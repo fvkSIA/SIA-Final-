@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HANAPKITA</title>
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: #4481eb;
+        }
+        .btn.prev {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: 2px solid #fff;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn.prev:hover {
+            background-color: #4481eb;
+        }
+        .container {
+            position: relative;
+            width: 1050px;
+            background: #fff;
+            padding: 25px;
+            margin-top: 50px;
+            margin-left: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .container header {
+            font-size: 30px;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+        }
+        .container .form {
+            margin-top: 30px;
+        }
+        .form .input-box {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .input-box label {
+            color: #333;
+        }
+        .form :where(.input-box input, .select-box) {
+            position: relative;
+            height: 50px;
+            width: 100%;
+            outline: none;
+            font-size: 1rem;
+            color: black;
+            margin-top: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0 15px;
+        }
+        .input-box input:focus {
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+        }
+        .form .column {
+            display: flex;
+            column-gap: 15px;
+        }
+        .info :where(input, .select-box) {
+            margin-top: 15px;
+        }
+        .select-box select {
+            height: 100%;
+            width: 100%;
+            outline: none;
+            border: none;
+            color: #707070;
+            font-size: 1rem;
+        }
+        .form button {
+            height: 55px;
+            width: 100%;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 400;
+            margin-top: 30px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #4481eb;
+        }
+        .form button:hover {
+            background: rgb(33, 108, 230);
+        }
+        .skilled, .unskilled {
+            margin-top: 20px;
+        }
+        .skilled label, .unskilled label {
+            display: block;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .skilled select {
+            position: relative;
+            height: 50px;
+            width: 30%;
+            outline: none;
+            font-size: 1rem;
+            color: black;
+            margin-top: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0 15px;
+        }
+
+        .unskilled select {
+            position: relative;
+            height: 50px;
+            width: 50%;
+            outline: none;
+            font-size: 1rem;
+            color: black;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0 15px;
+        }
+
+        .unskilled{
+          margin-top: -50px;
+          margin-left: 335px;
+        }
+
+
+        .skilled select:focus, .unskilled select:focus {
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .input-box.info.resume {
+            margin-top: 20px; /* Adjust this value to move the resume label down */
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 500px) {
+            .form .column {
+                flex-wrap: wrap;
+            }
+            .form :where(.gender-option, .gender) {
+                row-gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="container">
+        <header>CREATE A NEW ACCOUNT</header>
+        <form action="#" class="form">
+            <div class="input-box">
+                <label><b>Full Name:</b></label>
+                <input type="text" placeholder="Enter full name" required />
+            </div>
+            <div class="input-box">
+                <label><b>Email Address:</b></label>
+                <input type="text" placeholder="Enter email address" required />
+            </div>
+            <div class="column">
+                <div class="input-box">
+                    <label><b>Phone Number:</b></label>
+                    <input type="number" placeholder="Enter phone number" required />
+                </div>
+                <div class="input-box">
+                    <label><b>Birth Date:</b></label>
+                    <input type="date" placeholder="Enter birth date" required />
+                </div>
+            </div>
+            <div class="input-box info">
+                <label><b>Gender:</b></label>
+                <input type="text" placeholder="Enter your Gender" required />
+            </div>
+            <div class="input-box info">
+                <label><b>Address:</b></label>
+                <input type="text" placeholder="Enter your Address" required />
+            </div>
+            <div class="input-box info">
+                <label><b>Password:</b></label>
+                <input type="password" placeholder="Enter your Password" required />
+            </div>
+            <div class="input-box info">
+                <label><b>Confirm Password:</b></label>
+                <input type="password" placeholder="Confirm Password" required />
+            </div>
+
+            <div class="skilled">
+                <label><b>Select Type of Workers:</b></label>
+                <select>
+                    <option value="#">Select Skilled Worker</option>
+                    <option value="#">Welder</option>
+                    <option value="#">Carpenter</o  ption>
+                    <option value="#">Driver</option>
+                    <option value="#">Plumber</option>
+                    <option value="#">Electrician</option>
+                    <option value="#">Chef</option>
+                </select>                  
+            </div>
+            <div class="unskilled">
+                <select>
+                    <option value="#">Select Unskilled Worker</option>
+                    <option value="#">Laborer</option>
+                    <option value="#">Cleaner</option>
+                    <option value="#">Helper</option>
+                    <option value="#">Loader</option>
+                    <option value="#">Gardener</option>
+                </select>                  
+            </div>
+            <div class="input-box info picture">
+                <label><b>Profile:</b></label>
+                <input type="file" id="profile" name="profile" accept=".pdf, .jpg, .png" required  >
+            </div>
+            <div class="input-box info resume">
+                <label><b>Resume:</b></label>
+                <input type="file" id="resume" name="resume" accept=".pdf" required  >
+            </div>
+          
+            <div class="input-box info">
+                <label><b>2 Valid IDs / Birth Certificate:</b></label>
+                <input type="file" id="valid" name="valid" accept=".pdf" required  >
+            </div>
+
+            <div class="input-box info">
+                <label><b>Recent Job Experience:</b></label>
+                <input type="file" id="recent" name="recent" accept=".pdf" required  >
+            </div>
+
+            <button>SUBMIT</button>
+        </form>
+    </section>
+    <button onclick="history.back()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
+</body>
+</html>
