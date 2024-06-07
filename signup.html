@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HANAPKITA</title>
+</head>
+<script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #4481eb;
+}
+.btn.prev {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: 2px solid #fff;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn.prev:hover {
+  background-color: #4481eb;
+}
+.container {
+  position: relative;
+  width: 1050px;
+  background: #fff;
+  padding: 25px;
+  margin-top: 50px;
+  margin-left: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+.container header {
+  font-size: 30px;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+}
+.container .form {
+  margin-top: 30px;
+}
+.form .input-box {
+  width: 100%;
+  margin-top: 20px;
+}
+.input-box label {
+  color: #333;
+}
+.form :where(.input-box input, .select-box) {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  color: black;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 15px;
+}
+.input-box input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+.form .column {
+  display: flex;
+  column-gap: 15px;
+}
+
+.info :where(input, .select-box) {
+  margin-top: 15px;
+}
+.select-box select {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  color: #707070;
+  font-size: 1rem;
+}
+.form button {
+  height: 55px;
+  width: 100%;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #4481eb;
+}
+.form button:hover {
+  background: rgb(33, 108, 230);
+}
+/*Responsive*/
+@media screen and (max-width: 500px) {
+  .form .column {
+    flex-wrap: wrap;
+  }
+  .form :where(.gender-option, .gender) {
+    row-gap: 15px;
+  }
+}
+</style>
+<body>
+        <section class="container">
+          <header>CREATE A NEW ACCOUNT</header>
+          <form action="#" class="form">
+            <div class="input-box">
+              <label>Full Name:</label>
+              <input type="text" placeholder="Enter full name" required />
+            </div>
+            <div class="input-box">
+              <label>Email Address:</label>
+              <input type="text" placeholder="Enter email address" required />
+            </div>
+            <div class="column">
+              <div class="input-box">
+                <label>Phone Number:</label>
+                <input type="number" placeholder="Enter phone number" required />
+              </div>
+              <div class="input-box">
+                <label>Birth Date:</label>
+                <input type="date" placeholder="Enter birth date" required />
+              </div>
+            </div>
+            <div class="input-box info">
+              <label>Gender:</label>
+              <input type="text" placeholder="Enter your Gender" required />
+              </div>
+            <div class="input-box info">
+              <label>Address:</label>
+              <input type="text" placeholder="Enter your Address" required />
+              </div>
+              <div class="input-box info">
+                <label>Password:</label>
+                <input type="password" placeholder="Enter your Password" required />
+              </div>
+                <div class="input-box info">
+                  <label>Confirm Passowrd:</label>
+                  <input type="password" placeholder="Confirm Password" required />
+                </div>
+
+<div class="skilled">
+            <select>
+              <option value="#">SKILLED WORKER</option>
+              <option value="#">Welder</option>
+              <option value="#">Carpenter </option>
+              <option value="#">Driver </option>
+              <option value="#">Plumber </option>
+              <option value="#">Electrician </option>
+              <option value="#">Chef </option>
+              <option value="#">Chef </option>
+            </select>                  
+          </div>
+          <div class="unskilled ">
+            <select>
+              <option value="#">UNSKILLED WORKER</option>
+              <option value="#">Welder</option>
+              <option value="#">Carpenter </option>
+              <option value="#">Driver </option>
+              <option value="#">Plumber </option>
+              <option value="#">Electrician </option>
+              <option value="#">Chef </option>
+              <option value="#">Chef </option>
+            </select>                  
+          </div>
+
+
+
+
+
+
+<br><br><br><br><br><br>
+
+
+
+            <button>Submit</button>
+          </form>
+        </section>
+        <button onclick="history.back()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
+      </body>
+    </html>

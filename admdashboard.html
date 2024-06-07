@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<style>
+    body{
+        margin: 0;
+    }
+    nav{
+        width: 195px;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: blue;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        box-shadow: 0 0 2px 2px black;    
+    }
+    .logo{
+        width: 100px;
+        margin-left: -12px;
+    }
+    .brand-container{
+        text-align: center;
+        color: white;
+        padding: 25px 0;
+    }
+    .title{
+        display: inline-block;
+        margin: 0;
+        font-size: 23px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        position: relative;
+        top: 5px;
+        right: 4px;
+        }
+    .link{
+        display: flex;
+        color: white;
+        padding: 10px 60px;
+        text-decoration: none;
+        margin-bottom: 30px;
+        transition: 0.2s;
+        }
+    .link:hover{
+        background-color: white;
+        color: red;
+    }
+    .text{
+        text-align: center;
+    }
+
+    
+</style>
+<body>
+    <nav>
+        <div class="brand-container">
+            <img class="logo"
+            src="logo.png">
+            <h2 class="title"> DASHBOARD </h2>
+        </div>
+        <div class="links-container">
+            <a class="link" href="#"> HOME</a>
+            <a class="link" href="#"> INVENTORY</a>
+            <a class="link" href="#"> PRODUCT</a>
+            <a class="link" href="#"> ORDERS</a>
+            <a class="link" href="#"> LOGOUT</a>
+        </div>
+        
+        </div>
+
+    </nav>
+    <div class="main-cointaner">
+        <h1 class="text"> SIA SIA</h1>
+    </div>
+    
+</body>
+</html>
