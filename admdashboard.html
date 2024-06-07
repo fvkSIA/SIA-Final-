@@ -1,80 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <!-- Icon Link -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    background: #119aaf;
+    color: #fff;
+}
+
+.container .sidenav {
+    width: 115px;
+    height: 100vh;
+    overflow: hidden;
+    position: fixed;
+    padding: 32px 16px;
+    background-color: #000;
+    transition: width 0.6s;
+}
+
+label .close-btn {
+    display: none;
+}
+
+.container .logo h2 {
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+.sidenav .menu_text {
+    margin-top: 24px;
+}
+
+.sidenav .menu_text p {
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding-left: 10px;
+}
+
+.sidenav .icon_items ul {
+    list-style: none;
+    margin-top: 32px;
+    padding: 0 10px;
+}
+
+.sidenav .icon_items ul li {
+    cursor: pointer;
+    margin: 4px;
+    padding: 12px 0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    transition: 0.5s ease;
+}
+
+.icon_items .active,
+.sidenav .icon_items ul li:hover {
+    background: #119aaf;
+}
+
+.sidenav .icon_items ul li i {
+    font-size: 26px;
+    padding: 0 12px;
+}
+
+.sidenav .icon_items ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 17px;
+    padding-left: 18px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+#click {
+    display: none;
+}
+
+.container label {
+    position: absolute;
+    left: 3%;
+    top: 1.5%;
+    font-size: 24px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+#click:checked ~ .sidenav {
+    width: 260px;
+}
+
+#click:checked ~ .sidenav .icon_items ul li a {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#click:checked ~ .sidenav .logo h2 {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#click:checked ~ label {
+    left: 1%;
+}
+
+#click:checked ~ label .close-btn {
+    display: block;
+}
+
+#click:checked ~ label .menu-btn {
+    display: none;
+}
+    </style>
 </head>
-<style>
-    body{
-        margin: 0;
-    }
-    nav{
-        width: 195px;
-        height: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: blue;
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
-        box-shadow: 0 0 2px 2px black;    
-    }
-    .logo{
-        width: 100px;
-        margin-left: -12px;
-    }
-    .brand-container{
-        text-align: center;
-        color: white;
-        padding: 25px 0;
-    }
-    .title{
-        display: inline-block;
-        margin: 0;
-        font-size: 23px;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        position: relative;
-        top: 5px;
-        right: 4px;
-        }
-    .link{
-        display: flex;
-        color: white;
-        padding: 10px 60px;
-        text-decoration: none;
-        margin-bottom: 30px;
-        transition: 0.2s;
-        }
-    .link:hover{
-        background-color: white;
-        color: red;
-    }
-    .text{
-        text-align: center;
-    }
-
-    
-</style>
 <body>
-    <nav>
-        <div class="brand-container">
-            <img class="logo"
-            src="logo.png">
-            <h2 class="title"> DASHBOARD </h2>
-        </div>
-        <div class="links-container">
-            <a class="link" href="#"> HOME</a>
-            <a class="link" href="#"> INVENTORY</a>
-            <a class="link" href="#"> PRODUCT</a>
-            <a class="link" href="#"> ORDERS</a>
-            <a class="link" href="#"> LOGOUT</a>
-        </div>
-        
-        </div>
+    <div class="container">
+        <input type="checkbox" id="click">
+        <label for="click">
+            <i class='menu-btn bx bx-menu'></i>
+            <i class='close-btn bx bx-x-circle'></i>
+        </label>
 
-    </nav>
-    <div class="main-cointaner">
-        <h1 class="text"> SIA SIA</h1>
+        <div class="sidenav">
+            <div class="logo">
+                <h2>DASHBOARD</h2>
+            </div>
+
+            <div class="menu_text">
+                <p>Menu</p>
+            </div>
+
+            <div class="icon_items">
+                <ul>
+                    <li class="active">
+                        <i class='bx bxs-home'></i>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <i class='bx bxs-bar-chart-alt-2'></i>
+                        <a href="#">Analytics</a>
+                    </li>
+                    <li>
+                        <i class='bx bxs-message-dots'></i>
+                        <a href="#">Applicants</a>
+                    </li>
+                    <li>
+                        <i class='bx bxs-user-circle'></i>
+                        <a href="#">Jobseeker</a>
+                    </li>
+                    <li>
+                        <i class='bx bxs-shopping-bag'></i>
+                        <a href="#">Employer</a>
+                    </li>
+                    <li>
+                        <i class='bx bxs-bar-chart-alt-2'></i>
+                        <a href="#">Reports</a>
+                    </li>
+                    <li>
+                        <i class='bx bx-log-in'></i>
+                        <a href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    
 </body>
 </html>
