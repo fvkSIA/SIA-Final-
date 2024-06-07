@@ -91,10 +91,24 @@
         <hr>
         <p class="red-text">Are you?</p>
         <div class="button-container">
-            <button><b>EMPLOYEE</b></button>
-            <button><b>JOBSEEKER</b></button>
+            <button onclick="selectedOption = 'EMPLOYEE'"><b>EMPLOYEE</b></button>
+            <button onclick="selectedOption = 'JOBSEEKER'"><b>JOBSEEKER</b></button>
         </div>
-        <button onclick="window.location.href='termsemployer.html'" class="create-account">CREATE ACCOUNT</button>
+        <button onclick="redirectToPage()" class="create-account">CREATE ACCOUNT</button>
     </div>
+
+    <script>
+        var selectedOption;
+
+        function redirectToPage() {
+            if (selectedOption === 'EMPLOYEE') {
+                window.location.href = 'termsemployer.html';
+            } else if (selectedOption === 'JOBSEEKER') {
+                window.location.href = 'termsjobseeker.html';
+            } else {
+                alert('Please select an option.');
+            }
+        }
+    </script>
 </body>
 </html>
