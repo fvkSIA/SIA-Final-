@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2024 at 06:08 PM
+-- Generation Time: Jun 08, 2024 at 12:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,6 +41,30 @@ CREATE TABLE `employers` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobseekers`
+--
+
+CREATE TABLE `jobseekers` (
+  `id` int(11) NOT NULL,
+  `full_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone_number` varchar(20) NOT NULL,
+  `birth_date` date NOT NULL,
+  `gender` varchar(20) NOT NULL,
+  `address` text NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `worker_type` enum('skilled','unskilled') NOT NULL,
+  `type_of_work` varchar(255) NOT NULL,
+  `profile` varchar(255) NOT NULL,
+  `resume` varchar(255) NOT NULL,
+  `valid_ids` varchar(255) NOT NULL,
+  `recent_job_experience` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -52,6 +76,13 @@ ALTER TABLE `employers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `jobseekers`
+--
+ALTER TABLE `jobseekers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -59,7 +90,13 @@ ALTER TABLE `employers`
 -- AUTO_INCREMENT for table `employers`
 --
 ALTER TABLE `employers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `jobseekers`
+--
+ALTER TABLE `jobseekers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
