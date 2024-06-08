@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Employer Dashboard</title>
+  <!-- Link Styles -->
+  <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+:root{
+  --color-default:#004f83;
+  --color-second:#0067ac;
+  --color-white:#fff;
+  --color-body:#e4e9f7;
+  --color-light:#e0e0e0;
+}
+
+*{
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body{
+  min-height: 100vh;
+}
+
+.sidebar{
+  min-height: 100vh;
+  width: 78px;
+  padding: 6px 14px;
+  z-index: 99;
+  background-color: var(--color-default);
+  transition: all .5s ease;
+  position: fixed;
+  top:0;
+  left: 0;
+}
+
+.sidebar.open{
+  width: 250px;
+}
+
+.sidebar .logo_details{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.sidebar .logo_details .icon{
+  opacity: 0;
+  transition: all 0.5s ease ;
+}
+
+.sidebar .logo_details .logo_name{
+  color:var(--color-white);
+  font-size: 22px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all .5s ease;
+}
+
+.sidebar.open .logo_details .icon,
+.sidebar.open .logo_details .logo_name{
+  opacity: 1;
+}
+
+.sidebar .logo_details #btn{
+  position: absolute;
+  top:50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .5s ease;
+}
+
+.sidebar.open .logo_details #btn{
+  text-align: right;
+}
+
+.sidebar i{
+  color:var(--color-white);
+  height: 60px;
+  line-height: 60px;
+  min-width: 50px;
+  font-size: 25px;
+  text-align: center;
+}
+
+.sidebar .nav-list{
+  margin-top: 20px;
+  height: 100%;
+}
+
+.sidebar li{
+  position: relative;
+  margin:8px 0;
+  list-style: none;
+}
+
+.sidebar li .tooltip{
+  position: absolute;
+  top:-20px;
+  left:calc(100% + 15px);
+  z-index: 3;
+  background-color: var(--color-white);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 14px;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar li:hover .tooltip{
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top:50%;
+  transform: translateY(-50%);
+}
+
+.sidebar.open li .tooltip{
+  display: none;
+}
+
+.sidebar li a{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  text-decoration: none;
+  background-color: var(--color-default);
+  position: relative;
+  transition: all .5s ease;
+  z-index: 12;
+}
+
+.sidebar li a::after{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  background-color: var(--color-white);
+  border-radius: 5px;
+  transition: transform 0.3s ease-in-out;
+  transform-origin: left;
+  z-index: -2;
+}
+
+.sidebar li a:hover::after{
+  transform: scaleX(1);
+  color:var(--color-default)
+}
+
+.sidebar li a .link_name{
+  color:var(--color-white);
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.sidebar li a:hover .link_name,
+.sidebar li a:hover i{
+  transition: all 0.5s ease;
+  color:var(--color-default)
+}
+
+.sidebar.open li a .link_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar li i{
+  height: 35px;
+  line-height: 35px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.sidebar li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom:-8px;
+  padding:10px 14px;
+  overflow: hidden;
+  transition: all .5s ease;
+}
+
+.sidebar.open li.profile{
+  width: 250px;
+}
+
+.sidebar .profile .profile_details{
+  display: flex;
+  align-items: center;
+  flex-wrap:  nowrap;
+}
+
+.sidebar li img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.sidebar li.profile .name,
+.sidebar li.profile .designation{
+  font-size: 15px;
+  font-weight: 400;
+  color:var(--color-white);
+  white-space: nowrap;
+}
+
+.sidebar li.profile .designation{
+  font-size: 12px;
+}
+
+.sidebar .profile #log_out{
+  position: absolute;
+  top:50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: var(--color-second);
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.sidebar.open .profile #log_out{
+  width: 50px;
+  background: none;
+}
+
+.home-section{
+  position: relative;
+  background-color: var(--color-body);
+  min-height: 100vh;
+  top:0;
+  left:78px;
+  width: calc(100% - 78px);
+  transition: all .5s ease;
+  z-index: 2;
+}
+
+.home-section .text{
+  display: inline-block;
+  color:var(--color-default);
+  font-size: 55px;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 500;
+  margin-top: 40px;
+  margin-left: 350px;
+  
+}
+
+.sidebar.open ~ .home-section{
+  left:250px;
+  width: calc(100% - 250px);
+}
+
+.profile-container {
+    width: 150px; /* Adjusted width */
+    height: 160px; /* Added height */
+    margin-top: -268px; /* Adjust this value to move the container down */
+    margin-left: 85px;
+    border-radius: 50%; /* To make the container itself circular */
+    overflow: hidden; /* Ensure image does not overflow container */
+}
+
+.profile-container img {
+    width: 100%; /* Ensure the image fits within the container */
+    height: 100%; /* Ensure the image fits within the container */
+    border-radius: 50%; /* To make the image circular */
+}
+.pro {
+  background-color: red;
+  width: 1155px; /* Added width */
+  border-radius: 50px;
+  height: 280px; /* Added height */
+  margin-top: -80px;
+  margin-left: 17px;
+}
+
+.location {
+    margin-left: 350px; /* Adjust this value to move the text to the right */
+    margin-top: -15px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 17px;
+
+}
+.email {
+  margin-left: 350px; /* Adjust this value to move the text to the right */
+    margin-top: -70px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 17px;
+}
+.number {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 17px;
+  margin-top: 60px;
+  margin-left: 350px; /* Adjust this value to move the text to the right */
+}
+.edit {
+  margin-top: -220px;
+  margin-left: 1080px; /* Adjust this value to move the text to the right */
+  font-size: 50px;
+}
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin-top: 190px;
+            margin-left: 210px;
+              padding: 20px;
+        }
+        .form-group {
+            flex: 1 1 50%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+        .password-container input[type="password"] {
+            padding-right: 40px;
+        }
+
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo_details">
+      <i class="bx bxl-audible icon"></i>
+      <div class="logo_name">HANAPKITA</div>
+      <i class="bx bx-menu" id="btn"></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="#">
+          <i class="bx bx-grid-alt"></i>
+          <span class="link_name">Home</span>
+        </a>
+        <span class="tooltip">Home</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bx bx-chat"></i>
+          <span class="link_name">Inbox</span>
+        </a>
+        <span class="tooltip">Inbox</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bx bx-user"></i>
+          <span class="link_name">Worker</span>
+        </a>
+        <span class="tooltip">Worker</span>
+      </li>      
+      <li>
+        <a href="#">
+          <i class="bx bx-news"></i>
+          <span class="link_name">Job Post</span>
+        </a>
+        <span class="tooltip">Job Post</span>
+      </li> 
+      <li>
+        <a href="#">
+          <i class="bx bx-folder"></i>
+          <span class="link_name">History</span>
+        </a>
+        <span class="tooltip">History</span>
+      </li>     
+      <li class="profile">
+        <div class="profile_details">
+          <img src="bersoto.jpg" alt="profile image">
+          <div class="profile_content">
+            <div class="name">Joseph Bersoto</div>
+            <div class="designation">Employer</div>
+          </div>
+        </div>
+        <i class="bx bx-log-out" id="log_out"></i>
+      </li>
+    </ul>
+  </div>
+  <section class="home-section">
+    <div class="text">Joseph Carlo Bersoto</div>
+    <div class="pro"></div>
+    <div class="profile-container">
+      <img src="bersoto.jpg" class="profile-pic">
+    </div>
+    <div class="location">
+    <span class="bx bx-map">&nbsp; 6996 Pandacan Manila</span>
+    </div>
+    <div class="email">
+      <span class="bx bx-chat">&nbsp; josephsopogi@gmail.com</span>
+      </div>
+      <br>
+      <div class="number">
+        <span class="bx bx-phone">&nbsp; 09632654842</span>
+        </div>
+            <div class="edit">
+              <span class="bx bx-edit"></span>
+              </div>
+            <div class="container">
+              <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name">
+              </div>
+              <div class="form-group">
+                  <label for="address">Address:</label>
+                  <input type="text" id="address">
+              </div>
+              <div class="form-group">
+                  <label for="phone">Phone Number:</label>
+                  <input type="text" id="phone">
+              </div>
+              <div class="form-group">
+                  <label for="birthday">Birthday:</label>
+                  <input type="text" id="birthday" >
+              </div>
+              <div class="form-group">
+                  <label for="email">Email Address:</label>
+                  <input type="email" id="email" >
+              </div>
+              <div class="form-group">
+                  <label for="password">Password:</label>
+                  <div class="password-container">
+                      <input type="password" id="password">
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="gender">Gender:</label>
+                  <input type="text" id="gender">
+              </div>
+              <div class="form-group">
+                  <label for="confirm-password">Confirm Password:</label>
+                  <div class="password-container">
+                      <input type="password" id="confirm-password">
+                  </div>
+              </div>
+          </div>
+  </section>
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
