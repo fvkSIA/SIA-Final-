@@ -2,6 +2,10 @@
 // Include the database connection file
 include 'db_connection.php';
 
+// Initialize variables
+$showModal = false;
+$emailExists = false;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form data
     $full_name = $_POST['full_name'];
@@ -33,22 +37,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     move_uploaded_file($_FILES['valid']['tmp_name'], $valid_target);
     move_uploaded_file($_FILES['recent']['tmp_name'], $recent_target);
 
-    // Insert data into the database
-    $sql = "INSERT INTO jobseekers (full_name, email, phone_number, birth_date, gender, address, password, worker_type, type_of_work, profile, resume, valid_ids, recent_job_experience)
-            VALUES ('$full_name', '$email', '$phone_number', '$birth_date', '$gender', '$address', '$password', '$worker_type', '$type_of_work', '$profile', '$resume', '$valid_ids', '$recent_job_experience')";
+    // Check if email already exists
+    $email_check_sql = "SELECT * FROM jobseekers WHERE email='$email'";
+    $result = $conn->query($email_check_sql);
 
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.getElementById('successModal').style.display = 'block';
-                });
-              </script>";
+    if ($result->num_rows > 0) {
+        // Email already exists
+        $emailExists = true;
     } else {
-        echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.getElementById('errorModal').style.display = 'block';
-                });
-              </script>";
+        // Insert data into the database
+        $sql = "INSERT INTO jobseekers (full_name, email, phone_number, birth_date, gender, address, password, worker_type, type_of_work, profile, resume, valid_ids, recent_job_experience)
+                VALUES ('$full_name', '$email', '$phone_number', '$birth_date', '$gender', '$address', '$password', '$worker_type', '$type_of_work', '$profile', '$resume', '$valid_ids', '$recent_job_experience')";
+
+    if (mysqli_query($conn, $sql)) {
+        $showModal = true;
+    } else {
+        $errorMessage = "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
     }
 
     $conn->close();
@@ -205,45 +210,76 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         /* Modal styles */
         .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
             left: 0;
             top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-            padding-top: 60px;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
         }
+
         .modal-content {
             background-color: #fefefe;
-            margin: 5% auto;
+            margin: auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
+            width: 300px; /* Set width to desired size */
+            border-radius: 10px; /* Add border radius for aesthetics */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
             text-align: center;
         }
+
         .close {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
+
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-body h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .modal-body p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .modal-body button {
+            background-color: #4481eb;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .modal-body button:hover {
+            background-color: #3569d1;
+        }
     </style>
 </head>
 <body>
     <section class="container">
         <header>CREATE A NEW ACCOUNT</header>
-        <form action="jobseekersignup.php" method="post" enctype="multipart/form-data" class="form">
+        <form action="jobseekersignup.php" method="post" enctype="multipart/form-data" class="form" onsubmit="return validatePasswords()">
             <div class="input-box">
                 <label><b>Full Name:</b></label>
                 <input type="text" name="full_name" placeholder="Enter full name" required />
@@ -272,11 +308,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="input-box info">
                 <label><b>Password:</b></label>
-                <input type="password" name="password" placeholder="Enter your Password" required />
+                <input type="password" name="password" id="password" placeholder="Enter your Password" required />
             </div>
             <div class="input-box info">
                 <label><b>Confirm Password:</b></label>
-                <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required />
             </div>
 
             <div class="skilled">
@@ -314,8 +350,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <button type="submit">SUBMIT</button>
         </form>
+        <?php
+        if ($emailExists) {
+            echo "<p style='color: red;'>Error: The email address is already registered. Please use a different email.</p>";
+        }
+        ?>
     </section>
     <button onclick="history.back()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
+       <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <h2>New record created successfully!</h2>
+                <p>Your data has been successfully saved.</p>
+                <button id="continueBtn">Continue</button>
+            </div>
+        </div>
+    </div>
     <script>
         const workOptions = {
             skilled: [
@@ -359,22 +411,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 });
             }
         }
+
+        function validatePasswords() {
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirm_password').value;
+            if (password !== confirmPassword) {
+                alert("Passwords do not match. Please try again.");
+                return false;
+            }
+            return true;
+        }
+
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that closes the modal
+        var continueBtn = document.getElementById("continueBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks on the button, close the modal
+        continueBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Show the modal if the PHP variable indicates success
+        <?php if ($showModal) : ?>
+        document.addEventListener('DOMContentLoaded', function() {
+            modal.style.display = 'block';
+        });
+        <?php endif; ?>
     </script>
-
-    <!-- Success Modal -->
-    <div id="successModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="document.getElementById('successModal').style.display='none'">&times;</span>
-            <p>New record created successfully</p>
-        </div>
-    </div>
-
-    <!-- Error Modal -->
-    <div id="errorModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="document.getElementById('errorModal').style.display='none'">&times;</span>
-            <p>Error creating record. Please try again.</p>
-        </div>
-    </div>
 </body>
 </html>
