@@ -79,12 +79,17 @@
     button:hover {
         background-color: #1e1e5c;
     }
+
+    .error {
+        color: red;
+        margin-top: 10px;
+    }
 </style>
 </head>
 <body>
     <div class="login-container">
         <h1>ADMIN</h1>
-        <form>
+        <form id="loginForm">
             <label for="username">Username:</label>
             <div class="input-container">
                 <input type="text" id="username" name="username" required>
@@ -96,7 +101,30 @@
                 <i class='bx bx-lock'></i> <!-- Boxicons lock icon -->
             </div>
             <button type="submit">Login</button>
+            <div class="error" id="errorMessage"></div>
         </form>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Replace these with a more secure approach for production!
+            const validUsername = 'admin';
+            const validPassword = 'admin123';
+
+            if (username === validUsername && password === validPassword) {
+                alert('Login successful!');
+                // Redirect to the admin dashboard
+                window.location.href = 'admdashboard.html';
+            } else {
+                errorMessage.textContent = 'Invalid username or password';
+            }
+        });
+    </script>
 </body>
 </html>
