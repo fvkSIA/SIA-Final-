@@ -2,6 +2,10 @@
 // Include the database connection file
 include 'db_connection.php';
 
+// Initialize the showModal variable
+$showModal = false;
+$emailExists = false;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form data
     $full_name = $_POST['full_name'];
@@ -33,22 +37,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     move_uploaded_file($_FILES['valid']['tmp_name'], $valid_target);
     move_uploaded_file($_FILES['recent']['tmp_name'], $recent_target);
 
-    // Insert data into the database
-    $sql = "INSERT INTO jobseekers (full_name, email, phone_number, birth_date, gender, address, password, worker_type, type_of_work, profile, resume, valid_ids, recent_job_experience)
-            VALUES ('$full_name', '$email', '$phone_number', '$birth_date', '$gender', '$address', '$password', '$worker_type', '$type_of_work', '$profile', '$resume', '$valid_ids', '$recent_job_experience')";
+    // Check if email already exists
+    $email_check_sql = "SELECT * FROM jobseekers WHERE email='$email'";
+    $result = $conn->query($email_check_sql);
 
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.getElementById('successModal').style.display = 'block';
-                });
-              </script>";
+    if ($result->num_rows > 0) {
+        // Email already exists
+        $emailExists = true;
     } else {
-        echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.getElementById('errorModal').style.display = 'block';
-                });
-              </script>";
+        // Insert data into the database
+        $sql = "INSERT INTO jobseekers (full_name, email, phone_number, birth_date, gender, address, password, worker_type, type_of_work, profile, resume, valid_ids, recent_job_experience)
+                VALUES ('$full_name', '$email', '$phone_number', '$birth_date', '$gender', '$address', '$password', '$worker_type', '$type_of_work', '$profile', '$resume', '$valid_ids', '$recent_job_experience')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        document.getElementById('successModal').style.display = 'block';
+                    });
+                  </script>";
+        } else {
+            echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        document.getElementById('errorModal').style.display = 'block';
+                    });
+                  </script>";
+        }
     }
 
     $conn->close();
@@ -243,7 +256,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <section class="container">
         <header>CREATE A NEW ACCOUNT</header>
-        <form action="jobseekersignup.php" method="post" enctype="multipart/form-data" class="form">
+        <form action="jobseekersignup.php" method="post" enctype="multipart/form-data" class="form" onsubmit="return validatePasswords()">
             <div class="input-box">
                 <label><b>Full Name:</b></label>
                 <input type="text" name="full_name" placeholder="Enter full name" required />
@@ -272,11 +285,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="input-box info">
                 <label><b>Password:</b></label>
-                <input type="password" name="password" placeholder="Enter your Password" required />
+                <input type="password" name="password" id="password" placeholder="Enter your Password" required />
             </div>
             <div class="input-box info">
                 <label><b>Confirm Password:</b></label>
-                <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required />
             </div>
 
             <div class="skilled">
@@ -314,6 +327,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <button type="submit">SUBMIT</button>
         </form>
+        <?php
+        if ($emailExists) {
+            echo "<p style='color: red;'>Error: The email address is already registered. Please use a different email.</p>";
+        }
+        ?>
     </section>
     <button onclick="history.back()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
     <script>
@@ -359,6 +377,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 });
             }
         }
+
+        function validatePasswords() {
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirm_password').value;
+            if (password !== confirmPassword) {
+                alert("Passwords do not match. Please try again.");
+                return false;
+            }
+            return true;
+        }
+
     </script>
 
     <!-- Success Modal -->

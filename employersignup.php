@@ -2,20 +2,22 @@
 // Include the database connection file
 include 'db_connection.php';
 
+// Initialize variables
+$showModal = false;
+$errorMessage = '';
+
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Escape user inputs for security
-    $full_name = $conn->real_escape_string($_POST['full_name']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $phone_number = $conn->real_escape_string($_POST['phone_number']);
-    $birth_date = $conn->real_escape_string($_POST['birth_date']);
-    $gender = $conn->real_escape_string($_POST['gender']);
-    $address = $conn->real_escape_string($_POST['address']);
-    $password = $conn->real_escape_string($_POST['password']);
-    // You might want to hash the password for security
+    $full_name = $_POST['full_name'];
+    $email = $_POST['email'];
+    $phone_number = $_POST['phone_number'];
+    $birth_date = $_POST['birth_date'];
+    $gender = $_POST['gender'];
+    $address = $_POST['address'];
+    $password = $_POST['password'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $profile_image_path = $conn->real_escape_string($_FILES['profile_image_path']['name']);
-    $valid_id_path = $conn->real_escape_string($_FILES['valid_id_path']['name']);
+    $profile_image_path = $_FILES['profile_image_path']['name'];
+    $valid_id_path = $_FILES['valid_id_path']['name'];
 
     // File upload paths
     $profile_destination = 'profile_images/' . $profile_image_path;
@@ -25,15 +27,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     move_uploaded_file($_FILES['profile_image_path']['tmp_name'], $profile_destination);
     move_uploaded_file($_FILES['valid_id_path']['tmp_name'], $valid_destination);
 
-    // Prepare SQL insert statement
-    $sql = "INSERT INTO employers (full_name, email, phone_number, birth_date, gender, address, password, profile_image_path, valid_id_path) 
-            VALUES ('$full_name', '$email', '$phone_number', '$birth_date', '$gender', '$address', '$hashed_password', '$profile_destination', '$valid_destination')";
+    // Check if email already exists
+    $checkEmailQuery = "SELECT email FROM employers WHERE email = '$email'";
+    $result = mysqli_query($conn, $checkEmailQuery);
 
-if (mysqli_query($conn, $sql)) {
-    $showModal = true;
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-}
+    if (mysqli_num_rows($result) > 0) {
+        $errorMessage = "Error: The email address is already registered. Please use a different email.";
+        $showModal = false;
+    } else {
+        // Prepare SQL insert statement
+        $sql = "INSERT INTO employers (full_name, email, phone_number, birth_date, gender, address, password, profile_image_path, valid_id_path) 
+                VALUES ('$full_name', '$email', '$phone_number', '$birth_date', '$gender', '$address', '$hashed_password', '$profile_destination', '$valid_destination')";
+
+        if (mysqli_query($conn, $sql)) {
+            $showModal = true;
+        } else {
+            $errorMessage = "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -205,78 +216,84 @@ if (mysqli_query($conn, $sql)) {
                 row-gap: 15px;
             }
         }
-       /* Modal styles */
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-    }
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
 
-    .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 300px; /* Set width to desired size */
-        border-radius: 10px; /* Add border radius for aesthetics */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-        text-align: center;
-    }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px; /* Set width to desired size */
+            border-radius: 10px; /* Add border radius for aesthetics */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+            text-align: center;
+        }
 
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-    .modal-body {
-        padding: 20px;
-    }
+        .modal-body {
+            padding: 20px;
+        }
 
-    .modal-body h2 {
-        color: #333;
-        margin-bottom: 10px;
-    }
+        .modal-body h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
 
-    .modal-body p {
-        color: #666;
-        margin-bottom: 20px;
-    }
+        .modal-body p {
+            color: #666;
+            margin-bottom: 20px;
+        }
 
-    .modal-body button {
-        background-color: #4481eb;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-    }
+        .modal-body button {
+            background-color: #4481eb;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-    .modal-body button:hover {
-        background-color: #3569d1;
-    }
+        .modal-body button:hover {
+            background-color: #3569d1;
+        }
+
+        .error-message {
+            color: red;
+            text-align: left;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <section class="container">
         <header>CREATE A NEW ACCOUNT</header>
-        <form action="employersignup.php" method="POST" enctype="multipart/form-data" class="form">
+        <form action="employersignup.php" method="POST" enctype="multipart/form-data" class="form" onsubmit="return validatePasswords()">
             <div class="input-box">
                 <label><b>Full Name:</b></label>
                 <input type="text" name="full_name" placeholder="Enter full name" required />
@@ -305,11 +322,11 @@ if (mysqli_query($conn, $sql)) {
             </div>
             <div class="input-box info">
                 <label><b>Password:</b></label>
-                <input type="password" name="password" placeholder="Enter your Password" required />
+                <input type="password" id="password" name="password" placeholder="Enter your Password" required />
             </div>
             <div class="input-box info">
                 <label><b>Confirm Password:</b></label>
-                <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required />
             </div>
   
             <div class="input-box info picture">
@@ -323,6 +340,9 @@ if (mysqli_query($conn, $sql)) {
             </div>
 
             <button type="submit">SUBMIT</button>
+            <?php if ($errorMessage) : ?>
+                <p class="error-message"><?php echo $errorMessage; ?></p>
+            <?php endif; ?>
         </form>
     </section>
     <button onclick="history.back()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
@@ -371,6 +391,16 @@ if (mysqli_query($conn, $sql)) {
             modal.style.display = 'block';
         });
         <?php endif; ?>
+
+        function validatePasswords() {
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirm_password').value;
+            if (password !== confirmPassword) {
+                alert("Passwords do not match. Please try again.");
+                return false;
+            }
+            return true;
+        }
     </script>
 </body>
 </html>
