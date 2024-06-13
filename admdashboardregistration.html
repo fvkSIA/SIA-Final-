@@ -86,12 +86,6 @@
         .btn-remove {
             background-color: #f44336;
         }
-        .applicants {
-            margin-top: -220px; /* Adjust this value as needed */
-        }
-        .applicants label {
-            margin-right: 10px;
-        }
         .pagination {
             display: flex;
             margin-top: 230px;
@@ -102,6 +96,22 @@
             margin: 0 5px;
             padding: 5px 10px;
         }
+        .status {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 17px;
+      margin-top: -230px;
+      margin-left: 15px;
+      margin-bottom: 20px; /* Add space below the select button */
+
+    }
+    .status select {
+      padding: 7px;
+      font-size: 15px;
+      border-radius: 5px;
+      border: 1px solid black;
+      background-color: #fffaff; /* Set the background color */
+      color: black; /* Set the text color */
+    }
     </style>
 </head>
 <body>
@@ -174,17 +184,12 @@
         </tbody>
         
     </table>
-
-    <div class="applicants">
-        <label for="list">LIST OF APPLICANTS</label>
-        <select id="list">
-            <option value="1">1</option>
-            <option value="1">2</option>
-            <option value="1">3</option>
-            <!-- Add more options as needed -->
+    <div class="status">
+        <select>
+            <option>SKILLED WORKERS</option>
+            <option>UNSKILLED WORKERS</option>
         </select>
-    </div>
-
+      </div>
     <div class="pagination">
         <button class="prev">PREVIOUS</button>
         <button class="next">NEXT</button>

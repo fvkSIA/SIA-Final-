@@ -149,6 +149,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .info :where(input, .select-box) {
             margin-top: 15px;
         }
+        .input-box.info [type="file"] {
+            padding: 10px;
+        }
         .select-box select {
             height: 100%;
             width: 100%;
@@ -295,7 +298,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="input-box">
                     <label><b>Birth Date:</b></label>
-                    <input type="date" name="birth_date" placeholder="Enter birth date" required />
+                    <input type="date" name="birth_date" placeholder="Enter birth date" min="1995-01-01" max="2005-12-31" required />
                 </div>
             </div>
             <div class="input-box info">

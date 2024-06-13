@@ -129,6 +129,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .input-box input:focus {
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
         }
+        .input-box.info [type="file"] {
+            padding: 10px;
+        }
         .form .column {
             display: flex;
             column-gap: 15px;
@@ -309,7 +312,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="input-box">
                     <label><b>Birth Date:</b></label>
-                    <input type="date" name="birth_date" placeholder="Enter birth date" required />
+                    <input type="date" name="birth_date" placeholder="Enter birth date" min="1995-01-01" max="2005-12-31" required />
                 </div>
             </div>
             <div class="input-box info">

@@ -79,11 +79,6 @@
     button:hover {
         background-color: #1e1e5c;
     }
-
-    .error {
-        color: red;
-        margin-top: 10px;
-    }
 </style>
 </head>
 <body>
@@ -101,7 +96,6 @@
                 <i class='bx bx-lock'></i> <!-- Boxicons lock icon -->
             </div>
             <button type="submit">Login</button>
-            <div class="error" id="errorMessage"></div>
         </form>
     </div>
 
@@ -111,7 +105,6 @@
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('errorMessage');
 
             // Replace these with a more secure approach for production!
             const validUsername = 'admin';
@@ -122,7 +115,7 @@
                 // Redirect to the admin dashboard
                 window.location.href = 'admdashboard.html';
             } else {
-                errorMessage.textContent = 'Invalid username or password';
+                alert('Invalid username or password');
             }
         });
     </script>
