@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Offer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333333;
+        }
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            height: 550px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+        .title {
+            font-size: 32px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            color: #1E3B85;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .message-box {
+            background-color: #d7dfee;
+            padding: 105px;
+            width: 450px;
+            height: 20px;
+            margin-left: 73px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .message-box h2 {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 30px;
+            color: #333333;
+            font-weight: bold;
+            margin-left: -342px;
+            margin-top: -80px;
+        }
+        .message-box p {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 40px;
+            color: #333333;
+            font-weight: bold;
+        }
+        .greeting {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 16px;
+            margin: 25px 90px 15px;
+            text-align: left;
+        }
+        .congratulations {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 16px;
+            margin-bottom: 20px;
+            margin: 15px 100px 15px;
+            text-align: center;
+        }
+        .see-more {
+            color: #1E3B85;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            position: absolute;
+            bottom: 150px; /* Adjust as needed */
+            right: 55px;
+        }
+        .see-more:hover {
+            text-decoration: underline;
+        }
+        .button-group {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+        .proceed-button {
+            background-color: #1E3B85;
+            color: #ffffff;
+            border: none;
+            border-radius: 20px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .close-button {
+            background-color: transparent;
+            color: #333333;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Job Offer</div>
+        <div class="message-box">
+            <h2>Karen Gale Partos</h2>
+            <p>Your Application has been accepted!</p>
+        </div>
+        <div class="greeting">Hi Joseph Carlo Bersoto!</div>
+        <div class="congratulations">
+            Congratulations! You’ve been accepted as our driver. Your professionalism and commitment impressed us. Looking forward to smooth rides ahead. Welcome!
+        </div>
+        <a href="#" class="see-more">See more...</a>
+        <div class="button-group">
+            <button class="proceed-button">Proceed</button>
+            <button class="close-button" onclick="closeContainer()">×</button>
+        </div>
+    </div>
+    <script>
+        function closeContainer() {
+            document.querySelector('.container').remove();
+        }
+    </script>
+</body>
+</html>
