@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <title>Ongoing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            color: #333333;
+        }
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            height: 550px;
+            border-radius: 10px;
+            position: relative;
+        }
+        .title {
+            font-size: 32px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            color: #1E3B85;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .post-box {
+            background-color: #d7dfee;
+            width: 600px;
+            padding-left: 30px;
+            padding-top: 10%;
+            padding-right: 10%;
+            padding-bottom: 10%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .icon{
+            display: inline-block;
+            font-size: .5em;
+        }
+
+        .button-group {
+            position: absolute;
+            right: 20px;
+        }
+        .complete-button {
+            background-color: #F5BB00;
+            color: white;
+            font-weight: bolder;
+            font-size: 25px;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', Verdana, sans-serif;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 0px;
+            margin-bottom: 10%;
+        }
+
+        .ongoing{
+            border-radius: 20px;
+            font-size: 20px;
+            color: #ffffff;
+            font-weight: bold;
+            width: 100px;
+            padding: 5px;
+            background-color: green;
+        }
+
+        .post-box .pogi{
+            width: 20%;
+            border-radius: 50%;
+
+        }
+
+        .post-box .job-title{
+            font-size: 40px;
+            font-weight: bold;
+            color: #1E3B85;
+            opacity: 90%;
+        }
+
+        .post-box .employedWorker{
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+            margin-top: 10px;
+        }
+
+        .post-box .nameWorker{
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+            margin-top: 10px;
+        }
+
+
+        .post-box .job-detail{
+            background-color: #ffffff;
+            padding: 10px;
+            width: 25%;
+            border-radius: 100px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Job Order</div>
+        <div class="post-box">
+            <img src="bersoto.jpg" class="pogi" alt="pogi">
+            <div class="job-title"> Delivery Helper </div>
+            <p> Quezon City </p>
+            <div class="ongoing">ONGOING</div>
+            <div class="employedWorker">Employed Worker: </div>
+            <div class="nameWorker">JOSEPH BERSOTO</div>
+            
+            <h1>Job Details</h1>
+                <box-icon type='solid' name='briefcase-alt-2'></box-icon>
+                <label> Job Type:</label><br>
+                <p class="job-detail">FULL TIME</p>
+                <box-icon name='wallet-alt'></box-icon>
+                <label> Salary: </label><br>
+                <p class="job-detail">PHP 15,000 - PHP 18,000</p>
+                <box-icon name='current-location' ></box-icon>
+                <label> Location: </label>
+
+
+            <h1>Full Job Description</h1>
+            <p> <b>Responsibilities </b></p>
+            <ul>
+                <li>Assist the primary driver in the delivery and unloading of products to various locations.</li>
+                <li>Ensure timely and accurate delivery of goods, following the assigned route and schedule.</li>
+                <li>Load and unload products from the delivery vehicle safely.</li>
+                <li>Verify delivery items against invoices or shipping documents.  </li>
+                <li>Provide excellent customer service by addressing client inquiries and concerns professionally.</li>
+            </ul>
+            
+            <p> <b>Qualifications: </b></p>
+            <ul>
+                <li>Valid driver’s license with a clean driving record.</li>
+                <li>Ability to lift and carry heavy items (up to 50 lbs) regularly.</li>
+                <li>Good communication and interpersonal skills.</li>
+                <li>Ability to work flexible hours, including weekends and holidays.</li>
+            </ul>
+
+            <p> <b>Skills: </b></p>
+            <ul>
+                <li>Strong attention to detail.</li>
+                <li>Ability to navigate and read maps or GPS devices.</li>
+                <li>Reliability and punctuality.</li>
+                <li>Team-oriented with a positive attitude.</li>
+            </ul>
+
+        </div>
+     
+        <div class="button-group">
+            <button class="complete-button">COMPLETE JOB </button>
+        </div>
+    </div>
+</body>
+</html>
