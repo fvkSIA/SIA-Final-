@@ -24,6 +24,13 @@
 
 body{
   min-height: 100vh;
+  font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column; /* Changed to column to stack elements vertically */
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #7cbeea;
 }
 
 .sidebar{
@@ -258,9 +265,7 @@ body{
   width: calc(100% - 78px);
   transition: all .5s ease;
   z-index: 2;
-  margin-top: 10px; /* Adjust this value to remove the extra white space */
 }
-
 
 .home-section .text{
   display: inline-block;
@@ -275,11 +280,12 @@ body{
   width: calc(100% - 250px);
 }
 
+
 .status {
       font-family: 'Times New Roman', Times, serif;
       font-size: 17px;
       margin-top: 50px;
-      margin-left: 105px;
+      margin-right: 505px;
     }
     .status select {
       padding: 15px;
@@ -292,6 +298,7 @@ body{
     .skilled {
       display: flex;
       flex-direction: column;
+      margin-right: 610px;
       gap: 10px;
     }
     .box {
@@ -306,6 +313,7 @@ body{
       font-weight: bold;
       width: 185px;
       color: black;
+      cursor: pointer;
     }
     .container {
       background-color: #fff7f4;
@@ -319,7 +327,7 @@ body{
       color: #4a392f;
       display: flex;
       align-items: center;
-      width: 460px;
+      width: 560px;
     }
     .container img.profile {
       border-radius: 50%;
@@ -345,7 +353,7 @@ body{
     .top {
       font-size: 25px;
       margin-top: -25px;
-      margin-left: 50px;
+      margin-left: 100px;
     }
     .link {
       color: #3b5998;
@@ -382,52 +390,57 @@ body{
     top: 20px; /* Adjusted top position */
 }
 
-.footer {
-    width: 96%;
-    background-color: #f8f9fa;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    margin-top: 70px;
-    border-radius: 5px;
-}
-.footer-section {
-    display: flex;
-    justify-content: space-around;
-    width: 100%; /* Changed from max-width to width */
-    margin: 0 auto;
-}
-.footer-column {
-    list-style: none;
-    padding: 0;
-}
-.footer-column li {
-    margin-bottom: 10px;
-}
-.footer-column li a {
-    text-decoration: none;
-    color: #000;
-}
-.footer-column h4 {
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.footer-bottom {
-    text-align: center;
-    padding-top: 10px;
-    border-top: 1px solid #ccc;
-    font-size: 0.9em;
-    color: #6c757d;
-}
-.footer-bottom a {
-    text-decoration: none;
-    color: inherit;
-}
-.footer-bottom a:hover {
-    text-decoration: underline;
-}
+
+
+        .footer {
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            margin-top: 30px; /* Adjusted margin-top for space before footer */
+            border-radius: 5px;
+            box-sizing: border-box; /* Ensure padding and border are included in width */
+        }
+        .footer-section {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 1200px; /* Added max-width for content control */
+            margin: 0 auto;
+        }
+        .footer-column {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        .footer-column li a {
+            text-decoration: none;
+            color: #000;
+        }
+        .footer-column h4 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+        .footer-bottom a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
 
 
   </style>
+  
 </head>
 <body>
   <div class="sidebar">
@@ -438,40 +451,48 @@ body{
     </div>
     <ul class="nav-list">
       <li>
-        <a href="#">
+        <a href="employerdashboardhome.html">
           <i class="bx bx-grid-alt"></i>
           <span class="link_name">Home</span>
         </a>
         <span class="tooltip">Home</span>
       </li>
       <li>
-        <a href="#">
+        <a href="employerinbox.html">
           <i class="bx bx-chat"></i>
           <span class="link_name">Inbox</span>
         </a>
         <span class="tooltip">Inbox</span>
       </li>
       <li>
-        <a href="#">
+        <a href="employerskilledworker.html">
           <i class="bx bx-id-card"></i>
           <span class="link_name">Worker</span>
         </a>
         <span class="tooltip">Worker</span>
       </li>      
       <li>
-        <a href="#">
+        <a href="employerjobpost.html">
           <i class="bx bx-news"></i>
           <span class="link_name">Job Post</span>
         </a>
         <span class="tooltip">Job Post</span>
       </li> 
       <li>
-        <a href="#">
+        <a href="employerongoing.html">
+          <i class="bx bx-loader"></i> <!-- Changed icon class here -->
+          <span class="link_name">Ongoing</span> <!-- Updated the name to Ongoing -->
+        </a>
+        <span class="tooltip">Ongoing</span> <!-- Updated the tooltip to Ongoing -->
+      </li>
+      
+      <li>
+        <a href="employer_history.html">
           <i class="bx bx-history"></i>
           <span class="link_name">History</span>
         </a>
         <span class="tooltip">History</span>
-      </li>     
+      </li>
       <li class="profile">
         <div class="profile_details">
           <img src="bersoto.jpg" alt="profile image">
@@ -484,149 +505,160 @@ body{
       </li>
     </ul>
   </div>
-  <section class="home-section">
-    <div class="status">
-        <select>
-            <option>SKILLED WORKERS</option>
-            <option>UNSKILLED WORKERS</option>
-        </select>
-      </div>
-      <div class="skilled">
-        <div class="box">WELDER</div>
-        <div class="box">ELECTRICIAN</div>
-        <div class="box">PLUMBER</div>
-        <div class="box">ELECTRICIAN</div>
-        <div class="box">LINEMAN</div>
-        <div class="box">DRIVER</div>
-        <div class="box">REFRIGERATOR AND AIRCON SERVICE</div>
-      </div>
-    
-      <div class="container">
-        <img class="profile" src="asim.jpg" alt="Alberto Enano">
-        <div class="details">
-            <div class="name">GALE KAREN PARTOS</div>
-            <div class="ratings">RATINGS: 
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-            </div>
+
+
+  <div class="status">
+    <select onchange="handleStatusChange(event)">
+      <option value="UNSKILLED WORKERS">UNSKILLED WORKERS</option>
+        <option value="SKILLED WORKERS">SKILLED WORKERS</option>
+    </select>
+  </div>
+  <div class="skilled">
+    <a href="employerworkerfoodservice.html"><button class="box">FOODSERVICE</button></a>
+    <a href="employerworkerhousekeeper.html"><button class="box">HOUSEKEEPER</button></a>
+    <a href="employerworkerstaff.html"><button class="box">LAUNDRY STAFF</button></a>
+    <a href="employerworkerjanitor.html"><button class="box">JANITOR</button></a>
+    <a href="employerworkerfactory.html"><button class="box">FACTORY WORKER</button></a>
+    <a href="employerworkerconstruction.html"><button class="box">CONSTRUCTION WORKER</button></a>
+    <a href="employerworkerguard.html"><button class="box">SECURITY GUARD</button></a>
+  </div>
+
+  <div class="container">
+    <img class="profile" src="asim.jpg" alt="Alberto Enano">
+    <div class="details">
+        <div class="name">UNSKILLED</div>
+        <div class="ratings">RATINGS: 
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
         </div>
-    
-        <div class="top">TOP 1</div>
-        <a href="#" class="link">VIEW MORE DETAILS</a>
-      </div>
-    
-      <div class="container second">
-        <img class="profile" src="bersoto.jpg" alt="Alberto Enano">
-        <div class="details">
-            <div class="name">JOSEPH MASARAP</div>
-            <div class="ratings">RATINGS: 
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-            </div>
+    </div>
+
+    <div class="top">TOP 1</div>
+    <a href="#" class="link">VIEW MORE DETAILS</a>
+  </div>
+
+  <div class="container second">
+    <img class="profile" src="bersoto.jpg" alt="Alberto Enano">
+    <div class="details">
+        <div class="name">JOSEPH MASARAP</div>
+        <div class="ratings">RATINGS: 
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
         </div>
-    
-        <div class="top">TOP 2</div>
-        <a href="#" class="link">VIEW MORE DETAILS</a>
-      </div>
+    </div>
 
-      <div class="container third">
-        <img class="profile" src="pogi.jpg" alt="Alberto Enano">
-        <div class="details">
-            <div class="name">HEV DE JESUS</div>
-            <div class="ratings">RATINGS: 
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-            </div>
+    <div class="top">TOP 2</div>
+    <a href="#" class="link">VIEW MORE DETAILS</a>
+  </div>
+
+  <div class="container third">
+    <img class="profile" src="pogi.jpg" alt="Alberto Enano">
+    <div class="details">
+        <div class="name">HEV DE JESUS</div>
+        <div class="ratings">RATINGS: 
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
         </div>
-    
-        <div class="top">TOP 3</div>
-        <a href="#" class="link">VIEW MORE DETAILS</a>
-      </div>
+    </div>
 
-      <div class="container fourth">
-        <img class="profile" src="samurai.jpg" alt="Alberto Enano">
-        <div class="details">
-            <div class="name">ALBERTO ENANO</div>
-            <div class="ratings">RATINGS: 
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-            </div>
+    <div class="top">TOP 3</div>
+    <a href="#" class="link">VIEW MORE DETAILS</a>
+  </div>
+
+  <div class="container fourth">
+    <img class="profile" src="samurai.jpg" alt="Alberto Enano">
+    <div class="details">
+        <div class="name">ALBERTO ENANO</div>
+        <div class="ratings">RATINGS: 
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
         </div>
-    
-        <div class="top">TOP 4</div>
-        <a href="#" class="link">VIEW MORE DETAILS</a>
-      </div>
+    </div>
 
-      <div class="container fifth">
-        <img class="profile" src="ken.jpg" alt="Alberto Enano">
-        <div class="details">
-            <div class="name">KEN CRUZ</div>
-            <div class="ratings">RATINGS: 
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-                <img src="star.png">
-            </div>
+    <div class="top">TOP 4</div>
+    <a href="#" class="link">VIEW MORE DETAILS</a>
+  </div>
+
+  <div class="container fifth">
+    <img class="profile" src="ken.jpg" alt="Alberto Enano">
+    <div class="details">
+        <div class="name">KEN CRUZ</div>
+        <div class="ratings">RATINGS: 
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
+            <img src="star.png">
         </div>
-    
-        <div class="top">TOP 5</div>
-        <a href="#" class="link">VIEW MORE DETAILS</a>
-      </div>
-      <a href="#" class="see-more">SEE MORE..</a>
-      <br><br>
-      <footer class="footer">
-        <div class="footer-section">
-            <ul class="footer-column">
-                <h4>Job Seekers</h4>
-                <li><a href="#top">Job Search</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Recommended Jobs</a></li>
-                <li><a href="#">Saved Searches</a></li>
-                <li><a href="#">Saved Jobs</a></li>
-                <li><a href="#">Job Applications</a></li>
-            </ul>
-            <ul class="footer-column">
-                <h4>Employers</h4>
-                <li><a href="#">Registration for Free</a></li>
-                <li><a href="#">Post a Job ad</a></li>
-            </ul>
-            <ul class="footer-column">
-                <h4>About Jobstreet</h4>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Work for Jobstreet</a></li>
-            </ul>
-            <ul class="footer-column">
-                <h4>Contact</h4>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
-        </div>
-        <div class="footer-bottom">
-            <a href="#">Terms & conditions</a> | <a href="#">Security & Privacy</a>
-        </div>
-    </footer>
+    </div>
+
+    <div class="top">TOP 5</div>
+    <a href="#" class="link">VIEW MORE DETAILS</a>
+  </div>
+  <a href="#" class="see-more">SEE MORE..</a>
+  <br><br>
+
+    <!-- Additional rows removed for brevity -->
+
+<div style="height: 50px; width: 100%;"></div> <!-- Spacer div -->
+<footer class="footer">
+    <div class="footer-section">
+        <ul class="footer-column">
+            <h4>Job Seekers</h4>
+            <li><a href="#top">Job Search</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Recommended Jobs</a></li>
+            <li><a href="#">Saved Searches</a></li>
+            <li><a href="#">Saved Jobs</a></li>
+            <li><a href="#">Job Applications</a></li>
+        </ul>
+        <ul class="footer-column">
+            <h4>Employers</h4>
+            <li><a href="#">Registration for Free</a></li>
+            <li><a href="#">Post a Job ad</a></li>
+        </ul>
+        <ul class="footer-column">
+            <h4>About Jobstreet</h4>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Work for Jobstreet</a></li>
+        </ul>
+        <ul class="footer-column">
+            <h4>Contact</h4>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+    </div>
+    <div class="footer-bottom">
+        <a href="#">Terms & conditions</a> | <a href="#">Security & Privacy</a>
+    </div>
+</footer>
 
 
 
 
 
 
-
-
-  </section>
-  <!-- Scripts -->
-  <script src="script.js"></script>
+</section>
+<!-- Scripts -->
+<script>
+    function handleStatusChange(event) {
+        const value = event.target.value;
+        if (value === "SKILLED WORKERS") {
+            window.location.href = "employerskilledworker.html";
+        }
+    }
+</script>
+<script src="script.js"></script>
 </body>
 </html>
