@@ -1,0 +1,1010 @@
+<!-- RESPONSIVE -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Jobseeker Dashboard</title>
+  <!-- Link Styles -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+:root{
+  --color-default:#004f83;
+  --color-second:#0067ac;
+  --color-white:#fff;
+  --color-body:#e4e9f7;
+  --color-light:#e0e0e0;
+}
+
+*{
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body{
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+.sidebar{
+  min-height: 100vh;
+  width: 78px;
+  padding: 6px 14px;
+  z-index: 99;
+  background-color: var(--color-default);
+  transition: all .5s ease;
+  position: fixed;
+  top:0;
+  left: 0;
+}
+
+.sidebar.open{
+  width: 250px;
+}
+
+.sidebar .logo_details{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.sidebar .logo_details .icon{
+  opacity: 0;
+  transition: all 0.5s ease ;
+}
+
+.sidebar .logo_details .logo_name{
+  color:var(--color-white);
+  font-size: 22px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all .5s ease;
+}
+
+.sidebar.open .logo_details .icon,
+.sidebar.open .logo_details .logo_name{
+  opacity: 1;
+}
+
+.sidebar .logo_details #btn{
+  position: absolute;
+  top:50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .5s ease;
+}
+
+.sidebar.open .logo_details #btn{
+  text-align: right;
+}
+
+.sidebar i{
+  color:var(--color-white);
+  height: 60px;
+  line-height: 60px;
+  min-width: 50px;
+  font-size: 25px;
+  text-align: center;
+}
+
+.sidebar .nav-list{
+  margin-top: 20px;
+  height: 100%;
+}
+
+.sidebar li{
+  position: relative;
+  margin:8px 0;
+  list-style: none;
+}
+
+.sidebar li .tooltip{
+  position: absolute;
+  top:-20px;
+  left:calc(100% + 15px);
+  z-index: 3;
+  background-color: var(--color-white);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 14px;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar li:hover .tooltip{
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top:50%;
+  transform: translateY(-50%);
+}
+
+.sidebar.open li .tooltip{
+  display: none;
+}
+
+.sidebar li a{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  text-decoration: none;
+  background-color: var(--color-default);
+  position: relative;
+  transition: all .5s ease;
+  z-index: 12;
+}
+
+.sidebar li a::after{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  background-color: var(--color-white);
+  border-radius: 5px;
+  transition: transform 0.3s ease-in-out;
+  transform-origin: left;
+  z-index: -2;
+}
+
+.sidebar li a:hover::after{
+  transform: scaleX(1);
+  color:var(--color-default)
+}
+
+.sidebar li a .link_name{
+  color:var(--color-white);
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.sidebar li a:hover .link_name,
+.sidebar li a:hover i{
+  transition: all 0.5s ease;
+  color:var(--color-default)
+}
+
+.sidebar.open li a .link_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar li i{
+  height: 35px;
+  line-height: 35px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.sidebar li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom:-8px;
+  padding:10px 14px;
+  overflow: hidden;
+  transition: all .5s ease;
+}
+
+.sidebar.open li.profile{
+  width: 250px;
+}
+
+.sidebar .profile .profile_details{
+  display: flex;
+  align-items: center;
+  flex-wrap:  nowrap;
+}
+
+.sidebar li img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.sidebar li.profile .name,
+.sidebar li.profile .designation{
+  font-size: 15px;
+  font-weight: 400;
+  color:var(--color-white);
+  white-space: nowrap;
+}
+
+.sidebar li.profile .designation{
+  font-size: 12px;
+}
+
+.sidebar .profile #log_out{
+  position: absolute;
+  top:50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: var(--color-second);
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.sidebar.open .profile #log_out{
+  width: 50px;
+  background: none;
+}
+
+.home-section{
+  position: relative;
+  background-color: var(--color-body);
+  min-height: 100vh;
+  top:0;
+  left:78px;
+  width: calc(100% - 78px);
+  transition: all .5s ease;
+  z-index: 2;
+}
+
+.home-section .text{
+  display: inline-block;
+  color:var(--color-default);
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px;
+}
+
+.sidebar.open ~ .home-section{
+  left:250px;
+  width: calc(100% - 250px);
+}
+
+.text1 {
+  display: inline-block;
+  margin: 0;
+  color: #3D52A0;
+  font-size: 120px;
+  font-family: Georgia, 'Times New Roman', Times, serif; 
+  position: absolute;
+  top: -600px;
+  left: 70px; /* Adjusted value to position the title relative to the logo */
+  }
+  .text2 {
+  display: inline-block;
+  margin: 0;
+  color: #3D52A0;
+  font-size: 15px;
+  font-family: Georgia, 'Times New Roman', Times, serif; 
+  font-style: italic;
+  position: absolute;
+  top: -295px;
+  left: 90px; /* Adjusted value to position the title relative to the logo */
+  }
+  .landpic {
+  position: absolute;
+  top: -680px; /* Adjust as needed */
+  left: 670px; /* Adjust to move it to the right */
+  }
+  .pic1 {
+  height: 650px; /* Adjust height as needed */
+  width: 580px; /* Adjust width as needed */
+  }
+  .right-half {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  width: 40%; /* Adjust as needed */
+  height: 100%;
+  background-color: #EDE8F5; /* Set background color */
+  }
+  .search-bar {
+  background-color: #7091E6; /* Medium blue background */
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: -180px; /* Adjust this value to position the search bar */
+  left: 120px; /* Adjust this value to position the search bar */
+  gap: 15px;
+  }
+  .search-bar input, .search-bar select, .search-bar button {
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  margin-right: 25px;
+  font-size: 20px;
+  }
+  .search-bar input:focus, .search-bar select:focus, .search-bar button:focus {
+  outline: none;
+  }
+  .search-bar input {
+  flex: 1;
+  }
+  .search-bar select {
+  flex: 1.5; /* Adjust flex value to expand the select box */
+  }
+  .search-bar button {
+  background-color: #3D52A0; /* Dark blue button */
+  color: white;
+  cursor: pointer;
+  }
+  .search-bar button:hover {
+  background-color: #2d3d82; /* Slightly darker blue on hover */
+  }
+
+  .container {
+    display: flex;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 650px; /* Adjusted margin to move the content further down */
+    width: 96%; /* Make the container span the entire width */
+    margin-left: 30px;
+    flex-wrap: nowrap; /* Prevent wrapping to keep items in a row */
+}
+
+.image-section {
+    flex: 1; /* Adjusted width to make it flexible */
+    position: relative; /* Needed for absolute positioning within */
+}
+
+.image-section img {
+    width: 95%; /* Ensure the image takes up the entire container */
+    height: 500px ; /* Maintain aspect ratio */
+    border-radius: 5px;
+    position: absolute; /* Position the image absolutely within its container */
+    top: 0; /* Adjust as needed */
+    left: 0; /* Adjust as needed */
+    right: 0; /* Adjust as needed */
+    bottom: 0; /* Adjust as needed */
+    margin: auto; /* Center the image within its container */
+}
+
+.text-section {
+    flex: 1; /* Adjusted width to make it flexible */
+    padding: 40px; /* Adjusted padding for better spacing */
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+  
+  .text-section h1 {
+    margin-top: 0;
+    font-size: 2em;
+    color: #333;
+    font-weight: 600;
+  }
+  .text-section p {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .text-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  .top-job-seekers {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-left: 350px;
+    margin-top: 25px;
+    height: 320px; /* Adjusted height */
+}
+
+        .top-job-seekers h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #3D52A0;
+        }
+        .job-seeker {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ADBBDA;
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+        }
+        .job-seeker img {
+            border-radius: 50%;
+            width: 60px;
+            height: 70px;
+        }
+        .job-seeker-info {
+            flex: 1;
+            margin-left: 15px;
+            text-align: left;
+        }
+        .job-seeker-info h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .job-seeker-info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        .job-seeker-info .ratings {
+            color: #FFD700;
+        }
+        .rank {
+            font-size: 18px;
+            color: #3D52A0;
+            text-align: right;
+        }
+        .rank span {
+            display: block;
+            font-size: 14px;
+            color: #555;
+        }
+        .navigation {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .navigation span {
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            background-color: #ccc;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .navigation .active {
+            background-color: #3D52A0;
+        }
+
+
+
+        
+        .card {
+  position: relative;
+  width: 250px; /* Adjusted width */
+  background: #fafafa;
+  box-shadow: 0 2px 7px #000;
+  font-family: 'Montserrat', sans-serif;
+  margin: 20px auto;
+  padding: 15px;
+  height: 400px; /* Adjusted height */
+  margin-top: 60px;
+  margin-left: -325px; /* Added margin to the left */
+  padding-bottom: 20px;
+  border-radius: 10px;
+  }
+  .item1 img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .catagory {
+  color: #000;
+  font-size: 25px;
+  font-style: italic;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-top: 15px;
+  }
+  .price-1 {
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
+  }
+  .button-1 {
+  border: none;
+  padding: 10px 30px; /* Increased padding for a larger button */
+  border-radius: 5px;
+  background-color: #3D52A0;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto; /* Centering the button */
+  margin-top: 15px;
+  }
+  .button-1:hover {
+  background-color: #0000FF;
+  }
+
+  .card-1 {
+  position: relative;
+  width: 250px; /* Adjusted width */
+  background: #fafafa;
+  box-shadow: 0 2px 7px #000;
+  font-family: 'Montserrat', sans-serif;
+  margin: 20px auto;
+  padding: 15px;
+  height: 400px; /* Adjusted height */
+  margin-top: -410px;
+  margin-left: 290px; /* Added margin to the left */
+  padding-bottom: 20px;
+  border-radius: 10px;
+  }
+  .item2 img {
+  max-width: 100%;
+  height: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .catagory-1 {
+  color: #000;
+  font-size: 25px;
+  font-style: italic;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-top: 15px;
+  }
+  .price-2 {
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
+  }
+  .button-2 {
+  border: none;
+  padding: 10px 30px; /* Increased padding for a larger button */
+  border-radius: 5px;
+  background-color: #3D52A0;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto; /* Centering the button */
+  margin-top: 15px;
+  }
+  .button-2:hover {
+  background-color: #0000FF;
+  }
+
+  .card-2 {
+  position: relative;
+  width: 250px; /* Adjusted width */
+  background: #fafafa;
+  box-shadow: 0 2px 7px #000;
+  font-family: 'Montserrat', sans-serif;
+  margin: 20px auto;
+  padding: 15px;
+  height: 400px; /* Adjusted height */
+  margin-top: -410px;
+  margin-left: 290px; /* Added margin to the left */
+  padding-bottom: 20px;
+  border-radius: 10px;
+  }
+  .item3 img {
+  max-width: 100%;
+  height: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .catagory-3 {
+  color: #000;
+  font-size: 25px;
+  font-style: italic;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-top: 15px;
+  }
+  .price-3 {
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
+  }
+  .button-3 {
+  border: none;
+  padding: 10px 30px; /* Increased padding for a larger button */
+  border-radius: 5px;
+  background-color: #3D52A0;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto; /* Centering the button */
+  margin-top: -3px;
+  }
+  .button-3:hover {
+  background-color: #0000FF;
+  }
+
+
+  .card-3 {
+  position: relative;
+  width: 250px; /* Adjusted width */
+  background: #fafafa;
+  box-shadow: 0 2px 7px #000;
+  font-family: 'Montserrat', sans-serif;
+  margin: 20px auto;
+  padding: 15px;
+  height: 400px; /* Adjusted height */
+  margin-top: -412px;
+  margin-left: 285px; /* Added margin to the left */
+  padding-bottom: 20px;
+  border-radius: 10px;
+  }
+  .item4 img {
+  max-width: 100%;
+  height: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .catagory-4 {
+  color: #000;
+  font-size: 25px;
+  font-style: italic;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-top: 15px;
+  }
+  .price-4 {
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
+  }
+  .button-4 {
+  border: none;
+  padding: 10px 30px; /* Increased padding for a larger button */
+  border-radius: 5px;
+  background-color: #3D52A0;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto; /* Centering the button */
+  margin-top: 15px;
+  }
+  .button-4:hover {
+  background-color: #0000FF;
+  }
+
+  .card-5 {
+  position: relative;
+  width: 1190px; /* Adjusted width */
+  background: #fafafa;
+  box-shadow: 0 2px 7px #000;
+  font-family: 'Montserrat', sans-serif;
+  margin: 20px auto;
+  padding: 15px;
+  height: 745px; /* Adjusted height */
+  margin-top: 60px;
+  margin-left: -946px; /* Added margin to the left */
+  padding-bottom: 20px;
+  border-radius: 10px;
+  }
+  .item5 img { 
+  max-width: 50%;
+  height: 360px;
+  height: 350px;
+  margin-left: -590px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .text-1 {
+  color: #000;
+  font-size: 50px;
+  font-style: italic;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-left: 140px;
+  margin-top: -340px;
+
+  }
+  .text-2 {
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 23px;
+  margin-left: 620px;
+  font-style: normal;
+  margin-top: 25px;
+  text-align: center;
+  }
+
+
+
+  .item6 img {
+  max-width: 42%;
+  height: 360px;
+  margin-left: 693px;
+  border-radius: 10px;
+  margin-top: 35px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-3 {
+  color: #000;
+  font-size: 50px;
+  font-style: italic;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-right: 1080px;
+  margin-top: -340px;
+
+  }
+  .text-4 {
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 23px;
+  margin-right: 500px;    
+  font-style: normal;
+  margin-top: 20px;
+  text-align: center;
+  }
+
+.footer {
+    width: 98%;
+    background-color: #f8f9fa;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    margin-top: 70px;
+    border-radius: 5px;
+}
+.footer-section {
+    display: flex;
+    justify-content: space-around;
+    width: 100%; /* Changed from max-width to width */
+    margin: 0 auto;
+}
+.footer-column {
+    list-style: none;
+    padding: 0;
+}
+.footer-column li {
+    margin-bottom: 10px;
+}
+.footer-column li a {
+    text-decoration: none;
+    color: #000;
+}
+.footer-column h4 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.footer-bottom {
+    text-align: center;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+    font-size: 0.9em;
+    color: #6c757d;
+}
+.footer-bottom a {
+    text-decoration: none;
+    color: inherit;
+}
+.footer-bottom a:hover {
+    text-decoration: underline;
+}
+.title {
+  font-weight: 700;
+  color: #1a80bb;
+}
+.details {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+.bgcolor {
+  color: #000000;
+  background-color: #ede8f0;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+.section-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+.location {
+  color: #777777;
+}
+.text-gray {
+  color: #333333;
+}
+.list-disc {
+  list-style-type: disc;
+}
+#myButton {
+  position: fixed;
+  bottom: 20px; 
+  right: 20px; 
+  z-index: 99; 
+  padding: 10px 20px; 
+  background-color: #9399b6; 
+  color: black;
+  border: none;
+  border-radius: 50px; 
+  cursor: pointer;
+  font-weight: bold;  
+  width: 150px;
+}
+#myButton:hover {
+  background-color: white; 
+}
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo_details">
+      <i class="bx bxl-audible icon"></i>
+      <div class="logo_name">HANAPKITA</div>
+      <i class="bx bx-menu" id="btn"></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="#">
+          <i class="bx bx-grid-alt"></i>
+          <span class="link_name">Home</span>
+        </a>
+        <span class="tooltip">Home</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bx bx-chat"></i>
+          <span class="link_name">Inbox</span>
+        </a>
+        <span class="tooltip">Inbox</span>
+      </li>
+
+      <li>
+        <a href="#">
+          <i class="bx bx-briefcase"></i>
+          <span class="link_name"> Job Hiring</span>
+        </a>
+        <span class="tooltip"> Job Hiring</span>
+      </li>
+
+      <li>
+        <a href="#">
+          <i class="bx bx-news"></i>
+          <span class="link_name">Job Offer</span>
+        </a>
+        <span class="tooltip">Job Offer</span>
+      </li> 
+      <li>
+        <a href="#">
+          <i class="bx bx-comment-detail"></i>
+          <span class="link_name">Feedback</span>
+        </a>
+        <span class="tooltip">Feedback</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bx bx-calendar"></i>
+          <span class="link_name">Calendar</span>
+        </a>
+        <span class="tooltip">Calendar</span>
+      </li>     
+      <li class="profile">
+        <div class="profile_details">
+          <img src="asim.jpg" alt="profile image">
+          <div class="profile_content">
+            <div class="name">Gale Karen Partos</div>
+            <div class="designation">Jobseeker</div>
+          </div>
+        </div>
+        <i class="bx bx-log-out" id="log_out"></i>
+      </li>
+    </ul>
+  </div>
+  <section class="home-section">
+    <div class="max-w-4xl" style="max-width: 100%; margin: 0 auto; padding: 30px;">
+      <h1 class="text-2xl font-bold mb-3" style="padding-top: 30px; font-size: 2em;">Job Offer</h1>
+      <h2 class="title text-lg mb-1" style="font-size: 1.5em;">Delivery Helper</h2>
+      <p class="location mb-6" style="margin-bottom: 25px;">Quezon City</p>
+    
+      <div class="mb-6" style="margin-bottom: 25px;">
+        <h3 class="details mb-2" style="font-size: 1.25em; margin-bottom: 10px;">Job details</h3>
+        <div class="flex justify-between" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+          <div style="flex: 1 1 45%; margin-bottom: 15px;">
+            <p class="font-bold text-gray" style="font-weight: bold; color: gray;">Job type</p>
+            <p class="bgcolor" style="background-color: #f0f0f0; padding: 5px;">Full-time</p>
+          </div>
+          <div style="flex: 1 1 45%; margin-bottom: 15px;">
+            <p class="font-bold text-gray" style="font-weight: bold; color: gray;">Salary</p>
+            <p class="bgcolor" style="background-color: #f0f0f0; padding: 5px;">PHP 15,000 - PHP 18,000</p>
+          </div>
+        </div>
+      </div>
+    
+      <div class="mb-6" style="margin-bottom: 25px;">
+        <h3 class="section-title mb-2" style="font-size: 1.25em; margin-bottom: 10px;">Full Job description</h3>
+        <p class="mb-4" style="margin-bottom: 15px;">Responsibilities:</p>
+        <ul class="list-disc pl-5 mb-6" style="list-style-type: disc; padding-left: 20px; margin-bottom: 25px;">
+          <li>Assist the primary driver in the delivery and unloading of products to various locations.</li>
+          <li>Ensure safe and timely transportation of goods, following the assigned route and schedule.</li>
+          <li>Load and unload products from the delivery vehicle.</li>
+          <li>Verify delivery items against invoices or shipping documents.</li>
+          <li>Provide excellent customer service by addressing client inquiries and concerns professionally.</li>
+          <li>Maintain cleanliness and organization of the delivery vehicle.</li>
+          <li>Follow all safety protocols and company procedures during deliveries.</li>
+          <li>Assist in the regular maintenance and inspection of the delivery vehicle.</li>
+        </ul>
+    
+        <p class="mb-4" style="margin-bottom: 15px;">Qualifications:</p>
+        <ul class="list-disc pl-5 mb-6" style="list-style-type: disc; padding-left: 20px; margin-bottom: 25px;">
+          <li>Clean driving record with a valid driver's license.</li>
+          <li>Able to lift and carry heavy items (up to 50 lbs) regularly.</li>
+          <li>Familiarity with using road maps or GPS devices.</li>
+          <li>Strong attention to detail.</li>
+          <li>Excellent communication skills.</li>
+          <li>Ability to work independently and as part of a team.</li>
+          <li>Positive attitude and a proactive approach to work.</li>
+        </ul>
+    
+        <p class="mb-4" style="margin-bottom: 15px;">Skills:</p>
+        <ul class="list-disc pl-5 mb-6" style="list-style-type: disc; padding-left: 20px; margin-bottom: 25px;">
+          <li>Prior delivery or customer service experience is a plus.</li>
+          <li>Basic math skills.</li>
+        </ul>
+    
+        <p class="mb-4" style="margin-bottom: 15px;">Schedule:</p>
+        <ul class="list-disc pl-5 mb-6" style="list-style-type: disc; padding-left: 20px; margin-bottom: 25px;">
+          <li>Full-time.</li>
+          <li>Day shift.</li>
+          <li>Willing to work weekends.</li>
+          <li>Overtime as needed.</li>
+        </ul>
+    
+        <p class="mb-4" style="margin-bottom: 15px;">Supplemental Pay types:</p>
+        <ul class="list-disc pl-5 mb-6" style="list-style-type: disc; padding-left: 20px; margin-bottom: 25px;">
+          <li>Tips.</li>
+        </ul>
+      </div>
+    
+      <div style="padding-bottom: 40px;">
+        <h3 class="section-title mb-2" style="font-size: 1.25em; margin-bottom: 10px;">To Apply:</h3>
+        <p>
+          Interested applicants should send a resume and a brief cover letter
+          to [email address] with the subject line 'Delivery Helper Driver
+          Application.'
+        </p>
+      </div>
+    </div>
+
+  <!-- Button -->
+  <button id="myButton">Apply</button>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
