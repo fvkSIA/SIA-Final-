@@ -188,7 +188,7 @@ label .close-btn {
             font-size: 20px;
         }
 
-        .available-jobs { background: yellow; }
+        .pendingapplicants { background: yellow; }
         .ongoing-jobs { background: green; }
         .jobseekers-available { background: blue; }
         .hired-workers { background: pink; }
@@ -279,19 +279,19 @@ label .close-btn {
                 <ul>
                     <li class="active">
                         <i class='bx bxs-home'></i>
-                        <a href="#">Home</a>
+                        <a href="adminhomedashboard.html">Home</a>
                     </li>
                     <li>
                         <i class='bx bxs-user-check'></i>
-                        <a href="admdashboardapplicants.html">Registration</a>
+                        <a href="adminregistration.html">Registration</a>
                     </li>
                     <li>
                         <i class='bx bxs-user-circle'></i>
-                        <a href="admdashboardjobseeker.html">Jobseeker</a>
+                        <a href="adminjobseeker.html">Jobseeker</a>
                     </li>
                     <li>
                         <i class='bx bxs-group'></i>
-                        <a href="admdashboardemployer.html">Employer</a>
+                        <a href="adminemployer.html">Employer</a>
                     </li>
                     <li>
                         <i class='bx bxs-file'></i>
@@ -313,7 +313,7 @@ label .close-btn {
         </div>
         <div class="stats-container">
             <div class="stat-box">
-                <div class="stat-circle available-jobs" id="available-jobs">0</div>
+                <div class="stat-circle pendingapplicants" id="pendingapplicants">0</div>
                 <p>Pending Applicant's</p>
             </div>
             <div class="stat-box">
@@ -373,11 +373,11 @@ label .close-btn {
         // Simulating data fetching
         document.addEventListener("DOMContentLoaded", function () {
             const data = {
-                availableJobs: 38,
-                ongoingJobs: 187,
-                jobseekersAvailable: 187,
-                hiredWorkers: 200,
-                totalJobSeekers: 251,
+                pendingapplicants: 10,
+                ongoingJobs: 30,
+                jobseekersAvailable: 78,
+                hiredWorkers: 95,
+                totalJobSeekers: 200,
                 totalEmployers: 75,
                 jobOccupations: {
                     driver: 80,
@@ -389,7 +389,7 @@ label .close-btn {
             };
 
             // Update the dashboard with the data
-            document.getElementById('available-jobs').textContent = data.availableJobs;
+            document.getElementById('pendingapplicants').textContent = data.pendingapplicants;
             document.getElementById('ongoing-jobs').textContent = data.ongoingJobs;
             document.getElementById('jobseekers-available').textContent = data.jobseekersAvailable;
             document.getElementById('hired-workers').textContent = data.hiredWorkers;
