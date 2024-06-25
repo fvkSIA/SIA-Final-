@@ -152,20 +152,6 @@ label .close-btn {
 .header h1 {
     margin: 0;
 }
-
-.header button {
-    margin-right: 720px; /* Adjusted value as needed */
-    margin-top: 3px;
-    padding: 10px 10px;
-    font-size: 14px;
-    cursor: pointer;
-    border: 1px solid black;
-    background-color: #d3d3d3;
-    color: black;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
 .search {
     display: flex;
     justify-content: flex-end;
@@ -268,19 +254,19 @@ th, td {
                 <ul>
                     <li class="active">
                         <i class='bx bxs-home'></i>
-                        <a href="#">Home</a>
+                        <a href="adminhomedashboard.html">Home</a>
                     </li>
                     <li>
                         <i class='bx bxs-user-check'></i>
-                        <a href="admdashboardapplicants.html">Registration</a>
+                        <a href="adminregistration.html">Registration</a>
                     </li>
                     <li>
                         <i class='bx bxs-user-circle'></i>
-                        <a href="admdashboardjobseeker.html">Jobseeker</a>
+                        <a href="adminjobseeker.html">Jobseeker</a>
                     </li>
                     <li>
                         <i class='bx bxs-group'></i>
-                        <a href="admdashboardemployer.html">Employer</a>
+                        <a href="adminemployer.html">Employer</a>
                     </li>
                     <li>
                         <i class='bx bxs-file'></i>
@@ -297,7 +283,6 @@ th, td {
         <div class="register">
             <div class="header">
                 <h1>Applicant's</h1>
-                <button>&#43; ADD NEW APPLICANTS</button>
             </div>
             <div class="search">
                 <input type="text" id="search" placeholder="Search..." onkeyup="searchTable()">
@@ -376,8 +361,8 @@ th, td {
     
     <script>
         function viewApplicant(btn) {
-            alert("View button clicked!");
-            // Implement view functionality here
+            // Redirect to addjobseeker.html
+            window.location.href = 'adminviewapplicantsdetails.html';
         }
     
         function removeApplicant(btn) {

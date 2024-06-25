@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Employer Dashboard</title>
+  <!-- Link Styles -->
+  <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+:root{
+  --color-default:#004f83;
+  --color-second:#0067ac;
+  --color-white:#fff;
+  --color-body:#e4e9f7;
+  --color-light:#e0e0e0;
+}
+
+*{
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body{
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column; /* Changed to column to stack elements vertically */
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #7cbeea;
+}
+
+.sidebar{
+  min-height: 100vh;
+  width: 78px;
+  padding: 6px 14px;
+  z-index: 99;
+  background-color: var(--color-default);
+  transition: all .5s ease;
+  position: fixed;
+  top:0;
+  left: 0;
+}
+
+.sidebar.open{
+  width: 250px;
+}
+
+.sidebar .logo_details{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.sidebar .logo_details .icon{
+  opacity: 0;
+  transition: all 0.5s ease ;
+}
+
+.sidebar .logo_details .logo_name{
+  color:var(--color-white);
+  font-size: 22px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all .5s ease;
+}
+
+.sidebar.open .logo_details .icon,
+.sidebar.open .logo_details .logo_name{
+  opacity: 1;
+}
+
+.sidebar .logo_details #btn{
+  position: absolute;
+  top:50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .5s ease;
+}
+
+.sidebar.open .logo_details #btn{
+  text-align: right;
+}
+
+.sidebar i{
+  color:var(--color-white);
+  height: 60px;
+  line-height: 60px;
+  min-width: 50px;
+  font-size: 25px;
+  text-align: center;
+}
+
+.sidebar .nav-list{
+  margin-top: 20px;
+  height: 100%;
+}
+
+.sidebar li{
+  position: relative;
+  margin:8px 0;
+  list-style: none;
+}
+
+.sidebar li .tooltip{
+  position: absolute;
+  top:-20px;
+  left:calc(100% + 15px);
+  z-index: 3;
+  background-color: var(--color-white);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 14px;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar li:hover .tooltip{
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top:50%;
+  transform: translateY(-50%);
+}
+
+.sidebar.open li .tooltip{
+  display: none;
+}
+
+.sidebar li a{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  text-decoration: none;
+  background-color: var(--color-default);
+  position: relative;
+  transition: all .5s ease;
+  z-index: 12;
+}
+
+.sidebar li a::after{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  background-color: var(--color-white);
+  border-radius: 5px;
+  transition: transform 0.3s ease-in-out;
+  transform-origin: left;
+  z-index: -2;
+}
+
+.sidebar li a:hover::after{
+  transform: scaleX(1);
+  color:var(--color-default)
+}
+
+.sidebar li a .link_name{
+  color:var(--color-white);
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.sidebar li a:hover .link_name,
+.sidebar li a:hover i{
+  transition: all 0.5s ease;
+  color:var(--color-default)
+}
+
+.sidebar.open li a .link_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar li i{
+  height: 35px;
+  line-height: 35px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.sidebar li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom:-8px;
+  padding:10px 14px;
+  overflow: hidden;
+  transition: all .5s ease;
+}
+
+.sidebar.open li.profile{
+  width: 250px;
+}
+
+.sidebar .profile .profile_details{
+  display: flex;
+  align-items: center;
+  flex-wrap:  nowrap;
+}
+
+.sidebar li img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.sidebar li.profile .name,
+.sidebar li.profile .designation{
+  font-size: 15px;
+  font-weight: 400;
+  color:var(--color-white);
+  white-space: nowrap;
+}
+
+.sidebar li.profile .designation{
+  font-size: 12px;
+}
+
+.sidebar .profile #log_out{
+  position: absolute;
+  top:50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: var(--color-second);
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.sidebar.open .profile #log_out{
+  width: 50px;
+  background: none;
+}
+
+.home-section{
+  position: relative;
+  background-color: var(--color-body);
+  min-height: 100vh;
+  top:0;
+  left:78px;
+  width: calc(100% - 78px);
+  transition: all .5s ease;
+  z-index: 2;
+}
+
+.home-section .text{
+  display: inline-block;
+  color:var(--color-default);
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px;
+}
+
+.sidebar.open ~ .home-section{
+  left:250px;
+  width: calc(100% - 250px);
+}
+
+.history-container {
+            max-width: 1000px;
+            margin-top: 30px;
+            margin-left: 70px;
+            background-color: #ffffff;
+            padding: 120px;
+            height: 780px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .history-title {
+            font-size: 40px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            color: #3b5998;
+            margin-top: -90px;
+            margin-left: -70px;
+            margin-bottom: 30px;
+        }
+        .history-item {
+            background-color: #e7e4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin-left: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            width: 680px;
+            position: relative;
+        }
+        .history-item h3 {
+            margin: 0;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 30px;
+            color: #1E3B85;
+        }
+        .history-item p {
+            margin: 5px 0;
+            color: #4a4a4a;
+            font-size: 14px;
+        }
+        .right-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* Align items to the right */
+            justify-content: space-between; /* Space items evenly */
+        }
+        .stars {
+            color: #ffc107;
+            font-size: 30px; /* Adjust font size for stars */
+        }
+        .view-details {
+            color: #3b5998;
+            text-decoration: none;
+            font-size: 14px;
+            position: absolute; /* Use absolute positioning */
+            bottom: 10px; /* Position from the bottom */
+            right: 10px; /* Position from the right */
+        }
+        .view-details:hover {
+            text-decoration: underline;
+        }
+
+
+  </style>
+  
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo_details">
+          <i class="bx bxl-audible icon"></i>
+          <div class="logo_name">HANAPKITA</div>
+          <i class="bx bx-menu" id="btn"></i>
+        </div>
+        <ul class="nav-list">
+          <li>
+            <a href="jobseekerdashboardhome.html">
+              <i class="bx bx-grid-alt"></i>
+              <span class="link_name">Home</span>
+            </a>
+            <span class="tooltip">Home</span>
+          </li>
+          <li>
+            <a href="jobseekerinbox.html">
+              <i class="bx bx-chat"></i>
+              <span class="link_name">Inbox</span>
+            </a>
+            <span class="tooltip">Inbox</span>
+          </li>
+      
+          <li>
+            <a href="jobseekerhiring.html">
+              <i class="bx bx-briefcase"></i>
+              <span class="link_name"> Job Hiring</span>
+            </a>
+            <span class="tooltip"> Job Hiring</span>
+          </li>           
+          <li>
+            <a href="jobseeker_calendar.html">
+              <i class="bx bx-calendar"></i>
+              <span class="link_name">Calendar</span>
+            </a>
+            <span class="tooltip">Calendar</span>
+          </li>     
+          <li>
+            <a href="jobseekerjobhistory.html">
+              <i class="bx bx-comment-detail"></i>
+              <span class="link_name">History</span>
+            </a>
+            <span class="tooltip">History</span>
+          </li>
+      <li class="profile">
+        <div class="profile_details">
+          <img src="bersoto.jpg" alt="profile image">
+          <div class="profile_content">
+            <div class="name">Joseph Bersoto</div>
+            <div class="designation">Jobseeker</div>
+          </div>
+        </div>
+        <i class="bx bx-log-out" id="log_out"></i>
+      </li>
+    </ul>
+  </div>
+
+  <div class="history-container">
+    <div class="history-title">History</div>
+    <div class="history-item">
+        <div>
+            <h3>Truck Driver</h3><br>
+            <p>Karen Gale Partos</p><br>
+            <p>June 1, 2024</p>
+        </div>
+        <div class="right-container">
+            <div class="stars">★★★★☆</div>
+            <a href="#" class="view-details">View Details</a>
+        </div>
+    </div>
+    <div class="history-item">
+        <div>
+            <h3>Truck Driver</h3><br>
+            <p>Christephen De Jesus</p><br>
+            <p>February 5, 2024</p>
+        </div>
+        <div class="right-container">
+            <div class="stars">★★★★☆</div>
+            <a href="#" class="view-details">View Details</a>
+        </div>
+    </div>
+    <div class="history-item">
+        <div>
+            <h3>Truck Driver</h3><br>
+            <p>Andrea Brilliantes</p><br>
+            <p>January 3, 2024</p>
+        </div>
+        <div class="right-container">
+            <div class="stars">★★★★☆</div>
+            <a href="#" class="view-details">View Details</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<script src="script.js"></script>
+</body>
+</html>

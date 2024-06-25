@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Employer Dashboard</title>
+  <title>Jobseeker Dashboard</title>
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <style>
@@ -255,107 +255,7 @@ body{
   width: 50px;
   background: none;
 }
-
-.home-section{
-  position: relative;
-  background-color: var(--color-body);
-  min-height: 100vh;
-  top:0;
-  left:78px;
-  width: calc(100% - 78px);
-  transition: all .5s ease;
-  z-index: 2;
-}
-
-.home-section .text{
-  display: inline-block;
-  color:var(--color-default);
-  font-size: 25px;
-  font-weight: 500;
-  margin: 18px;
-}
-
-.sidebar.open ~ .home-section{
-  left:250px;
-  width: calc(100% - 250px);
-}
-
-
-
-.text1 {
-  display: inline-block;
-  margin: 0;
-  color: #3D52A0;
-  font-size: 120px;
-  font-family: Georgia, 'Times New Roman', Times, serif; 
-  position: absolute;
-  top: -600px;
-  left: 70px; /* Adjusted value to position the title relative to the logo */
-  }
-  .text2 {
-  display: inline-block;
-  margin: 0;
-  color: #3D52A0;
-  font-size: 15px;
-  font-family: Georgia, 'Times New Roman', Times, serif; 
-  font-style: italic;
-  position: absolute;
-  top: -295px;
-  left: 90px; /* Adjusted value to position the title relative to the logo */
-  }
-  .landpic {
-  position: absolute;
-  top: -680px; /* Adjust as needed */
-  left: 670px; /* Adjust to move it to the right */
-  }
-  .pic1 {
-  height: 650px; /* Adjust height as needed */
-  width: 580px; /* Adjust width as needed */
-  }
-  .right-half {
-  position: absolute;
-  top: 0px;
-  right: 0;
-  width: 40%; /* Adjust as needed */
-  height: 100%;
-  background-color: #EDE8F5; /* Set background color */
-  }
-  .search-bar {
-  background-color: #7091E6; /* Medium blue background */
-  padding: 20px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  position: absolute;
-  top: -180px; /* Adjust this value to position the search bar */
-  left: 120px; /* Adjust this value to position the search bar */
-  gap: 15px;
-  }
-  .search-bar input, .search-bar select, .search-bar button {
-  border: none;
-  border-radius: 10px;
-  padding: 13px;
-  margin-right: 25px;
-  font-size: 20px;
-  }
-  .search-bar input:focus, .search-bar select:focus, .search-bar button:focus {
-  outline: none;
-  }
-  .search-bar input {
-  flex: 1;
-  }
-  .search-bar select {
-  flex: 1.5; /* Adjust flex value to expand the select box */
-  }
-  .search-bar button {
-  background-color: #3D52A0; /* Dark blue button */
-  color: white;
-  cursor: pointer;
-  }
-  .search-bar button:hover {
-  background-color: #2d3d82; /* Slightly darker blue on hover */
-  }
-  table {
+        table {
             border-collapse: collapse;
             width: 90%;
             margin-top: 20px;
@@ -431,8 +331,7 @@ body{
             text-decoration: underline;
         }
 
-
-  </style>
+    </style>
 </head>
 <body>
   <div class="sidebar">
@@ -443,54 +342,47 @@ body{
     </div>
     <ul class="nav-list">
       <li>
-        <a href="employerdashboardhome.html">
+        <a href="jobseekerdashboardhome.html">
           <i class="bx bx-grid-alt"></i>
           <span class="link_name">Home</span>
         </a>
         <span class="tooltip">Home</span>
       </li>
       <li>
-        <a href="employerinbox.html">
+        <a href="jobseekerinbox.html">
           <i class="bx bx-chat"></i>
           <span class="link_name">Inbox</span>
         </a>
         <span class="tooltip">Inbox</span>
       </li>
+
       <li>
-        <a href="employerskilledworker.html">
-          <i class="bx bx-id-card"></i>
-          <span class="link_name">Worker</span>
+        <a href="jobseekerhiring.html">
+          <i class="bx bx-briefcase"></i>
+          <span class="link_name"> Job Hiring</span>
         </a>
-        <span class="tooltip">Worker</span>
-      </li>      
+        <span class="tooltip"> Job Hiring</span>
+      </li>          
       <li>
-        <a href="employerjobpost.html">
-          <i class="bx bx-news"></i>
-          <span class="link_name">Job Post</span>
+        <a href="jobseeker_calendar.html">
+          <i class="bx bx-calendar"></i>
+          <span class="link_name">Calendar</span>
         </a>
-        <span class="tooltip">Job Post</span>
-      </li> 
+        <span class="tooltip">Calendar</span>
+      </li>     
       <li>
-        <a href="employerongoing.html">
-          <i class="bx bx-loader"></i> <!-- Changed icon class here -->
-          <span class="link_name">Ongoing</span> <!-- Updated the name to Ongoing -->
-        </a>
-        <span class="tooltip">Ongoing</span> <!-- Updated the tooltip to Ongoing -->
-      </li>
-      
-      <li>
-        <a href="employer_history.html">
-          <i class="bx bx-history"></i>
+        <a href="jobseekerjobhistory.html">
+          <i class="bx bx-comment-detail"></i>
           <span class="link_name">History</span>
         </a>
         <span class="tooltip">History</span>
-      </li>      
+      </li>     
       <li class="profile">
         <div class="profile_details">
-          <img src="bersoto.jpg" alt="profile image">
+          <img src="asim.jpg" alt="profile image">
           <div class="profile_content">
-            <div class="name">Joseph Bersoto</div>
-            <div class="designation">Employer</div>
+            <div class="name">Gale Karen Partos</div>
+            <div class="designation">Jobseeker</div>
           </div>
         </div>
         <i class="bx bx-log-out" id="log_out"></i>
@@ -498,40 +390,31 @@ body{
     </ul>
   </div>
 
-
-  <table>
+<table>
     <tr>
         <td colspan="3">
             <div class="details">
-                <b>Karen Gale Partos | Accepted the job offer you have been requested! </b>
-                <a href="employeracceptedoffermessage.html">View Details</a>
+                <b>Thea Joie Aquino | Sent you a job offer!</b>
+                <a href="jobseekeracceptedoffer.html">View Details</a>
             </div>
         </td>
     </tr>
     <tr>
         <td colspan="3">
             <div class="details">
-                <b>Joseph Bersoto | Your driver have done to her job give him a feedback </b>
-                <a href="employergivingfeedback.html">View Details</a>
+                <b>Karen Gale Partos | Sent you a job offer!</b>
+                <a href="jobseekeracceptedoffer.html">View Details</a>
             </div>
         </td>
     </tr>
     <tr>
         <td colspan="3">
             <div class="details">
-                <b>Ken Josh Cruz | Want's to apply to your job post </b>
-                <a href="jobseekerviewprofile.html">View Details</a>
+                <b>Your application as a driver have been Accepted </b>
+                <a href="jobseekerhired.html">View Details</a>
             </div>
         </td>
     </tr>
-    <tr>
-      <td colspan="3">
-          <div class="details">
-              <b>JC Javalla | Want's to apply to your job post </b>
-              <a href="jobseekerviewprofile.html">View Details</a>
-          </div>
-      </td>
-  </tr>
     <tr>
         <td colspan="3">
             <div class="details">
@@ -606,14 +489,7 @@ body{
         <a href="#">Terms & conditions</a> | <a href="#">Security & Privacy</a>
     </div>
 </footer>
-
-
-
-
-
-
-</section>
-<!-- Scripts -->
-<script src="script.js"></script>
+  <!-- Scripts -->
+  <script src="script.js"></script>
 </body>
 </html>
