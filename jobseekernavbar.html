@@ -9,7 +9,7 @@
     // Function to change content automatically
     function changeContentAutomatically() {
         var iframe = document.getElementById('myIframe');
-        iframe.src = 'jobseeker_profile.html'; // Set the source of iframe
+        iframe.src = 'jobseekerdashboardhome.html'; // Set the source of iframe
     }
 
     // Automatically change content on page load
@@ -27,7 +27,7 @@
 
     :root {
       --color-default: #004f83;
-      --color-second: #0067ac;
+      --color-second: #004f83;
       --color-white: #fff;
       --color-body: #e4e9f7;
       --color-light: #e0e0e0;
@@ -339,55 +339,52 @@
     </div>
     <ul class="nav-list">
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('jobseeker_profile.html')">
+        <a href="javascript:void(0)" onclick="changeContent('jobseekerdashboardhome.html')">
           <i class="bx bx-grid-alt"></i>
           <span class="link_name">Home</span>
         </a>
-        <span class="tooltip">Home</span>
       </li>
       <li>
         <a href="javascript:void(0)" onclick="changeContent('jobseekerinbox.html')">
           <i class="bx bx-chat"></i>
           <span class="link_name">Inbox</span>
         </a>
-        <span class="tooltip">Inbox</span>
       </li>
       <li>
         <a href="javascript:void(0)" onclick="changeContent('jobseekerhiring.html')">
           <i class="bx bx-search"></i>
           <span class="link_name">Job Hiring</span>
         </a>
-        <span class="tooltip">Job Hiring</span>
       </li>
       <li>
         <a href="javascript:void(0)" onclick="changeContent('jobseekerjoboffer.html')">
           <i class="bx bx-news"></i>
           <span class="link_name">Job Offer</span>
         </a>
-        <span class="tooltip">Job Offer</span>
       </li>
       <li>
         <a href="javascript:void(0)" onclick="changeContent('jobseeker_feedbacks_entry.html')">
           <i class="bx bx-folder"></i>
           <span class="link_name">Feedback</span>
         </a>
-        <span class="tooltip">Feedback</span>
       </li>
       <li>
         <a href="javascript:void(0)" onclick="changeContent('jobseeker_calendar.html')">
           <i class="bx bx-calendar"></i>
           <span class="link_name">History</span>
         </a>
-        <span class="tooltip">History</span>
+      </li>
+      <li>
+        <a href="javascript:void(0)" onclick="changeContent('jobseeker_profile.html')">
+          <i class="bx bxs-user-circle"></i>
+          <span class="link_name">Profile</span>
+        </a>
       </li>
       <li class="profile">
-        <div class="profile_details">
-          <img src="asim.jpg" alt="profile image">
-          <div class="profile_content">
-            <div class="name">Gale Karen Partos</div>
-            <div class="designation">Jobseeker</div>
-          </div>
-        </div>
+        <a href="landing.html">
+          <i class="bx bx-log-out"></i>
+          <span class="link_name">Logout</span>
+        </a>
         <i class="bx bx-log-out" id="log_out"></i>
       </li>
     </ul>

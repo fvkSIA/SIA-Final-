@@ -1,264 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Jobseeker Dashboard</title>
+  <title>Employer Dashboard</title>
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-:root{
-  --color-default:#004f83;
-  --color-second:#0067ac;
-  --color-white:#fff;
-  --color-body:#e4e9f7;
-  --color-light:#e0e0e0;
-}
 
-*{
-  padding: 0%;
-  margin: 0%;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
 
-body{
-  min-height: 100vh;
-}
 
-.sidebar{
-  min-height: 100vh;
-  width: 78px;
-  padding: 6px 14px;
-  z-index: 99;
-  background-color: var(--color-default);
-  transition: all .5s ease;
-  position: fixed;
-  top:0;
-  left: 0;
-}
-
-.sidebar.open{
-  width: 250px;
-}
-
-.sidebar .logo_details{
-  height: 60px;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-.sidebar .logo_details .icon{
-  opacity: 0;
-  transition: all 0.5s ease ;
-}
-
-.sidebar .logo_details .logo_name{
-  color:var(--color-white);
-  font-size: 22px;
-  font-weight: 600;
-  opacity: 0;
-  transition: all .5s ease;
-}
-
-.sidebar.open .logo_details .icon,
-.sidebar.open .logo_details .logo_name{
-  opacity: 1;
-}
-
-.sidebar .logo_details #btn{
-  position: absolute;
-  top:50%;
-  right: 0;
-  transform: translateY(-50%);
-  font-size: 23px;
-  text-align: center;
-  cursor: pointer;
-  transition: all .5s ease;
-}
-
-.sidebar.open .logo_details #btn{
-  text-align: right;
-}
-
-.sidebar i{
-  color:var(--color-white);
-  height: 60px;
-  line-height: 60px;
-  min-width: 50px;
-  font-size: 25px;
-  text-align: center;
-}
-
-.sidebar .nav-list{
-  margin-top: 20px;
-  height: 100%;
-}
-
-.sidebar li{
-  position: relative;
-  margin:8px 0;
-  list-style: none;
-}
-
-.sidebar li .tooltip{
-  position: absolute;
-  top:-20px;
-  left:calc(100% + 15px);
-  z-index: 3;
-  background-color: var(--color-white);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  padding: 6px 14px;
-  font-size: 15px;
-  font-weight: 400;
-  border-radius: 5px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.sidebar li:hover .tooltip{
-  opacity: 1;
-  pointer-events: auto;
-  transition: all 0.4s ease;
-  top:50%;
-  transform: translateY(-50%);
-}
-
-.sidebar.open li .tooltip{
-  display: none;
-}
-
-.sidebar li a{
-  display: flex;
-  height: 100%;
-  width: 100%;
-  align-items: center;
-  text-decoration: none;
-  background-color: var(--color-default);
-  position: relative;
-  transition: all .5s ease;
-  z-index: 12;
-}
-
-.sidebar li a::after{
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: scaleX(0);
-  background-color: var(--color-white);
-  border-radius: 5px;
-  transition: transform 0.3s ease-in-out;
-  transform-origin: left;
-  z-index: -2;
-}
-
-.sidebar li a:hover::after{
-  transform: scaleX(1);
-  color:var(--color-default)
-}
-
-.sidebar li a .link_name{
-  color:var(--color-white);
-  font-size: 15px;
-  font-weight: 400;
-  white-space: nowrap;
-  pointer-events: auto;
-  transition: all 0.4s ease;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.sidebar li a:hover .link_name,
-.sidebar li a:hover i{
-  transition: all 0.5s ease;
-  color:var(--color-default)
-}
-
-.sidebar.open li a .link_name{
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.sidebar li i{
-  height: 35px;
-  line-height: 35px;
-  font-size: 18px;
-  border-radius: 5px;
-}
-
-.sidebar li.profile{
-  position: fixed;
-  height: 60px;
-  width: 78px;
-  left: 0;
-  bottom:-8px;
-  padding:10px 14px;
-  overflow: hidden;
-  transition: all .5s ease;
-}
-
-.sidebar.open li.profile{
-  width: 250px;
-}
-
-.sidebar .profile .profile_details{
-  display: flex;
-  align-items: center;
-  flex-wrap:  nowrap;
-}
-
-.sidebar li img{
-  height: 45px;
-  width: 45px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.sidebar li.profile .name,
-.sidebar li.profile .designation{
-  font-size: 15px;
-  font-weight: 400;
-  color:var(--color-white);
-  white-space: nowrap;
-}
-
-.sidebar li.profile .designation{
-  font-size: 12px;
-}
-
-.sidebar .profile #log_out{
-  position: absolute;
-  top:50%;
-  right: 0;
-  transform: translateY(-50%);
-  background-color: var(--color-second);
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.5s ease;
-}
-
-.sidebar.open .profile #log_out{
-  width: 50px;
-  background: none;
-}
-
-.home-section{
-  position: relative;
-  background-color: var(--color-body);
-  min-height: 100vh;
-  top:0;
-  left:78px;
-  width: calc(100% - 78px);
-  transition: all .5s ease;
-  z-index: 2;
-}
+    .home-section {
+      position: relative;
+      background-color: var(--color-body);
+      min-height: 100vh;
+      top: 0;
+      width: calc(100% - 78px);
+      transition: all .5s ease;
+      z-index: 2;
+      margin: 0 auto;
+    }
+    
 
 .home-section .text{
   display: inline-block;
@@ -268,10 +29,8 @@ body{
   margin: 18px;
 }
 
-.sidebar.open ~ .home-section{
-  left:250px;
-  width: calc(100% - 250px);
-}
+
+
 
 .text1 {
   display: inline-block;
@@ -303,6 +62,17 @@ body{
   height: 650px; /* Adjust height as needed */
   width: 580px; /* Adjust width as needed */
   }
+
+  @media (max-width: 768px) {
+    /* Adjustments for smaller screens (tablets and phones) */
+    .text1 {
+        font-size: 2em; /* Decrease font size */
+    }
+
+    .text2 {
+        font-size: 0.8em; /* Decrease font size */
+    }
+}
   .right-half {
   position: absolute;
   top: 0px;
@@ -349,15 +119,16 @@ body{
 
   .container {
     display: flex;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
-    margin-top: 650px; /* Adjusted margin to move the content further down */
-    width: 96%; /* Make the container span the entire width */
-    margin-left: 30px;
+    margin-top: 0px; /* Adjusted margin to move the content further down */
+    width: 100%; /* Make the container span the entire width */
+    margin: 0 auto; /* Center align horizontally */
     flex-wrap: nowrap; /* Prevent wrapping to keep items in a row */
 }
+
 
 .image-section {
     flex: 1; /* Adjusted width to make it flexible */
@@ -380,7 +151,7 @@ body{
     flex: 1; /* Adjusted width to make it flexible */
     padding: 40px; /* Adjusted padding for better spacing */
     font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa;
+    background-color: #f8f9fa00;
 }
 
   
@@ -401,16 +172,16 @@ body{
   }
 
   .top-job-seekers {
-    background-color: white;
-    padding: 20px;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 10px;
     border-radius: 20px;
     width: 600px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin-left: 350px;
-    margin-top: 25px;
+    margin: 25px auto; /* Center horizontally with auto margins */
+    text-align: center; /* Center text content inside the div */
     height: 320px; /* Adjusted height */
 }
+
 
         .top-job-seekers h2 {
             margin-bottom: 20px;
@@ -475,294 +246,8 @@ body{
             background-color: #3D52A0;
         }
 
-
-
-        
-        .card {
-  position: relative;
-  width: 250px; /* Adjusted width */
-  background: #fafafa;
-  box-shadow: 0 2px 7px #000;
-  font-family: 'Montserrat', sans-serif;
-  margin: 20px auto;
-  padding: 15px;
-  height: 400px; /* Adjusted height */
-  margin-top: 60px;
-  margin-left: -325px; /* Added margin to the left */
-  padding-bottom: 20px;
-  border-radius: 10px;
-  }
-  .item1 img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .catagory {
-  color: #000;
-  font-size: 25px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-top: 15px;
-  }
-  .price-1 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-style: italic;
-  margin-top: 10px;
-  text-align: center;
-  }
-  .button-1 {
-  border: none;
-  padding: 10px 30px; /* Increased padding for a larger button */
-  border-radius: 5px;
-  background-color: #3D52A0;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  display: block;
-  margin: 0 auto; /* Centering the button */
-  margin-top: 15px;
-  }
-  .button-1:hover {
-  background-color: #0000FF;
-  }
-
-  .card-1 {
-  position: relative;
-  width: 250px; /* Adjusted width */
-  background: #fafafa;
-  box-shadow: 0 2px 7px #000;
-  font-family: 'Montserrat', sans-serif;
-  margin: 20px auto;
-  padding: 15px;
-  height: 400px; /* Adjusted height */
-  margin-top: -410px;
-  margin-left: 290px; /* Added margin to the left */
-  padding-bottom: 20px;
-  border-radius: 10px;
-  }
-  .item2 img {
-  max-width: 100%;
-  height: 250px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .catagory-1 {
-  color: #000;
-  font-size: 25px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-top: 15px;
-  }
-  .price-2 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-style: italic;
-  margin-top: 10px;
-  text-align: center;
-  }
-  .button-2 {
-  border: none;
-  padding: 10px 30px; /* Increased padding for a larger button */
-  border-radius: 5px;
-  background-color: #3D52A0;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  display: block;
-  margin: 0 auto; /* Centering the button */
-  margin-top: 15px;
-  }
-  .button-2:hover {
-  background-color: #0000FF;
-  }
-
-  .card-2 {
-  position: relative;
-  width: 250px; /* Adjusted width */
-  background: #fafafa;
-  box-shadow: 0 2px 7px #000;
-  font-family: 'Montserrat', sans-serif;
-  margin: 20px auto;
-  padding: 15px;
-  height: 400px; /* Adjusted height */
-  margin-top: -410px;
-  margin-left: 290px; /* Added margin to the left */
-  padding-bottom: 20px;
-  border-radius: 10px;
-  }
-  .item3 img {
-  max-width: 100%;
-  height: 250px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .catagory-3 {
-  color: #000;
-  font-size: 25px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-top: 15px;
-  }
-  .price-3 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-style: italic;
-  margin-top: 10px;
-  text-align: center;
-  }
-  .button-3 {
-  border: none;
-  padding: 10px 30px; /* Increased padding for a larger button */
-  border-radius: 5px;
-  background-color: #3D52A0;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  display: block;
-  margin: 0 auto; /* Centering the button */
-  margin-top: -3px;
-  }
-  .button-3:hover {
-  background-color: #0000FF;
-  }
-
-
-  .card-3 {
-  position: relative;
-  width: 250px; /* Adjusted width */
-  background: #fafafa;
-  box-shadow: 0 2px 7px #000;
-  font-family: 'Montserrat', sans-serif;
-  margin: 20px auto;
-  padding: 15px;
-  height: 400px; /* Adjusted height */
-  margin-top: -412px;
-  margin-left: 285px; /* Added margin to the left */
-  padding-bottom: 20px;
-  border-radius: 10px;
-  }
-  .item4 img {
-  max-width: 100%;
-  height: 250px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .catagory-4 {
-  color: #000;
-  font-size: 25px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-top: 15px;
-  }
-  .price-4 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-style: italic;
-  margin-top: 10px;
-  text-align: center;
-  }
-  .button-4 {
-  border: none;
-  padding: 10px 30px; /* Increased padding for a larger button */
-  border-radius: 5px;
-  background-color: #3D52A0;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  display: block;
-  margin: 0 auto; /* Centering the button */
-  margin-top: 15px;
-  }
-  .button-4:hover {
-  background-color: #0000FF;
-  }
-
-  .card-5 {
-  position: relative;
-  width: 1190px; /* Adjusted width */
-  background: #fafafa;
-  box-shadow: 0 2px 7px #000;
-  font-family: 'Montserrat', sans-serif;
-  margin: 20px auto;
-  padding: 15px;
-  height: 745px; /* Adjusted height */
-  margin-top: 60px;
-  margin-left: -946px; /* Added margin to the left */
-  padding-bottom: 20px;
-  border-radius: 10px;
-  }
-  .item5 img { 
-  max-width: 50%;
-  height: 360px;
-  height: 350px;
-  margin-left: -590px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .text-1 {
-  color: #000;
-  font-size: 50px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-left: 140px;
-  margin-top: -340px;
-
-  }
-  .text-2 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 23px;
-  margin-left: 620px;
-  font-style: normal;
-  margin-top: 25px;
-  text-align: center;
-  }
-
-
-
-  .item6 img {
-  max-width: 42%;
-  height: 360px;
-  margin-left: 693px;
-  border-radius: 10px;
-  margin-top: 35px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .text-3 {
-  color: #000;
-  font-size: 50px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-right: 1080px;
-  margin-top: -340px;
-
-  }
-  .text-4 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 23px;
-  margin-right: 500px;    
-  font-style: normal;
-  margin-top: 20px;
-  text-align: center;
-  }
-
 .footer {
-    width: 98%;
-    background-color: #f8f9fa;
+    width: 100%;
     padding: 20px;
     font-family: Arial, sans-serif;
     margin-top: 70px;
@@ -807,214 +292,113 @@ body{
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo_details">
-      <i class="bx bxl-audible icon"></i>
-      <div class="logo_name">HANAPKITA</div>
-      <i class="bx bx-menu" id="btn"></i>
-    </div>
-    <ul class="nav-list">
-      <li>
-        <a href="jobseekerdashboardhome.html">
-          <i class="bx bx-grid-alt"></i>
-          <span class="link_name">Home</span>
-        </a>
-        <span class="tooltip">Home</span>
-      </li>
-      <li>
-        <a href="jobseekerinbox.html">
-          <i class="bx bx-chat"></i>
-          <span class="link_name">Inbox</span>
-        </a>
-        <span class="tooltip">Inbox</span>
-      </li>
-
-      <li>
-        <a href="jobseekerhiring.html">
-          <i class="bx bx-briefcase"></i>
-          <span class="link_name"> Job Hiring</span>
-        </a>
-        <span class="tooltip"> Job Hiring</span>
-      </li>        
-      <li>
-        <a href="jobseeker_calendar.html">
-          <i class="bx bx-calendar"></i>
-          <span class="link_name">Calendar</span>
-        </a>
-        <span class="tooltip">Calendar</span>
-      </li>     
-      <li>
-        <a href="jobseekerjobhistory.html">
-          <i class="bx bx-comment-detail"></i>
-          <span class="link_name">History</span>
-        </a>
-        <span class="tooltip">History</span>
-      </li>
-      <li class="profile">
-        <div class="profile_details">
-          <img src="asim.jpg" alt="profile image">
-          <div class="profile_content">
-            <div class="name">Gale Karen Partos</div>
-            <div class="designation">Jobseeker</div>
-          </div>
-        </div>
-        <i class="bx bx-log-out" id="log_out"></i>
-      </li>
-    </ul>
-  </div>
+  <br>
   <section class="home-section">
-    <section class="home-section">
-      <div id="top"></div>
-      <h1 class="text1">Search, Find,<br>and Apply!</h1>
-      <h5 class="text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id lectus sit <br>
-          amet augue aliquet consectetur. Donec interdum, sem et facilisis luctus,<br>
-          neque sapien tincidunt odio, et efficitur tellus lacus tincidunt metus. </h5>
-  
-  
-          <div class="landpic">
-          <img class="pic1" src="landpic1.png"> 
-      </div>
-  
-      <div class="search-bar">
-          <input type="text" placeholder="Job title or Keyword" />
-          <select>
-              <option value="">Location</option>
-          </select>
-          <button>Find Now!</button>
-      </div>
-  
-      <div class="container">
-          <div class="image-section">
-              <img src="pic1.jpg">
-          </div>
-          <div class="text-section">
-              <p>HanapKITA aims to revolutionize the job search experience by providing an intuitive, efficient, and comprehensive platform for job seekers and employers alike. </p> 
-              <p>Our primary goal is to bridge the gap between talent and opportunity, ensuring that individuals can find job positions that truly match their skills, interests, and career aspirations. We understand the complexities of the job market and strive to simplify this process by offering a user-friendly interface, advanced search functionalities, and a wide array of job listings across various industries.</p>
-              <p>Moreover, HanapKITA seeks to foster a community where employers and job seekers can connect seamlessly and effectively. We prioritize creating a transparent and supportive environment that allows employers to find the right candidates quickly and efficiently. By leveraging technology and a deep understanding of the job market, HanapKITA aspires to become the go-to platform for anyone looking to advance their career or find the perfect candidate for their organization, thereby contributing to a more dynamic and thriving workforce.</p>
-  
+    
+    <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto; max-width: 1000px; padding-bottom: 20px;">
+        <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
+            <h1 style="font-family: Georgia, serif; font-size: 2.5em; font-weight: bold; color: #333; padding-top: 30px;">
+                Search, Find, and Apply!
+            </h1>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 10px; background-color: #f0f0f0; padding: 10px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <input type="text" style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+                <select style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: white;">
+                    <option value="">Location</option>
+                </select>
+                <button style="flex: 1 1 auto; padding: 8px 20px; width: 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;">
+                    Find Now!
+                </button>
             </div>
-      </div>
-      <div id="middle"></div>
-      <div class="top-job-seekers">
-          <h2>Top Job Seekers</h2>
-          <div class="job-seeker">
-              <img src="asim.jpg" alt="Job Seeker">
-              <div class="job-seeker-info">
-                  <h3>GALE KAREN PARTOS</h3>
-                  <p>RATINGS: <span class="ratings">⭐⭐⭐⭐⭐</span></p>
-              </div>
-              <div class="rank">
-                  RANK 1
-                  <span>SEE MORE DETAILS</span>
-              </div>
+        </div>
+    </div>
+    <br>
+    
+    
+    
+    
+    
+    
+
+    
+    <div class="container">
+        <div class="image-section">
+            <img src="pic1.jpg">
+        </div>
+        <div class="text-section">
+            <p>HanapKITA aims to revolutionize the job search experience by providing an intuitive, efficient, and comprehensive platform for job seekers and employers alike. </p> 
+            <p>Our primary goal is to bridge the gap between talent and opportunity, ensuring that individuals can find job positions that truly match their skills, interests, and career aspirations. We understand the complexities of the job market and strive to simplify this process by offering a user-friendly interface, advanced search functionalities, and a wide array of job listings across various industries.</p>
+            <p>Moreover, HanapKITA seeks to foster a community where employers and job seekers can connect seamlessly and effectively. We prioritize creating a transparent and supportive environment that allows employers to find the right candidates quickly and efficiently. By leveraging technology and a deep understanding of the job market, HanapKITA aspires to become the go-to platform for anyone looking to advance their career or find the perfect candidate for their organization, thereby contributing to a more dynamic and thriving workforce.</p>
+
           </div>
-          <div class="job-seeker">
-              <img src="bersoto.jpg" alt="Job Seeker">
-              <div class="job-seeker-info">
-                  <h3>JOSEPH CARLO BERSOTO</h3>
-                  <p>RATINGS: <span class="ratings">⭐⭐⭐⭐⭐</span></p>
-              </div>
-              <div class="rank">
-                  RANK 2
-                  <span>SEE MORE DETAILS</span>
-              </div>
-          </div>
-          <div class="navigation">
-              <span class="active"></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-          </div>
-  
-          <div class="card">
-              <div class="item1">
-                  <img src="electrician.jpg">
-                      <h2 class="catagory"> Electrician </h2>
-                      <h3 class="price-1"> We Make Things Shine. </h3>
-                      <button class="button-1"> APPLY NOW!!</button>
-              </div>
-              
-              <div class="card-1">
-              <div class="item2">
-                  <img src="plumber.jpg">
-                      <h2 class="catagory-1"> Plumber </h2>
-                      <h3 class="price-2"> Leaks Fear Us. </h3>
-                      <button class="button-2"> APPLY NOW!!</button>
-              </div>
-              
-              <div class="card-2">
-              <div class="item3">
-                  <img src="welder.jpg">
-                      <h2 class="catagory-2"> Welder </h2>
-                      <h3 class="price-3"> We Weld It Right!. </h3>
-                      <button class="button-3"> APPLY NOW!!</button>
-              </div>
-  
-              <div class="card-3">
-                  <div class="item4">
-                      <img src="driver.jpg">
-                          <h2 class="catagory-3"> Driver </h2>
-                          <h3 class="price-4"> Stay alert, Arrive Alive. </h3>
-                          <button class="button-4"> APPLY NOW!!</button>
-                  </div>
-  
-  
-  
-              <div class="card-5">
-                  <div class="item5">
-                      <img src="mission.jpg">
-                          <h2 class="text-1"><b>MISSION </b></h2>
-                          <p class="text-2"> Our mission at HanapKITA is to empower skilled and unskilled workers by providing a comprehensive, user friendly web-based platform that connects them with employment opportunities. 
-                            <br><br>We aim to bridge the gap between job seekers and employers by facilitating efficient, transparent, and reliable job matching services, ultimately contributing to the economic growth and development of our communities.
-       </p>
-                  </div>
-  
-                      <div class="item6">
-                          <img src="mission.jpg">
-                              <h2 class="text-3"><b>VISION </b></h2>
-                              <p class="text-4"> Our vision is to become the leading job search platform 
-                                   <br>in the region, known for its commitment to inclusivity, 
-                                  <br> innovation, and excellence. We aspire to transform 
-                                  <br>the job-seeking experience for skilled and unskilled 
-                                  <br> workers, ensuring that everyone has equal access to opportunities 
-                                  <br>that allow them to thrive and succeed in their careers.
-                                  <br><br>Through continuous improvement and community engagement, 
-                                  <br>we aim to build a future where employment is accessible to all, 
-                                  <br>and every individual can realize their full potential.
-                              </p>
-                      </div>
-  
-                      <footer class="footer">
-                          <div class="footer-section">
-                              <ul class="footer-column">
-                                  <h4>Job Seekers</h4>
-                                  <li><a href="#top">Job Search</a></li>
-                                  <li><a href="#">Profile</a></li>
-                                  <li><a href="#">Recommended Jobs</a></li>
-                                  <li><a href="#">Saved Searches</a></li>
-                                  <li><a href="#">Saved Jobs</a></li>
-                                  <li><a href="#">Job Applications</a></li>
-                              </ul>
-                              <ul class="footer-column">
-                                  <h4>Employers</h4>
-                                  <li><a href="#">Registration for Free</a></li>
-                                  <li><a href="#">Post a Job ad</a></li>
-                              </ul>
-                              <ul class="footer-column">
-                                  <h4>About Jobstreet</h4>
-                                  <li><a href="#">About Us</a></li>
-                                  <li><a href="#">Work for Jobstreet</a></li>
-                              </ul>
-                              <ul class="footer-column">
-                                  <h4>Contact</h4>
-                                  <li><a href="#">Contact Us</a></li>
-                              </ul>
-                          </div>
-                          <div class="footer-bottom">
-                              <a href="#">Terms & conditions</a> | <a href="#">Security & Privacy</a>
-                          </div>
-                      </footer>
+    </div>
+    <div class="top-job-seekers">
+        <h2>Top Job Seekers</h2>
+        <div class="job-seeker">
+            <img src="asim.jpg" alt="Job Seeker">
+            <div class="job-seeker-info">
+                <h3>GALE KAREN PARTOS</h3>
+                <p>RATINGS: <span class="ratings">⭐⭐⭐⭐⭐</span></p>
+            </div>
+            <div class="rank">
+                RANK 1
+                <span>SEE MORE DETAILS</span>
+            </div>
+        </div>
+        <div class="job-seeker">
+            <img src="bersoto.jpg" alt="Job Seeker">
+            <div class="job-seeker-info">
+                <h3>JOSEPH CARLO BERSOTO</h3>
+                <p>RATINGS: <span class="ratings">⭐⭐⭐⭐⭐</span></p>
+            </div>
+            <div class="rank">
+                RANK 2
+                <span>SEE MORE DETAILS</span>
+            </div>
+        </div>
+    </div>
+        <div class="navigation">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        
+          <iframe src="slide/index.html" frameborder="0" style="width: 100%; height: 540px;"></iframe>
+      
+
+                    <footer class="footer">
+                        <div class="footer-section">
+                            <ul class="footer-column">
+                                <h4>Job Seekers</h4>
+                                <li><a href="#top">Job Search</a></li>
+                                <li><a href="#">Profile</a></li>
+                                <li><a href="#">Recommended Jobs</a></li>
+                                <li><a href="#">Saved Searches</a></li>
+                                <li><a href="#">Saved Jobs</a></li>
+                                <li><a href="#">Job Applications</a></li>
+                            </ul>
+                            <ul class="footer-column">
+                                <h4>Employers</h4>
+                                <li><a href="#">Registration for Free</a></li>
+                                <li><a href="#">Post a Job ad</a></li>
+                            </ul>
+                            <ul class="footer-column">
+                                <h4>About Jobstreet</h4>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Work for Jobstreet</a></li>
+                            </ul>
+                            <ul class="footer-column">
+                                <h4>Contact</h4>
+                                <li><a href="#">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-bottom">
+                            <a href="#">Terms & conditions</a> | <a href="#">Security & Privacy</a>
+                        </div>
+                    </footer>
+
   </section>
   <!-- Scripts -->
   <script src="script.js"></script>
