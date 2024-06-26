@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TOP</title>
+  <!-- Link Styles -->
+  <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <style>
+
+  .top-job-seekers {
+    background-color: rgba(255, 255, 255, 0);
+    padding: 10px;
+    border-radius: 20px;
+    width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 25px auto; /* Center horizontally with auto margins */
+    text-align: center; /* Center text content inside the div */
+    height: 320px; /* Adjusted height */
+}
+
+
+        .top-job-seekers h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #3D52A0;
+        }
+        .job-seeker {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ADBBDA;
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+        }
+        .job-seeker img {
+            border-radius: 50%;
+            width: 60px;
+            height: 70px;
+        }
+        .job-seeker-info {
+            flex: 1;
+            margin-left: 15px;
+            text-align: left;
+        }
+        .job-seeker-info h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .job-seeker-info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        .job-seeker-info .ratings {
+            color: #FFD700;
+        }
+        .rank {
+            font-size: 18px;
+            color: #3D52A0;
+            text-align: right;
+        }
+        .rank span {
+            display: block;
+            font-size: 14px;
+            color: #555;
+        }
+        .navigation {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .navigation span {
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            background-color: #ccc;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .navigation .active {
+            background-color: #3D52A0;
+        }
+
+
+  </style>
+</head>
+<body>
+  <br>
+ 
+   
+    <div class="top-job-seekers">
+        <h2>Top Job Seekers</h2>
+        <div class="job-seeker">
+            <img src="asim.jpg" alt="Job Seeker">
+            <div class="job-seeker-info">
+                <h3>DRIVER: GALE KAREN PARTOS</h3>
+                <p>RATINGS: <span class="ratings">⭐⭐⭐⭐⭐</span></p>
+            </div>
+            <div class="rank">
+                RANK 1
+                <span>SEE MORE DETAILS</span>
+            </div>
+        </div>
+        <div class="job-seeker">
+            <img src="bersoto.jpg" alt="Job Seeker">
+            <div class="job-seeker-info">
+                <h3>DRIVER: JOSEPH CARLO BERSOTO</h3>
+                <p>RATINGS: <span class="ratings">⭐⭐⭐⭐⭐</span></p>
+            </div>
+            <div class="rank">
+                RANK 2
+                <span>SEE MORE DETAILS</span>
+            </div>
+        </div>
+    </div>
+        <div class="navigation">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+</body>
+</html>
