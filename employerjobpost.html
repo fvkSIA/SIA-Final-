@@ -5,526 +5,161 @@
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    body {
+      font-family: Arial, sans-serif;
+    }
 
-:root{
-  --color-default:#004f83;
-  --color-second:#0067ac;
-  --color-white:#fff;
-  --color-body:#e4e9f7;
-  --color-light:#e0e0e0;
-}
+    .home-section {
+      position: relative;
+      background-color: var(--color-body);
+      min-height: 100vh;
+      top: 0;
+      left: 78px;
+      width: calc(100% - 78px);
+      transition: all .5s ease;
+      z-index: 2;
+    }
 
-*{
-  padding: 0%;
-  margin: 0%;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+    .home-section .text {
+      display: inline-block;
+      color: var(--color-default);
+      font-size: 25px;
+      font-weight: 500;
+      margin: 18px;
+    }
 
-body{
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column; /* Changed to column to stack elements vertically */
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #7cbeea;
-}
+    .sidebar.open ~ .home-section {
+      left: 250px;
+      width: calc(100% - 250px);
+    }
 
-.sidebar{
-  min-height: 100vh;
-  width: 78px;
-  padding: 6px 14px;
-  z-index: 99;
-  background-color: var(--color-default);
-  transition: all .5s ease;
-  position: fixed;
-  top:0;
-  left: 0;
-}
+    .container {
+      max-width: 100%;
+      border-radius: 10px;
+    }
 
-.sidebar.open{
-  width: 250px;
-}
+    .title {
+      font-size: 32px;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      color: #1E3B85;
+      margin-bottom: 20px;
+      text-align: left;
+    }
 
-.sidebar .logo_details{
-  height: 60px;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
+    .post-box {
+      background-color: #d7dfee00;
+      width: 85%;
+      padding-left: 30px;
+      padding-top: 2%;
+      padding-right: 10%;
+      padding-bottom: 10%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
 
-.sidebar .logo_details .icon{
-  opacity: 0;
-  transition: all 0.5s ease ;
-}
+    .post-box h2 {
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-size: 30px;
+      color: #333333;
+      font-weight: bold;
+      margin-left: -342px;
+      margin-top: -80px;
+    }
 
-.sidebar .logo_details .logo_name{
-  color:var(--color-white);
-  font-size: 22px;
-  font-weight: 600;
-  opacity: 0;
-  transition: all .5s ease;
-}
+    .post-box label {
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-size: 20px;
+      margin: 10px;
+      color: #333333;
+      font-weight: bold;
+      text-align: left;
+      display: inline-block;
+    }
 
-.sidebar.open .logo_details .icon,
-.sidebar.open .logo_details .logo_name{
-  opacity: 1;
-}
+    .post-box input[type=text],
+    .post-box input[type=number],
+    .post-box input[type=date],
+    .post-box input[type=time],
+    .post-box select,
+    .post-box textarea {
+      height: 40px;
+      font-size: 16px;
+      display: block;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
 
-.sidebar .logo_details #btn{
-  position: absolute;
-  top:50%;
-  right: 0;
-  transform: translateY(-50%);
-  font-size: 23px;
-  text-align: center;
-  cursor: pointer;
-  transition: all .5s ease;
-}
+    .post-box textarea {
+      height: 100px;
+    }
 
-.sidebar.open .logo_details #btn{
-  text-align: right;
-}
+    .post-box p {
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-size: 40px;
+      color: #333333;
+      font-weight: bold;
+    }
 
-.sidebar i{
-  color:var(--color-white);
-  height: 60px;
-  line-height: 60px;
-  min-width: 50px;
-  font-size: 25px;
-  text-align: center;
-}
-
-.sidebar .nav-list{
-  margin-top: 20px;
-  height: 100%;
-}
-
-.sidebar li{
-  position: relative;
-  margin:8px 0;
-  list-style: none;
-}
-
-.sidebar li .tooltip{
-  position: absolute;
-  top:-20px;
-  left:calc(100% + 15px);
-  z-index: 3;
-  background-color: var(--color-white);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  padding: 6px 14px;
-  font-size: 15px;
-  font-weight: 400;
-  border-radius: 5px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.sidebar li:hover .tooltip{
-  opacity: 1;
-  pointer-events: auto;
-  transition: all 0.4s ease;
-  top:50%;
-  transform: translateY(-50%);
-}
-
-.sidebar.open li .tooltip{
-  display: none;
-}
-
-.sidebar li a{
-  display: flex;
-  height: 100%;
-  width: 100%;
-  align-items: center;
-  text-decoration: none;
-  background-color: var(--color-default);
-  position: relative;
-  transition: all .5s ease;
-  z-index: 12;
-}
-
-.sidebar li a::after{
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: scaleX(0);
-  background-color: var(--color-white);
-  border-radius: 5px;
-  transition: transform 0.3s ease-in-out;
-  transform-origin: left;
-  z-index: -2;
-}
-
-.sidebar li a:hover::after{
-  transform: scaleX(1);
-  color:var(--color-default)
-}
-
-.sidebar li a .link_name{
-  color:var(--color-white);
-  font-size: 15px;
-  font-weight: 400;
-  white-space: nowrap;
-  pointer-events: auto;
-  transition: all 0.4s ease;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.sidebar li a:hover .link_name,
-.sidebar li a:hover i{
-  transition: all 0.5s ease;
-  color:var(--color-default)
-}
-
-.sidebar.open li a .link_name{
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.sidebar li i{
-  height: 35px;
-  line-height: 35px;
-  font-size: 18px;
-  border-radius: 5px;
-}
-
-.sidebar li.profile{
-  position: fixed;
-  height: 60px;
-  width: 78px;
-  left: 0;
-  bottom:-8px;
-  padding:10px 14px;
-  overflow: hidden;
-  transition: all .5s ease;
-}
-
-.sidebar.open li.profile{
-  width: 250px;
-}
-
-.sidebar .profile .profile_details{
-  display: flex;
-  align-items: center;
-  flex-wrap:  nowrap;
-}
-
-.sidebar li img{
-  height: 45px;
-  width: 45px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.sidebar li.profile .name,
-.sidebar li.profile .designation{
-  font-size: 15px;
-  font-weight: 400;
-  color:var(--color-white);
-  white-space: nowrap;
-}
-
-.sidebar li.profile .designation{
-  font-size: 12px;
-}
-
-.sidebar .profile #log_out{
-  position: absolute;
-  top:50%;
-  right: 0;
-  transform: translateY(-50%);
-  background-color: var(--color-second);
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.5s ease;
-}
-
-.sidebar.open .profile #log_out{
-  width: 50px;
-  background: none;
-}
-
-.home-section{
-  position: relative;
-  background-color: var(--color-body);
-  min-height: 100vh;
-  top:0;
-  left:78px;
-  width: calc(100% - 78px);
-  transition: all .5s ease;
-  z-index: 2;
-}
-
-.home-section .text{
-  display: inline-block;
-  color:var(--color-default);
-  font-size: 25px;
-  font-weight: 500;
-  margin: 18px;
-}
-
-.sidebar.open ~ .home-section{
-  left:250px;
-  width: calc(100% - 250px);
-}
-
-
-.container {
-            max-width: 800px;
-            padding: 20px;
-            height: 550px;
-            border-radius: 10px;
-            position: relative;
-        }
-        .title {
-            font-size: 32px;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            color: #1E3B85;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        .post-box {
-            background-color: #d7dfee;
-            width: 600px;
-            padding-left: 30px;
-            padding-top: 10%;
-            padding-right: 10%;
-            padding-bottom: 10%;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-        .post-box h2 {
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-size: 30px;
-            color: #333333;
-            font-weight: bold;
-            margin-left: -342px;
-            margin-top: -80px;
-        }
-
-        .post-box label{
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-size: 20px;
-            margin: 10px;
-            color: #333333;
-            font-weight: bold;
-            text-align: left;
-            display: inline-block;
-        }
-
-        .post-box input[type=text], select {
-                height: 150%;
-                font-size: 20px;
-                display: inline-block;
-                border: 1px solid #ccc;
-                border-radius: 20px;
-                box-sizing: border-box;
-                }
-
-         .post-box input[type=textarea], select {
-                width: 100%;
-                height: 200px;
-                font-size: 12px;
-                display:  inline-block;
-                border: 1px solid #ccc;
-                border-radius: 20px;
-                box-sizing: border-box;
-                margin-left: 10px;
-                }
-
-        .post-box input[type=selector], select {
-                height: 150%;
-                width: 45%;
-                font-size: 20px;
-                display:  inline-block;
-                border: 1px solid #ccc;
-                border-radius: 20px;
-                box-sizing: border-box;
-                }
-                
-        .post-box input[type=date], select {
-                height: 150%;
-                font-size: 20px;
-                display: inline-block;
-                border: 1px solid #ccc;
-                border-radius: 20px;
-                box-sizing: border-box;
-                }
-
-        .post-box input[type=time], select {
-                height: 150%;
-                font-size: 20px;
-                display:  inline-block;
-                border: 1px solid #ccc;
-                border-radius: 20px;
-                box-sizing: border-box;
-                }
-
-        .post-box input[type=number], select {
-                height: 150%;
-                font-size: 20px;
-                display:  inline-block;
-                border: 1px solid #ccc;
-                border-radius: 20px;
-                box-sizing: border-box;
-                }
-
-        .post-box p {
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-size: 40px;
-            color: #333333;
-            font-weight: bold;
-        }
-
-
-        .button-group {
-            position: absolute;
-            right: 20px;
-        }
-        .post-button {
-            background-color: #d7dfee;
-            color: black;
-            font-weight: bold;
-            font-size: 25px;
-            border: none;
-            border-radius: 25px;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-right: 0px;
-        }
-
-
-
-
+    .post-button {
+      background-color: #d7dfee;
+      color: black;
+      font-weight: bold;
+      font-size: 25px;
+      border: none;
+      border-radius: 25px;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-right: 0px;
+    }
   </style>
-  
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo_details">
-      <i class="bx bxl-audible icon"></i>
-      <div class="logo_name">HANAPKITA</div>
-      <i class="bx bx-menu" id="btn"></i>
-    </div>
-    <ul class="nav-list">
-      <li>
-        <a href="employerdashboardhome.html">
-          <i class="bx bx-grid-alt"></i>
-          <span class="link_name">Home</span>
-        </a>
-        <span class="tooltip">Home</span>
-      </li>
-      <li>
-        <a href="employerinbox.html">
-          <i class="bx bx-chat"></i>
-          <span class="link_name">Inbox</span>
-        </a>
-        <span class="tooltip">Inbox</span>
-      </li>
-      <li>
-        <a href="employerskilledworker.html">
-          <i class="bx bx-id-card"></i>
-          <span class="link_name">Worker</span>
-        </a>
-        <span class="tooltip">Worker</span>
-      </li>      
-      <li>
-        <a href="employerjobpost.html">
-          <i class="bx bx-news"></i>
-          <span class="link_name">Job Post</span>
-        </a>
-        <span class="tooltip">Job Post</span>
-      </li> 
-      <li>
-        <a href="employerongoing.html">
-          <i class="bx bx-loader"></i> <!-- Changed icon class here -->
-          <span class="link_name">Ongoing</span> <!-- Updated the name to Ongoing -->
-        </a>
-        <span class="tooltip">Ongoing</span> <!-- Updated the tooltip to Ongoing -->
-      </li>
-      
-      <li>
-        <a href="employer_history.html">
-          <i class="bx bx-history"></i>
-          <span class="link_name">History</span>
-        </a>
-        <span class="tooltip">History</span>
-      </li>    
-      <li class="profile">
-        <div class="profile_details">
-          <img src="bersoto.jpg" alt="profile image">
-          <div class="profile_content">
-            <div class="name">Joseph Bersoto</div>
-            <div class="designation">Employer</div>
-          </div>
-        </div>
-        <i class="bx bx-log-out" id="log_out"></i>
-      </li>
-    </ul>
+<div class="container">
+  <div class="title">Post a Job</div>
+  <div class="post-box">
+    <label> Hiring for: </label>
+    <select id="selectJob" onchange="stateSelected();" class="selector">
+      <option value="" selected="selected">Choose job</option>
+      <option value="jobDriver">Driver</option>
+      <option value="jobWasher">Washer</option>
+      <option value="jobSecurityGuard">Security Guard</option>
+      <option value="jobElectrician">Electrician</option>
+      <option value="jobPlumber">Plumber</option>
+      <option value="jobYaya">Yaya</option>
+    </select><br>
+
+    <label>Location:</label>
+    <select id="selectLocation" onchange="stateSelected();" class="selector">
+      <option value="" selected="selected">Choose location</option>
+      <option value="caloocan">Caloocan</option>
+      <option value="sampaloc">Sampaloc</option>
+      <option value="santaana">Santa Ana</option>
+      <option value="malate">Malate</option>
+      <option value="paco">Paco</option>
+      <option value="qc">Quezon City</option>
+    </select><br>
+
+    <label>Salary Offer:</label>
+    <input type="number" id="salary" name="salary"><br>
+
+    <label>Date:</label>
+    <input type="date" id="date" name="date"><br>
+
+    <label>Time:</label>
+    <input type="time" id="time" name="time"><br>
+
+    <label>Job Description:</label>
+    <textarea id="jobDescription" name="jobDescription"></textarea><br>
+
+    <button class="post-button">POST</button>
   </div>
-
-  <div class="container">
-    <div class="title">Post a Job</div>
-    <div class="post-box">
-        <label> Hiring for: </label>
-        <select id="selectJob" onchange="stateSelected();" class="selector"> 
-            <option value="" selected="selected">Choose job</option> 
-            <option value="jobDriver">Driver</option> 
-            <option value="jobWasher">Washer</option> 
-            <option value="jobSecurityGuard">Security Guard</option> 
-            <option value="jobElectrician">Electrician</option> 
-            <option value="jobPlumber">Plumber</option> 
-            <option value="jobYaya">Yaya</option> 
-        </select> <br>
-
-        <label>Location:</label>
-        <select id="selectJob" onchange="stateSelected();" class="selector"> 
-        <option value="" selected="selected">Choose location</option> 
-        <option value="caloocan">Caloocan</option> 
-        <option value="sampaloc">Sampaloc</option> 
-        <option value="santaana">Santa Ana</option> 
-        <option value="malate">Malate</option> 
-        <option value="paco">Paco</option> 
-        <option value="qc">Quezon City</option> 
-        
-        <label>Salary Offer:</label>
-        <input type="number" id="salary" name="salary"> <br>
-
-        <label> Date:</label>
-        <input type="date" id="date" name="date"> <br>
-
-        <label>Time:</label>
-        <input type="time" id="time" name="time"> <br>
-
-        <label>Job Description:</label>
-        <input type="textarea" id="jobDescription" name="jobDescription"><br>
-
-    </div>
- 
-    <div class="button-group">
-        <button class="post-button">POST </button>
-    </div>
 </div>
-
-
-
-
-
-
 
 <script src="script.js"></script>
 </body>

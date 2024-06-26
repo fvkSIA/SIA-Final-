@@ -139,38 +139,31 @@
                     </li>
                     <li id="registration">
                         <i class='bx bxs-user-check'></i>
-                        <a href="javascript:void(0)" onclick="changeContent('#')">Registration</a>
+                        <a href="javascript:void(0)" onclick="changeContent('adminregistration.html')">Registration</a>
                     </li>
                     <li id="jobseeker">
                         <i class='bx bxs-user-circle'></i>
                         <a href="javascript:void(0)" onclick="changeContent('admdashboardjobseeker.html')">Jobseeker</a>
                     </li>
                     <li id="employer">
-                        <i class='bx bxs-user-circle'></i>
-                        <a href="javascript:void(0)" onclick="changeContent('admdashboardemployer.html')">Employer</a>
-                    </li>
-                    <li id="company">
                         <i class='bx bxs-group'></i>
-                        <a href="javascript:void(0)" onclick="changeContent('admincompany.html')">Company</a>
+                        <a href="javascript:void(0)" onclick="changeContent('admdashboardemployer.html')">Employer</a>
                     </li>
                     <li id="reports">
                         <i class='bx bxs-file'></i>
-                        <a href="javascript:void(0)" onclick="changeContent('#')">Reports</a>
+                        <a href="javascript:void(0)" onclick="changeContent('adminhomedashboard.html')">Reports</a>
                     </li>
                     <li id="logout">
                         <i class='bx bx-log-in'></i>
-                        <a href="javascript:void(0)" onclick="changeContent('adminlogin.html')">Logout</a>
+                        <a href="adminlogin.html">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="main-content" id="mainContent">
-            <!-- Content will be loaded here -->
-            <div class="dashboard-content">
-                <h1>Welcome to the Admin Dashboard</h1>
-                <p>Here is the main content of your admin dashboard.</p>
-            </div>
+            <iframe src="adminhomedashboard.html" width="100%" height="520px" frameborder="0"></iframe>
         </div>
+        
     </div>
 
     <script>

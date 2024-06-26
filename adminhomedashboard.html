@@ -43,12 +43,16 @@
 
         .stat-box {
             background: #ffffff;
-            padding: 2px;
+            padding: 1px;
             border-radius: 8px;
             text-align: center;
-            width: 23%;
+            width: 20%;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+        }
+        .stat-box a {
+            text-decoration: none !important; /* Alisin ang underline */
+            color: inherit; /* Panatilihing kulay ng text tulad ng default */
         }
 
         .stat-box .stat-circle {
@@ -76,10 +80,9 @@
 
         .total-box {
             background: #ffffff;
-            padding: 0px;
             border-radius: 8px;
             text-align: center;
-            width: 49%;
+            width: 47%;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
@@ -135,7 +138,7 @@
 
         @media (max-width: 768px) {
             .stat-box, .total-box {
-                width: 48%;
+                width: 44%;
             }
         }
 
@@ -175,6 +178,40 @@
                 margin-top: 10px;
             }
         }
+        .stats-container a,
+        .total-container a {
+            text-decoration: none; /* Removes underline */
+        }
+        .stats-container {
+            font-size: 16px;
+        }
+        .stat-box {
+            display: inline-block;
+            text-align: center;
+            margin: 1px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            color: inherit;
+        }
+        .stat-circle {
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        .total-container {
+            margin-top: 20px;
+        }
+        .total-box {
+            display: inline-block;
+            text-align: center;
+            margin: 2px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
 </head>
 <body>
@@ -184,52 +221,50 @@
         <div style="color: black;">
             <div class="header">
                 <h1>Admin Dashboard</h1>
-                <div class="filters">
-                    <!-- Filters content -->
-                </div>
             </div>
 
             <div class="stats-container" style="font-size: 16px;">
-                <div class="stat-box">
+                <a href="#pending-applicants" class="stat-box">
                     <div class="stat-circle pendingapplicants">
                         <i class='bx bxs-user'></i>
                     </div>
                     Pending Applicants
                     <p>5</p>
-                </div>
-                <div class="stat-box">
+                </a>
+                <a href="#ongoing-jobs" class="stat-box">
                     <div class="stat-circle ongoing-jobs">
                         <i class='bx bxs-briefcase'></i>
                     </div>
                     Ongoing Jobs
                     <p>5</p>
-                </div>
-                <div class="stat-box">
+                </a>
+                <a href="#jobseekers-available" class="stat-box">
                     <div class="stat-circle jobseekers-available">
                         <i class='bx bxs-group'></i>
                     </div>
                     Jobseekers Available
                     <p>5</p>
-                </div>
-                <div class="stat-box">
+                </a>
+                <a href="#hired-workers" class="stat-box">
                     <div class="stat-circle hired-workers">
                         <i class='bx bxs-user-check'></i>
                     </div>
                     Hired Workers
                     <p>5</p>
-                </div>
+                </a>
             </div>
-
+            
             <div class="total-container">
-                <div class="total-box">
+                <a href="#total-jobs" class="total-box">
                     <h2>Total Jobs Advertised</h2>
                     <p>50</p>
-                </div>
-                <div class="total-box">
+                </a>
+                <a href="#total-companies" class="total-box">
                     <h2>Total Companies</h2>
                     <p>20</p>
-                </div>
+                </a>
             </div>
+            
 
             <div class="job-occupations">
                 <h2>Job Occupations</h2>

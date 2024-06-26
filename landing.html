@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HANAPKITA</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your external stylesheet -->
+
 
     <style>
         body{
@@ -9,92 +13,93 @@
             background-color: #E9F1FA; /* Updated background color */
 
         }
-        nav{
-            background-color: #00ABE4;
-            padding: 0px 10px;
-            box-shadow: 0 0 3px 2px #c8e8e9;
+        nav {
+            background-color: #4661a8;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            font-family: 'Arial', sans-serif; /* dagdag na font family */
         }
+        
         .logo-container {
-            margin-top: 10px;
-            display: inline-block;
+            display: flex;
+            align-items: center;
         }
-
+        
         .logo {
-            height: 100px;
-            width: 100px;
-            margin-left: 30px;                
+            width: 40px; /* Adjust size as needed */
+            height: auto;
+            margin-right: 10px;
         }
-        .title{
-            display: inline-block;
+        
+        .title {
+            font-size: 1.5em;
             margin: 0;
-            color: black;
-            font-size: 28px;
-            font-family: Georgia, 'Times New Roman', Times, serif; 
-            position: relative;
-            top: -45px;
-            right: 5px;
         }
-        .links-container{
-            float: right;
-            position: relative;
-            top: 45px;
+        
+        .links-container {
+            display: flex;
+            align-items: center;
         }
-        .link{
-            font-size: 18px;
-            color: black;
+        
+        .link, .btn-link {
+            color: #fff;
             text-decoration: none;
-            font-family: Georgia, 'Times New Roman', Times, serif; 
-            margin: 0 20px;
-            transition: 0.2s;
-        }
-        .link:hover{
-            color: purple;
-        }
-
-        .btn-link{
-            background-color: #fafafa;;
-            font-family: Georgia, 'Times New Roman', Times, serif; 
-            padding: 10px 15px;
-            text-decoration: none;  
-            border: 2px solid;
-            border-radius: 5px;
-            color: black;
             margin: 0 10px;
         }
-        .btn-link:hover{
-            padding: 10px 30px;
-        }
+        .btn-container {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #f0f0f0; /* default background color */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: background-color 0.3s ease; /* smooth background color transition */
+    }
 
-        .text1 {
-  display: inline-block;
-  margin: 0;
-  color: #3D52A0;
-  font-size: 120px;
-  font-family: Georgia, 'Times New Roman', Times, serif; 
-  position: absolute;
-  top: 150px;
-  left: 70px; /* Adjusted value to position the title relative to the logo */
-  }
-  .text2 {
-  display: inline-block;
-  margin: 0;
-  color: #3D52A0;
-  font-size: 15px;
-  font-family: Georgia, 'Times New Roman', Times, serif; 
-  font-style: italic;
-  position: absolute;
-  top: 450px;
-  left: 90px; /* Adjusted value to position the title relative to the logo */
-  }
-  .landpic {
-  position: absolute;
-  top: 80px; /* Adjust as needed */
-  left: 670px; /* Adjust to move it to the right */
-  }
-  .pic1 {
-  height: 650px; /* Adjust height as needed */
-  width: 580px; /* Adjust width as needed */
-  }
+    .btn-container:hover {
+        background-color: #e0e0e0; /* background color when hovered */
+    }
+
+    .btn-link {
+        display: inline-block;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: #000000;
+        background-color: #007bff;
+        border: 2px solid #007bff; 
+        border-radius: 5px;
+        transition: background-color 0.3s ease, border-color 0.3s ease; 
+        font-weight: bold;
+    }
+
+    .btn-link:hover {
+        background-color: #a0ceff;
+        border-color: #000101; 
+    }
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        
+            .logo-container {
+                margin-bottom: 10px;
+            }
+        
+            .links-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        
+            .link, .btn-link {
+                margin: 5px 0;
+            }
+        }
+        
+
   .right-half {
   position: absolute;
   top: 0px;
@@ -110,9 +115,6 @@
   display: flex;
   align-items: center;
   position: absolute;
-  top: 550px; /* Adjust this value to position the search bar */
-  left: 110px; /* Adjust this value to position the search bar */
-  gap: 15px;
   }
   .search-bar input, .search-bar select, .search-bar button {
   border: none;
@@ -143,13 +145,13 @@
     display: flex;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: 640px; /* Adjusted margin to move the content further down */
-    width: 96%; /* Make the container span the entire width */
-    margin-left: 30px;
-    flex-wrap: nowrap; /* Prevent wrapping to keep items in a row */
+    width: 100%; /* Adjusted to span full width */
+    max-width: 1200px; /* Optional: Set a max-width for large screens */
+    margin: 0 auto; /* Centering the container horizontally */
 }
+
+
+
 
 .image-section {
     flex: 1; /* Adjusted width to make it flexible */
@@ -157,15 +159,9 @@
 }
 
 .image-section img {
-    width: 95%; /* Ensure the image takes up the entire container */
-    height: 500px ; /* Maintain aspect ratio */
+    width: 100%; /* Ensure the image takes up the entire container */
+    height: auto; /* Maintain aspect ratio */
     border-radius: 5px;
-    position: absolute; /* Position the image absolutely within its container */
-    top: 0; /* Adjust as needed */
-    left: 0; /* Adjust as needed */
-    right: 0; /* Adjust as needed */
-    bottom: 0; /* Adjust as needed */
-    margin: auto; /* Center the image within its container */
 }
 
 .text-section {
@@ -174,6 +170,7 @@
     font-family: 'Poppins', sans-serif;
     background-color: #f8f9fa;
 }
+
 
   
   .text-section h1 {
@@ -196,13 +193,12 @@
     background-color: white;
     padding: 20px;
     border-radius: 20px;
-    width: 600px;
+    width: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-left: 350px;
-    margin-top: 25px;
-    height: 320px; /* Adjusted height */
+    margin: 0 auto; /* This centers the container horizontally */
 }
+
 
         .top-job-seekers h2 {
             margin-bottom: 20px;
@@ -487,18 +483,10 @@
 
 
   .card-5 {
-  position: relative;
-  width: 1190px; /* Adjusted width */
+  width: 100%; /* Adjusted width */
   background: #fafafa;
   box-shadow: 0 2px 7px #000;
   font-family: 'Montserrat', sans-serif;
-  margin: 20px auto;
-  padding: 15px;
-  height: 745px; /* Adjusted height */
-  margin-top: 60px;
-  margin-left: -946px; /* Added margin to the left */
-  padding-bottom: 20px;
-  border-radius: 10px;
   }
   .item5 img { 
   max-width: 50%;
@@ -559,14 +547,14 @@
   text-align: center;
   }
 
-.footer {
-    width: 98%;
+  .footer {
+    width: 100%; /* Adjusted to span full width */
     background-color: #f8f9fa;
-    padding: 20px;
     font-family: Arial, sans-serif;
     margin-top: 70px;
     border-radius: 5px;
 }
+
 .footer-section {
     display: flex;
     justify-content: space-around;
@@ -614,7 +602,7 @@
             <img class="logo"
             src="hanapKITA.png">
             <h2 class="title"> HANAPKITA</h2>
-            </div>
+        </div>
             <div class="links-container">
                 <a class="link" href="landing.html"> HOME </a>
                 <a class="link" href="#top"> JOB SEARCH </a>
@@ -622,26 +610,24 @@
                 <a class="link" href="#middle"> JOB HIRING </a>  
                 <a class="link" href="#bottom"> ABOUT </a>
                 <a class="btn-link" href="login.html"> SIGN IN </a>
-                </div>
+            </div>
     </nav>
 
-    <div id="top"></div>
-    <h1 class="text1">Search, Find,<br>and Apply!</h1>
-    <h5 class="text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id lectus sit <br>
-        amet augue aliquet consectetur. Donec interdum, sem et facilisis luctus,<br>
-        neque sapien tincidunt odio, et efficitur tellus lacus tincidunt metus. </h5>
-
-
-        <div class="landpic">
-        <img class="pic1" src="landpic1.png"> 
-    </div>
-
-    <div class="search-bar">
-        <input type="text" placeholder="Job title or Keyword" />
-        <select>
-            <option value="">Location</option>
-        </select>
-        <button>Find Now!</button>
+    <div  style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto; width: 100%; padding-bottom: 20px;">
+        <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
+            <h1 style="font-family: Georgia, serif; font-size: 2.5em; font-weight: bold; color: #333; padding-top: 30px;">
+                Search, Find, and Apply!
+            </h1>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 10px; background-color: #f0f0f0; padding: 10px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <input type="text" style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+                <select style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: white;">
+                    <option value="">Location</option>
+                </select>
+                <button style="flex: 1 1 auto; padding: 8px 20px; width: 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;">
+                    Find Now!
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -655,6 +641,8 @@
 
           </div>
     </div>
+
+    <br><br>
     <div id="middle"></div>
     <div class="top-job-seekers">
         <h2>Top Job Seekers</h2>
@@ -688,63 +676,29 @@
             <span></span>
         </div>
 
-        <div class="card">
-            <div class="item1">
-                <img src="electrician.jpg">
-                    <h2 class="catagory"> Electrician </h2>
-                    <h3 class="price-1"> We Make Things Shine. </h3>
-                    <button class="button-1"> APPLY NOW!!</button>
-            </div>
-            
-            <div class="card-1">
-            <div class="item2">
-                <img src="plumber.jpg">
-                    <h2 class="catagory-1"> Plumber </h2>
-                    <h3 class="price-2"> Leaks Fear Us. </h3>
-                    <button class="button-2"> APPLY NOW!!</button>
-            </div>
-            
-            <div class="card-2">
-            <div class="item3">
-                <img src="welder.jpg">
-                    <h2 class="catagory-2"> Welder </h2>
-                    <h3 class="price-3"> We Weld It Right!. </h3>
-                    <button class="button-3"> APPLY NOW!!</button>
-            </div>
-
-            <div class="card-3">
-                <div class="item4">
-                    <img src="driver.jpg">
-                        <h2 class="catagory-3"> Driver </h2>
-                        <h3 class="price-4"> Stay alert, Arrive Alive. </h3>
-                        <button class="button-4"> APPLY NOW!!</button>
-                </div>
+    </div>
+<br>
+<iframe src="slide/index.html" frameborder="0" style="width: 100%; height: 540px;"></iframe>
 
 
-            <div id="bottom"></div>
-            <div class="card-5">
-                <div class="item5">
-                    <img src="mission.jpg">
-                        <h2 class="text-1"><b>MISSION </b></h2>
-                        <p class="text-2"> Our mission at HanapKITA is to empower skilled and unskilled workers by providing a comprehensive, user friendly web-based platform that connects them with employment opportunities. 
-                          <br><br>We aim to bridge the gap between job seekers and employers by facilitating efficient, transparent, and reliable job matching services, ultimately contributing to the economic growth and development of our communities.
-     </p>
-                </div>
+    
+    <div style="padding: 20px; background-color: #f8f9fa; border: 1px solid #ccc; border-radius: 5px; width: 90%; margin: 0 auto; text-align: center;">
 
-                    <div class="item6">
-                        <img src="mission.jpg">
-                            <h2 class="text-3"><b>VISION </b></h2>
-                            <p class="text-4"> Our vision is to become the leading job search platform 
-                                 <br>in the region, known for its commitment to inclusivity, 
-                                <br> innovation, and excellence. We aspire to transform 
-                                <br>the job-seeking experience for skilled and unskilled 
-                                <br> workers, ensuring that everyone has equal access to opportunities 
-                                <br>that allow them to thrive and succeed in their careers.
-                                <br><br>Through continuous improvement and community engagement, 
-                                <br>we aim to build a future where employment is accessible to all, 
-                                <br>and every individual can realize their full potential.
-                            </p>
-                    </div>
+        <h2><b>MISSION </b></h2>
+        <p style="font-size: 20px;">Our mission at HanapKITA is to empower skilled and unskilled workers by providing a comprehensive, user-friendly web-based platform that connects them with employment opportunities. We aim to bridge the gap between job seekers and employers by facilitating efficient, transparent, and reliable job matching services, ultimately contributing to the economic growth and development of our communities.</p>
+        
+        <h2><b>VISION </b></h2>
+        <p style="font-size: 16px;">Our vision is to become the leading job search platform in the region, known for its commitment to inclusivity, innovation, and excellence. We aspire to transform the job-seeking experience for skilled and unskilled workers, ensuring that everyone has equal access to opportunities that allow them to thrive and succeed in their careers. Through continuous improvement and community engagement, we aim to build a future where employment is accessible to all, and every individual can realize their full potential.</p>
+    
+    </div>
+    
+    
+    
+                        
+
+                  
+
+
 
                     <footer class="footer">
                         <div class="footer-section">
