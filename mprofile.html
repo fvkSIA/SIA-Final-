@@ -101,18 +101,32 @@
                         </div>
                     </div>
                     
-                    <!-- Languages -->
-                    <div>
-                        <h2 class="text-2xl font-semibold text-[#4B5EAB]">Languages</h2>
-                        <button class="mt-2 px-4 py-2 bg-[#E1E7EF] rounded-md text-[#4B5EAB] text-sm hover:bg-[#D0D7E2]" id="addlanguageBtn">Add Languages</button>
-                        <p class="mt-2 text-gray-700 text-sm">Add languages to appeal to more companies and employers.</p>
-                    </div>
                     
                     <!-- Resume -->
                     <div>
-                        <h2 class="text-2xl font-semibold text-[#4B5EAB]">Resume</h2>
-                        <button class="mt-2 px-4 py-2 bg-[#E1E7EF] rounded-md text-[#4B5EAB] text-sm hover:bg-[#D0D7E2]">Add Resume</button>
-                    </div>
+                      <h2 class="text-2xl font-semibold text-[#4B5EAB]">Resume</h2>
+                      <label for="resume-upload" class="mt-2 px-4 py-2 bg-[#E1E7EF] rounded-md text-[#4B5EAB] text-sm hover:bg-[#D0D7E2] cursor-pointer">Add Resume</label>
+                      <input id="resume-upload" type="file" accept=".pdf" style="display: none">
+                  </div>
+                  <div id="pdf-container" style="display: none;">
+                      <embed id="pdf-viewer" src="" type="application/pdf" width="100%" height="600px">
+                  </div>
+                  
+                  <script>
+                      document.getElementById('resume-upload').addEventListener('change', function(event) {
+                          const file = event.target.files[0];
+                          if (file) {
+                              const reader = new FileReader();
+                              reader.onload = function(e) {
+                                  const pdfViewer = document.getElementById('pdf-viewer');
+                                  pdfViewer.setAttribute('src', e.target.result);
+                                  document.getElementById('pdf-container').style.display = 'block';
+                              };
+                              reader.readAsDataURL(file);
+                          }
+                      });
+                  </script>
+                                
                 </div>
             </div>
         </div>
@@ -125,56 +139,55 @@
           <h1 style="font-weight: bold;">Edit Profile</h1>
           <iframe src="jobseeker_profile.html" width="100%" height="400"></iframe>
       </div>
-  </div>
+    </div>
   
     
     <div id="summaryModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Add Summary</h2>
-            <p>This is where you can add your personal summary.</p>
-        </div>
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h1 style="font-weight: bold;">Add Summary</h1>
+          <iframe src="modalsummary.html" width="100%" height="400"></iframe>
+      </div>
     </div>
-    
+
     <div id="roleModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Add Role</h2>
-            <p>This is where you can add your career history role.</p>
-        </div>
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h1 style="font-weight: bold;">Add Role</h1>
+          <iframe src="modalcareer.html" width="100%" height="400"></iframe>
+      </div>
     </div>
     
+
     <div id="educationModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Add Education</h2>
-            <p>This is where you can add your education details.</p>
-        </div>
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h1 style="font-weight: bold;">Add Educatione</h1>
+          <iframe src="modaleducation.html" width="100%" height="400"></iframe>
+      </div>
     </div>
+
     
     <div id="licenceModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Add License or Certification</h2>
-            <p>This is where you can add your licenses and certifications.</p>
-        </div>
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h1 style="font-weight: bold;">Add License or Certification</h1>
+          <iframe src="modaladdlicense.html" width="100%" height="400"></iframe>
+      </div>
     </div>
-    
+
     <div id="skillsModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Edit Skills</h2>
-            <p>This is where you can edit your skills.</p>
-        </div>
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h1 style="font-weight: bold;">Add Skills</h1>
+          <iframe src="modalskills.html" width="100%" height="400"></iframe>
+      </div>
     </div>
     
-    <div id="languagesModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Add Languages</h2>
-            <p>This is where you can add languages you speak.</p>
-        </div>
-    </div>
+    
+
+
+    
 
     <script>
         const modals = {
@@ -184,7 +197,6 @@
             addeducationBtn: 'educationModal',
             addlicenceBtn: 'licenceModal',
             editskillsBtn: 'skillsModal',
-            addlanguageBtn: 'languagesModal'
         };
 
         Object.keys(modals).forEach(id => {
