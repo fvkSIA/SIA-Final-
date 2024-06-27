@@ -1,0 +1,74 @@
+<html>
+<head>
+    <title>Career History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-white font-poppins">
+    <div class="max-w-lg mx-auto mt-10 p-6 border border-gray-200 rounded-lg shadow-sm">
+        <h1 class="text-2xl font-bold mb-2">Career History</h1>
+        <p class="text-gray-600 mb-4">Add your previous roles here</p>
+        <form>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-1">Title/Position</label>
+                <input type="text" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="">
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Employment Type</label>
+                    <select class="w-full border border-gray-300 rounded px-3 py-2">
+                        <option>FULL-TIME</option>
+                        <option>PART-TIME</option>
+                        <option>CONTRACT</option>
+                        <option>INTERNSHIP</option>
+                        <option>TEMPORARY</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Location</label>
+                    <select class="w-full border border-gray-300 rounded px-3 py-2">
+                        <option>City of Manila</option>
+                        <option>Quezon City</option>
+                        <option>Makati</option>
+                        <option>Pasig</option>
+                        <option>Taguig</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Start</label>
+                    <div class="relative">
+                        <input type="text" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="04-24-2020">
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">End</label>
+                    <div class="relative">
+                        <input type="text" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="10-7-2021">
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-1">Company Name / Employer Name</label>
+                <input type="text" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-1">Job Description</label>
+                <textarea class="w-full border border-gray-300 rounded px-3 py-2" rows="4"></textarea>
+            </div>
+            <div class="flex space-x-2">
+                <button type="submit" class="flex-1 bg-blue-600 text-white text-lg font-medium py-2.5 rounded">Add Entry</button>
+                <button type="reset" class="flex-1 bg-gray-200 text-lg font-medium py-2.5 rounded">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</body>
+</html>
