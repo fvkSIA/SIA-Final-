@@ -1,123 +1,212 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: "Poppins", sans-serif;
+            font-family: 'Roboto', sans-serif;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 3% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 100%;
+            max-width: 95%;
+            border-radius: 10px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
-  </head>
-  <body style="font-family: 'Roboto', sans-serif;">
-    <div class="max-w-2xl mx-auto p-4 bg-white rounded-lg shadow-md mt-10">
-      <div class="flex justify-between items-center p-4 rounded-t-lg bg-indigo-100">
-        <div class="flex items-center">
-          <img src="https://placehold.co/80x80" alt="Portrait of Joseph Carlo Bersoto" class="rounded-full w-20 h-20 border-4 border-white -mt-10">
-          <div class="ml-4">
-            <h1 class="text-xl font-bold text-gray-800">Joseph Carlo Bersoto</h1>
-            <p class="text-sm text-gray-600 flex items-center">
-              <i class="fas fa-map-marker-alt mr-2"></i>Pandacan, Manila
-            </p>
-            <p class="text-sm text-gray-600">
-              Bersotojoseph@gmail.com
-            </p>
-          </div>
-        </div>
-        <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2">Edit</button>
-      </div>
-      
-      <div class="p-4">
-        <div class="mb-6">
-          <h2 class="text-lg font-bold text-gray-800">Personal Summary</h2>
-          <p class="text-gray-500 mt-1">Add a way of Personal Summary to your Profile as a way to introduce who you are.</p>
-        </div>
-        
-        <div class="mb-6">
-          <h2 class="text-lg font-bold text-gray-800">Career History</h2>
-          <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1">Add role</button>
-        </div>
-        
-        <div>
-          <h2 class="text-lg font-bold text-gray-800">Education</h2>
-          <div class="border border-gray-300 p-4 mt-2 rounded-lg flex justify-between items-center">
-            <div>
-              <h3 class="text-md font-bold text-gray-800">Bachelor Of Information Technology</h3>
-              <p class="text-sm text-gray-600">Pamantasan ng Lungsod ng Maynila<br>2021 - 2024<br>Dean's Lister</p>
-            </div>
-            <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2">Add Education</button>
-          </div>
-          <div class="space-y-8">
-            <!-- Licences and Certification -->
-            <div>
-                <h2 class="text-2xl font-semibold text-[#4B5EAB]">
-                    Licences and Certification
-                </h2>
-                <button
-                    class="mt-2 px-4 py-2 bg-[#E1E7EF] rounded-md text-[#4B5EAB] text-sm hover:bg-[#D0D7E2]"
-                >
-                    Add licence or certification
-                </button>
-                <p class="mt-2 text-gray-700 text-sm">
-                    Showcase your professional credentials. Add your relevant
-                    licences, certificates, membership and accreditations here.
-                </p>
-            </div>
-
-            <!-- Skill -->
-            <div>
-                <h2 class="text-2xl font-semibold text-[#4B5EAB]">Skill</h2>
-                <div
-                    class="mt-2 px-4 py-3 border rounded-md space-x-2 flex items-center"
-                >
-                    <span
-                        class="px-2 py-1 bg-gray-200 rounded-full text-sm text-gray-600"
-                    >
-                        Computer Literacy
-                    </span>
-                    <span
-                        class="px-2 py-1 bg-gray-200 rounded-full text-sm text-gray-600"
-                    >
-                        Computer Systems
-                    </span>
-                    <span
-                        class="ml-auto text-sm text-gray-600 cursor-pointer"
-                    >
-                        Edit Skills
-                    </span>
+</head>
+<body>
+    <div class="mx-auto p-4 bg-white rounded-lg shadow-md mt-10">
+        <div class="flex justify-between items-center p-4 rounded-t-lg bg-indigo-100">
+            <div class="flex items-center">
+                <img src="https://placehold.co/80x80" alt="Portrait of Joseph Carlo Bersoto" class="rounded-full w-20 h-20 border-4 border-white -mt-10">
+                <div class="ml-4">
+                    <h1 class="text-xl font-bold text-gray-800">Joseph Carlo Bersoto</h1>
+                    <p class="text-sm text-gray-600 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Pandacan, Manila
+                    </p>
+                    <p class="text-sm text-gray-600">Bersotojoseph@gmail.com</p>
                 </div>
             </div>
-
-            <!-- Languages -->
-            <div>
-                <h2 class="text-2xl font-semibold text-[#4B5EAB]">Languages</h2>
-                <button
-                    class="mt-2 px-4 py-2 bg-[#E1E7EF] rounded-md text-[#4B5EAB] text-sm hover:bg-[#D0D7E2]"
-                >
-                    Add Languages
-                </button>
-                <p class="mt-2 text-gray-700 text-sm">
-                    Add languages to appeal to more companies and employers.
-                </p>
+            <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2" id="editBtn">Edit</button>
+        </div>
+        
+        <div class="p-4">
+            <div class="mb-6">
+                <h2 class="text-lg font-bold text-gray-800">Personal Summary</h2>
+                <p class="text-gray-500 mt-1">Add a way of Personal Summary to your Profile as a way to introduce who you are.</p>
+                <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button>
             </div>
-
-            <!-- Resumé -->
+            
+            <div class="mb-6">
+                <h2 class="text-lg font-bold text-gray-800">Career History</h2>
+                <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addroleBtn">Add role</button>
+            </div>
+            
             <div>
-                <h2 class="text-2xl font-semibold text-[#4B5EAB]">Resumé</h2>
-                <button
-                    class="mt-2 px-4 py-2 bg-[#E1E7EF] rounded-md text-[#4B5EAB] text-sm hover:bg-[#D0D7E2]"
-                >
-                    Add Resumé
-                </button>
+                <h2 class="text-lg font-bold text-gray-800">Education</h2>
+                <div class="border border-gray-300 p-4 mt-2 rounded-lg flex justify-between items-center">
+                    <div>
+                        <h3 class="text-md font-bold text-gray-800">Bachelor Of Information Technology</h3>
+                        <p class="text-sm text-gray-600">Pamantasan ng Lungsod ng Maynila<br>2021 - 2024<br>Dean's Lister</p>
+                    </div>
+                    <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2" id="addeducationBtn">Add Education</button>
+                </div>
+                <div class="space-y-8">
+                    <!-- Licenses and Certification -->
+                    <div>
+                        <h2 class="text-2xl font-semibold text-[#4B5EAB]">Licenses and Certification</h2>
+                        <button class="mt-2 px-4 py-2 bg-[#E1E7EF] rounded-md text-[#4B5EAB] text-sm hover:bg-[#D0D7E2]" id="addlicenceBtn">Add license or certification</button>
+                        <p class="mt-2 text-gray-700 text-sm">Showcase your professional credentials. Add your relevant licenses, certificates, membership, and accreditations here.</p>
+                    </div>
+                    
+                    <!-- Skills -->
+                    <div>
+                        <h2 class="text-2xl font-semibold text-[#4B5EAB]">Skills</h2>
+                        <div class="mt-2 px-4 py-3 border rounded-md space-x-2 flex items-center">
+                            <span class="px-2 py-1 bg-gray-200 rounded-full text-sm text-gray-600">Computer Literacy</span>
+                            <span class="px-2 py-1 bg-gray-200 rounded-full text-sm text-gray-600">Computer Systems</span>
+                            <span class="ml-auto text-sm text-gray-600 cursor-pointer" id="editskillsBtn">Edit Skills</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Languages -->
+                    <div>
+                        <h2 class="text-2xl font-semibold text-[#4B5EAB]">Languages</h2>
+                        <button class="mt-2 px-4 py-2 bg-[#E1E7EF] rounded-md text-[#4B5EAB] text-sm hover:bg-[#D0D7E2]" id="addlanguageBtn">Add Languages</button>
+                        <p class="mt-2 text-gray-700 text-sm">Add languages to appeal to more companies and employers.</p>
+                    </div>
+                    
+                    <!-- Resume -->
+                    <div>
+                        <h2 class="text-2xl font-semibold text-[#4B5EAB]">Resume</h2>
+                        <button class="mt-2 px-4 py-2 bg-[#E1E7EF] rounded-md text-[#4B5EAB] text-sm hover:bg-[#D0D7E2]">Add Resume</button>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
-      </div>
     </div>
-  </body>
+
+    <!-- Modal Areas -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h1 style="font-weight: bold;">Edit Profile</h1>
+          <iframe src="jobseeker_profile.html" width="100%" height="400"></iframe>
+      </div>
+  </div>
+  
+    
+    <div id="summaryModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Summary</h2>
+            <p>This is where you can add your personal summary.</p>
+        </div>
+    </div>
+    
+    <div id="roleModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Role</h2>
+            <p>This is where you can add your career history role.</p>
+        </div>
+    </div>
+    
+    <div id="educationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Education</h2>
+            <p>This is where you can add your education details.</p>
+        </div>
+    </div>
+    
+    <div id="licenceModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add License or Certification</h2>
+            <p>This is where you can add your licenses and certifications.</p>
+        </div>
+    </div>
+    
+    <div id="skillsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Skills</h2>
+            <p>This is where you can edit your skills.</p>
+        </div>
+    </div>
+    
+    <div id="languagesModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Languages</h2>
+            <p>This is where you can add languages you speak.</p>
+        </div>
+    </div>
+
+    <script>
+        const modals = {
+            editBtn: 'editModal',
+            addsummaryBtn: 'summaryModal',
+            addroleBtn: 'roleModal',
+            addeducationBtn: 'educationModal',
+            addlicenceBtn: 'licenceModal',
+            editskillsBtn: 'skillsModal',
+            addlanguageBtn: 'languagesModal'
+        };
+
+        Object.keys(modals).forEach(id => {
+            document.getElementById(id).onclick = function() {
+               
+              const modalId = modals[id];
+              const modal = document.getElementById(modalId);
+              const span = modal.getElementsByClassName("close")[0];
+          
+              modal.style.display = "block";
+          
+              span.onclick = function() {
+                  modal.style.display = "none";
+              }
+          
+              window.onclick = function(event) {
+                  if (event.target == modal) {
+                      modal.style.display = "none";
+                  }
+              }
+          };
+      });
+  </script>
+</body>
 </html>
