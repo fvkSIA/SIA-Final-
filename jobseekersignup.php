@@ -8,7 +8,9 @@ $emailExists = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form data
-    $full_name = $_POST['full_name'];
+    $full_name = $_POST['first_name'];
+    $full_name = $_POST['middle_name'];
+    $full_name = $_POST['last_name'];
     $email = $_POST['email'];
     $phone_number = $_POST['phone_number'];
     $birth_date = $_POST['birth_date'];
@@ -46,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $emailExists = true;
     } else {
         // Insert data into the database
-        $sql = "INSERT INTO jobseekers (full_name, email, phone_number, birth_date, gender, address, password, worker_type, type_of_work, profile, resume, valid_ids, recent_job_experience)
-                VALUES ('$full_name', '$email', '$phone_number', '$birth_date', '$gender', '$address', '$password', '$worker_type', '$type_of_work', '$profile', '$resume', '$valid_ids', '$recent_job_experience')";
+        $sql = "INSERT INTO jobseekers (first_name, middle_name, last_name, email, phone_number, birth_date, gender, address, password, worker_type, type_of_work, profile, resume, valid_ids, recent_job_experience)
+                VALUES ('$first_name', '$middle_name', '$last_name', '$email', '$phone_number', '$birth_date', '$gender', '$address', '$password', '$worker_type', '$type_of_work', '$profile', '$resume', '$valid_ids', '$recent_job_experience')";
 
     if (mysqli_query($conn, $sql)) {
         $showModal = true;
@@ -284,8 +286,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <header>CREATE A NEW ACCOUNT</header>
         <form action="jobseekersignup.php" method="post" enctype="multipart/form-data" class="form" onsubmit="return validatePasswords()">
             <div class="input-box">
-                <label><b>Full Name:</b></label>
-                <input type="text" name="full_name" placeholder="Enter full name" required />
+                <label><b>First Name:</b></label>
+                <input type="text" name="first_name" placeholder="Enter first name" required />
+            </div>
+            <div class="input-box">
+                <label><b>Middle Name:</b></label>
+                <input type="text" name="middle_name" placeholder="Enter middle name" required />
+            </div>
+            <div class="input-box">
+                <label><b>Last Name:</b></label>
+                <input type="text" name="last_name" placeholder="Enter last name" required />
             </div>
             <div class="input-box">
                 <label><b>Email Address:</b></label>
