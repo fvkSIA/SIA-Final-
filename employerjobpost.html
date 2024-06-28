@@ -9,30 +9,6 @@
       font-family: Arial, sans-serif;
     }
 
-    .home-section {
-      position: relative;
-      background-color: var(--color-body);
-      min-height: 100vh;
-      top: 0;
-      left: 78px;
-      width: calc(100% - 78px);
-      transition: all .5s ease;
-      z-index: 2;
-    }
-
-    .home-section .text {
-      display: inline-block;
-      color: var(--color-default);
-      font-size: 25px;
-      font-weight: 500;
-      margin: 18px;
-    }
-
-    .sidebar.open ~ .home-section {
-      left: 250px;
-      width: calc(100% - 250px);
-    }
-
     .container {
       max-width: 100%;
       border-radius: 10px;
@@ -40,7 +16,6 @@
 
     .title {
       font-size: 32px;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       color: #1E3B85;
       margin-bottom: 20px;
       text-align: left;
@@ -59,22 +34,18 @@
     }
 
     .post-box h2 {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       font-size: 30px;
       color: #333333;
       font-weight: bold;
-      margin-left: -342px;
-      margin-top: -80px;
     }
 
     .post-box label {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       font-size: 20px;
-      margin: 10px;
       color: #333333;
       font-weight: bold;
       text-align: left;
-      display: inline-block;
+      display: block;
+      margin-bottom: 5px;
     }
 
     .post-box input[type=text],
@@ -98,11 +69,49 @@
       height: 100px;
     }
 
-    .post-box p {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      font-size: 40px;
-      color: #333333;
-      font-weight: bold;
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .textarea-container {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      flex: 1;
+      height: 100px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+
+    .delete-button {
+      background-color: transparent;
+      color: #ff4d4d;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 20px;
+      align-self: center;
+      display: none; /* Hide delete button by default */
+    }
+
+    .delete-button:hover {
+      color: #ff1a1a;
+    }
+
+    .add-other {
+      color: #007bff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .add-other:hover {
+      text-decoration: underline;
     }
 
     .post-button {
@@ -112,18 +121,18 @@
       font-size: 25px;
       border: none;
       border-radius: 25px;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       padding: 10px 20px;
       cursor: pointer;
-      margin-right: 0px;
+      float: right; /* Align to the right */
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 <div class="container">
-  <div class="title">Post a Job</div>
+  <div class="title">POST A JOB</div>
   <div class="post-box">
-    <label> Hiring for: </label>
+    <label>Hiring for:</label>
     <select id="selectJob" onchange="stateSelected();" class="selector">
       <option value="" selected="selected">Choose job</option>
       <option value="jobDriver">Driver</option>
@@ -145,6 +154,14 @@
       <option value="qc">Quezon City</option>
     </select><br>
 
+    <label>Job Type:</label>
+    <select id="selectJobType" onchange="stateSelected();" class="selector">
+      <option value="" selected="selected">Choose Job Type</option>
+      <option value="fulltime">Full Time</option>
+      <option value="parttime">Part Time</option>
+      <option value="onetime">One Time</option>
+    </select><br>
+
     <label>Salary Offer:</label>
     <input type="number" id="salary" name="salary"><br>
 
@@ -154,13 +171,62 @@
     <label>Time:</label>
     <input type="time" id="time" name="time"><br>
 
-    <label>Job Description:</label>
-    <textarea id="jobDescription" name="jobDescription"></textarea><br>
+    <div class="form-group">
+      <label for="job-description">Responsibilities:</label>
+      <div class="textarea-container">
+        <textarea id="job-description" name="job-description"></textarea>
+        <button class="delete-button" onclick="deleteTextarea(this)"><i class="bx bx-x"></i></button>
+      </div>
+      <a href="#" class="add-other" onclick="addOther('job-description')">Add "Other"</a>
+    </div>
+
+    <div class="form-group">
+      <label for="job-qualifications">Qualifications:</label>
+      <div class="textarea-container">
+        <textarea id="job-qualifications" name="job-qualifications"></textarea>
+        <button class="delete-button" onclick="deleteTextarea(this)"><i class="bx bx-x"></i></button>
+      </div>
+      <a href="#" class="add-other" onclick="addOther('job-qualifications')">Add "Other"</a>
+    </div>
 
     <button class="post-button">POST</button>
   </div>
 </div>
+<script>
+  function addOther(name) {
+    const formContainer = document.querySelector(`textarea[name="${name}"]`).parentNode.parentNode;
 
-<script src="script.js"></script>
+    // Create a new container for the textarea and delete button
+    const newContainer = document.createElement('div');
+    newContainer.className = 'textarea-container';
+
+    // Create a new textarea element
+    const newTextarea = document.createElement('textarea');
+    newTextarea.name = name;
+
+    // Create a delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'delete-button';
+    deleteButton.innerHTML = '<i class="bx bx-x"></i>';
+    deleteButton.onclick = function() {
+        formContainer.removeChild(newContainer);
+    };
+
+    // Append the textarea and delete button to the new container
+    newContainer.appendChild(newTextarea);
+    newContainer.appendChild(deleteButton);
+
+    // Insert the new container into the form container before the "add Other" link
+    formContainer.insertBefore(newContainer, formContainer.querySelector('.add-other'));
+
+    // Show the delete button
+    deleteButton.style.display = 'inline-block';
+  }
+
+  function deleteTextarea(button) {
+    const container = button.parentNode;
+    container.parentNode.removeChild(container);
+  }
+</script>
 </body>
 </html>
