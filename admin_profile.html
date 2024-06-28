@@ -50,21 +50,18 @@
     .status {
       margin-top: 10px;
       text-align: center; /* Center align text */
+      font-size: 25px;
     }
     .status select {
       padding: 5px;
       font-size: 15px;
       border-radius: 7px;
       border: 1px solid var(--color-default);
-      background-color: #9DCD5A; /* Light green background */
+      background-color: #1566b788; /* Light green background */
       color: black;
     }
     .status select:hover {
-      background-color: #06ae06; /* Dark green on hover */
-    }
-    .status select option[value="unavailable"] {
-      background-color: rgb(227, 46, 46); /* Red background for unavailable status */
-      color: black;
+      background-color: #1313616b; /* Dark green on hover */
     }
     .container {
       max-width: 800px;
@@ -147,14 +144,11 @@
 <body>
   <section class="home-section">
     <div class="profile-container">
-      <img src="bersoto.jpg" alt="Profile Picture">
+      <img src="samurai.jpg" alt="Profile Picture">
       <button onclick="updateProfile()">Update Profile</button>
     </div>
     
-    <div class="text">Joseph Carlo Bersoto</div>
-    
-    
-    
+    <div class="text">Alberto L. Enano Jr.</div>
     
     
     <hr>
@@ -188,13 +182,6 @@
 
   </section>
 
-  <script>
-    function changeColor(select) {
-      var option = select.options[select.selectedIndex];
-      var backgroundColor = option.value === "unavailable" ? "red" : "green";
-      select.style.backgroundColor = backgroundColor;
-    }
-  </script>
 
   <!-- Your additional scripts -->
   <script src="script.js"></script>
