@@ -10,545 +10,177 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
   <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-:root{
-  --color-default:#004f83;
-  --color-second:#0067ac;
-  --color-white:#fff;
-  --color-body:#e4e9f7;
-  --color-light:#e0e0e0;
-}
+    :root{
+      --color-default:#004f83;
+      --color-second:#0067ac;
+      --color-white:#fff;
+      --color-body:#e4e9f7;
+      --color-light:#e0e0e0;
+    }
 
-*{
-  padding: 0%;
-  margin: 0%;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+    *{
+      padding: 0%;
+      margin: 0%;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-body{
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column; /* Changed to column to stack elements vertically */
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #7cbeea;
-}
+    body{
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #7cbeea;
+      padding: 20px;
+    }
 
-.sidebar{
-  min-height: 100vh;
-  width: 78px;
-  padding: 6px 14px;
-  z-index: 99;
-  background-color: var(--color-default);
-  transition: all .5s ease;
-  position: fixed;
-  top:0;
-  left: 0;
-}
+    main {
+      width: 100%;
+      max-width: 800px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-.sidebar.open{
-  width: 250px;
-}
+    .search-bar {
+      background-color: #7091E6; /* Medium blue background */
+      padding: 20px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-.sidebar .logo_details{
-  height: 60px;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
+    .search-bar input, .search-bar select, .search-bar button {
+      border: none;
+      border-radius: 10px;
+      padding: 13px;
+      font-size: 20px;
+    }
 
-.sidebar .logo_details .icon{
-  opacity: 0;
-  transition: all 0.5s ease ;
-}
+    .search-bar input:focus, .search-bar select:focus, .search-bar button:focus {
+      outline: none;
+    }
 
-.sidebar .logo_details .logo_name{
-  color:var(--color-white);
-  font-size: 22px;
-  font-weight: 600;
-  opacity: 0;
-  transition: all .5s ease;
-}
+    .search-bar input {
+      flex: 1;
+    }
 
-.sidebar.open .logo_details .icon,
-.sidebar.open .logo_details .logo_name{
-  opacity: 1;
-}
+    .search-bar select {
+      flex: 1.5; /* Adjust flex value to expand the select box */
+    }
 
-.sidebar .logo_details #btn{
-  position: absolute;
-  top:50%;
-  right: 0;
-  transform: translateY(-50%);
-  font-size: 23px;
-  text-align: center;
-  cursor: pointer;
-  transition: all .5s ease;
-}
+    .search-bar button {
+      background-color: #3D52A0; /* Dark blue button */
+      color: white;
+      cursor: pointer;
+    }
 
-.sidebar.open .logo_details #btn{
-  text-align: right;
-}
-
-.sidebar i{
-  color:var(--color-white);
-  height: 60px;
-  line-height: 60px;
-  min-width: 50px;
-  font-size: 25px;
-  text-align: center;
-}
-
-.sidebar .nav-list{
-  margin-top: 20px;
-  height: 100%;
-}
-
-.sidebar li{
-  position: relative;
-  margin:8px 0;
-  list-style: none;
-}
-
-.sidebar li .tooltip{
-  position: absolute;
-  top:-20px;
-  left:calc(100% + 15px);
-  z-index: 3;
-  background-color: var(--color-white);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  padding: 6px 14px;
-  font-size: 15px;
-  font-weight: 400;
-  border-radius: 5px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.sidebar li:hover .tooltip{
-  opacity: 1;
-  pointer-events: auto;
-  transition: all 0.4s ease;
-  top:50%;
-  transform: translateY(-50%);
-}
-
-.sidebar.open li .tooltip{
-  display: none;
-}
-
-.sidebar li a{
-  display: flex;
-  height: 100%;
-  width: 100%;
-  align-items: center;
-  text-decoration: none;
-  background-color: var(--color-default);
-  position: relative;
-  transition: all .5s ease;
-  z-index: 12;
-}
-
-.sidebar li a::after{
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: scaleX(0);
-  background-color: var(--color-white);
-  border-radius: 5px;
-  transition: transform 0.3s ease-in-out;
-  transform-origin: left;
-  z-index: -2;
-}
-
-.sidebar li a:hover::after{
-  transform: scaleX(1);
-  color:var(--color-default)
-}
-
-.sidebar li a .link_name{
-  color:var(--color-white);
-  font-size: 15px;
-  font-weight: 400;
-  white-space: nowrap;
-  pointer-events: auto;
-  transition: all 0.4s ease;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.sidebar li a:hover .link_name,
-.sidebar li a:hover i{
-  transition: all 0.5s ease;
-  color:var(--color-default)
-}
-
-.sidebar.open li a .link_name{
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.sidebar li i{
-  height: 35px;
-  line-height: 35px;
-  font-size: 18px;
-  border-radius: 5px;
-}
-
-.sidebar li.profile{
-  position: fixed;
-  height: 60px;
-  width: 78px;
-  left: 0;
-  bottom:-8px;
-  padding:10px 14px;
-  overflow: hidden;
-  transition: all .5s ease;
-}
-
-.sidebar.open li.profile{
-  width: 250px;
-}
-
-.sidebar .profile .profile_details{
-  display: flex;
-  align-items: center;
-  flex-wrap:  nowrap;
-}
-
-.sidebar li img{
-  height: 45px;
-  width: 45px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.sidebar li.profile .name,
-.sidebar li.profile .designation{
-  font-size: 15px;
-  font-weight: 400;
-  color:var(--color-white);
-  white-space: nowrap;
-}
-
-.sidebar li.profile .designation{
-  font-size: 12px;
-}
-
-.sidebar .profile #log_out{
-  position: absolute;
-  top:50%;
-  right: 0;
-  transform: translateY(-50%);
-  background-color: var(--color-second);
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.5s ease;
-}
-
-.sidebar.open .profile #log_out{
-  width: 50px;
-  background: none;
-}
-
-.home-section{
-  position: relative;
-  background-color: var(--color-body);
-  min-height: 100vh;
-  top:0;
-  left:78px;
-  width: calc(100% - 78px);
-  transition: all .5s ease;
-  z-index: 2;
-}
-
-.home-section .text{
-  display: inline-block;
-  color:var(--color-default);
-  font-size: 25px;
-  font-weight: 500;
-  margin: 18px;
-}
-
-.sidebar.open ~ .home-section{
-  left:250px;
-  width: calc(100% - 250px);
-}
-
-
-
-.text1 {
-  display: inline-block;
-  margin: 0;
-  color: #3D52A0;
-  font-size: 120px;
-  font-family: Georgia, 'Times New Roman', Times, serif; 
-  position: absolute;
-  top: -600px;
-  left: 70px; /* Adjusted value to position the title relative to the logo */
-  }
-  .text2 {
-  display: inline-block;
-  margin: 0;
-  color: #3D52A0;
-  font-size: 15px;
-  font-family: Georgia, 'Times New Roman', Times, serif; 
-  font-style: italic;
-  position: absolute;
-  top: -295px;
-  left: 90px; /* Adjusted value to position the title relative to the logo */
-  }
-  .landpic {
-  position: absolute;
-  top: -680px; /* Adjust as needed */
-  left: 670px; /* Adjust to move it to the right */
-  }
-  .pic1 {
-  height: 650px; /* Adjust height as needed */
-  width: 580px; /* Adjust width as needed */
-  }
-  .right-half {
-  position: absolute;
-  top: 0px;
-  right: 0;
-  width: 40%; /* Adjust as needed */
-  height: 100%;
-  background-color: #EDE8F5; /* Set background color */
-  }
-  .search-bar {
-  background-color: #7091E6; /* Medium blue background */
-  padding: 20px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  position: absolute;
-  top: -180px; /* Adjust this value to position the search bar */
-  left: 120px; /* Adjust this value to position the search bar */
-  gap: 15px;
-  }
-  .search-bar input, .search-bar select, .search-bar button {
-  border: none;
-  border-radius: 10px;
-  padding: 13px;
-  margin-right: 25px;
-  font-size: 20px;
-  }
-  .search-bar input:focus, .search-bar select:focus, .search-bar button:focus {
-  outline: none;
-  }
-  .search-bar input {
-  flex: 1;
-  }
-  .search-bar select {
-  flex: 1.5; /* Adjust flex value to expand the select box */
-  }
-  .search-bar button {
-  background-color: #3D52A0; /* Dark blue button */
-  color: white;
-  cursor: pointer;
-  }
-  .search-bar button:hover {
-  background-color: #2d3d82; /* Slightly darker blue on hover */
-  }
-
-
+    .search-bar button:hover {
+      background-color: #2d3d82; /* Slightly darker blue on hover */
+    }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo_details">
-      <i class="bx bxl-audible icon"></i>
-      <div class="logo_name">HANAPKITA</div>
-      <i class="bx bx-menu" id="btn"></i>
-    </div>
-    <ul class="nav-list">
-      <li>
-        <a href="employerdashboardhome.html">
-          <i class="bx bx-grid-alt"></i>
-          <span class="link_name">Home</span>
-        </a>
-        <span class="tooltip">Home</span>
-      </li>
-      <li>
-        <a href="employerinbox.html">
-          <i class="bx bx-chat"></i>
-          <span class="link_name">Inbox</span>
-        </a>
-        <span class="tooltip">Inbox</span>
-      </li>
-      <li>
-        <a href="employerskilledworker.html">
-          <i class="bx bx-id-card"></i>
-          <span class="link_name">Worker</span>
-        </a>
-        <span class="tooltip">Worker</span>
-      </li>      
-      <li>
-        <a href="employerjobpost.html">
-          <i class="bx bx-news"></i>
-          <span class="link_name">Job Post</span>
-        </a>
-        <span class="tooltip">Job Post</span>
-      </li> 
-      <li>
-        <a href="employerongoing.html">
-          <i class="bx bx-loader"></i> <!-- Changed icon class here -->
-          <span class="link_name">Ongoing</span> <!-- Updated the name to Ongoing -->
-        </a>
-        <span class="tooltip">Ongoing</span> <!-- Updated the tooltip to Ongoing -->
-      </li>
-      
-      <li>
-        <a href="employer_history.html">
-          <i class="bx bx-history"></i>
-          <span class="link_name">History</span>
-        </a>
-        <span class="tooltip">History</span>
-      </li>      
-      <li class="profile">
-        <div class="profile_details">
-          <img src="bersoto.jpg" alt="profile image">
-          <div class="profile_content">
-            <div class="name">Joseph Bersoto</div>
-            <div class="designation">Employer</div>
+  <main class="p-10">
+    <span class="text-blue-500" style="font-size: 25px;">JOB POST</span>
+    <div class="bg-blue-100 p-6 rounded-lg mt-4">
+      <h1 class="text-lg font-bold text-blue-500">Looking for Driver</h1>
+      <p class="text-sm text-gray-600">Quezon City</p>
+      <div class="mt-4">
+        <p class="font-bold text-gray-700">Employed Worker: <span class="text-green-500">JOSEPH BERSOTO</span></p>
+      </div>
+      <hr class="my-4">
+      <h2 class="text-xl font-bold text-gray-900">Job details</h2>
+      <div class="flex items-center mt-2 text-gray-600">
+        <i class="fas fa-briefcase mr-2"></i>
+        <p class="text-sm">Full-time</p>
+      </div>
+      <div class="flex items-center mt-2 text-gray-600">
+        <i class="fas fa-map-marker-alt mr-2"></i>
+        <p class="text-sm">Quezon City</p>
+      </div>
+      <div class="mt-4">
+        <h3 class="text-lg font-bold text-gray-900">Salary</h3>
+        <p class="text-sm bg-gray-100 px-2 py-1 rounded text-gray-700 font-semibold">PHP 15,000 - PHP 18,000</p>
+      </div>
+      <hr class="my-4">
+      <h2 class="text-xl font-bold text-gray-900">Full Job description</h2>
+      <p class="text-sm mt-2 text-gray-600">Responsibilities:</p>
+      <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
+        <li>Assist the primary driver in the delivery and unloading of products to various locations.</li>
+        <li>Ensure timely and accurate delivery of goods, following the assigned route and schedule.</li>
+        <li>Load and unload products from the delivery vehicle safely.</li>
+        <li>Verify delivery items against invoices or shipping documents.</li>
+        <li>Provide excellent customer service by addressing client inquiries and concerns professionally.</li>
+        <li>Maintain cleanliness and organization of the delivery vehicle.</li>
+        <li>Follow all safety protocols and company procedures during deliveries.</li>
+        <li>Assist in the regular maintenance and inspection of the delivery vehicle.</li>
+      </ul>
+      <div class="mb-4">
+        <h2 class="font-bold text-lg">Qualifications:</h2>
+        <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
+          <li>Valid driver’s license with a clean driving record.</li>
+          <li>Ability to lift and carry heavy items (up to 50 lbs) regularly.</li>
+          <li>Good communication and interpersonal skills.</li>
+          <li>Ability to work flexible hours, including weekends and holidays.</li>
+          <li>Previous delivery or customer service experience is a plus.</li>
+        </ul>
+      </div>
+      <div class="mb-4">
+        <h2 class="font-bold text-lg">Skills:</h2>
+        <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
+          <li>Strong attention to detail.</li>
+          <li>Ability to navigate and read maps or GPS devices.</li>
+          <li>Reliability and punctuality.</li>
+          <li>Team-oriented with a positive attitude.</li>
+        </ul>
+      </div>
+      <div class="mb-4">
+        <h2 class="font-bold text-lg">Schedule:</h2>
+        <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
+          <li>8hrs Shift</li>
+          <li>Monday-Friday</li>
+        </ul>
+      </div>
+      <div class="mb-8">
+        <h2 class="font-bold text-lg">Supplement pay types:</h2>
+        <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
+          <li>13th month pay</li>
+          <li>Overtime pay</li>
+        </ul>
+      </div>
+      <div class="text-center mt-4">
+        <button id="acceptButton" class="bg-[#FFCC00] text-white font-bold py-2 px-6 rounded-full">ACCEPT WORKER</button>
+      </div>
+      <div id="confirmationBox" class="hidden absolute inset-0 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg" style="width: 30%;">
+          <p class="text-lg font-bold mb-4">Are you sure you want to accept this worker?</p>
+          <div class="flex justify-center">
+            <button id="confirmButton" class="bg-blue-500 text-white py-2 px-6 rounded-full mr-2">Yes</button>
+            <button id="cancelButton" class="bg-gray-300 py-2 px-6 rounded-full">No</button>
           </div>
         </div>
-        <i class="bx bx-log-out" id="log_out"></i>
-      </li>
-    </ul>
-  </div>
-  <main class="flex-0 p-10 flex justify-center" style="margin-left: -10%; margin-bottom: 17%;">
-
-    <div class=" mx-auto">
-        <span class="text-blue-500" style="font-size: 25px;">JOB POST</span>
-        
-        <div class="bg-blue-100 p-6 rounded-lg" style="width: 150%;">
-            
-            <h1 class="text-lg font-bold text-blue-500">Looking for Driver</h1>
-            <p class="text-sm text-gray-600">Quezon City</p>
-
-            <div class="mt-4">
-                <p class="font-bold text-gray-700">Employed Worker: <span class="text-green-500">JOSEPH BERSOTO</span></p>
-            </div>
-
-            <hr class="my-4">
-
-            <h2 class="text-xl font-bold text-gray-900">Job details</h2>
-
-            <div class="flex items-center mt-2 text-gray-600">
-                <i class="fas fa-briefcase mr-2"></i>
-                <p class="text-sm">Full-time</p>
-            </div>
-            <div class="flex items-center mt-2 text-gray-600">
-                <i class="fas fa-map-marker-alt mr-2"></i>
-                <p class="text-sm">Quezon City</p>
-            </div>
-
-            <div class="mt-4">
-                <h3 class="text-lg font-bold text-gray-900">Salary</h3>
-                <p class="text-sm bg-gray-100 px-2 py-1 rounded text-gray-700 font-semibold">PHP 15,000 - PHP 18,000</p>
-            </div>
-
-            <hr class="my-4">
-
-            <h2 class="text-xl font-bold text-gray-900">Full Job description</h2>
-            <p class="text-sm mt-2 text-gray-600">Responsibilities:</p>
-            <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
-                <li>Assist the primary driver in the delivery and unloading of products to various locations.</li>
-                <li>Ensure timely and accurate delivery of goods, following the assigned route and schedule.</li>
-                <li>Load and unload products from the delivery vehicle safely.</li>
-                <li>Verify delivery items against invoices or shipping documents.</li>
-                <li>Provide excellent customer service by addressing client inquiries and concerns professionally.</li>
-                <li>Maintain cleanliness and organization of the delivery vehicle.</li>
-                <li>Follow all safety protocols and company procedures during deliveries.</li>
-                <li>Assist in the regular maintenance and inspection of the delivery vehicle.</li>
-            </ul>
-            <div class="mb-4">
-                <h2 class="font-bold text-lg">Qualifications:</h2>
-                <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
-                    <li>Valid driver’s license with a clean driving record.</li>
-                    <li>Ability to lift and carry heavy items (up to 50 lbs) regularly.</li>
-                    <li>Good communication and interpersonal skills.</li>
-                    <li>Ability to work flexible hours, including weekends and holidays.</li>
-                    <li>Previous delivery or customer service experience is a plus.</li>
-                </ul>
-            </div>
-            <div class="mb-4">
-                <h2 class="font-bold text-lg">Skills:</h2>
-                <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
-                    <li>Strong attention to detail.</li>
-                    <li>Ability to navigate and read maps or GPS devices.</li>
-                    <li>Reliability and punctuality.</li>
-                    <li>Team-oriented with a positive attitude.</li>
-                </ul>
-            </div>
-            <div class="mb-4">
-                <h2 class="font-bold text-lg">Schedule:</h2>
-                <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
-                    <li>8hrs Shift</li>
-                    <li>Monday-Friday</li>
-                </ul>
-            </div>
-            <div class="mb-8">
-                <h2 class="font-bold text-lg">Supplement pay types:</h2>
-                <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
-                    <li>13th month pay</li>
-                    <li>Overtime pay</li>
-                </ul>
-            </div>
-            <div class="text-center mt-4">
-                <button id="acceptButton" class="bg-[#FFCC00] text-white font-bold py-2 px-6 rounded-full">ACCEPT WORKER</button>
-            </div>
-            <div id="confirmationBox" class="hidden absolute inset-0 bg-opacity-50 flex justify-center items-center">
-                <div class="bg-white p-6 rounded-lg" style="width: 30%; text-align: justify;">
-                    <p class="text-lg font-bold mb-4">Are you sure you want to accept this worker?</p>
-                    <p class="mb-6">Are you sure you want to accept the applicant? Accepting the applicant means that the job seeker has met the job offer requirements and will start the job. </p>
-                    <div class="flex justify-center">
-                        <button id="cancelButton" class="bg-gray-400 text-black font-bold py-2 px-4 rounded-full mr-2">CANCEL</button>
-                        <button id="confirmButton" class="bg-[#09287e] text-white font-bold py-2 px-4 rounded-full">CONFIRM</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-</main>
-<script>
-    // JavaScript for handling button clicks and confirmation box
-    document.getElementById("acceptButton").addEventListener("click", function() {
-      document.getElementById("confirmationBox").classList.remove("hidden");
+  </main>
+  <!-- JS Scripts -->
+  <script>
+    document.getElementById('acceptButton').addEventListener('click', function() {
+      document.getElementById('confirmationBox').classList.remove('hidden');
     });
-
-    document.getElementById("cancelButton").addEventListener("click", function() {
-      document.getElementById("confirmationBox").classList.add("hidden");
+    document.getElementById('confirmButton').addEventListener('click', function() {
+      // Handle the confirmation action here
+      alert('Worker accepted');
+      document.getElementById('confirmationBox').classList.add('hidden');
     });
-
-    document.getElementById("confirmButton").addEventListener("click", function() {
-      // Placeholder for actual acceptance logic
-      // For demonstration, just hide the confirmation box
-      document.getElementById("confirmationBox").classList.add("hidden");
-
-      // Redirect to employergivingfeedback.html
-      window.location.href = "employerongoing.html";
+    document.getElementById('cancelButton').addEventListener('click', function() {
+      document.getElementById('confirmationBox').classList.add('hidden');
     });
   </script>
-
-
-
-
-
-
-</section>
-<!-- Scripts -->
-<script src="script.js"></script>
 </body>
 </html>
