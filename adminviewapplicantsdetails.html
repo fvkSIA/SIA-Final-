@@ -3,263 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
-    <!-- Icon Link -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
-
-.container {
-    width: 100%;
-    background: #119aaf;
-    color: #fff;
-    display: flex;
-}
-
-.container .sidenav {
-    width: 115px;
-    height: 100vh;
-    overflow: hidden;
-    position: fixed;
-    padding: 32px 16px;
-    background-color: #000;
-    transition: width 0.6s;
-}
-
-label .close-btn {
-    display: none;
-}
-
-.container .logo h2 {
-    font-size: 20px;
-    text-transform: uppercase;
-    text-align: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.3s ease;
-}
-
-.sidenav .menu_text {
-    margin-top: 24px;
-}
-
-.sidenav .menu_text p {
-    font-size: 17px;
-    font-weight: 500;
-    text-transform: uppercase;
-    padding-left: 10px;
-}
-
-.sidenav .icon_items ul {
-    list-style: none;
-    margin-top: 32px;
-    padding: 0 10px;
-}
-
-.sidenav .icon_items ul li {
-    cursor: pointer;
-    margin: 4px;
-    padding: 12px 0;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    transition: 0.5s ease;
-}
-
-.icon_items .active,
-.sidenav .icon_items ul li:hover {
-    background: #119aaf;
-}
-
-.sidenav .icon_items ul li i {
-    font-size: 26px;
-    padding: 0 12px;
-}
-
-.sidenav .icon_items ul li a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 17px;
-    padding-left: 18px;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.3s ease;
-}
-
-#click {
-    display: none;
-}
-
-.container label {
-    position: absolute;
-    left: 3%;
-    top: 1.5%;
-    font-size: 24px;
-    z-index: 1;
-    cursor: pointer;
-}
-
-#click:checked ~ .sidenav {
-    width: 260px;
-}
-
-#click:checked ~ .sidenav .icon_items ul li a {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-#click:checked ~ .sidenav .logo h2 {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-#click:checked ~ label {
-    left: 1%;
-}
-
-#click:checked ~ label .close-btn {
-    display: block;
-}
-
-#click:checked ~ label .menu-btn {
-    display: none;
-}
-.half-color-bg {
-            background: linear-gradient(to bottom, #c6c6c6 15%, #f1f1f1 40%);
-            padding: 6px;
-            border-radius: 10px; /* Adjust the radius as needed */
-            margin-bottom: 8px;
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
         }
+
         .view {
-            max-width: 1200px; /* Adjust this value to reduce the width */
-            margin-left: 150px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(to bottom, #c6c6c6 15%, #f1f1f1 40%);
+            border-radius: 10px;
+            margin-top: 20px;
         }
 
+        .half-color-bg {
+            padding: 6px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            position: relative; /* Ensure relative positioning for absolute child */
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px; /* Adjust top position as needed */
+            right: 10px;
+            padding: 5px 10px;
+            border: none;
+            background-color: transparent;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .approve-btn, .decline-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .approve-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .decline-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .approve-btn:hover, .decline-btn:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <input type="checkbox" id="click">
-        <label for="click">
-            <i class='menu-btn bx bx-menu'></i>
-            <i class='close-btn bx bx-x-circle'></i>
-        </label>
-
-        <div class="sidenav">
-            <div class="logo">
-                <h2>DASHBOARD</h2>
-            </div>
-
-            <div class="menu_text">
-                <p>Menu</p>
-            </div>
-
-            <div class="icon_items">
-                <ul>
-                    <li class="active">
-                        <i class='bx bxs-home'></i>
-                        <a href="adminhomedashboard.html">Home</a>
-                    </li>
-                    <li>
-                        <i class='bx bxs-user-check'></i>
-                        <a href="adminregistration.html">Registration</a>
-                    </li>
-                    <li>
-                        <i class='bx bxs-user-circle'></i>
-                        <a href="adminjobseeker.html">Jobseeker</a>
-                    </li>
-                    <li>
-                        <i class='bx bxs-group'></i>
-                        <a href="adminemployer.html">Employer</a>
-                    </li>
-                    <li>
-                        <i class='bx bxs-file'></i>
-                        <a href="#">Reports</a>
-                    </li>
-                    <li>
-                        <i class='bx bx-log-in'></i>
-                        <a href="adminlogin.html">Logout</a>
-                    </li>
-                </ul>
+    <main class="view">
+        <div class="half-color-bg p-6">
+            <!-- Close button -->
+            <button class="close-btn" onclick="closeDiv()">X</button>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <img src="1.jpg" alt="Circular Image" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover;">
+                <p style="padding-top: 50px; font-weight: bold; font-size: 35px;">JOHN CARLO JAVALLA</p>
+                <i style="color: red; padding-top: 50px;">backend echo</i>
             </div>
         </div>
 
-        <main class="view p-8">
-            <div class="half-color-bg p-6" style="position: relative;">
-                <!-- Close button -->
-                <button style="position: absolute; top: 10px; right: 10px; padding: 5px 10px; border: none; background-color: transparent; font-size: 20px; cursor: pointer;" onclick="closeDiv()">X</button>
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <img src="1.jpg" alt="Circular Image" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover;">
-                    <p style="padding-top: 50px; font-weight: bold; font-size: 35px;">JOHN CARLO JAVALLA</p><i style="color: red; padding-top: 50px;">backend echo</i>
-               </div>
-            
-            <div class="bg-#f1f1f1 p-6 mb-3">
-                <div style="display: flex; justify-content: space-between; max-width: 100%; margin: 0 auto;">
-                    <div style="width: 13%; margin-left: 30px; box-sizing: border-box;">
-                        <p style="font-weight: bold;">
-                            APPLIED FOR:
-                        </p><p style="margin-top: 15px; font-weight: bold;">
-                            AGE:
-                        </p><p style="margin-top: 15px; font-weight: bold;">
-                            ADDRESS:
-                        </p><p style="margin-top: 15px; font-weight: bold;">
-                            SEX:
-                        </p><p style="margin-top: 15px; font-weight: bold;">
-                            CONTACT NUMBER:
-                        </p><p style="margin-top: 15px; font-weight: bold;">
-                            EMAIL ADDRESS:
-                        </p>
-                    </div>
-                    <div style="width: 25%;  box-sizing: border-box;">
-                        <p>
-                            DRIVER <i style="color: red;">backend echo</i>
-                        </p><p style="margin-top: 15px;">
-                            23 <i style="color: red;">backend echo</i>
-                        </p><p style="margin-top: 15px;">
-                            DIMAKITA ST. <i style="color: red;">backend echo</i>
-                        </p><p style="margin-top: 15px;">
-                            UNKNOWN <i style="color: red;">backend echo</i>
-                        </p><p style="margin-top: 15px;">
-                            09123456789 <i style="color: red;">backend echo</i>
-                        </p><p style="margin-top: 15px;">
-                            JCMASARAP123@GMAIL.COM <i style="color: red;">backend echo</i>
-                        </p>
-                    </div>
-                    <div style="width: 50%; margin-left: 20px; box-sizing: border-box;">
-                        <p style="font-weight: bold;">RESUME:</p>
-                        <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo</p>
-                        <p style="margin-top: 10px; font-weight: bold;">2 VALID ID'S</p>
-                        <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo 1 backend echo 2</p>
-                        <p style="margin-top: 10px; font-weight: bold;">BIRTH CERTIFICATE:</p>
-                        <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo</p>
-                        <p style="margin-top: 10px; font-weight: bold;">RECENT JOB:</p>
-                        <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo</p>
-                    </div>
+        <div class="bg-#f1f1f1 p-6 mb-3">
+            <div style="display: flex; justify-content: space-between; max-width: 100%; margin: 0 auto;">
+                <div style="width: 13%; margin-left: 30px; box-sizing: border-box;">
+                    <p style="font-weight: bold;">
+                        APPLIED FOR:
+                    </p>
+                    <p style="margin-top: 15px; font-weight: bold;">
+                        AGE:
+                    </p>
+                    <p style="margin-top: 15px; font-weight: bold;">
+                        ADDRESS:
+                    </p>
+                    <p style="margin-top: 15px; font-weight: bold;">
+                        SEX:
+                    </p>
+                    <p style="margin-top: 15px; font-weight: bold;">
+                        CONTACT NUMBER:
+                    </p>
+                    <p style="margin-top: 15px; font-weight: bold;">
+                        EMAIL ADDRESS:
+                    </p>
+                </div>
+                <div style="width: 25%; box-sizing: border-box;">
+                    <p>
+                        DRIVER <i style="color: red;">backend echo</i>
+                    </p>
+                    <p style="margin-top: 15px;">
+                        23 <i style="color: red;">backend echo</i>
+                    </p>
+                    <p style="margin-top: 15px;">
+                        DIMAKITA ST. <i style="color: red;">backend echo</i>
+                    </p>
+                    <p style="margin-top: 15px;">
+                        UNKNOWN <i style="color: red;">backend echo</i>
+                    </p>
+                    <p style="margin-top: 15px;">
+                        09123456789 <i style="color: red;">backend echo</i>
+                    </p>
+                    <p style="margin-top: 15px;">
+                        JCMASARAP123@GMAIL.COM <i style="color: red;">backend echo</i>
+                    </p>
+                </div>
+                <div style="width: 50%; margin-left: 20px; box-sizing: border-box;">
+                    <p style="font-weight: bold;">RESUME:</p>
+                    <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo</p>
+                    <p style="margin-top: 10px; font-weight: bold;">2 VALID ID'S</p>
+                    <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo 1 backend echo 2</p>
+                    <p style="margin-top: 10px; font-weight: bold;">BIRTH CERTIFICATE:</p>
+                    <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo</p>
+                    <p style="margin-top: 10px; font-weight: bold;">RECENT JOB:</p>
+                    <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo</p>
                 </div>
             </div>
-            <div class="bg-#f1f1f1 p-8  mb-4" style="display: flex; justify-content: flex-end;">
-                <button class="py-2 px-6 bg-gray-400 text-black hover:bg-gray-200" style="border-radius: 20px; border: 1px solid #333; font-weight: bold;">APPROVE</button>&emsp;
-                <button class="py-2 px-6 bg-gray-400 text-black hover:bg-gray-200" style="border-radius: 20px; border: 1px solid #333; font-weight: bold;">DECLINE</button>
-            </div>
-            <script>
-                function closeDiv() {
-                    // Find the parent element and remove it
-                    const parentDiv = document.querySelector('.half-color-bg');
-                    parentDiv.remove();
-                }
-            </script>
         </div>
-        </main>
+
+        <div class="btn-container">
+            <button class="approve-btn" onclick="approve()">APPROVE</button>
+            <button class="decline-btn" onclick="decline()">DECLINE</button>
+        </div>
+    </main>
+
+    <script>
+        function closeDiv() {
+            // Find the parent element and remove it
+            const parentDiv = document.querySelector('.half-color-bg');
+            parentDiv.remove();
+        }
+
+        function approve() {
+            // Handle approve button action
+            console.log('Approved');
+        }
+
+        function decline() {
+            // Handle decline button action
+            console.log('Declined');
+        }
+    </script>
 </body>
 </html>
+    
