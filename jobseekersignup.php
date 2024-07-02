@@ -8,9 +8,9 @@ $emailExists = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form data
-    $full_name = $_POST['first_name'];
-    $full_name = $_POST['middle_name'];
-    $full_name = $_POST['last_name'];
+    $first_name = $_POST['first_name'];
+    $middle_name = $_POST['middle_name'];
+    $last_name = $_POST['last_name'];
     $email = $_POST['email'];
     $phone_number = $_POST['phone_number'];
     $birth_date = $_POST['birth_date'];

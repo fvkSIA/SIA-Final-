@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2024 at 12:59 PM
+-- Generation Time: Jul 02, 2024 at 11:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,7 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `employers` (
   `id` int(11) NOT NULL,
-  `full_name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `middle_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone_number` varchar(20) NOT NULL,
   `birth_date` date NOT NULL,
@@ -37,8 +39,7 @@ CREATE TABLE `employers` (
   `address` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `profile_image_path` varchar(255) NOT NULL,
-  `valid_id_path` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `valid_id_path` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -49,7 +50,9 @@ CREATE TABLE `employers` (
 
 CREATE TABLE `jobseekers` (
   `id` int(11) NOT NULL,
-  `full_name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `middle_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone_number` varchar(20) NOT NULL,
   `birth_date` date NOT NULL,
@@ -61,8 +64,7 @@ CREATE TABLE `jobseekers` (
   `profile` varchar(255) NOT NULL,
   `resume` varchar(255) NOT NULL,
   `valid_ids` varchar(255) NOT NULL,
-  `recent_job_experience` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `recent_job_experience` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -79,8 +81,7 @@ ALTER TABLE `employers`
 -- Indexes for table `jobseekers`
 --
 ALTER TABLE `jobseekers`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -90,13 +91,13 @@ ALTER TABLE `jobseekers`
 -- AUTO_INCREMENT for table `employers`
 --
 ALTER TABLE `employers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `jobseekers`
 --
 ALTER TABLE `jobseekers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
