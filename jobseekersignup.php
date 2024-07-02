@@ -279,6 +279,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .modal-body button:hover {
             background-color: #3569d1;
         }
+
+        .eye-icon {
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 70%;
+            transform: translateY(-50%);
+        }
+
+        .input-box {
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -321,11 +333,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="input-box info">
                 <label><b>Password:</b></label>
-                <input type="password" name="password" id="password" placeholder="Enter your Password" required />
+                <input type="password" name="password" id="password" placeholder="Enter password" required />
+                <i class="fas fa-eye eye-icon" id="passwordIcon" onclick="togglePasswordVisibility('password', 'passwordIcon')"></i>
+            </div>
             </div>
             <div class="input-box info">
                 <label><b>Confirm Password:</b></label>
-                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required />
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" required />
+                <i class="fas fa-eye eye-icon" id="confirmPasswordIcon" onclick="togglePasswordVisibility('confirm_password', 'confirmPasswordIcon')"></i>
             </div>
 
             <div class="skilled">
@@ -426,15 +441,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         function validatePasswords() {
-            var password = document.getElementById('password').value;
-            var confirmPassword = document.getElementById('confirm_password').value;
-            if (password !== confirmPassword) {
-                alert("Passwords do not match. Please try again.");
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+            
+            var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            
+            if (!passwordRegex.test(password)) {
+                alert("Password must be at least 8 characters long, contain at least one uppercase letter, and include at least one special character.");
                 return false;
             }
+            
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+            
             return true;
         }
-
+        
+        function togglePasswordVisibility(inputId, iconId) {
+            var input = document.getElementById(inputId);
+            var eyeIcon = document.getElementById(iconId);
+                if (input.type === "password") {
+                    input.type = "text";
+                    eyeIcon.classList.remove("fa-eye");
+                    eyeIcon.classList.add("fa-eye-slash");
+                } else {
+                    input.type = "password";
+                    eyeIcon.classList.remove("fa-eye-slash");
+                    eyeIcon.classList.add("fa-eye");
+                }
+        }
         // Get the modal
         var modal = document.getElementById("myModal");
 
