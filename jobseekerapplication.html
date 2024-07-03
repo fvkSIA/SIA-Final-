@@ -12,22 +12,22 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-    :root{
-      --color-default:#004f83;
-      --color-second:#0067ac;
-      --color-white:#fff;
-      --color-body:#e4e9f7;
-      --color-light:#e0e0e0;
+    :root {
+      --color-default: #004f83;
+      --color-second: #0067ac;
+      --color-white: #fff;
+      --color-body: #e4e9f7;
+      --color-light: #e0e0e0;
     }
 
-    *{
+    * {
       padding: 0%;
       margin: 0%;
       box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
     }
 
-    body{
+    body {
       min-height: 100vh;
       font-family: Arial, sans-serif;
       display: flex;
@@ -47,7 +47,7 @@
     }
 
     .search-bar {
-      background-color: #7091E6; /* Medium blue background */
+      background-color: #7091E6;
       padding: 20px;
       border-radius: 20px;
       display: flex;
@@ -71,17 +71,17 @@
     }
 
     .search-bar select {
-      flex: 1.5; /* Adjust flex value to expand the select box */
+      flex: 1.5;
     }
 
     .search-bar button {
-      background-color: #3D52A0; /* Dark blue button */
+      background-color: #3D52A0;
       color: white;
       cursor: pointer;
     }
 
     .search-bar button:hover {
-      background-color: #2d3d82; /* Slightly darker blue on hover */
+      background-color: #2d3d82;
     }
   </style>
 </head>
@@ -92,7 +92,7 @@
       <h1 class="text-lg font-bold text-blue-500">Looking for Driver</h1>
       <p class="text-sm text-gray-600">07/12/2024 at 10:00am</p>
       <div class="mt-4">
-        <p class="font-bold text-gray-700">Employed Worker: <span class="text-green-500">JOSEPH BERSOTO</span></p>
+        <p class="font-bold text-gray-700">Employed Worker: <span class="text-green-500">Karen Gale Partos</span></p>
       </div>
       <hr class="my-4">
       <h2 class="text-xl font-bold text-gray-900">Job details</h2>
@@ -151,9 +151,8 @@
       document.getElementById('confirmationBox').classList.remove('hidden');
     });
     document.getElementById('confirmButton').addEventListener('click', function() {
-      // Handle the confirmation action here
-      alert('Worker accepted');
-      document.getElementById('confirmationBox').classList.add('hidden');
+      // Redirect to jc.html
+      window.location.href = 'employerongoing.html';
     });
     document.getElementById('cancelButton').addEventListener('click', function() {
       document.getElementById('confirmationBox').classList.add('hidden');
