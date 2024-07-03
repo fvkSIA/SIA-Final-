@@ -323,10 +323,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="date" name="birth_date" placeholder="Enter birth date" min="1995-01-01" max="2005-12-31" required />
                 </div>
             </div>
-            <div class="input-box info">
-                <label><b>Sex:</b></label>
-                <input type="text" name="sex" placeholder="Enter your Sex" required />
-            </div>
+            <div class="input-box info" style="margin-bottom: 10px;">
+            <label><b>Sex:</b></label></div>
+            <input type="radio" id="female" name="sex" value="female" required>
+            <label for="female" style="margin-right: 15px; font-size: 18px;">Female</label>
+            <input type="radio" id="male" name="sex" value="male" required>
+            <label for="male" style="margin-right: 10px; font-size: 18px;">Male</label>
+
+
             <div class="input-box info">
                 <label><b>Address:</b></label>
                 <input type="text" name="address" placeholder="Enter your Address" required />
@@ -504,11 +508,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             modal.style.display = 'block';
         });
         <?php endif; ?>
-
-         // When the user clicks the button, redirect them to the login page
-         continueBtn.onclick = function() {
-            window.location.href = "login.html";
-        }
         
         // Add event listener for phone number input
         document.querySelector('input[name="phone_number"]').addEventListener('input', function() {

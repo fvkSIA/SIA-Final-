@@ -331,17 +331,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="column">
                 <div class="input-box">
                     <label><b>Phone Number:</b></label>
-                    <input type="number" name="phone_number" placeholder="Enter phone number" required />
+                    <input type="text" name="phone_number" placeholder="Enter your phone number" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                 </div>
                 <div class="input-box">
                     <label><b>Birth Date:</b></label>
                     <input type="date" name="birth_date" placeholder="Enter birth date" min="1995-01-01" max="2005-12-31" required />
                 </div>
             </div>
-            <div class="input-box info">
-                <label><b>Sex:</b></label>
-                <input type="text" name="sex" placeholder="Enter your Gender" required />
-            </div>
+            <div class="input-box info" style="margin-bottom: 10px;">
+            <label><b>Sex:</b></label></div>
+            <input type="radio" id="female" name="sex" value="female" required>
+            <label for="female" style="margin-right: 15px; font-size: 18px;">Female</label>
+            <input type="radio" id="male" name="sex" value="male" required>
+            <label for="male" style="margin-right: 10px; font-size: 18px;">Male</label>
             <div class="input-box info">
                 <label><b>Address:</b></label>
                 <input type="text" name="address" placeholder="Enter your Address" required />
@@ -359,7 +361,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="input-box info picture">
                 <label><b>Profile:</b></label>
-                <input type="file" id="profile" name="profile_image_path" accept=".jpg, .png" required  >
+                <input type="file" id="profile" name="profile_image_path" accept=".pdf, .jpg, .png" required  >
             </div>
           
             <div class="input-box info">
@@ -452,11 +454,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     eyeIcon.classList.add("fa-eye");
                 }
         }
-         // When the user clicks the button, redirect them to the login page
-         continueBtn.onclick = function() {
-            window.location.href = "login.html";
-        }
-
     // Add event listener for phone number input
     document.querySelector('input[name="phone_number"]').addEventListener('input', function() {
             validatePhoneNumber(this);
