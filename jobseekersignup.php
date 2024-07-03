@@ -504,6 +504,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             modal.style.display = 'block';
         });
         <?php endif; ?>
+
+         // When the user clicks the button, redirect them to the login page
+         continueBtn.onclick = function() {
+            window.location.href = "login.html";
+        }
         
         // Add event listener for phone number input
         document.querySelector('input[name="phone_number"]').addEventListener('input', function() {
