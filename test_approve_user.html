@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve User</title>
+</head>
+<body>
+    <h1>Approve User</h1>
+    <form action="approve_user.php" method="POST">
+        <label for="id">User ID:</label>
+        <input type="text" id="id" name="id" value="1" required>
+        <br>
+        <label for="type">User Type:</label>
+        <select id="type" name="type" required>
+            <option value="jobseeker">Jobseeker</option>
+            <option value="employer">Employer</option>
+        </select>
+        <br>
+        <button type="submit">Approve User</button>
+    </form>
+</body>
+</html>

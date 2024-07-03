@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 03, 2024 at 09:04 AM
+-- Generation Time: Jul 03, 2024 at 10:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,11 +35,12 @@ CREATE TABLE `employers` (
   `email` varchar(255) NOT NULL,
   `phone_number` varchar(20) NOT NULL,
   `birth_date` date NOT NULL,
-  `gender` varchar(10) NOT NULL,
+  `sex` varchar(10) NOT NULL,
   `address` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `profile_image_path` varchar(255) NOT NULL,
-  `valid_id_path` varchar(255) NOT NULL
+  `valid_id_path` varchar(255) NOT NULL,
+  `is_approved` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -56,7 +57,7 @@ CREATE TABLE `jobseekers` (
   `email` varchar(255) NOT NULL,
   `phone_number` varchar(20) NOT NULL,
   `birth_date` date NOT NULL,
-  `gender` varchar(20) NOT NULL,
+  `sex` varchar(20) NOT NULL,
   `address` text NOT NULL,
   `password` varchar(255) NOT NULL,
   `worker_type` enum('skilled','unskilled') NOT NULL,
@@ -64,7 +65,8 @@ CREATE TABLE `jobseekers` (
   `profile` varchar(255) NOT NULL,
   `resume` varchar(255) NOT NULL,
   `valid_ids` varchar(255) NOT NULL,
-  `recent_job_experience` varchar(255) NOT NULL
+  `recent_job_experience` varchar(255) NOT NULL,
+  `is_approved` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -117,13 +119,13 @@ ALTER TABLE `number_of_registration`
 -- AUTO_INCREMENT for table `employers`
 --
 ALTER TABLE `employers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jobseekers`
 --
 ALTER TABLE `jobseekers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `number_of_registration`

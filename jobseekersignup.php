@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $phone_number = $_POST['phone_number'];
     $birth_date = $_POST['birth_date'];
-    $gender = $_POST['sex'];
+    $sex = $_POST['sex'];
     $address = $_POST['address'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $worker_type = $_POST['worker_type'];
@@ -325,7 +325,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="input-box info">
                 <label><b>Sex:</b></label>
-                <input type="text" name="sex" placeholder="Enter your Gender" required />
+                <input type="text" name="sex" placeholder="Enter your Sex" required />
             </div>
             <div class="input-box info">
                 <label><b>Address:</b></label>

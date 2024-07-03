@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $phone_number = $_POST['phone_number'];
     $birth_date = $_POST['birth_date'];
-    $gender = $_POST['sex'];
+    $sex = $_POST['sex'];
     $address = $_POST['address'];
     $password = $_POST['password'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
