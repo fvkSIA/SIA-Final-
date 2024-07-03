@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2024 at 11:35 AM
+-- Generation Time: Jul 03, 2024 at 09:04 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -67,6 +67,26 @@ CREATE TABLE `jobseekers` (
   `recent_job_experience` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `number_of_registration`
+--
+
+CREATE TABLE `number_of_registration` (
+  `id` int(11) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `registrations` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `number_of_registration`
+--
+
+INSERT INTO `number_of_registration` (`id`, `type`, `registrations`) VALUES
+(1, 'EMPLOYER', 0),
+(2, 'JOBSEEKER', 0);
+
 --
 -- Indexes for dumped tables
 --
@@ -84,6 +104,12 @@ ALTER TABLE `jobseekers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `number_of_registration`
+--
+ALTER TABLE `number_of_registration`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -97,7 +123,13 @@ ALTER TABLE `employers`
 -- AUTO_INCREMENT for table `jobseekers`
 --
 ALTER TABLE `jobseekers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `number_of_registration`
+--
+ALTER TABLE `number_of_registration`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
