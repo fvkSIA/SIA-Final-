@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $phone_number = $_POST['phone_number'];
     $birth_date = $_POST['birth_date'];
-    $gender = $_POST['gender'];
+    $gender = $_POST['sex'];
     $address = $_POST['address'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $worker_type = $_POST['worker_type'];
@@ -48,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $emailExists = true;
     } else {
         // Insert data into the database
-        $sql = "INSERT INTO jobseekers (first_name, middle_name, last_name, email, phone_number, birth_date, gender, address, password, worker_type, type_of_work, profile, resume, valid_ids, recent_job_experience)
-                VALUES ('$first_name', '$middle_name', '$last_name', '$email', '$phone_number', '$birth_date', '$gender', '$address', '$password', '$worker_type', '$type_of_work', '$profile', '$resume', '$valid_ids', '$recent_job_experience')";
+        $sql = "INSERT INTO jobseekers (first_name, middle_name, last_name, email, phone_number, birth_date, sex, address, password, worker_type, type_of_work, profile, resume, valid_ids, recent_job_experience)
+                VALUES ('$first_name', '$middle_name', '$last_name', '$email', '$phone_number', '$birth_date', '$sex', '$address', '$password', '$worker_type', '$type_of_work', '$profile', '$resume', '$valid_ids', '$recent_job_experience')";
 
     if (mysqli_query($conn, $sql)) {
         $showModal = true;
@@ -324,8 +324,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <div class="input-box info">
-                <label><b>Gender:</b></label>
-                <input type="text" name="gender" placeholder="Enter your Gender" required />
+                <label><b>Sex:</b></label>
+                <input type="text" name="sex" placeholder="Enter your Gender" required />
             </div>
             <div class="input-box info">
                 <label><b>Address:</b></label>
@@ -359,7 +359,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="input-box info picture">
                 <label><b>Profile:</b></label>
-                <input type="file" id="profile" name="profile" accept=".pdf, .jpg, .png" required  >
+                <input type="file" id="profile" name="profile" accept=".jpg, .png" required  >
             </div>
             <div class="input-box info resume">
                 <label><b>Resume:</b></label>

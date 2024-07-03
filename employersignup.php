@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $phone_number = $_POST['phone_number'];
     $birth_date = $_POST['birth_date'];
-    $gender = $_POST['gender'];
+    $gender = $_POST['sex'];
     $address = $_POST['address'];
     $password = $_POST['password'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -38,8 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $showModal = false;
     } else {
         // Prepare SQL insert statement
-        $sql = "INSERT INTO employers (first_name, middle_name, last_name, email, phone_number, birth_date, gender, address, password, profile_image_path, valid_id_path) 
-                VALUES ('$first_name', '$middle_name', '$last_name', '$email', '$phone_number', '$birth_date', '$gender', '$address', '$hashed_password', '$profile_destination', '$valid_destination')";
+        $sql = "INSERT INTO employers (first_name, middle_name, last_name, email, phone_number, birth_date, sex, address, password, profile_image_path, valid_id_path) 
+                VALUES ('$first_name', '$middle_name', '$last_name', '$email', '$phone_number', '$birth_date', '$sex', '$address', '$hashed_password', '$profile_destination', '$valid_destination')";
 
         if (mysqli_query($conn, $sql)) {
             $showModal = true;
@@ -339,8 +339,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <div class="input-box info">
-                <label><b>Gender:</b></label>
-                <input type="text" name="gender" placeholder="Enter your Gender" required />
+                <label><b>Sex:</b></label>
+                <input type="text" name="sex" placeholder="Enter your Gender" required />
             </div>
             <div class="input-box info">
                 <label><b>Address:</b></label>

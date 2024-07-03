@@ -1,119 +1,117 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>TERMS AND CONDITIONS</title>
+  <title>TERMS AND CONDITIONS</title>
 
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-:root {
-  --bg-clr: #6c00f9;
-  --white: #fff;
-  --primary-text-clr: #212121;
-  --secondary-text-clr: #8c8c8c;
-  --bg-hvr: #5803c7;
-}
+    :root {
+      --bg-clr: #6c00f9;
+      --white: #fff;
+      --primary-text-clr: #212121;
+      --secondary-text-clr: #8c8c8c;
+      --bg-hvr: #5803c7;
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Open Sans", sans-serif;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif; /* Change to Poppins font */
+    }
 
-body {
-  background: #E9F1FA;
-  font-size: 12px;
-}
+    body {
+      background: #E9F1FA;
+      font-size: 12px;
+      text-align: justify; /* Justify all text */
+    }
 
+    .flex_align_justify {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.flex_align_justify{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .flex_align {
+      display: flex;
+      align-items: center;
+    }
 
-.flex_align{
-  display: flex;
-  align-items: center;
-}
+    .wrapper {
+      min-height: 100vh;
+      padding: 0 20px;
+    }
 
+    .terms_service {
+      width: 800px;
+      max-width: 100%;
+      height: 550px;
+      background: var(--white);
+      border-radius: 3px;
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+    }
 
-.wrapper{
-  min-height: 100vh;
-  padding: 0 20px;
-}
+    .terms_service .tc_item {
+      padding: 20px 40px;
+    }
 
-.terms_service{
-  width: 800px;
-  max-width: 100%;
-  height: 550px;
-  background: var(--white);
-  border-radius: 3px;
-  box-shadow: 0px 0px 3px rgba(0,0,0,0.15);
-}
+    .terms_service .tc_head {
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      height: 90px;
+      font-style: italic;
+      font-size: 25px; /* Adjust the font size as needed */
+    }
 
-.terms_service .tc_item{
-  padding: 20px 40px;
-}
+    .terms_service .tc_body {
+      height: calc(100% - 170px);
+      overflow: auto;
+      padding-right: 20px;
+    }
 
-.terms_service .tc_head{
-  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-  height: 90px;
-  font-style: italic;
-  font-size: 25px; /* Adjust the font size as needed */
+    .terms_service .tc_body ol li {
+      margin-bottom: 15px;
+    }
 
-}
+    .terms_service .tc_body ol li h3 {
+      margin-bottom: 5px;
+    }
 
-.terms_service .tc_body{
-  height: calc(100% - 170px);
-  overflow: auto;
-  padding-right: 20px;
-}
+    .terms_service .tc_foot {
+      box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.15);
+      justify-content: space-between;
+      height: 80px;
+    }
 
-.terms_service .tc_body ol li{
-  margin-bottom: 15px;
-}
+    .terms_service .tc_foot button {
+      width: 100%;
+      border: 1px solid var(--bg-clr);
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
 
-.terms_service .tc_body ol li h3{
-  margin-bottom: 5px;
-}
+    .terms_service .tc_foot a.decline_btn button {
+      margin-right: 20px;
+      background: var(--white);
+      color: var(--bg-clr);
+    }
 
-.terms_service .tc_foot{
-  box-shadow: 0 -1px 2px rgba(0,0,0,0.15);
-  justify-content: space-between;
-    height: 80px;
-}
+    .terms_service .tc_foot a.accept_btn button {
+      background: var(--bg-clr);
+      color: var(--white);
+    }
 
-.terms_service .tc_foot button{
-  width: 100%;
-  border: 1px solid var(--bg-clr);
-  padding: 10px 20px;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.5s ease;
-}
+    .terms_service .tc_foot a.decline_btn button:hover {
+      background: var(--bg-clr);
+      color: var(--white);
+    }
 
-.terms_service .tc_foot a.decline_btn button{
-  margin-right: 20px;
-  background: var(--white);
-  color: var(--bg-clr);
-}
-
-.terms_service .tc_foot a.accept_btn button{
-  background: var(--bg-clr);
-  color: var(--white);
-}
-
-.terms_service .tc_foot a.decline_btn button:hover{
-  background: var(--bg-clr);
-  color: var(--white);
-}
-
-.terms_service .tc_foot a.accept_btn button:hover{
-  background: var(--bg-hvr);
-  color: var(--white);
-}
+    .terms_service .tc_foot a.accept_btn button:hover {
+      background: var(--bg-hvr);
+      color: var(--white);
+    }
   </style>
 </head>
 
@@ -121,124 +119,153 @@ body {
 
 <div class="wrapper flex_align_justify">
   <div class="terms_service">
-      <div class="tc_item tc_head flex_align_justify">
-        <div class="icon flex_align_justify">
-          <ion-icon name="terminal-outline"></ion-icon>
-        </div>
-        <div class="text">
-          <h2> JOBSEEKER TERMS AND CONDITIONS</h2>
-        </div>
+    <div class="tc_item tc_head flex_align_justify">
+      <div class="icon flex_align_justify">
+        <ion-icon name="terminal-outline"></ion-icon>
       </div>
-      <div class="tc_item tc_body">
-        <ol>
-          <li>
-            <h3>Overview</h3>
-            <p> This page states the terms of use (“Terms”) under which you (“You”) may use our HanapKITA Application. Please read them carefully as they affect Your rights and liabilities under the law. If You do not agree to these Terms, please do not register for an account or use our websites and apps. These Terms are effective on the date they are published on our websites and apps.</p>
-          </li>
-          <li>
-            <h3>Binding agreement and variations</h3>
-            <p>a. Our websites and apps are provided to you for your use subject to these Terms. By accessing or using our websites and apps you agree to accept and be bound by these Terms. ⁠
-              b. We may update these Terms from time to time and the updated version will apply to you. Our current Terms will be accessible through our websites and apps. 
-              c. If we reasonably believe that changes to these Terms will be materially detrimental to Users, we will provide a notice on our websites and / or apps 30 days prior to the changes taking effect. 
-              d. If you do not wish to accept the new Terms, you should not continue to use our websites and apps. If you continue to use our websites and apps, your use will indicate your agreement to be bound by the new Terms.⁠
-            </p>
-          </li>
-          <li>
-            <h3>Registration</h3>
-            <p>a. To register an account on our websites and apps you must be capable of entering into a legally binding contract in the country in which you live.
-              b. You must ensure that the details provided by you to us on registration (or at any time) are correct and complete.
-              c. You must inform us immediately of any changes to the information that you provided when registering by updating your personal details so that we can communicate with you effectively.
-              </p>
-          </li>
-          <li>
-            <h3>Password and security</h3>
-            <p>a. When you register an account through our websites and apps you will be asked to create a password. In order to prevent fraud, you must keep your Login Details confidential and must not disclose them or share them with anyone. You agree to immediately notify us of any unauthorized use of your Login Details or any other breach of security that is relevant to us.
-              b. If we have reason to believe that there is likely to be a breach of security or misuse of our websites and apps, we may require you to change your Login Details or we may suspend your account.
-              c. You are entirely responsible if you do not maintain the confidentiality of your Login Details. Furthermore, you are entirely responsible for any and all activities that occur within or through your account. You may change your password at any time by following the instructions in ‘Settings’. You may also delete services attached to your registration at your convenience.
-              d. If you do not maintain the confidentiality of your Login Details:                     
-              all resulting losses or damage incurred by us or you shall be borne by you; and
-              you shall fully indemnify us should we suffer any loss or damage.
-              </p>
-          </li>
-          <li>
-            <h3>Intellectual Property</h3>
-            <p>a. We own all intellectual property rights associated with the website HanapKITA. 
-              b. We do not own any pre-existing intellectual property owned by you (an example of which may be your company logo). However, you agree to provide us with a perpetual, non-transferable, royalty free licence to use your intellectual property in the products and services we provide (or make available) to you. If you withdraw this licence, we may be unable to provide certain products and services to you.
-              c. Unless otherwise expressly permitted by us, the materials and Content on our websites and apps must only be used for your personal, non-commercial purposes. You must keep intact all and any copyright and proprietary notices. You may not otherwise reproduce, modify, copy or distribute or use for non-personal or commercial purposes any of the materials or Content on our websites and apps without prior written permission from us.
-              </p>
-          </li>
-          <li>
-            <h3>Your use of our websites and apps</h3>
-            <p>a. We hereby grant you a limited, terminable, non-exclusive right to access and use our websites and apps only for your personal use and/or employment purposes.
-              b. You may not use our websites and apps for any of the following purposes:
-              disseminating any unlawful, illegally discriminatory, harassing, libelous, abusive, threatening, harmful, vulgar, obscene, or otherwise objectionable material or otherwise breaching any laws;       
-              aggregating, copying or duplicating in any manner any of the Content or information available from any of our websites and apps, including expired job postings;                  
-              reproducing any of the Content for general use;
-              link to any Content or information available from any of our websites and apps unless we permit otherwise;
-              transmitting material that encourages conduct that constitutes a criminal offence, or otherwise breaches any applicable laws, regulations or codes of practice;            
-              interfering with any other person’s use or enjoyment of our websites and apps; or                
-              making, transmitting or storing electronic copies of materials protected by copyright without the permission of the owner.
-              c.  You agree not to resell or assign your rights or obligations under these Terms. You also agree not to make any unatuthorized commercial use of our websites and apps.
-              d. You may not use data mining, robots, screen scraping, or similar automated data gathering, extraction or publication tools on our websites and apps (including without limitation for the purposes of establishing, maintaining, advancing or reproducing information contained on our websites and apps on your own website or in any other publication), except with our prior written consent.
-              e. You may not use our application as means to manage your company human resources. We shall only be the means to find any suitable candidate for your company.
-              </p>
-          </li>
-          <li>
-            <h3>Additional Terms applicable to Jobseekers</h3>
-            <p>a. If you are a Jobseeker, this section applies to you.
-              b. We hereby grant you a limited, terminable, non-exclusive right to access and use our websites and apps only for your personal use seeking employment opportunities for yourself. This authorizes you to view and download a single copy of the Content or material on our websites and apps solely for your personal, non-commercial use.
-              c. When you register with any of our websites and apps, you will be asked to create an account and provide us with certain information including a valid email address.
-              d. Any Profile you submit must be accurate, complete, up to date and not misleading. The Profile requires standard fields to be completed by you. You may not impersonate another person, living or dead.
-              e. You acknowledge and agree that you are solely responsible for the form, content and accuracy of any Profile and resume or material contained therein placed by you on our websites and apps.
-              f. You acknowledge and agree that you are solely responsible for any consequences arising from the creation of your account and the use of our websites and apps.
-              g. We grant you the right to apply to multiple job vacancies on the condition that you are able to commit to them.
-              h. You acknowledge that by applying and being accepted into various job offers made within our application, you have a legal obligation to commit yourself into the contract provided to you, and that you must fulfill your end of each binding terms. 
-              i. You understand and acknowledge that all information provided by you, your Profile, resume, and/or other account information shall be disclosed to prospective Employers when you apply for a role. Your information may also be searchable by Employers via our Talent Search functionality.
-              j. You understand and acknowledge that you have no ownership rights in your account and that if you cancel your account or your account is terminated, all your account information, including your Profile, resumes, cover letters, saved jobs, will be marked as deleted in and may be deleted from our Databases and will be removed from any public area of our websites and apps. Information may continue to be available for some period of time because of delays in propagating such deletion through our web servers. In addition, third parties may retain saved copies of your information and Employers may still have access to your previously submitted applications through our websites and apps for a period of time.
-              k. We reserve the right to delete your account and all of your information after a significant duration of inactivity. 
-              l. We reserve the right to suspend or terminate your account on grounds of underperformance and fraud subject to existing laws and if proven upon investigation.
-              m. We give no guarantee to you of the continued availability of any particular job advertised on our websites and apps and will not be liable to you should an Advertiser have filled the vacancy at any time prior to removal of the advertisement from our websites and apps. While we take efforts to ensure that jobs advertised are for actual job vacancies, we give no guarantee to you that every job advertisement represents an actual job vacancy.
-              </p>
-          </li>
-          <li>
-            <h3>User Content and Submissions</h3>
-            <p>a. You understand that all User Content is the sole responsibility of the person from which such User Content originated.
-              b. You understand and acknowledge that all information provided by you, your Profile, resume, and/or account information shall be stored in our Databases.
-              c. You understand, acknowledge and consent that all information provided by you, your Profile, resume, and/or account information may be transferred to countries outside of your location for the purposes of storing and/or processing. 
-              d. By submitting, posting or displaying User Content on or through our websites and apps, you grant us, subject to your privacy setting and applicable laws, a worldwide, non-exclusive, royalty-free license to reproduce, adapt, distribute and publish such User Content through our websites and apps. We will discontinue this licensed use within a commercially reasonable period after such User Content is removed from our websites and apps. We reserve the right to refuse to accept, post, display or transmit any User Content in our sole discretion.
-              e. If you post User Content in any public area of any of our websites and apps, you also permit any User to access, view, store and reproduce such User Content for personal use.
-              f. We may review and remove any User Content that, in our sole judgment, violates these Terms, violates applicable laws, rules or regulations, is abusive, disruptive, offensive or illegal, or violates the rights of, or harms or threatens the safety of, Users of any of our websites and apps. We reserve the right to expel Users and prevent their further access to our websites and apps and/or use of our Services for violating the Terms or applicable laws, rules or regulations. We may take any action with respect to User Content that we deem necessary or appropriate in our sole discretion if we believe that such User Content could create liability for us, damage our brand or public image, or cause us to lose Users.
-              g. We do not represent or guarantee the truthfulness, accuracy, or reliability of User Content, derivative works from User Content, or any other communications posted by Users nor do we endorse any opinions expressed by Users. You acknowledge that any reliance on material posted by other Users will be at your own risk.
-              </p>
-          </li>
-          <li>
-            <h3>Our right to suspend or cancel your account registration</h3>
-            <p>a. We may suspend or cancel your Jobseeker account registration immediately at our reasonable discretion or if you breach any of your obligations under these Terms.
-              b. You can cancel your Jobseeker account registration at any time. 
-              c. The suspension or cancellation of your Jobseeker account registration and your right to use our websites and apps shall not affect either party’s statutory rights or liabilities.
-              d. If you have an employer account with us, we determine the circumstances in which we can suspend or cancel your account. 
-              </p>
-          </li>
-          <li>
-            <h3>Term and Termination</h3>
-            <p>a. These Terms will remain in full force and effect while you are a User of any of our websites and apps.
-              b. We reserve the right, at our sole discretion, to pursue all of our legal remedies, if you breach these Terms. This may include, but is not limited to: 
-              removal of your User Content from our websites and apps;                     
-              suspension of the account;
-              immediate termination of your Jobseeker account registration; 
-              removing or restricting your access to our websites and apps and/or any of our Services.
-              c. Even after you are no longer a User of our websites and apps, provisions of these Terms that are capable of surviving will remain in effect.
-              d. Idle accounts shall be subject to termination of account.
-              </p>
-          </li>
-        </ol>
+      <div class="text">
+        <h2> JOBSEEKER TERMS AND CONDITIONS</h2>
       </div>
-      <div class="tc_item tc_foot flex_align">
-        <a href="landing.html" class="decline_btn"><button>Decline</button></a>
-        <a href="jobseekersignup.php" class="accept_btn"><button>Accept</button></a>
     </div>
-    
-
+    <div class="tc_item tc_body">
+      <ol>
+        <li>
+          <h3>Overview</h3><br>
+          <p> This page states the terms of use (“Terms”) under which you (“You”) may use our HanapKITA Application. Please read them carefully as they affect Your rights and liabilities under the law. If You do not agree to these Terms, please do not register for an account or use our websites and apps. These Terms are effective on the date they are published on our websites and apps.</p>
+        </li>
+        <li>
+        <h3>Binding agreement and variations</h3><br>
+        <p>a. Our websites and apps are provided to you for your use subject to these Terms. By accessing or using our websites and apps you agree to accept and be bound by these Terms. ⁠
+          <br><br>
+          b. We may update these Terms from time to time and the updated version will apply to you. Our current Terms will be accessible through our websites and apps. 
+          <br><br>
+          c. If we reasonably believe that changes to these Terms will be materially detrimental to Users, we will provide a notice on our websites and / or apps 30 days prior to the changes taking effect. 
+          <br><br>
+          d. If you do not wish to accept the new Terms, you should not continue to use our websites and apps. If you continue to use our websites and apps, your use will indicate your agreement to be bound by the new Terms.⁠
+        </p>
+      </li>
+      <li>
+        <h3>Registration</h3><br>
+        <p>a. To register an account on our websites and apps you must be capable of entering into a legally binding contract in the country in which you live.
+          <br><br>
+          b. You must ensure that the details provided by you to us on registration (or at any time) are correct and complete.
+          <br><br>
+          c. You must inform us immediately of any changes to the information that you provided when registering by updating your personal details so that we can communicate with you effectively.
+          </p>
+      </li>
+      <li>
+        <h3>Password and security</h3><br>
+        <p>a. When you register an account through our websites and apps you will be asked to create a password. In order to prevent fraud, you must keep your Login Details confidential and must not disclose them or share them with anyone. You agree to immediately notify us of any unauthorized use of your Login Details or any other breach of security that is relevant to us.
+          <br><br>
+          b. If we have reason to believe that there is likely to be a breach of security or misuse of our websites and apps, we may require you to change your Login Details or we may suspend your account.
+          <br><br>
+          c. You are entirely responsible if you do not maintain the confidentiality of your Login Details. Furthermore, you are entirely responsible for any and all activities that occur within or through your account. You may change your password at any time by following the instructions in ‘Settings’. You may also delete services attached to your registration at your convenience.
+          <br><br>
+          d. If you do not maintain the confidentiality of your Login Details: all resulting losses or damage incurred by us or you shall be borne by you; and
+          you shall fully indemnify us should we suffer any loss or damage.
+          </p>
+      </li>
+      <li>
+        <h3>Intellectual Property</h3><br>
+        <p>a. We own all intellectual property rights associated with the website HanapKITA. 
+          <br><br>
+          b. We do not own any pre-existing intellectual property owned by you (an example of which may be your company logo). However, you agree to provide us with a perpetual, non-transferable, royalty free licence to use your intellectual property in the products and services we provide (or make available) to you. If you withdraw this licence, we may be unable to provide certain products and services to you.
+          <br><br>
+          c. Unless otherwise expressly permitted by us, the materials and Content on our websites and apps must only be used for your personal, non-commercial purposes. You must keep intact all and any copyright and proprietary notices. You may not otherwise reproduce, modify, copy or distribute or use for non-personal or commercial purposes any of the materials or Content on our websites and apps without prior written permission from us.
+          </p>
+      </li>
+      <li>
+        <h3>Your use of our websites and apps</h3>
+        <p>a. We hereby grant you a limited, terminable, non-exclusive right to access and use our websites and apps only for your personal use and/or employment purposes.
+          <br><br>
+          b. You may not use our websites and apps for any of the following purposes: disseminating any unlawful, illegally discriminatory, harassing, libelous, abusive, threatening, harmful, vulgar, obscene, or otherwise objectionable material or otherwise breaching any laws;       
+          aggregating, copying or duplicating in any manner any of the Content or information available from any of our websites and apps, including expired job postings;                  
+          reproducing any of the Content for general use; link to any Content or information available from any of our websites and apps unless we permit otherwise;
+          transmitting material that encourages conduct that constitutes a criminal offence, or otherwise breaches any applicable laws, regulations or codes of practice;            
+          interfering with any other person's use or enjoyment of our websites and apps; or making, transmitting or storing electronic copies of materials protected by copyright without the permission of the owner.
+          <br><br>
+          c.  You agree not to resell or assign your rights or obligations under these Terms. You also agree not to make any unatuthorized commercial use of our websites and apps.
+          <br><br>
+          d. You may not use data mining, robots, screen scraping, or similar automated data gathering, extraction or publication tools on our websites and apps (including without limitation for the purposes of establishing, maintaining, advancing or reproducing information contained on our websites and apps on your own website or in any other publication), except with our prior written consent.
+          <br><br>
+          e. You may not use our application as means to manage your company human resources. We shall only be the means to find any suitable candidate for your company.
+          </p>
+      </li>
+      <li>
+        <h3>Additional Terms applicable to Jobseekers</h3><br>
+        <p>a. If you are a Jobseeker, this section applies to you.
+          <br><br>
+          b. We hereby grant you a limited, terminable, non-exclusive right to access and use our websites and apps only for your personal use seeking employment opportunities for yourself. This authorizes you to view and download a single copy of the Content or material on our websites and apps solely for your personal, non-commercial use.
+          <br><br>
+          c. When you register with any of our websites and apps, you will be asked to create an account and provide us with certain information including a valid email address.
+          <br><br>
+          d. Any Profile you submit must be accurate, complete, up to date and not misleading. The Profile requires standard fields to be completed by you. You may not impersonate another person, living or dead.
+          <br><br>
+          e. You acknowledge and agree that you are solely responsible for the form, content and accuracy of any Profile and resume or material contained therein placed by you on our websites and apps.
+          <br><br>
+          f. You acknowledge and agree that you are solely responsible for any consequences arising from the creation of your account and the use of our websites and apps.
+          <br><br>
+          g. We grant you the right to apply to multiple job vacancies on the condition that you are able to commit to them.
+          <br><br>
+          h. You acknowledge that by applying and being accepted into various job offers made within our application, you have a legal obligation to commit yourself into the contract provided to you, and that you must fulfill your end of each binding terms. 
+          <br><br>
+          i. You understand and acknowledge that all information provided by you, your Profile, resume, and/or other account information shall be disclosed to prospective Employers when you apply for a role. Your information may also be searchable by Employers via our Talent Search functionality.
+          <br><br>
+          j. You understand and acknowledge that you have no ownership rights in your account and that if you cancel your account or your account is terminated, all your account information, including your Profile, resumes, cover letters, saved jobs, will be marked as deleted in and may be deleted from our Databases and will be removed from any public area of our websites and apps. Information may continue to be available for some period of time because of delays in propagating such deletion through our web servers. In addition, third parties may retain saved copies of your information and Employers may still have access to your previously submitted applications through our websites and apps for a period of time.
+          <br><br>
+          k. We reserve the right to delete your account and all of your information after a significant duration of inactivity. 
+          <br><br>
+          l. We reserve the right to suspend or terminate your account on grounds of underperformance and fraud subject to existing laws and if proven upon investigation.
+          <br><br>
+          m. We give no guarantee to you of the continued availability of any particular job advertised on our websites and apps and will not be liable to you should an Advertiser have filled the vacancy at any time prior to removal of the advertisement from our websites and apps. While we take efforts to ensure that jobs advertised are for actual job vacancies, we give no guarantee to you that every job advertisement represents an actual job vacancy.
+          </p>
+      </li>
+      <li>
+        <h3>User Content and Submissions</h3><br>
+        <p>a. You understand that all User Content is the sole responsibility of the person from which such User Content originated.
+          <br><br>
+          b. You understand and acknowledge that all information provided by you, your Profile, resume, and/or account information shall be stored in our Databases.
+          <br><br>
+          c. You understand, acknowledge and consent that all information provided by you, your Profile, resume, and/or account information may be transferred to countries outside of your location for the purposes of storing and/or processing. 
+          <br><br>
+          d. By submitting, posting or displaying User Content on or through our websites and apps, you grant us, subject to your privacy setting and applicable laws, a worldwide, non-exclusive, royalty-free license to reproduce, adapt, distribute and publish such User Content through our websites and apps. We will discontinue this licensed use within a commercially reasonable period after such User Content is removed from our websites and apps. We reserve the right to refuse to accept, post, display or transmit any User Content in our sole discretion.
+          <br><br>
+          e. If you post User Content in any public area of any of our websites and apps, you also permit any User to access, view, store and reproduce such User Content for personal use.
+          <br><br>
+          f. We may review and remove any User Content that, in our sole judgment, violates these Terms, violates applicable laws, rules or regulations, is abusive, disruptive, offensive or illegal, or violates the rights of, or harms or threatens the safety of, Users of any of our websites and apps. We reserve the right to expel Users and prevent their further access to our websites and apps and/or use of our Services for violating the Terms or applicable laws, rules or regulations. We may take any action with respect to User Content that we deem necessary or appropriate in our sole discretion if we believe that such User Content could create liability for us, damage our brand or public image, or cause us to lose Users.
+          <br><br>
+          g. We do not represent or guarantee the truthfulness, accuracy, or reliability of User Content, derivative works from User Content, or any other communications posted by Users nor do we endorse any opinions expressed by Users. You acknowledge that any reliance on material posted by other Users will be at your own risk.
+          </p>
+      </li>
+      <li>
+        <h3>Our right to suspend or cancel your account registration</h3><br>
+        <p>a. We may suspend or cancel your Jobseeker account registration immediately at our reasonable discretion or if you breach any of your obligations under these Terms.
+          <br><br>
+          b. You can cancel your Jobseeker account registration at any time. 
+          <br><br>
+          c. The suspension or cancellation of your Jobseeker account registration and your right to use our websites and apps shall not affect either party’s statutory rights or liabilities.
+          <br><br>
+          d. If you have an employer account with us, we determine the circumstances in which we can suspend or cancel your account. 
+          </p>
+      </li>
+      <li>
+        <h3>Term and Termination</h3><br>
+        <p>a. These Terms will remain in full force and effect while you are a User of any of our websites and apps.
+          <br><br>
+          b. We reserve the right, at our sole discretion, to pursue all of our legal remedies, if you breach these Terms. This may include, but is not limited to: 
+          removal of your User Content from our websites and apps; suspension of the account; immediate termination of your Jobseeker account registration; removing or restricting your access to our websites and apps and/or any of our Services.
+          <br><br>
+          c. Even after you are no longer a User of our websites and apps, provisions of these Terms that are capable of surviving will remain in effect.
+          <br><br>
+          d. Idle accounts shall be subject to termination of account.
+          </p>
+      </li>
+    </ol>
+  </div>
+    <div class="tc_item tc_foot flex_align">
+      <a href="landing.html" class="decline_btn"><button>Decline</button></a>
+      <a href="jobseekersignup.php" class="accept_btn"><button>Accept</button></a>
+    </div>
   </div>
 </div>
 

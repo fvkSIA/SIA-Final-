@@ -91,7 +91,7 @@
         <hr>
         <p class="red-text">Are you?</p>
         <div class="button-container">
-            <button onclick="selectedOption = 'EMPLOYEE'"><b>EMPLOYEE</b></button>
+            <button onclick="selectedOption = 'EMPLOYER'"><b>EMPLOYER</b></button>
             <button onclick="selectedOption = 'JOBSEEKER'"><b>JOBSEEKER</b></button>
         </div>
         <button onclick="redirectToPage()" class="create-account">CREATE ACCOUNT</button>
@@ -101,7 +101,7 @@
         var selectedOption;
 
         function redirectToPage() {
-            if (selectedOption === 'EMPLOYEE') {
+            if (selectedOption === 'EMPLOYER') {
                 window.location.href = 'termsemployer.html';
             } else if (selectedOption === 'JOBSEEKER') {
                 window.location.href = 'termsjobseeker.html';
