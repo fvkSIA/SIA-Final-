@@ -79,65 +79,6 @@
                 <p class="text-gray-500 mt-1">Add a way of Personal Summary to your Profile as a way to introduce who you are.</p>
                 <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button>
             </div>
-            
-            <div class="mb-6">
-                <h2 class="text-2xl font-semibold text-[#4B5EAB]">Career History</h2>
-                <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addroleBtn">Add role</button>
-            </div>
-            
-            <div>
-                <h2 class="text-2xl font-semibold text-[#4B5EAB]">Education</h2>
-                <div class="border border-gray-300 p-4 mt-2 rounded-lg flex justify-between items-center">
-                    <div>
-                        <h3 class="text-md font-bold text-gray-800">Bachelor Of Information Technology</h3>
-                        <p class="text-sm text-gray-600">Pamantasan ng Lungsod ng Maynila<br>2021 - 2024<br>Dean's Lister</p>
-                    </div>
-                    <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2" id="addeducationBtn">Add Education</button>
-                </div>
-                <div class="space-y-8">
-                    <!-- Licenses and Certification -->
-                    <div>
-                        <h2 class="text-2xl font-semibold text-[#4B5EAB]" style="padding-top: 25px;">Licenses and Certification</h2>
-                        <button class="mt-2 px-4 py-2 bg-[#E1E7EF] rounded-md text-[#4B5EAB] text-sm hover:bg-[#D0D7E2]" id="addlicenceBtn">Add license or certification</button>
-                        <p class="mt-2 text-gray-700 text-sm">Showcase your professional credentials. Add your relevant licenses, certificates, membership, and accreditations here.</p>
-                    </div>
-                    
-                    <!-- Skills -->
-                    <div>
-                        <h2 class="text-2xl font-semibold text-[#4B5EAB]">Skills</h2>
-                        <div class="mt-2 px-4 py-3 border rounded-md space-x-2 flex items-center">
-                            <span class="px-2 py-1 bg-gray-200 rounded-full text-sm text-gray-600">Computer Literacy</span>
-                            <span class="px-2 py-1 bg-gray-200 rounded-full text-sm text-gray-600">Computer Systems</span>
-                            <span class="ml-auto text-sm text-gray-600 cursor-pointer" id="editskillsBtn">Edit Skills</span>
-                        </div>
-                    </div>
-                    
-                    
-                    <!-- Resume -->
-                    <div>
-                      <h2 class="text-2xl font-semibold text-[#4B5EAB]">Resume</h2>
-                      <label for="resume-upload" class="mt-2 px-4 py-2 bg-[#E1E7EF] rounded-md text-[#4B5EAB] text-sm hover:bg-[#D0D7E2] cursor-pointer">Add Resume</label>
-                      <input id="resume-upload" type="file" accept=".pdf" style="display: none">
-                  </div>
-                  <div id="pdf-container" style="display: none;">
-                      <embed id="pdf-viewer" src="" type="application/pdf" width="100%" height="600px">
-                  </div>
-                  
-                  <script>
-                      document.getElementById('resume-upload').addEventListener('change', function(event) {
-                          const file = event.target.files[0];
-                          if (file) {
-                              const reader = new FileReader();
-                              reader.onload = function(e) {
-                                  const pdfViewer = document.getElementById('pdf-viewer');
-                                  pdfViewer.setAttribute('src', e.target.result);
-                                  document.getElementById('pdf-container').style.display = 'block';
-                              };
-                              reader.readAsDataURL(file);
-                          }
-                      });
-                  </script>
-                                
                 </div>
             </div>
         </div>
@@ -161,39 +102,7 @@
       </div>
     </div>
 
-    <div id="roleModal" class="modal">
-      <div class="modal-content">
-          <span class="close">&times;</span>
-          <h1 style="font-weight: bold;">Add Role</h1>
-          <iframe src="modalcareer.html" width="100%" height="400"></iframe>
-      </div>
-    </div>
-    
 
-    <div id="educationModal" class="modal">
-      <div class="modal-content">
-          <span class="close">&times;</span>
-          <h1 style="font-weight: bold;">Add Educatione</h1>
-          <iframe src="modaleducation.html" width="100%" height="400"></iframe>
-      </div>
-    </div>
-
-    
-    <div id="licenceModal" class="modal">
-      <div class="modal-content">
-          <span class="close">&times;</span>
-          <h1 style="font-weight: bold;">Add License or Certification</h1>
-          <iframe src="modaladdlicense.html" width="100%" height="400"></iframe>
-      </div>
-    </div>
-
-    <div id="skillsModal" class="modal">
-      <div class="modal-content">
-          <span class="close">&times;</span>
-          <h1 style="font-weight: bold;">Add Skills</h1>
-          <iframe src="modalskills.html" width="100%" height="400"></iframe>
-      </div>
-    </div>
     
     
 
@@ -204,10 +113,6 @@
         const modals = {
             editBtn: 'editModal',
             addsummaryBtn: 'summaryModal',
-            addroleBtn: 'roleModal',
-            addeducationBtn: 'educationModal',
-            addlicenceBtn: 'licenceModal',
-            editskillsBtn: 'skillsModal',
         };
 
         Object.keys(modals).forEach(id => {

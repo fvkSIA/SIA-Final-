@@ -7,6 +7,30 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    .apply-now-container {
+      position: relative;
+      height: 100%;
+    }
+    .apply-now-button {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      padding: 10px 20px;
+      background-color: #1E40AF; /* Tailwind's blue-900 */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      text-decoration: none; /* Ensure the text isn't underlined */
+      display: inline-block;
+    }
+    .apply-now-button:hover {
+      background-color: #1E3A8A; /* Tailwind's blue-800 */
+    }
+  </style>
 </head>
 <body>
   <main class="flex-1 p-8">
@@ -21,7 +45,7 @@
                     <option>Electrician</option>
                     <option>Carpenter</option>
                     <option>Driver</option>
-                    <option>Refrigarator and Aircon Service</option>
+                    <option>Refrigerator and Aircon Service</option>
                     <option>Food Service</option>
                     <option>Laundry Staff</option>
                     <option>Factory Worker</option>
@@ -53,26 +77,24 @@
             <button class="py-2 px-6 bg-blue-900 text-white rounded hover:bg-blue-800">Find Now!</button>
         </div>
     </div>
-    <div class="bg-purple-100 p-8 rounded-lg mb-4">
+    <div class="bg-purple-100 p-8 rounded-lg mb-4 apply-now-container">
         <div class="bg-#f1f1f1 p-4 mb-1">
             <div style="display: flex; justify-content: space-between; max-width: 100%; ">
+                <div style="width: 10%; margin-left: 20px; box-sizing: border-box;">
+                    <img src="bersoto.jpg" alt="Circular Image" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;">
+                    <a href="employerhiringprofile.html" style="text-decoration: underline; display: flex; justify-content: center; margin-top: 10px;">View Profile</a>
+                </div>
                 <div style="width: 15%; margin: 1px; box-sizing: border-box;">
                     <p style="font-weight: bold;">
                         LOOKING FOR:
                     </p><p style="margin-top: 15px; font-weight: bold;">
                         LOCATION:
-                    </p><p style="margin-top: 15px; font-weight: bold;">
-                        DETAILS:
-                    </p>
                 </div>
                 <div style="width: 25%;  box-sizing: border-box;">
                     <p>
-                        PLUMBER <i style="color: red;">backend echo</i>
+                        DRIVER <i style="color: red;">backend echo</i>
                     </p><p style="margin-top: 10px;">
                         DIMAKITA ST. <i style="color: red;">backend echo</i>
-                    </p><p style="margin-top: 15px;">
-                        DETAILS <i style="color: red;">backend echo</i>
-                    </p>
                 </div>
                 <div style="width: 15%; margin: 1px; box-sizing: border-box;">
                     <p style="font-weight: bold;">
@@ -88,15 +110,48 @@
                         12/12/12 <i style="color: red;">backend echo</i>
                     </p>
                 </div>
+            </div>
+        </div>
+        <a href="applydetails.html" class="apply-now-button">Apply Now</a>
+    </div>
+
+    <div class="bg-purple-100 p-8 rounded-lg mb-4 apply-now-container">
+        <div class="bg-#f1f1f1 p-4 mb-1">
+            <div style="display: flex; justify-content: space-between; max-width: 100%; ">
                 <div style="width: 10%; margin-left: 20px; box-sizing: border-box;">
                     <img src="bersoto.jpg" alt="Circular Image" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;">
-                    <a href="employerviewprofile.html" style="text-decoration: underline; display: flex; justify-content: center; margin-top: 10px;">View Profile</a>
+                    <a href="employerhiringprofile.html" style="text-decoration: underline; display: flex; justify-content: center; margin-top: 10px;">View Profile</a>
+                </div>
+                <div style="width: 15%; margin: 1px; box-sizing: border-box;">
+                    <p style="font-weight: bold;">
+                        LOOKING FOR:
+                    </p><p style="margin-top: 15px; font-weight: bold;">
+                        LOCATION:
+                </div>
+                <div style="width: 25%;  box-sizing: border-box;">
+                    <p>
+                        DRIVER <i style="color: red;">backend echo</i>
+                    </p><p style="margin-top: 10px;">
+                        DIMAKITA ST. <i style="color: red;">backend echo</i>
+                </div>
+                <div style="width: 15%; margin: 1px; box-sizing: border-box;">
+                    <p style="font-weight: bold;">
+                        SALARY:
+                    </p><p style="margin-top: 15px; font-weight: bold;">
+                        DATE:
+                    </p>
+                </div>
+                <div style="width: 25%;  box-sizing: border-box;">
+                    <p>
+                        1,000,000 <i style="color: red;">backend echo</i>
+                    </p><p style="margin-top: 10px;">
+                        12/12/12 <i style="color: red;">backend echo</i>
+                    </p>
                 </div>
             </div>
         </div>
+        <a href="applydetails.html" class="apply-now-button">Apply Now</a>
     </div>
-    <div class="bg-purple-100 p-8 rounded-lg mb-4"></div>
-    <div class="bg-purple-100 p-8 rounded-lg mb-4"></div>
 </main>
 
 <script>
