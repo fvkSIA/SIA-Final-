@@ -331,7 +331,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="column">
                 <div class="input-box">
                     <label><b>Phone Number:</b></label>
-                    <input type="number" name="phone_number" placeholder="Enter phone number" required />
+                    <input type="text" name="phone_number" placeholder="Enter your phone number" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                 </div>
                 <div class="input-box">
                     <label><b>Birth Date:</b></label>
@@ -452,6 +452,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     eyeIcon.classList.add("fa-eye");
                 }
         }
+    // Add event listener for phone number input
+    document.querySelector('input[name="phone_number"]').addEventListener('input', function() {
+            validatePhoneNumber(this);
+        });
     </script>
 </body>
 </html>
