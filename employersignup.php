@@ -361,7 +361,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="input-box info picture">
                 <label><b>Profile:</b></label>
-                <input type="file" id="profile" name="profile_image_path" accept=".pdf, .jpg, .png" required  >
+                <input type="file" id="profile" name="profile_image_path" accept=".jpg, .png" required  >
             </div>
           
             <div class="input-box info">
@@ -454,6 +454,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     eyeIcon.classList.add("fa-eye");
                 }
         }
+
+             // When the user clicks the button, redirect them to the login page
+             continueBtn.onclick = function() {
+            window.location.href = "login.html";
+        }
+
     // Add event listener for phone number input
     document.querySelector('input[name="phone_number"]').addEventListener('input', function() {
             validatePhoneNumber(this);
