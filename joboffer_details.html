@@ -163,7 +163,7 @@
             <h1>Job Offer</h1>
             <div class="header">
                 <h2>Partos Residence</h2>
-                <p>National Capital Region</p>
+                <p>07/12/2024</p>
             </div>
 
             <div class="details">
@@ -196,13 +196,13 @@
                     <li>Plan efficient routes to minimize travel time while prioritizing safety and comfort.</li>
                     <li>Assist with loading and unloading luggage, groceries, and other items as needed.</li>
                     <li>Provide exceptional customer service, including opening doors, assisting with packages, and accommodating any special requests.</li>
-                    <li>Maintain confidentiality and discretion regarding the employer’s personal and professional matters.</li>
+                    <li>Maintain confidentiality and discretion regarding the employer's personal and professional matters.</li>
                     <li>Adhere to all traffic laws and regulations, and exercise caution in all driving situations.</li>
                     <li>Communicate effectively with the employer to coordinate schedules and make necessary adjustments.</li>
                 </ul>
                 <h4>Qualifications:</h4>
                 <ul>
-                    <li>Valid driver’s license with a clean driving record.</li>
+                    <li>Valid driver's license with a clean driving record.</li>
                     <li>Proven experience as a personal or chauffeur driver, preferably in a similar capacity.</li>
                     <li>Excellent knowledge of local roads and routes, with the ability to navigate efficiently.</li>
                     <li>Strong communication and interpersonal skills, with a professional demeanor.</li>
@@ -214,11 +214,19 @@
             </div>
         </div>
         <div class="buttons">
-            <button class="accept">Accept</button>
-            <a href="joboffer.html">
-                <button class="decline">Decline</button>
-            </a>
+            <button class="accept" onclick="redirectToJC()">Accept</button>
+            <button class="decline" onclick="redirectToLOL()">Decline</button>
         </div>
     </div>
+
+    <script>
+        function redirectToJC() {
+            window.location.href = "jobseeker_calendar.html";
+        }
+
+        function redirectToLOL() {
+            window.location.href = "joboffer.html";
+        }
+    </script>
 </body>
 </html>

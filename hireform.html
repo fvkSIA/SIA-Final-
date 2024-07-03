@@ -276,7 +276,7 @@
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
     <p>The Offer successfully sent to jobseeker!</p>
-    <button class="modal-button" onclick="closeModal()">Continue</button>
+    <button class="modal-button" onclick="closeModalAndRedirect()">Continue</button>
   </div>
 </div>
 
@@ -324,6 +324,11 @@
   function closeModal() {
     const modal = document.getElementById("myModal");
     modal.style.display = "none";
+  }
+
+  function closeModalAndRedirect() {
+    closeModal();
+    window.location.href = 'findworkers.html'; // Replace 'jobseekernavbar.html' with the actual path to the jobseeker navbar page
   }
 
   // Close the modal when clicking outside of the modal content
