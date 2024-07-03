@@ -13,92 +13,6 @@
             background-color: #E9F1FA; /* Updated background color */
 
         }
-        nav {
-            background-color: #4661a8;
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            font-family: 'Arial', sans-serif; /* dagdag na font family */
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo {
-            width: 40px; /* Adjust size as needed */
-            height: auto;
-            margin-right: 10px;
-        }
-        
-        .title {
-            font-size: 1.5em;
-            margin: 0;
-        }
-        
-        .links-container {
-            display: flex;
-            align-items: center;
-        }
-        
-        .link, .btn-link {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .btn-container {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #f0f0f0; /* default background color */
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        transition: background-color 0.3s ease; /* smooth background color transition */
-    }
-
-    .btn-container:hover {
-        background-color: #e0e0e0; /* background color when hovered */
-    }
-
-    .btn-link {
-        display: inline-block;
-        padding: 10px 20px;
-        text-decoration: none;
-        color: #000000;
-        background-color: #007bff;
-        border: 2px solid #007bff; 
-        border-radius: 5px;
-        transition: background-color 0.3s ease, border-color 0.3s ease; 
-        font-weight: bold;
-    }
-
-    .btn-link:hover {
-        background-color: #a0ceff;
-        border-color: #000101; 
-    }
-        
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        
-            .logo-container {
-                margin-bottom: 10px;
-            }
-        
-            .links-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        
-            .link, .btn-link {
-                margin: 5px 0;
-            }
-        }
-        
 
   .right-half {
   position: absolute;
@@ -597,21 +511,18 @@
 </head>
 
 <body>
-    <nav>
-        <div class="logo-container">
-            <img class="logo"
-            src="hanapKITA.png">
-            <h2 class="title"> HANAPKITA</h2>
-        </div>
-            <div class="links-container">
-                <a class="link" href="landing.html"> HOME </a>
-                <a class="link" href="#top"> JOB SEARCH </a>
-                <a class="link" href="unskilledworker.html"> WORKER </a>
-                <a class="link" href="#middle"> JOB HIRING </a>  
-                <a class="link" href="#bottom"> ABOUT </a>
-                <a class="btn-link" href="login.html"> SIGN IN </a>
-            </div>
-    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          fetch('workerheader.html')
+            .then(response => response.text())
+            .then(data => {
+              document.querySelector('header').innerHTML = data;
+            });
+        });
+      </script>
+      
+      <!-- Main Content -->
+      <header></header>
 
     <div  style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto; width: 100%; padding-bottom: 20px;">
         <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
@@ -619,7 +530,14 @@
                 Search, Find, and Apply!
             </h1>
             <div style="display: flex; justify-content: center; align-items: center; gap: 10px; background-color: #f0f0f0; padding: 10px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                <input type="text" style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+                <select style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: white;">
+                    <option>Select type of worker</option>
+                    <option>Delivery Rider</option>
+                    <option>Personal Driver</option>
+                    <option>Delivery Driver Helper</option>
+                    <option>Company Driver</option>
+                    <option>Tourist Bus Driver</option>
+                </select>
                 <select style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: white;">
                     <option value="">Location</option>
                     <option value="manila">Manila</option>
