@@ -28,12 +28,19 @@
 //         echo "Error updating record: " . $conn->error;
 //     }
 // } 
+if (isset($_POST['selectedOption'])){
+    $selectedOption = $_POST['selectedOption'];
 
-if ($selectedOption == 'Employer') {
-    header("Location: termsemployer.html");
-} else {
-    header("Location: termsjobseeker.html");
+    if ($selectedOption == 'EMPLOYER') {
+        header("Location: ../signup/termsemployer.html");
+    } else if ($selectedOption == 'JOBSEEKER') {
+        header("Location: ../signup/termsjobseeker.html");
+    }
+
 }
+
+
+
 
 // $conn->close();
 ?>

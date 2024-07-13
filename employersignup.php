@@ -5,6 +5,7 @@ include 'db_connection.php';
 // Initialize variables
 $showModal = false;
 $errorMessage = '';
+$employer_id = 3;
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

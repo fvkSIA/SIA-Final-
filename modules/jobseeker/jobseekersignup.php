@@ -1,6 +1,6 @@
 <?php
 // Include the database connection file
-include 'db_connection.php';
+require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 
 // Initialize variables
 $showModal = false;
