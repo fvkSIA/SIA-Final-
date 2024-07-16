@@ -8,18 +8,20 @@ $result = null;
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   $job_type = $_POST['job_type'];
   $location = $_POST['location'] ?? '';
+
+  $param = "%{$location}%";
   
 //   $sql = "SELECT  * FROM users where type = 3 AND job_type = ? AND city = ?";
 
-  $sql = "SELECT job_listings.*, users.id as user_id, users.firstname, users.lastname, users.middlename, users.email FROM job_listings 
+  $sql = "SELECT job_listings.*, users.id as user_id, users.profile, users.firstname, users.lastname, users.middlename, users.email FROM job_listings 
             INNER JOIN users ON users.id = job_listings.employer_id
             WHERE users.type = 3
             AND job_listings.job = ?
-            AND job_listings.location = ?";
+            AND job_listings.location LIKE ?";
 
   // echo $job_type . " " . $location . ' query: ' . $sql; die();
   if ($stmt = $conn->prepare($sql)) {
-    $stmt->bind_param("ss", $job_type, $location);
+    $stmt->bind_param("ss", $job_type, $param);
     $stmt->execute();
     $result = $stmt->get_result() ?? null;
     
@@ -126,7 +128,7 @@ $conn->close();
                 <div class="bg-#f1f1f1 p-4 mb-1">
                     <div style="display: flex; justify-content: space-between; max-width: 100%; ">
                         <div style="width: 10%; margin-left: 20px; box-sizing: border-box;">
-                            <img src="../jobseeker/assets/images/<?php echo $row['profile'] ?? 'no-image.png'?>" alt="Circular Image" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;">
+                            <img src="../employer/assets/images/<?php echo $row['profile'] ?? 'no-image.png'?>" alt="Circular Image" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;">
                             <a href="employerhiringprofile.php?id=<?php echo $row['employer_id'];?>" style="text-decoration: underline; display: flex; justify-content: center; margin-top: 10px;">View Profile</a>
                         </div>
                         <div style="width: 15%; margin: 1px; box-sizing: border-box;">

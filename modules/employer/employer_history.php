@@ -89,7 +89,6 @@
             <p>June 1, 2024</p>
         </div>
         <div class="right-container">
-            <div class="stars">★★★★☆</div>
             <a href="view-details-history.html" class="view-details">View Details</a>
         </div>
     </div>
@@ -100,7 +99,6 @@
             <p>June 1, 2024</p>
         </div>
         <div class="right-container">
-            <div class="stars">★★★★☆</div>
             <a href="view-details-history.html" class="view-details">View Details</a>
         </div>
     </div>
@@ -111,7 +109,6 @@
             <p>June 1, 2024</p>
         </div>
         <div class="right-container">
-            <div class="stars">★★★★☆</div>
             <a href="view-details-history.html" class="view-details">View Details</a>
         </div>
     </div>

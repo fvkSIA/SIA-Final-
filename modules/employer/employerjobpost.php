@@ -277,22 +277,25 @@ $conn->close();
       <label>Location:</label>
       <select id="selectLocation" onchange="stateSelected();" class="selector" name="location">
         <option value="" selected="selected">Choose location</option>
-        <option value="pateros">Municipality of Pateros</option>
-        <option value="caloocan">Caloocan City</option>
-        <option value="marikina">Marikina City</option>
+        <!-- <option value="">Location</option> -->
+        <option value="manila">Manila</option>
+        <option value="caloocan">Caloocan</option>
+        <option value="valenzuela">Valenzuela</option>
+        <option value="pasay">Pasay</option>
+        <option value="makati">Makati</option>
+        <option value="quezon_city">Quezon City</option>
+        <option value="navotas">Navotas</option>
+        <option value="las_piñas">Las Piñas</option>
+        <option value="malabon">Malabon</option>
         <option value="mandaluyong">Mandaluyong</option>
-        <option value="muntinlupa">Muntinlupa City</option>
-        <option value="cityofmanila">City of Manila</option>
-        <option value="navotas">Navotas City</option>
-        <option value="cityofmalabon">City of Malabon</option>
-        <option value="navotas">Navotas City</option>
-        <option value="valenzuela">Valenzuela City</option>
-        <option value="pasay">Pasay City</option>
-        <option value="parañaque">Parañaque City</option>
-        <option value="sanjuan">City of San Juan</option>
-        <option value="laspiñas">Las Piñas City</option>
-        <option value="taguig">Taguig City</option>
-        <option value="quezon city">Quezon City</option>
+        <option value="marikina">Marikina</option>
+        <option value="muntinlupa">Muntinlupa</option>
+        <option value="parañaque">Parañaque</option>
+        <option value="pasig">Pasig</option>
+        <option value="san_juan">San Juan</option>
+        <option value="taguig">Taguig</option>
+        <option value="valenzuela">Valenzuela</option>
+        <option value="pateros">Pateros</option>
       </select><br>
 
       <div class="form-group">

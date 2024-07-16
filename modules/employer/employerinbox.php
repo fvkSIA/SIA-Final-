@@ -8,10 +8,20 @@ $result = null;
 
 $id = $_SESSION['user_id'];
 
-$sql = "SELECT job_requests.*, users.id as user_id, users.firstname, users.lastname, job_listings.* FROM job_requests
-        INNER JOIN users ON job_requests.user_id = users.id 
-        INNER JOIN job_listings ON job_requests.job_id = job_listings.id
-        WHERE job_listings.employer_id = ?";
+// $sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_requests.job_id as jr_jobid, job_requests.employer_id as jr_empid, job_requests.type as jr_type,
+//         job_requests.status as jr_stat, job_requests.is_accepted as jr_accept, users.id as user_id, users.firstname, users.lastname, job_listings.*, job_offers.* FROM job_requests
+//         INNER JOIN users ON job_requests.user_id = users.id 
+//         INNER JOIN job_listings ON job_requests.job_id = job_listings.id
+//         INNER JOIN job_offers ON job_requests.job_id = job_offers.id
+//         WHERE job_listings.employer_id = ?";
+
+$sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_requests.job_id as jr_jobid, job_requests.employer_id as jr_empid, job_requests.type as jr_type,
+        job_requests.status as jr_comp, job_requests.is_accepted, users.id as user_id, users.firstname, users.lastname, job_listings.*, job_offers.*, a.firstname as job_seek_fname, a.lastname as job_seek_lname, a.middlename as job_seek_mname, a.email as job_seek_email, a.phone_number as job_seek_phone FROM job_requests
+        LEFT JOIN users ON job_requests.employer_id = users.id
+        LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
+        LEFT JOIN users as a ON job_requests.user_id = a.id
+        INNER JOIN job_offers ON job_requests.job_id = job_offers.id
+        WHERE job_requests.employer_id = ?";
 
   // echo $job_type . " " . $location . ' query: ' . $sql; die();
   if ($stmt = $conn->prepare($sql)) {
@@ -157,14 +167,32 @@ table {
   <table>
     <?php if($data):?>
         <?php foreach($data as $row): ?>
-            <tr>
-                <td colspan="3">
-                    <div class="details">
-                        <b><?php echo $row['firstname'] . ' ' . $row['lastname'];?> | Want's to apply to your job post </b>
-                        <a href="jobseekerapply.php">View Details</a>
-                    </div>
-                </td>
-            </tr>
+            <!-- <?php echo $row['jr_type'];?> -->
+            <?php if($row['jr_type'] === 1): ?>
+                <?php if($row['is_accepted'] == 1): ?>
+                    <tr>
+                        <td colspan="3">
+                            <div class="details">
+                                <b><?php echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'];?> | Accepted the job offer you have been requested! </b>
+                                <a href="#">View Details</a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endif;?>
+                
+            <?php elseif($row['jr_type'] === 2): ?>
+                <tr>
+                    <td colspan="3">
+                        <div class="details">
+                            <b><?php echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'];?> | Want's to apply to your job post </b>
+                            <a href="jobseekerapply.php?id=<?php echo $row['jr_uid'];?>">View Details</a>
+                        </div>
+                    </td>
+                </tr>
+            <?php elseif($row['jr_type'] === 3):?>
+            <?php else:?>
+            <?php endif;?>
+            
         <?php endforeach;?>
     <?php else:?>
         <tr>

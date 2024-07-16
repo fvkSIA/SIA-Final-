@@ -8,8 +8,12 @@ $result = null;
 
 $id = $_SESSION['user_id'];
 
-$sql = "SELECT job_offers.*, users.id as user_id, users.firstname, users.middlename, users.lastname FROM job_offers 
-INNER JOIN users ON users.id = job_offers.employer_id where job_offers.job_seeker_id = ?";
+$sql = "SELECT job_offers.*, job_offers.type as jo_type, users.id as userid, users.firstname, users.middlename, users.lastname, job_requests.id as jr_id, job_requests.user_id, job_requests.job_id, job_requests.employer_id, job_requests.type, job_requests.status, job_requests.is_accepted  FROM job_offers 
+  INNER JOIN users ON users.id = job_offers.employer_id 
+  INNER JOIN job_requests ON job_offers.id = job_requests.job_id
+  WHERE job_requests.user_id = ?
+  AND job_requests.is_accepted = 0 
+  AND job_requests.type = 1";
 
 // echo $id . ' query: ' . $sql; die();
 if ($stmt = $conn->prepare($sql)) {
@@ -157,7 +161,7 @@ $conn->close();
             <div class="job-location"><?php echo $row['location']?></div>
             <div class="job-type">
               <span>Job Type</span>
-              <span><?php echo $row['type']?></span>
+              <span><?php echo $row['jo_type']?></span>
             </div>
             <div class="job-salary">
               <span>Salary</span>
@@ -165,7 +169,7 @@ $conn->close();
             </div>
           </div>
           <div class="employee-name"><?php echo $row['firstname'] . ' ' . $row['lastname']?></div>
-          <a href="joboffer_details.html" class="view-offer">VIEW OFFER</a>
+          <a href="jobseekerofferdetails.php?id=<?php echo $row['id']?>&jrid=<?php echo $row['jr_id'];?>" class="view-offer">VIEW OFFER</a>
         </div>
       <?php endforeach;?>
     <?php else:?>

@@ -345,7 +345,7 @@
         </a>
       </li>
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('jobseekerinbox.html')">
+        <a href="javascript:void(0)" onclick="changeContent('jobseekerinbox.php')">
           <i class="bx bx-chat"></i>
           <span class="link_name">Inbox</span>
         </a>

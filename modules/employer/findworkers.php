@@ -8,12 +8,14 @@ $result = null;
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   $job_type = $_POST['job_type'];
   $location = $_POST['location'] ?? '';
+
+  $param = "%{$location}%";
   
-  $sql = "SELECT  * FROM users where type = 2 AND job_type = ? AND city = ?";
+  $sql = "SELECT  * FROM users where type = 2 AND job_type = ? AND city like ?";
 
   // echo $job_type . " " . $location . ' query: ' . $sql; die();
   if ($stmt = $conn->prepare($sql)) {
-    $stmt->bind_param("ss", $job_type, $location);
+    $stmt->bind_param("ss", $job_type, $param);
     $stmt->execute();
     $result = $stmt->get_result() ?? null;
     
@@ -113,7 +115,7 @@ $conn->close();
             <h2 class="text-xl font-bold"><?php echo $row['lastname'] . ', ' . $row['firstname'] . ' ' . $row['middlename'];?></h2>
             <p class="text-gray-600">Location: <?php echo $row['city']?></p>
             <p class="text-gray-600">Type of Worker: <?php echo $row['job_type']?></p>
-            <div class="flex items-center mt-2">
+            <!-- <div class="flex items-center mt-2">
               <span class="text-yellow-500">
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
@@ -121,10 +123,10 @@ $conn->close();
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
               </span>
-            </div>
+            </div> -->
           </div>
           <div class="text-center">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGcXaN1eANzJpV2p02f3Up6BqJ8I46Zc4BonvdyCvldGnrDLoAZ3E9lHH7ZGFr_-0F0LQ&usqp=CAU" alt="no image" class="rounded-full mb-2 w-24 h-24"> <!-- Adjusted size -->
+            <img src="../jobseeker/assets/images/<?php echo $row['profile'] ?? 'no-image.png';?>" alt="no image" class="rounded-full mb-2 w-24 h-24"> <!-- Adjusted size -->
             <a href='jobseekerviewprofile.php?id=<?php echo $row['id'];?>' class="text-blue-500">View Profile</a>
           </div>
         </div>

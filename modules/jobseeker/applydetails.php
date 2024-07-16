@@ -21,11 +21,13 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
 } else if ($_SERVER["REQUEST_METHOD"] == "POST"){
   $jobid = $_POST['job_id'];
   $userid = $_POST['user_id'];
+  $emp_id = $_POST['emp_id'];
+  $type = 2;
 
-  $sql = "INSERT INTO job_requests (user_id, job_id) VALUES (?,?)";
+  $sql = "INSERT INTO job_requests (user_id, job_id, type, employer_id) VALUES (?,?,?,?)";
 
   if ($stmt = $conn->prepare($sql)){
-    $stmt->bind_param("ii", $userid, $jobid);
+    $stmt->bind_param("iiii", $userid, $jobid, $type, $emp_id);
     
     if ($stmt->execute()){
       // success
@@ -206,6 +208,7 @@ $conn->close();
    <form action="applydetails.php" method="post">
     <input type="hidden" name="job_id" value="<?php echo $job['id'];?>">
     <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'];?>">
+    <input type="hidden" name="emp_id" value="<?php echo $job['employer_id'];?>">
     <button id="myButton" type="submit">Apply</button>
    </form>
    

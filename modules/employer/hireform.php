@@ -31,13 +31,22 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
   $location = $_POST['location'];
   $job_desc = $_POST['job_responsibilities'];
   $job_quali = $_POST['job_qualifications'];
+  $type = 1;
 
   $sql = "INSERT INTO job_offers (job, date, time, type, salary_offer, location, responsibilities, qualifications, job_seeker_id, employer_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
-
+  $jr = "INSERT INTO job_requests (user_id, job_id, employer_id, type) VALUES (?,?,?,?)";
   if ($stmt = $conn->prepare($sql)){
     $stmt->bind_param('ssssssssii', $job, $date, $time, $job_type, $salary, $location, $job_desc, $job_quali, $jobseeker_id, $emp_id);
     if ($stmt->execute()){
-      $showModal = true;
+      $last_id = mysqli_insert_id($conn);
+      if ($job_req = $conn->prepare($jr)){
+        $job_req->bind_param('ssss', $jobseeker_id, $last_id, $emp_id, $type);
+        if ($job_req->execute()){
+          $showModal = true;
+        } else {
+          $errorMessage = "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+      }
     } else {
         $errorMessage = "Error: " . $sql . "<br>" . mysqli_error($conn);
     }

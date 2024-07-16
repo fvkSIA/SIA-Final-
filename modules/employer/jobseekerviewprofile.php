@@ -98,11 +98,7 @@ $conn->close();
   </style>
 </head>
 <body>
-  <div class="rounded-lg shadow-lg p-6" style="background-color: #f1eaf7; width: 40%;">
-    <div class="flex items-center mb-4">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGcXaN1eANzJpV2p02f3Up6BqJ8I46Zc4BonvdyCvldGnrDLoAZ3E9lHH7ZGFr_-0F0LQ&usqp=CAU" class="w-20 h-20 rounded-full mr-4" alt="Profile picture of driver">
-      <div>
-        <?php 
+<?php 
           $data = [];
           if ($result != null) {
             $user = $result->fetch_assoc();
@@ -111,12 +107,17 @@ $conn->close();
           }
 
         ?>
+  <div class="rounded-lg shadow-lg p-6" style="background-color: #f1eaf7; width: 40%;">
+    <div class="flex items-center mb-4">
+      <img src="../jobseeker/assets/images/<?php echo $user['profile'] ?? 'no-image.png';?>" class="w-20 h-20 rounded-full mr-4" alt="no image">
+      <div>
+        
         <h1 class="text-xl font-bold mb-2" style="letter-spacing: 5px;"><?php echo $user['lastname'] . ', ' . $user['firstname']; ?></h1>
         <div class="flex items-center text-sm text-gray-600 mb-2">
           <span class="mr-2 font-bold w-1/3">RANKING:</span>
           <a href="#" class="text-yellow-500 font-semibold underline">TOP 1 - DRIVER</a>
         </div>
-        <div class="flex items-center mb-2">
+        <!-- <div class="flex items-center mb-2">
           <span class="text-sm text-gray-600 mr-2 font-bold w-1/3">RATING:</span>
           <div class="flex">
             <i class="fas fa-star text-yellow-500"></i>
@@ -125,7 +126,7 @@ $conn->close();
             <i class="fas fa-star text-yellow-500"></i>
             <i class="fas fa-star text-yellow-500"></i>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="space-y-2 text-sm text-gray-600">

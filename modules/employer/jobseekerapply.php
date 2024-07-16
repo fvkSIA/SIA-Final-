@@ -1,3 +1,27 @@
+<?php 
+require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
+session_start();
+$error = '';
+$result = null;
+$showModal = false;
+
+if($_SERVER["REQUEST_METHOD"] == "GET") {
+  $id = $_GET['id'];
+  
+  $sql = "SELECT  * FROM users where id = ?";
+
+  // echo $id . ' query: ' . $sql; die();
+  if ($stmt = $conn->prepare($sql)) {
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $result = $stmt->get_result() ?? null;
+    $stmt->close();
+  }
+
+} 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,17 +77,26 @@
   </style>
 </head>
 <body class="bg-gray-100">
+<?php 
+    $data = [];
+    if ($result != null) {
+      $user = $result->fetch_assoc();
+    } else {
+      echo '';
+    }
+
+  ?>
   <div class="flex justify-center mt-10">
     <div class="rounded-lg shadow-lg p-6 bg-white w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/5">
       <div class="flex items-center mb-4">
-        <img src="../jobseeker/assets/images/no-image.png" class="w-20 h-20 rounded-full mr-4" alt="Profile picture of driver">
+        <img src="../jobseeker/assets/images/<?php echo $user['profile'] ?? 'no-image.png';?>" class="w-20 h-20 rounded-full mr-4" alt="Profile picture of driver">
         <div>
-          <h1 class="text-xl font-bold mb-2">KAREN GALE PARTOS</h1>
+          <h1 class="text-xl font-bold mb-2"><?php echo $user['firstname'] . ' ' . $user['lastname'];?></h1>
           <div class="flex items-center text-sm text-gray-600 mb-2">
-            <span class="mr-2 font-bold">RANKING:</span>
-            <a href="#" class="text-yellow-500 font-semibold underline">TOP 1 - DRIVER</a>
+            <span class="mr-2 font-bold">SKILLS:</span>
+            <a href="#" class="text-yellow-500 font-semibold underline"><?php echo $user['job_type'];?></a>
           </div>
-          <div class="flex items-center mb-2">
+          <!-- <div class="flex items-center mb-2">
             <span class="text-sm text-gray-600 mr-2 font-bold">RATING:</span>
             <div class="flex">
               <i class="fas fa-star text-yellow-500"></i>
@@ -72,25 +105,25 @@
               <i class="fas fa-star text-yellow-500"></i>
               <i class="fas fa-star text-yellow-500"></i>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="space-y-2 text-sm text-gray-600">
         <div class="flex">
           <span class="font-semibold">PHONE NUMBER:</span>
-          <span class="ml-2">09632654842</span>
+          <span class="ml-2"><?php echo $user['phone_number'];?></span>
         </div>
         <div class="flex">
           <span class="font-semibold">EMAIL ADDRESS:</span>
-          <span class="ml-2">karengalepartos@gmail.com</span>
+          <span class="ml-2"><?php echo $user['email'];?></span>
         </div>
         <div class="flex">
           <span class="font-semibold">GENDER:</span>
-          <span class="ml-2">Female</span>
+          <span class="ml-2"><?php echo $user['gender'];?></span>
         </div>
         <div class="flex">
           <span class="font-semibold">Location:</span>
-          <span class="ml-2"> Caloocan City</span>
+          <span class="ml-2"><?php echo $user['city'];?></span>
         </div>
       </div>
       <div class="mt-4 p-4 border-t border-gray-300 flex justify-between items-center">

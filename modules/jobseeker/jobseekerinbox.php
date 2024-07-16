@@ -1,3 +1,37 @@
+<?php 
+
+require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
+session_start();
+$error = '';
+$result = null;
+
+
+$id = $_SESSION['user_id'];
+
+$sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_requests.job_id as jr_jobid, job_requests.employer_id as jr_empid, job_requests.type as jr_type,
+        job_requests.status as jr_comp, users.id as user_id, users.firstname, users.lastname, job_listings.*, job_offers.* FROM job_requests
+        LEFT JOIN users ON job_requests.employer_id = users.id
+        LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
+        INNER JOIN job_offers ON job_requests.job_id = job_offers.id
+        WHERE job_requests.user_id = ? 
+        AND job_requests.is_accepted = 0";
+
+  // echo $job_type . " " . $location . ' query: ' . $sql; die();
+  if ($stmt = $conn->prepare($sql)) {
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result() ?? null;
+    
+    $stmt->close();
+  }
+  
+$conn->close();
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,74 +117,57 @@
     </style>
 </head>
 <body>
-  
+<?php 
+      $data = [];
+      if ($result != null)
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+      else 
+        echo '';
+    ?>
 
 <table>
-    <tr>
+    <?php if($data):?>
+        <?php foreach($data as $row): ?>
+            <!-- <?php echo $row['jr_type'];?> -->
+            <?php if($row['jr_type'] === 1): ?>
+                <tr>
+                    <td colspan="3">
+                        <div class="details">
+                            <b><?php echo $row['firstname'] . ' ' . $row['lastname'];?> | Sent you a job offer! </b>
+                            <a href="jobseekeracceptedoffer.php?id=<?php echo $row['jr_jobid'];?>&jrid=<?php echo $row['jr_id'];?>">View Details</a>
+                        </div>
+                    </td>
+                </tr>
+            <?php elseif($row['jr_type'] === 2): ?>
+                <?php if ($row['accepted'] == 1):?>
+                    <tr>
+                        <td colspan="3">
+                            <div class="details">
+                                <b>Your applicaton as a <?php echo $row['job'];?> have been accepted.</b>
+                                <a href="jobseekerhired.php">View Details</a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php else:?>
+                    
+                <?php endif;?>
+                
+            <?php elseif($row['jr_type'] === 3):?>
+            <?php else:?>
+            <?php endif;?>
+            
+        <?php endforeach;?>
+    <?php else:?>
+        <tr>
         <td colspan="3">
             <div class="details">
-                <b>Thea Joie Aquino | Sent you a job offer!</b>
-                <a href="jobseekeracceptedoffer.html">View Details</a>
+                <b>No items yet</b>
+                <!-- <a href="employeracceptedoffermessage.html">View Details</a> -->
             </div>
         </td>
     </tr>
-    <tr>
-        <td colspan="3">
-            <div class="details">
-                <b>Karen Gale Partos | Sent you a job offer!</b>
-                <a href="jobseekeracceptedoffer.html">View Details</a>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">
-            <div class="details">
-                <b>Your application as a driver have been Accepted </b>
-                <a href="jobseekerhired.html">View Details</a>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">
-            <div class="details">
-                <b></b>
-                <a href="#">View Details</a>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">
-            <div class="details">
-                <b></b>
-                <a href="#">View Details</a>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">
-            <div class="details">
-                <b></b>
-                <a href="#">View Details</a>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">
-            <div class="details">
-                <b></b>
-                <a href="#">View Details</a>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">
-            <div class="details">
-                <b></b>
-                <a href="#">View Details</a>
-            </div>
-        </td>
-    </tr>
-
+    <?php endif;?>
+    
     <!-- Additional rows removed for brevity -->
 </table>
 <div style="height: 50px; width: 100%;"></div> <!-- Spacer div -->

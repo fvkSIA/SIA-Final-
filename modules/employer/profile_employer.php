@@ -57,7 +57,7 @@ session_start();
     <div class="mx-auto p-4 bg-white rounded-lg shadow-md">
         <div class="flex justify-between items-center p-4 rounded-t-lg bg-indigo-100">
             <div class="flex items-center" style="padding: 1%;">
-                <img src="../jobseeker/assets/images/<?php echo $_SESSION['profile'] ?? 'no-image.png'?>" alt="image" class="rounded-full w-25 h-25 md:w-40 md:h-40 lg:w-40 lg:h-40 border-4 border-white -mt-50 mr-6">
+                <img src="../employer/assets/images/<?php echo $_SESSION['profile'] ?? 'no-image.png'?>" alt="image" class="rounded-full w-25 h-25 md:w-40 md:h-40 lg:w-40 lg:h-40 border-4 border-white -mt-50 mr-6">
                 <div class="ml-4">
                     <h1 class="text-4xl font-bold text-gray-800"><?php echo $_SESSION['name'];?></h1>
                     <p class="text-2xl text-gray-600">

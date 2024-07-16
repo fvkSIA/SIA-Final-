@@ -365,14 +365,14 @@
         <span class="tooltip">Job Post</span>
       </li>
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('employerongoing.html')">
+        <a href="javascript:void(0)" onclick="changeContent('employerongoing.php')">
           <i class="bx bx-loader"></i>
           <span class="link_name">Ongoing</span>
         </a>
         <span class="tooltip">Ongoing</span>
       </li>
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('employer_history.html')">
+        <a href="javascript:void(0)" onclick="changeContent('employer_history.php')">
           <i class="bx bx-history"></i>
           <span class="link_name">History</span>
         </a>
