@@ -114,8 +114,8 @@ $conn->close();
         
         <h1 class="text-xl font-bold mb-2" style="letter-spacing: 5px;"><?php echo $user['lastname'] . ', ' . $user['firstname']; ?></h1>
         <div class="flex items-center text-sm text-gray-600 mb-2">
-          <span class="mr-2 font-bold w-1/3">RANKING:</span>
-          <a href="#" class="text-yellow-500 font-semibold underline">TOP 1 - DRIVER</a>
+          <!-- <span class="mr-2 font-bold w-1/3">RANKING:</span>
+          <a href="#" class="text-yellow-500 font-semibold underline">TOP 1 - DRIVER</a> -->
         </div>
         <!-- <div class="flex items-center mb-2">
           <span class="text-sm text-gray-600 mr-2 font-bold w-1/3">RATING:</span>

@@ -9,7 +9,9 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
   $id = $_GET['id'];
   $userid = $_SESSION['user_id'];
 
-  $sql = "SELECT job_requests.*, job_requests.type as job_req_type, job_listings.*, job_offers.id as job_offer_id, job_offers.job as job_offer_job, job_offers.date as job_offer_date, job_offers.time as job_offer_time, job_offers.type as job_offer_type, job_offers.salary_offer as job_offer_sal, job_offers.location as job_offer_loc, job_offers.responsibilities as job_offer_respo, job_offers.qualifications as job_offer_quali, users.firstname as user_fname, users.lastname as user_lname, users.email as user_email, users.home_address as user_address FROM job_requests
+  $sql = "SELECT job_requests.*, job_requests.id as job_req_id, job_requests.type as job_req_type, job_listings.*, job_offers.id as job_offer_id, job_offers.job as job_offer_job, 
+  job_offers.date as job_offer_date, job_offers.time as job_offer_time, job_offers.type as job_offer_type, job_offers.salary_offer as job_offer_sal, job_offers.location as job_offer_loc, job_offers.responsibilities as job_offer_respo, job_offers.qualifications as job_offer_quali,
+   users.id as userid ,users.firstname as user_fname, users.lastname as user_lname, users.email as user_email, users.home_address as user_address FROM job_requests
         LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
         LEFT JOIN job_offers ON job_requests.job_id = job_offers.id
         INNER JOIN users ON job_requests.user_id = users.id
@@ -25,7 +27,9 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     $stmt->close();
   }
 
-} 
+}
+
+$conn->close();
 
 ?>
 
@@ -63,7 +67,13 @@ body{
   <main class=" justify-center">
 
     <div class=" mx-auto">
-        <span class="text-blue-500" style="font-size: 25px; font-weight: bold;">JOB ORBER</span>
+        <span class="text-blue-500" style="font-size: 25px; font-weight: bold;">JOB ORDER</span>
+
+        <form action="employergivingfeedback.php" method="post" id="job_order_form">
+            <input type="hidden" name="job_req_id" value="<?php echo $row['job_req_id'] ?? ''; ?>">
+            <input type="hidden" name="user_id" value="<?php echo $row['userid'] ?? '';?>">
+
+        </form>
         
         <div class="bg-blue-100 p-6 rounded-lg" style="width: 100%;">
             
@@ -112,7 +122,7 @@ body{
             </div>
             <div id="confirmationBox" class="hidden absolute inset-0 bg-opacity-50 flex justify-center items-center">
                 <div class="bg-white p-6 rounded-lg" style="width: 30%; text-align: justify;">
-                    <p class="text-lg font-bold mb-4">Are you sure you want to accept this worker?</p>
+                    <p class="text-lg font-bold mb-4">Are you sure?</p>
                     <p class="mb-6">Are you sure you want to complete the job order? This action cannot be undone.</p>
                     <div class="text-right">
                         <button id="confirmButton" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">Yes</button>
@@ -130,7 +140,8 @@ body{
 
     document.getElementById('confirmButton').addEventListener('click', function() {
         document.getElementById('confirmationBox').classList.add('hidden');
-        window.location.href = "employergivingfeedback.php";
+        document.getElementById("job_order_form").submit();
+        // window.location.href = "employergivingfeedback.php";
     });
 
     document.getElementById('cancelButton').addEventListener('click', function() {

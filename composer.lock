@@ -1,9 +1,14 @@
 {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "a683d2b7b8c23a368d35a2113e1683a6",
     "packages": [
         {
             "name": "davmixcool/php-sentiment-analyzer",
             "version": "1.2.2",
-            "version_normalized": "1.2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/davmixcool/php-sentiment-analyzer.git",
@@ -18,9 +23,7 @@
             "require": {
                 "php": ">=5.5.9"
             },
-            "time": "2020-09-17T13:50:06+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Sentiment\\": "src/"
@@ -52,9 +55,16 @@
                 "issues": "https://github.com/davmixcool/php-sentiment-analyzer/issues",
                 "source": "https://github.com/davmixcool/php-sentiment-analyzer/tree/1.2.2"
             },
-            "install-path": "../davmixcool/php-sentiment-analyzer"
+            "time": "2020-09-17T13:50:06+00:00"
         }
     ],
-    "dev": true,
-    "dev-package-names": []
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

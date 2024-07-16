@@ -1,3 +1,29 @@
+<?php 
+
+require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
+session_start();
+$error = '';
+$result = null;
+$showModal = false;
+
+$id = $_SESSION['user_id'];
+$sql = "SELECT ratings.*, job_requests.*, users.*, job_listings.*, job_offers.id as job_offer_id, job_offers.job as job_offer_job, 
+    job_offers.date as job_offer_date, job_offers.time as job_offer_time, job_offers.type as job_offer_type, job_offers.salary_offer as job_offer_sal, job_offers.location as job_offer_loc, job_offers.responsibilities as job_offer_respo, job_offers.qualifications as job_offer_quali FROM `ratings` 
+    INNER JOIN job_requests ON ratings.job_req_id = job_requests.id
+    INNER JOIN users ON job_requests.employer_id = users.id
+    LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
+    LEFT JOIN job_offers ON job_requests.job_id = job_offers.id
+    WHERE ratings.user_id = ?";
+
+if($stmt = $conn->prepare($sql)){
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result() ?? null;
+    $stmt->close();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,23 +125,29 @@
     </style>
 </head>
 <body>
+    <?php 
+      $data = [];
+      if ($result != null)
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+      else 
+        echo '';
+    ?>
     <div class="feedback-container">
         <div class="feedback-title">Feedback</div>
-        <div class="feedback-item">
-            <h3>Driver - Caloocan City - Karen Gale Partos</h3>
-            <p>Her dedication to providing safe and reliable transportation has been exceptional. Her professionalism and attention to detail make every journey a pleasure. Thank you for your hard work and commitment as our personal driver.</p>
-            <div class="right-container">
-                <div class="stars">★★★★★</div>
-            </div>
-        </div>
-        <div class="feedback-item">
-            <h3>Driver - Caloocan City - Karen Gale Partos</h3>
-            <p>Her driving skills was good.</p>
-            <div class="right-container">
-                <div class="stars">★★★★★</div>
-            </div>
-            
-        </div>
+        <?php if($data):?>
+            <?php foreach($data as $row): ?>
+                <div class="feedback-item">
+                    <h3><?php echo $row['job_offer_job'] ?? ''?> - <?php echo $row['job_offer_loc'] ?? ''?> - <?php echo $row['firstname'] ?? ''?> <?php echo $row['lastname'] ?? ''?></h3>
+                    <p><?php echo $row['reviews'] ?? 'No review'?></p>
+                    <!-- <div class="right-container">
+                        <div class="stars">★★★★★</div>
+                    </div> -->
+                </div>
+            <?php endforeach;?>
+        <?php else:?>
+        <?php endif;?>
+        
+        
     </div>
 </body>
 </html>
