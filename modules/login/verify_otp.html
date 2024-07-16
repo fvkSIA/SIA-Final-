@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify OTP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+</head>
+<body class="flex items-center justify-center h-screen bg-blue-100">
+    <div class="bg-white border-2 border-gray-300 rounded-lg p-8 shadow-lg w-96">
+        <div class="flex items-center justify-center mb-6">
+            <i class="fas fa-search text-xl"></i>
+            <h1 class="ml-2 text-2xl font-bold" style="font-family: 'Poppins', sans-serif; color: #374070;">HANAPKITA</h1>
+        </div>
+        <h2 class="text-center text-lg font-medium mb-4" style="font-family: 'Poppins', sans-serif; color: #666666;">Verify OTP</h2>
+        <form action="reset_password.php" method="POST">
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1" style="font-family: 'Poppins', sans-serif; color: #666666;">Enter OTP:</label>
+                <input type="text" name="otp" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter OTP" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1" style="font-family: 'Poppins', sans-serif; color: #666666;">New Password:</label>
+                <input type="password" name="new_password" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="New Password" required>
+            </div>
+            <div class="flex justify-center">
+                <button type="submit" class="w-full px-4 py-2 text-white bg-black rounded" style="font-family: 'Poppins', sans-serif;">Reset Password</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
