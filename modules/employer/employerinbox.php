@@ -20,7 +20,7 @@ $sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_req
         LEFT JOIN users ON job_requests.employer_id = users.id
         LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
         LEFT JOIN users as a ON job_requests.user_id = a.id
-        INNER JOIN job_offers ON job_requests.job_id = job_offers.id
+        LEFT JOIN job_offers ON job_requests.job_id = job_offers.id
         WHERE job_requests.employer_id = ?";
 
   // echo $job_type . " " . $location . ' query: ' . $sql; die();
