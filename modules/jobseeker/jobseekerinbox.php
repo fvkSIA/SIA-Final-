@@ -9,12 +9,13 @@ $result = null;
 $id = $_SESSION['user_id'];
 
 $sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_requests.job_id as jr_jobid, job_requests.employer_id as jr_empid, job_requests.type as jr_type,
-        job_requests.status as jr_comp, users.id as user_id, users.firstname, users.lastname, job_listings.*, job_offers.* FROM job_requests
+        job_requests.status as jr_comp, job_requests.is_accepted as jr_accept, users.id as user_id, users.firstname, users.lastname, job_listings.id as job_list_id, job_listings.job as job_list_job,
+         job_listings.date as job_list_data, job_listings.time as job_list_time, job_listings.time as job_list_type, job_listings.salary_offer as job_list_sal, job_listings.location as job_list_loc, job_listings.responsibilities as job_list_respo, 
+         job_listings.qualifications as job_list_quali, job_listings.accepted as job_list_accept, job_offers.* FROM job_requests
         LEFT JOIN users ON job_requests.employer_id = users.id
         LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
-        INNER JOIN job_offers ON job_requests.job_id = job_offers.id
-        WHERE job_requests.user_id = ? 
-        AND job_requests.is_accepted = 0";
+        LEFT JOIN job_offers ON job_requests.job_id = job_offers.id
+        WHERE job_requests.user_id = ?";
 
   // echo $job_type . " " . $location . ' query: ' . $sql; die();
   if ($stmt = $conn->prepare($sql)) {
@@ -130,20 +131,23 @@ $conn->close();
         <?php foreach($data as $row): ?>
             <!-- <?php echo $row['jr_type'];?> -->
             <?php if($row['jr_type'] === 1): ?>
-                <tr>
-                    <td colspan="3">
-                        <div class="details">
-                            <b><?php echo $row['firstname'] . ' ' . $row['lastname'];?> | Sent you a job offer! </b>
-                            <a href="jobseekeracceptedoffer.php?id=<?php echo $row['jr_jobid'];?>&jrid=<?php echo $row['jr_id'];?>">View Details</a>
-                        </div>
-                    </td>
-                </tr>
-            <?php elseif($row['jr_type'] === 2): ?>
-                <?php if ($row['accepted'] == 1):?>
+                <?php if ($row['jr_comp'] !== 1):?>
                     <tr>
                         <td colspan="3">
                             <div class="details">
-                                <b>Your applicaton as a <?php echo $row['job'];?> have been accepted.</b>
+                                <b><?php echo $row['firstname'] . ' ' . $row['lastname'];?> | Sent you a job offer! </b>
+                                <a href="jobseekeracceptedoffer.php?id=<?php echo $row['jr_jobid'];?>&jrid=<?php echo $row['jr_id'];?>">View Details</a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endif;?>
+                
+            <?php elseif($row['jr_type'] === 2): ?>
+                <?php if ($row['jr_accept'] == 1):?>
+                    <tr>
+                        <td colspan="3">
+                            <div class="details">
+                                <b>Your applicaton as a <?php echo $row['job_list_job'];?> have been accepted.</b>
                                 <a href="jobseekerhired.php">View Details</a>
                             </div>
                         </td>

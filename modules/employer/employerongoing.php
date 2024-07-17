@@ -114,7 +114,7 @@ body{
                     <div style="display: flex; justify-content: space-between; max-width: 100%; ">
                         <div style="width: 20%; margin: 1px; box-sizing: border-box;">
                             <p style="font-weight: bold; font-size: 25px;">
-                                <?php echo $row['job'];?>
+                                <?php echo $row['job'] ?? $row['job_list_job'];?>
                             </p><p style="margin-top: 15px; font-weight: bold;">
                                 <?php echo $row['location'];?>
                             </p><p style="margin-top: 15px; font-weight: bold;">

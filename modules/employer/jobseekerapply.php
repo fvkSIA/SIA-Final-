@@ -7,6 +7,7 @@ $showModal = false;
 
 if($_SERVER["REQUEST_METHOD"] == "GET") {
   $id = $_GET['id'];
+  $jr_id = $_GET['jrid'];
   
   $sql = "SELECT  * FROM users where id = ?";
 
@@ -129,10 +130,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
       <div class="mt-4 p-4 border-t border-gray-300 flex justify-between items-center">
        
         <div class="flex items-center">
-          <span class="font-semibold text-gray-600 mr-2">RESUME:</span>
-          <a href="#" class="text-sm text-blue-500 underline"><i class="far fa-file-alt mr-1"></i> JAVALLA, JOHN CARLO</a>
+          <!-- <span class="font-semibold text-gray-600 mr-2">RESUME:</span>
+          <a href="#" class="text-sm text-blue-500 underline"><i class="far fa-file-alt mr-1"></i> JAVALLA, JOHN CARLO</a> -->
         </div>
-        <button id="myButton" onclick="window.location.href='#'">HIRE</button>
+        <a id="myButton" href="jobseekerapplication.php?id=<?php echo $jr_id?>">HIRE</a>
       </div>
     </div>
   </div>
