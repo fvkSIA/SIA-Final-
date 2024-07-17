@@ -16,7 +16,10 @@ $id = $_SESSION['user_id'];
 //         WHERE job_listings.employer_id = ?";
 
 $sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_requests.job_id as jr_jobid, job_requests.employer_id as jr_empid, job_requests.type as jr_type,
-        job_requests.status as jr_comp, job_requests.is_accepted, users.id as user_id, users.firstname, users.lastname, job_listings.*, job_offers.*, a.firstname as job_seek_fname, a.lastname as job_seek_lname, a.middlename as job_seek_mname, a.email as job_seek_email, a.phone_number as job_seek_phone FROM job_requests
+        job_requests.status as jr_comp, job_requests.is_accepted, users.id as user_id, users.firstname, users.lastname, job_listings.id as job_list_id, job_listings.job as job_list_job,
+         job_listings.date as job_list_data, job_listings.time as job_list_time, job_listings.time as job_list_type, job_listings.salary_offer as job_list_sal, job_listings.location as job_list_loc, job_listings.responsibilities as job_list_respo, 
+         job_listings.qualifications as job_list_quali, job_listings.accepted as job_list_accept,
+         job_offers.*, a.firstname as job_seek_fname, a.lastname as job_seek_lname, a.middlename as job_seek_mname, a.email as job_seek_email, a.phone_number as job_seek_phone FROM job_requests
         LEFT JOIN users ON job_requests.employer_id = users.id
         LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
         LEFT JOIN users as a ON job_requests.user_id = a.id
@@ -181,14 +184,17 @@ table {
                 <?php endif;?>
                 
             <?php elseif($row['jr_type'] === 2): ?>
-                <tr>
-                    <td colspan="3">
-                        <div class="details">
-                            <b><?php echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'];?> | Want's to apply to your job post </b>
-                            <a href="jobseekerapply.php?id=<?php echo $row['jr_uid'];?>&jrid=<?php echo $row['jr_id'];?>">View Details</a>
-                        </div>
-                    </td>
-                </tr>
+                <?php if ($row['is_accepted'] == 0):?>
+                    <tr>
+                        <td colspan="3">
+                            <div class="details">
+                                <b><?php echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'];?> | Want's to apply to your job post </b>
+                                <a href="jobseekerapply.php?id=<?php echo $row['jr_uid'];?>&jrid=<?php echo $row['jr_id'];?>">View Details</a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endif;?>
+                
             <?php elseif($row['jr_type'] === 3):?>
             <?php else:?>
             <?php endif;?>
