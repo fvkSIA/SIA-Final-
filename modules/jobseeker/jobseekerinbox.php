@@ -9,7 +9,9 @@ $result = null;
 $id = $_SESSION['user_id'];
 
 $sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_requests.job_id as jr_jobid, job_requests.employer_id as jr_empid, job_requests.type as jr_type,
-        job_requests.status as jr_comp, job_requests.is_accepted as jr_accept, users.id as user_id, users.firstname, users.lastname, job_listings.*, job_offers.* FROM job_requests
+        job_requests.status as jr_comp, job_requests.is_accepted as jr_accept, users.id as user_id, users.firstname, users.lastname, job_listings.id as job_list_id, job_listings.job as job_list_job,
+         job_listings.date as job_list_data, job_listings.time as job_list_time, job_listings.time as job_list_type, job_listings.salary_offer as job_list_sal, job_listings.location as job_list_loc, job_listings.responsibilities as job_list_respo, 
+         job_listings.qualifications as job_list_quali, job_listings.accepted as job_list_accept, job_offers.* FROM job_requests
         LEFT JOIN users ON job_requests.employer_id = users.id
         LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
         LEFT JOIN job_offers ON job_requests.job_id = job_offers.id
@@ -145,7 +147,7 @@ $conn->close();
                     <tr>
                         <td colspan="3">
                             <div class="details">
-                                <b>Your applicaton as a <?php echo $row['job'];?> have been accepted.</b>
+                                <b>Your applicaton as a <?php echo $row['job_list_job'];?> have been accepted.</b>
                                 <a href="jobseekerhired.php">View Details</a>
                             </div>
                         </td>
