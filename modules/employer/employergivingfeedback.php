@@ -23,6 +23,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   $job_req_id = $_POST['job_req_id'];
   $user_id = $_POST['user_id'];
 
+
+
+
+
   $update_flag = $_POST['update'] ?? 0;
   if ($update_flag == 1) {
     $reviewStr = $_POST['review_text'];
@@ -40,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         // if success move file to directory
         move_uploaded_file($_FILES['image_proof']['tmp_name'], $img_destination);
         $update->close();
-        header('Location: employerongoingdetails.php');
+        header('Location: employerongoing.php');
         // die();
       }
     }
