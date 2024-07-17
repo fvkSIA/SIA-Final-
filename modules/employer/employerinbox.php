@@ -185,7 +185,7 @@ table {
                     <td colspan="3">
                         <div class="details">
                             <b><?php echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'];?> | Want's to apply to your job post </b>
-                            <a href="jobseekerapply.php?id=<?php echo $row['jr_uid'];?>">View Details</a>
+                            <a href="jobseekerapply.php?id=<?php echo $row['jr_uid'];?>&jrid=<?php echo $row['jr_id'];?>">View Details</a>
                         </div>
                     </td>
                 </tr>
