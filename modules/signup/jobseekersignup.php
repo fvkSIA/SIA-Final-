@@ -337,8 +337,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" name="first_name" placeholder="Enter first name" required />
             </div>
             <div class="input-box">
-                <label><b>Middle Name:</b></label>
-                <input type="text" name="middle_name" placeholder="Enter middle name" required />
+                <label><b>Middle Initial:</b></label>
+                <input type="text" name="middle_name" placeholder="Enter middle initial" maxlength="1"  required />
             </div>
             <div class="input-box">
                 <label><b>Last Name:</b></label>
@@ -368,10 +368,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label><b>Address:</b></label>
                 <input type="text" name="address" placeholder="Enter your Address" required />
             </div>
-            <div class="input-box info">
-                <label><b>City:</b></label>
-                <input type="text" name="city" placeholder="City" required />
-            </div>
+            <div class="skilled">
+             <label><b>City:</b></label>
+                    <select name="city" required>
+                    <option value="">Select Location</option>
+                    <option value="manila">Manila</option>
+                    <option value="caloocan">Caloocan</option>
+                    <option value="valenzuela">Valenzuela</option>
+                    <option value="pasay">Pasay</option>
+                    <option value="makati">Makati</option>
+                    <option value="quezon_city">Quezon City</option>
+                    <option value="navotas">Navotas</option>
+                    <option value="las_piñas">Las Piñas</option>
+                    <option value="malabon">Malabon</option>
+                    <option value="mandaluyong">Mandaluyong</option>
+                    <option value="marikina">Marikina</option>
+                    <option value="muntinlupa">Muntinlupa</option>
+                    <option value="parañaque">Parañaque</option>
+                    <option value="pasig">Pasig</option>
+                    <option value="san_juan">San Juan</option>
+                    <option value="taguig">Taguig</option>
+                    <option value="valenzuela">Valenzuela</option>
+                    <option value="pateros">Pateros</option>
+                  </select>
+                </div>
             <div class="input-box info">
                 <label><b>Password:</b></label>
                 <input type="password" name="password" id="password" placeholder="Enter password" required />
@@ -444,6 +464,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div> -->
+    <?php if ($errorMessage) : ?>
+    <script>
+        alert("Error: The email address is already registered. Please use a different email.");
+    </script>
+<?php endif; ?>
     <script>
         // Password validation function
         function validatePasswords() {

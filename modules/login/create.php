@@ -54,7 +54,7 @@ if (isset($_POST['selectedOption'])){
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
+            background-color:#4481eb;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -71,7 +71,7 @@ if (isset($_POST['selectedOption'])){
             text-align: center;
             transition: transform 0.3s;
             height: 330px;
-            margin-top: 0; /* Adjusted margin-top */
+            margin-top: 0;
         }
 
         .container:hover {
@@ -104,6 +104,10 @@ if (isset($_POST['selectedOption'])){
             background-color: #007bff;
             transform: translateY(-2px);
         }
+        .button-container button.selected {
+            background-color: #003366; /* Darker shade when selected */
+            color: white; /* Change text color when selected */
+        }
         .create-account {
             background-color: #9DCD5A;
             border: 1px solid;
@@ -114,10 +118,10 @@ if (isset($_POST['selectedOption'])){
             font-weight: bold;
             color: black;
             transition: background-color 0.3s, transform 0.3s;
-            text-decoration: none; /* Remove default underline */
-            margin-top: 20px; /* Add margin-top to create some space */
-            display: inline-block; /* Ensure the button is displayed as a block element */
-            width: auto; /* Let the button adjust its width based on content */
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+            width: auto;
         }
         .create-account:hover {
             background-color: #218838;
@@ -138,8 +142,8 @@ if (isset($_POST['selectedOption'])){
         <hr>
         <p class="red-text">Are you?</p>
         <div class="button-container">
-            <button type="button" onclick="selectOption('EMPLOYER')"><b>EMPLOYER</b></button>
-            <button type="button" onclick="selectOption('JOBSEEKER')"><b>JOBSEEKER</b></button>
+            <button type="button" onclick="selectOption('EMPLOYER', this)"><b>EMPLOYER</b></button>
+            <button type="button" onclick="selectOption('JOBSEEKER', this)"><b>JOBSEEKER</b></button>
         </div>
         <form id="registrationForm" method="POST" action="create.php">
             <input type="hidden" id="selectedOption" name="selectedOption">
@@ -148,8 +152,17 @@ if (isset($_POST['selectedOption'])){
     </div>
 
     <script>
-        function selectOption(option) {
+        function selectOption(option, button) {
             document.getElementById('selectedOption').value = option;
+            
+            // Remove selected class from all buttons
+            var buttons = document.querySelectorAll('.button-container button');
+            buttons.forEach(function(btn) {
+                btn.classList.remove('selected');
+            });
+
+            // Add selected class to the clicked button
+            button.classList.add('selected');
         }
 
         document.getElementById('registrationForm').addEventListener('submit', function(event) {

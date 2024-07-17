@@ -184,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .form button:hover {
             background: rgb(33, 108, 230);
         }
-        .skilled, .unskilled {
+        .skilled {
             margin-top: 20px;
         }
         .skilled label, .unskilled label {
@@ -195,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .skilled select {
             position: relative;
             height: 50px;
-            width: 30%;
+            width: 100%;
             outline: none;
             font-size: 1rem;
             color: black;
@@ -205,25 +205,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 0 15px;
         }
 
-        .unskilled select {
-            position: relative;
-            height: 50px;
-            width: 50%;
-            outline: none;
-            font-size: 1rem;
-            color: black;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            padding: 0 15px;
-        }
-
-        .unskilled{
-          margin-top: -50px;
-          margin-left: 335px;
-        }
-
-
-        .skilled select:focus, .unskilled select:focus {
+        .skilled select:focus{
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
         }
 
@@ -336,8 +318,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" name="first_name" placeholder="Enter first name" required />
             </div>
             <div class="input-box">
-                <label><b>Middle Name:</b></label>
-                <input type="text" name="middle_name" placeholder="Enter middle name" required />
+                <label><b>Middle Initial:</b></label>
+                <input type="text" name="middle_name" placeholder="Enter middle initial"  maxlength="1"  required />
             </div>
             <div class="input-box">
                 <label><b>Last Name:</b></label>
@@ -367,10 +349,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label><b>Address:</b></label>
                 <input type="text" name="address" placeholder="Enter your Address" required />
             </div>
-            <div class="input-box info">
-                <label><b>City:</b></label>
-                <input type="text" name="city" placeholder="City" required />
-            </div>
+            <div class="skilled">
+             <label><b>City:</b></label>
+                    <select name="city" required>
+                    <option value="">Select Location</option>
+                    <option value="manila">Manila</option>
+                    <option value="caloocan">Caloocan</option>
+                    <option value="valenzuela">Valenzuela</option>
+                    <option value="pasay">Pasay</option>
+                    <option value="makati">Makati</option>
+                    <option value="quezon_city">Quezon City</option>
+                    <option value="navotas">Navotas</option>
+                    <option value="las_piñas">Las Piñas</option>
+                    <option value="malabon">Malabon</option>
+                    <option value="mandaluyong">Mandaluyong</option>
+                    <option value="marikina">Marikina</option>
+                    <option value="muntinlupa">Muntinlupa</option>
+                    <option value="parañaque">Parañaque</option>
+                    <option value="pasig">Pasig</option>
+                    <option value="san_juan">San Juan</option>
+                    <option value="taguig">Taguig</option>
+                    <option value="valenzuela">Valenzuela</option>
+                    <option value="pateros">Pateros</option>
+                  </select>
+                </div>
             <div class="input-box info">
                 <label><b>Password:</b></label>
                 <input type="password" name="password" id="password" placeholder="Enter password" required />
@@ -411,7 +413,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-
+    <?php if ($errorMessage) : ?>
+    <script>
+        alert("Error: The email address is already registered. Please use a different email.");
+    </script>
+<?php endif; ?>
     <script>
         // Get the modal
         var modal = document.getElementById("myModal");
