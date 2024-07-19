@@ -1,3 +1,38 @@
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require './PHPMailer/src/Exception.php';
+require './PHPMailer/src/PHPMailer.php';
+require './PHPMailer/src/SMTP.php';
+include '/xampp/htdocs/SIA-Final-/db/db_connection.php';
+session_start();
+$error = '';
+
+if(isset($_POST['change-password'])){
+        $_SESSION['info'] = "";
+        $password = mysqli_real_escape_string($conn, $_POST['password']);
+        $cpassword = mysqli_real_escape_string($conn, $_POST['cpassword']);
+        if($password !== $cpassword){
+            $errors['password'] = "Confirm password not matched!";
+        }else{
+            $code = 0;
+            $email = $_SESSION['email']; //getting this email using session
+            $encpass = password_hash($password, PASSWORD_BCRYPT);
+            $update_pass = "UPDATE users SET password = '$encpass' WHERE email = '$email'";
+            $run_query = mysqli_query($conn, $update_pass);
+            if($run_query){
+                $info = "Your password changed. Now you can login with your new password.";
+                $_SESSION['info'] = $info;
+                header('Location: login.html');
+            }else{
+                $errors['db-error'] = "Failed to change your password!";
+            }
+        }
+    }
+
+    ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,23 +132,23 @@
 <body>
     <div class="container">
         <h1>FORGOT PASSWORD</h1>
-        <form>
+        <form action="newpass.php" method="POST" class="newpass-form">
             <div class="input-group">
                 <label for="new-password">New Password</label>
                 <div class="password-toggle">
-                    <input type="password" id="new-password" placeholder="Password">
+                    <input type="password" id="new-password" name="password" placeholder="Password">
                     <i class="fas fa-eye toggle-password" id="passwordIcon" onclick="togglePasswordVisibility('new-password', 'passwordIcon')"></i>
                 </div>
             </div>
             <div class="input-group">
                 <label for="confirm-password">Confirm New Password</label>
                 <div class="password-toggle">
-                    <input type="password" id="confirm-password" placeholder="Confirm Password">
+                    <input type="password" id="confirm-password" name="cpassword" placeholder="Confirm Password">
                     <i class="fas fa-eye toggle-password" id="confirmPasswordIcon" onclick="togglePasswordVisibility('confirm-password', 'confirmPasswordIcon')"></i>
                 </div>
             </div>
             <br>
-            <button type="submit">SUBMIT</button>
+            <button type="submit" name="change-password">SUBMIT</button>
         </form>
     </div>
 

@@ -1,73 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #b8c6db;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require './PHPMailer/src/Exception.php';
+require './PHPMailer/src/PHPMailer.php';
+require './PHPMailer/src/SMTP.php';
+include '/xampp/htdocs/SIA-Final-/db/db_connection.php';
+session_start();
+$error = '';
+
+if( isset($_POST['email'])) {
+   
+    // username and password sent from form 
+    $email = mysqli_real_escape_string($conn,$_POST['email']);
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    if ($_POST['email']== $user['email']) {
+
+        $otp = rand(100000, 999999);
+        $otp_expiry = date("Y-m-d H:i:s", strtotime("+3 minute"));
+        $subject= "Your OTP for Password Reset";
+        $message="Your OTP is: $otp";
+        $f_name = $row['firstname'];
+        
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->SMTPDebug = 2;
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'kjcruz0604@gmail.com'; //host email 
+        $mail->Password = 'qvxhyivnmoiiexum'; // app password of your host email nncd fuyn vlzl xrbv
+        $mail->Port = 465;
+        $mail->SMTPSecure = 'ssl';
+        $mail->isHTML(true);
+        $mail->setFrom('kjcruz0604@gmail.com', 'HanapKITA Team');//Sender's Email & Name
+        $mail->addAddress($email,$f_name); //Receiver's Email and Name
+        $mail->Subject = ("$subject");
+        $mail->Body = $message;
+        $mail->send();
+
+        $sql1 = "UPDATE users SET otp='$otp', otp_expiry='$otp_expiry' WHERE id=".$user['id'];
+        $query1 = mysqli_query($conn, $sql1);
+
+        $_SESSION['email']=$user['email'];
+        $_SESSION['temp_user'] = ['id' => $user['id'], 'otp' => $otp];
+        header('Location:enterotp.php');
+        }else{
+          ?>
+            <script type="text/javascript">alert("Incorrect email or password, please try again.");</script>
+            <?php 
         }
-        .container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            width: 400px;
-            text-align: center;
+      }else{
+        ?>
+          <script type="text/javascript">alert("Incorrect email or password, please try again.");</script>
+          <?php 
         }
-        h1 {
-            color: #3a4a7b;
-            font-size: 30px;
-            margin-top: 15px;
-        }
-        input[type="email"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-            font-size: 14px;
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
-        }
-        input[type="email"]::placeholder {
-            color: #999;
-            text-align: center;
-        }
-        button {
-            padding: 10px 30px;
-            background-color: white;
-            color: #3a4a7b;
-            border: 2px solid #3a4a7b;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            font-family: 'Poppins', sans-serif;
-        }
-        button:hover {
-            background-color: #3a4a7b;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>FORGOT PASSWORD</h1>
-        <form>
-            <input type="email" placeholder="Enter Email-Address" required>
-            <br>
-            <button type="submit">SUBMIT</button>
-        </form>
-    </div>
-</body>
-</html>
+?>

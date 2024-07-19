@@ -1,3 +1,49 @@
+<?php
+
+session_start();
+include '/xampp/htdocs/SIA-Final-/db/db_connection.php';
+if (!isset($_SESSION['temp_user'])) {
+    header("Location: login.html");
+    exit();
+}
+ob_start();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $user_otp = $_POST['otp'];
+    $stored_otp = $_SESSION['temp_user']['otp'];
+    $user_id = $_SESSION['temp_user']['id'];
+
+    $sql = "SELECT * FROM users WHERE id='$user_id' AND otp='$user_otp'";
+    $query = mysqli_query($conn, $sql);
+    $user = mysqli_fetch_array($query);
+
+    if ($user) {
+        $otp_expiry = strtotime($user['otp_expiry']);
+        if ($otp_expiry >= time()) {
+            $_SESSION['email'] = $user['email'];
+            unset($_SESSION['temp_user']);
+            header('Location:newpass.php');
+        } else {
+            ?>
+                <script>
+    alert("OTP has expired. Please try again.");
+    function navigateToPage() {
+        window.location.href = 'login.html';
+    }
+    window.onload = function() {
+        navigateToPage();
+    }
+</script>
+            <?php 
+        }
+    } else {
+        ?>
+          <script type="text/javascript">alert("Incorrect OTP, please try again.");</script>
+          <?php 
+}
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,14 +115,11 @@
     <div class="container">
         <h1>Enter Verification Code</h1>
         <p>Make sure the verification code is correct.</p>
-        <div class="code-inputs">
-            <input type="text" class="code-input" maxlength="1">
-            <input type="text" class="code-input" maxlength="1">
-            <input type="text" class="code-input" maxlength="1">
-            <input type="text" class="code-input" maxlength="1">
-            <input type="text" class="code-input" maxlength="1">
-            <input type="text" class="code-input" maxlength="1">
-        </div>
+        <form method="post" action="enterotp.php">
+            <label style="font-weight: bold; font-size: 18px;" for="otp">Enter OTP Code:</label><br>
+            <input type="number" name="otp" pattern="\d{6}" placeholder="Six-Digit OTP" required><br><br>
+            <button type="submit">Verify OTP</button>
+        </form>
         <button>CONFIRM</button>
     </div>
 </body>
