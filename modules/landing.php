@@ -178,290 +178,33 @@
         .navigation .active {
             background-color: #3D52A0;
         }
-
-
-
         
-        .card {
-  position: relative;
-  width: 250px; /* Adjusted width */
-  background: #fafafa;
-  box-shadow: 0 2px 7px #000;
-  font-family: 'Montserrat', sans-serif;
-  margin: 20px auto;
-  padding: 15px;
-  height: 400px; /* Adjusted height */
-  margin-top: 60px;
-  margin-left: -325px; /* Added margin to the left */
-  padding-bottom: 20px;
-  border-radius: 10px;
-  }
-  .item1 img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .catagory {
-  color: #000;
-  font-size: 25px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-top: 15px;
-  }
-  .price-1 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-style: italic;
-  margin-top: 10px;
-  text-align: center;
-  }
-  .button-1 {
-  border: none;
-  padding: 10px 30px; /* Increased padding for a larger button */
-  border-radius: 5px;
-  background-color: #3D52A0;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  display: block;
-  margin: 0 auto; /* Centering the button */
-  margin-top: 15px;
-  }
-  .button-1:hover {
-  background-color: #0000FF;
-  }
+        .content {
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 90%;
+            margin: 0 auto;
+            margin-top: -100px; /* Adjust this value as needed */
 
-  .card-1 {
-  position: relative;
-  width: 250px; /* Adjusted width */
-  background: #fafafa;
-  box-shadow: 0 2px 7px #000;
-  font-family: 'Montserrat', sans-serif;
-  margin: 20px auto;
-  padding: 15px;
-  height: 400px; /* Adjusted height */
-  margin-top: -410px;
-  margin-left: 290px; /* Added margin to the left */
-  padding-bottom: 20px;
-  border-radius: 10px;
-  }
-  .item2 img {
-  max-width: 100%;
-  height: 250px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .catagory-1 {
-  color: #000;
-  font-size: 25px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-top: 15px;
-  }
-  .price-2 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-style: italic;
-  margin-top: 10px;
-  text-align: center;
-  }
-  .button-2 {
-  border: none;
-  padding: 10px 30px; /* Increased padding for a larger button */
-  border-radius: 5px;
-  background-color: #3D52A0;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  display: block;
-  margin: 0 auto; /* Centering the button */
-  margin-top: 15px;
-  }
-  .button-2:hover {
-  background-color: #0000FF;
-  }
-
-  .card-2 {
-  position: relative;
-  width: 250px; /* Adjusted width */
-  background: #fafafa;
-  box-shadow: 0 2px 7px #000;
-  font-family: 'Montserrat', sans-serif;
-  margin: 20px auto;
-  padding: 15px;
-  height: 400px; /* Adjusted height */
-  margin-top: -410px;
-  margin-left: 290px; /* Added margin to the left */
-  padding-bottom: 20px;
-  border-radius: 10px;
-  }
-  .item3 img {
-  max-width: 100%;
-  height: 250px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .catagory-3 {
-  color: #000;
-  font-size: 25px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-top: 15px;
-  }
-  .price-3 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-style: italic;
-  margin-top: 10px;
-  text-align: center;
-  }
-  .button-3 {
-  border: none;
-  padding: 10px 30px; /* Increased padding for a larger button */
-  border-radius: 5px;
-  background-color: #3D52A0;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  display: block;
-  margin: 0 auto; /* Centering the button */
-  margin-top: -3px;
-  }
-  .button-3:hover {
-  background-color: #0000FF;
-  }
-
-
-  .card-3 {
-  position: relative;
-  width: 250px; /* Adjusted width */
-  background: #fafafa;
-  box-shadow: 0 2px 7px #000;
-  font-family: 'Montserrat', sans-serif;
-  margin: 20px auto;
-  padding: 15px;
-  height: 400px; /* Adjusted height */
-  margin-top: -412px;
-  margin-left: 285px; /* Added margin to the left */
-  padding-bottom: 20px;
-  border-radius: 10px;
-  }
-  .item4 img {
-  max-width: 100%;
-  height: 250px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .catagory-4 {
-  color: #000;
-  font-size: 25px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-top: 15px;
-  }
-  .price-4 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-style: italic;
-  margin-top: 10px;
-  text-align: center;
-  }
-  .button-4 {
-  border: none;
-  padding: 10px 30px; /* Increased padding for a larger button */
-  border-radius: 5px;
-  background-color: #3D52A0;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  display: block;
-  margin: 0 auto; /* Centering the button */
-  margin-top: 15px;
-  }
-  .button-4:hover {
-  background-color: #0000FF;
-  }
-
-
-
-
-
-
-
-
-  .card-5 {
-  width: 100%; /* Adjusted width */
-  background: #fafafa;
-  box-shadow: 0 2px 7px #000;
-  font-family: 'Montserrat', sans-serif;
-  }
-  .item5 img { 
-  max-width: 50%;
-  height: 360px;
-  height: 350px;
-  margin-left: -590px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .text-1 {
-  color: #000;
-  font-size: 50px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-left: 140px;
-  margin-top: -340px;
-
-  }
-  .text-2 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 23px;
-  margin-left: 620px;
-  font-style: normal;
-  margin-top: 25px;
-  text-align: center;
-  }
-
-
-
-  .item6 img {
-  max-width: 42%;
-  height: 360px;
-  margin-left: 693px;
-  border-radius: 10px;
-  margin-top: 35px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .text-3 {
-  color: #000;
-  font-size: 50px;
-  font-style: italic;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  margin-right: 1080px;
-  margin-top: -340px;
-
-  }
-  .text-4 {
-  color: black;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 23px;
-  margin-right: 500px;    
-  font-style: normal;
-  margin-top: 20px;
-  text-align: center;
-  }
+            text-align: center;
+        }
+        .content p {
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            text-align: justify;
+        }
+        .content .vision p {
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+        }
+        h2 {
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+        }
+        
 
   .footer {
     width: 100%; /* Adjusted to span full width */
@@ -534,6 +277,8 @@ nav {
 }
 
 .links-container {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
     display: flex;
     align-items: center;
 }
@@ -594,7 +339,6 @@ border-color: #000101;
 }
 </style>
 
-    </style>
 </head>
 
 <body>
