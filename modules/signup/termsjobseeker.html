@@ -112,6 +112,18 @@
       background: var(--bg-hvr);
       color: var(--white);
     }
+    .terms_service .tc_foot .checkbox_wrapper {
+    margin-top: 10px;
+  }
+
+  .terms_service .tc_foot .checkbox_wrapper input[type="checkbox"] {
+    margin-right: 10px;
+  }
+
+  .terms_service .tc_foot .checkbox_wrapper label {
+    font-family:"Poppins", sans-serif;
+    font-size: 15px;
+  }
   </style>
 </head>
 
@@ -264,10 +276,19 @@
   </div>
     <div class="tc_item tc_foot flex_align">
       <a href="../landing.php" class="decline_btn"><button>Decline</button></a>
-      <a href="jobseekersignup.php" class="accept_btn"><button>Accept</button></a>
+      <div class="checkbox_wrapper">
+        <input type="checkbox" id="agree" name="agree">
+        <label for="agree">I agree to the terms and conditions</label>
+      </div>
+      <a href="jobseekersignup.php" class="accept_btn"><button id="acceptBtn" disabled>Accept</button></a>
     </div>
   </div>
 </div>
-
+<script>
+  document.getElementById('agree').addEventListener('change', function() {
+    const acceptButton = document.getElementById('acceptBtn');
+    acceptButton.disabled = !this.checked;
+  });
+</script>
 </body>
 </html>
