@@ -125,7 +125,7 @@ session_start();
 
   .container {
     display: flex;
-    background-color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -390,13 +390,12 @@ body {
 
           </div>
     </div>
-    <div class="top-job-seekers">
+    <!-- <div class="top-job-seekers">
         <h2>Top Job Seekers</h2>
         <div class="job-seeker">
-            <img src="asim.jpg" alt="Job Seeker">
+        <img src="../employer/assets/images/no-image.png" alt="Job Seeker">
             <div class="job-seeker-info">
                 <h3>GALE KAREN PARTOS</h3>
-                <p>RATINGS: <span class="ratings">⭐⭐⭐⭐⭐</span></p>
             </div>
             <div class="rank">
                 RANK 1
@@ -404,24 +403,23 @@ body {
             </div>
         </div>
         <div class="job-seeker">
-            <img src="bersoto.jpg" alt="Job Seeker">
+            <img src="../employer/assets/images/no-image.png" alt="Job Seeker">
             <div class="job-seeker-info">
                 <h3>JOSEPH CARLO BERSOTO</h3>
-                <p>RATINGS: <span class="ratings">⭐⭐⭐⭐⭐</span></p>
             </div>
             <div class="rank">
                 RANK 2
                 <span>SEE MORE DETAILS</span>
             </div>
         </div>
-    </div>
-        <div class="navigation">
+    </div> -->
+        <!-- <div class="navigation">
             <span class="active"></span>
             <span></span>
             <span></span>
             <span></span>
             <span></span>
-        </div>
+        </div> -->
 
         
           <!-- <iframe src="/slide/index.html" frameborder="0" style="width: 100%; height: 540px;"></iframe> -->

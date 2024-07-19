@@ -177,7 +177,7 @@ table {
                         <td colspan="3">
                             <div class="details">
                                 <b><?php echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'];?> | Accepted the job offer you have been requested! </b>
-                                <a href="#">View Details</a>
+                                <a href="employeracceptedoffermessage.php?fname=<?php echo $row['job_seek_fname'];?>&lname=<?php echo $row['job_seek_lname'];?>">View Details</a>
                             </div>
                         </td>
                     </tr>

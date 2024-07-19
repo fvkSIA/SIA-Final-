@@ -126,7 +126,7 @@ session_start();
 
   .container {
     display: flex;
-    background-color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -375,7 +375,7 @@ session_start();
 
           </div>
     </div>
-    <div class="top-job-seekers">
+    <!-- <div class="top-job-seekers">
         <h2>Top Job Seekers</h2>
         <div class="job-seeker">
             <img src="asim.jpg" alt="Job Seeker">
@@ -406,7 +406,7 @@ session_start();
             <span></span>
             <span></span>
             <span></span>
-        </div>
+        </div> -->
 
         
           <!-- <iframe src="slide/index.html" frameborder="0" style="width: 100%; height: 540px;"></iframe> -->
@@ -429,9 +429,9 @@ session_start();
                                 <li><a href="#">Post a Job ad</a></li>
                             </ul>
                             <ul class="footer-column">
-                                <h4>About Jobstreet</h4>
+                                <h4>About Employers</h4>
                                 <li><a href="#">About Us</a></li>
-                                <li><a href="#">Work for Jobstreet</a></li>
+                                <li><a href="#">Work for Us</a></li>
                             </ul>
                             <ul class="footer-column">
                                 <h4>Contact</h4>

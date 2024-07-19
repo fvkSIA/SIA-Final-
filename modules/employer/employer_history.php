@@ -131,10 +131,10 @@ $conn->close();
           <div>
               <h3><?php echo $row['job_req_type'] == 1 ? $row['job_offer_job'] : $row['job'];?></h3>
               <p><?php echo $row['user_fname'] . ' ' . $row['user_lname'];?></p>
-              <p><?php echo $row['job_req_type'] == 1 ? $row['job_offer_date'] : $row['date'];?></p>
+              <p><?php echo $row['job_req_type'] == 1 ? $row['job_offer_date'] : $row['date'];?> <?php echo $row['job_req_type'] == 1 ? $row['job_offer_time'] : $row['time'];?></p>
           </div>
           <div class="right-container">
-              <a href="view-details-history.php" class="view-details">View Details</a>
+              <a href="view-details-history.php?id=<?php echo $row['job_req_id'];?>" class="view-details">View Details</a>
           </div>
       </div>
         <?php endforeach;?>

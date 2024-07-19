@@ -1,6 +1,19 @@
 <?php 
-
 session_start();
+
+require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
+
+$user_id = $_SESSION['user_id'];
+
+$sql = "SELECT * FROM users WHERE id = ?";
+
+if ($stmt = $conn->prepare($sql)) {
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result() ?? null;
+
+    $stmt->close();
+}
 
 ?>
 
@@ -53,37 +66,49 @@ session_start();
     </style>
 </head>
 <body>
+<?php 
+      $data = [];
+      if ($result != null)
+        $data = $result->fetch_assoc();
+      else 
+        echo '';
+    ?>
     <div class="mx-auto p-4 bg-white rounded-lg shadow-md">
         <div class="flex justify-between items-center p-4 rounded-t-lg bg-indigo-100">
             <div class="flex items-center" style="padding: 1%;">
-                <img src="../jobseeker/assets/images/<?php echo $_SESSION['profile'] ?? 'no-image.png'?>" alt="no image" class="rounded-full w-25 h-25 md:w-40 md:h-40 lg:w-40 lg:h-40 border-4 border-white -mt-50 mr-6">
+                <img src="../jobseeker/assets/images/<?php echo $data['profile'] ?? 'no-image.png'?>" alt="no image" class="rounded-full w-25 h-25 md:w-40 md:h-40 lg:w-40 lg:h-40 border-4 border-white -mt-50 mr-6">
                 <div class="ml-4">
-                    <h1 class="text-4xl font-bold text-gray-800"><?php echo $_SESSION['name'];?></h1>
+                    <h1 class="text-4xl font-bold text-gray-800"><?php echo $data['firstname'];?> <?php echo $data['lastname'];?></h1>
                     <p class="text-2xl text-gray-600">
-                        <i class="fas fa-envelope mr-3"></i>&nbsp;<?php echo $_SESSION['email'];?>
+                        <i class="fas fa-envelope mr-3"></i>&nbsp;<?php echo $data['email'];?>
                     </p>
                     <p class="text-2xl text-gray-600 flex items-center">
-                        <i class="fas fa-phone mr-3"></i>&nbsp;<?php echo $_SESSION['phone'];?>
+                        <i class="fas fa-phone mr-3"></i>&nbsp;<?php echo $data['phone_number'];?>
                     </p>
                     <p class="text-2xl text-gray-600 flex items-center">
-                        <i class="fas fa-map-marker-alt mr-4"></i>&nbsp;<?php echo $_SESSION['address'];?>
+                        <i class="fas fa-map-marker-alt mr-4"></i>&nbsp;<?php echo $data['home_address'];?>
                     </p>
                     <p class="text-2xl text-gray-600 flex items-center">
-                        <i class="fas fa-medal mr-3"></i>&nbsp;no rank yet
+                        <!-- <i class="fas fa-medal mr-3"></i>&nbsp;no rank yet -->
                     </p>
-                    <p class="text-2xl text-gray-600 flex items-center">
-                        <i class="fas fa-exclamation-circle mr-3"></i>&nbsp;Available
+                    <p class="text-2xl text-gray-600 flex items-center text-emerald-600">
+                        <?php if($data['availability'] == 1):?>
+                            <i class="fas fa-circle mr-3 text-emerald-600" ></i>&nbsp;Available
+                        <?php else:?>
+                            <i class="fas fa-circle mr-3 text-red-600" ></i>&nbsp;Not Available
+                        <?php endif;?>
+                        
                     </p>
                 </div>
             </div>
-            <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mr-10" id="editBtn">Edit</button>
+            <a class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mr-10" href="jobseekereditprofile.php">Edit</a>
         </div>
         
         <div class="p-4">
             <div class="mb-6">
                 <h2 class="text-2xl font-semibold text-[#4B5EAB]">Personal Summary</h2>
-                <p class="text-gray-500 mt-1">Add a way of Personal Summary to your Profile as a way to introduce who you are.</p>
-                <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button>
+                <p class="text-gray-500 mt-1"><?php echo $data['bio'];?></p>
+                <!-- <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button> -->
             </div>
                 </div>
             </div>

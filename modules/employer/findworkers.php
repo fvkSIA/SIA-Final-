@@ -115,6 +115,14 @@ $conn->close();
             <h2 class="text-xl font-bold"><?php echo $row['lastname'] . ', ' . $row['firstname'] . ' ' . $row['middlename'];?></h2>
             <p class="text-gray-600">Location: <?php echo $row['city']?></p>
             <p class="text-gray-600">Type of Worker: <?php echo $row['job_type']?></p>
+            <p class="text-sm text-gray-600 flex items-center text-emerald-600">
+                  <?php if($row['availability'] == 1):?>
+                      <i class="fas fa-circle mr-3 text-emerald-600" ></i>&nbsp;Available
+                  <?php else:?>
+                      <i class="fas fa-circle mr-3 text-red-600" ></i>&nbsp;Not Available
+                  <?php endif;?>
+                  
+              </p>
             <!-- <div class="flex items-center mt-2">
               <span class="text-yellow-500">
                 <i class="fas fa-star"></i>

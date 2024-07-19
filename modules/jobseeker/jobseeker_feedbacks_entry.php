@@ -13,7 +13,8 @@ $sql = "SELECT ratings.*, job_requests.*, users.*, job_listings.*, job_offers.id
     INNER JOIN users ON job_requests.employer_id = users.id
     LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
     LEFT JOIN job_offers ON job_requests.job_id = job_offers.id
-    WHERE ratings.user_id = ?";
+    WHERE ratings.user_id = ?
+    ORDER BY job_requests.created_at DESC";
 
 if($stmt = $conn->prepare($sql)){
     $stmt->bind_param('i', $id);
@@ -137,7 +138,7 @@ if($stmt = $conn->prepare($sql)){
         <?php if($data):?>
             <?php foreach($data as $row): ?>
                 <div class="feedback-item">
-                    <h3><?php echo $row['job_offer_job'] ?? ''?> - <?php echo $row['job_offer_loc'] ?? ''?> - <?php echo $row['firstname'] ?? ''?> <?php echo $row['lastname'] ?? ''?></h3>
+                    <h3><?php echo $row['job_offer_job'] == '' ? $row['job'] : $row['job_offer_job'];?> - <?php echo $row['job_offer_loc'] == '' ? $row['location'] : $row['job_offer_loc'];?> - <?php echo $row['firstname'] ?? ''?> <?php echo $row['lastname'] ?? ''?></h3>
                     <p><?php echo $row['reviews'] ?? 'No review'?></p>
                     <!-- <div class="right-container">
                         <div class="stars">★★★★★</div>

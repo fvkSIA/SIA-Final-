@@ -17,22 +17,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $result->fetch_assoc();
 
     if ($user && password_verify($_POST['password'], $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['profile'] = $user['profile'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['name'] = $user['lastname'] . ', ' . $user['firstname'];
-        $_SESSION['phone'] = $user['phone_number'];
-        $_SESSION['address'] = $user['home_address'];
-        if ($user['type'] == 2) {
-            // jobseeker dashboard
-            header('location: ../jobseeker/jobseekernavbar.php');
-        } else if ($user['type'] == 3){
-            header('location: ../employer/employernavbar.php');
+        if ($user['verified'] != 0) {
+            // login
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['profile'] = $user['profile'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['name'] = $user['lastname'] . ', ' . $user['firstname'];
+            $_SESSION['phone'] = $user['phone_number'];
+            $_SESSION['address'] = $user['home_address'];
+            if ($user['type'] == 2) {
+                // jobseeker dashboard
+                header('location: ../jobseeker/jobseekernavbar.php');
+            } else if ($user['type'] == 3){
+                header('location: ../employer/employernavbar.php');
+            }
+        
+        } else {
+            echo  "This account is not yet verified";
         }
         
-        exit;
     } else {
         echo "Invalid email or password.";
+        
     }
     $stmt->close();
  }

@@ -1,15 +1,23 @@
+<?php session_start();
+
+if (!isset($_SESSION['user_id'])){
+  header('location: index.php');
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jobseeker Dashboard</title>
+  <title>ADMIN Dashboard</title>
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <script>
     // Function to change content automatically
     function changeContentAutomatically() {
         var iframe = document.getElementById('myIframe');
-        iframe.src = 'jobseekerdashboardhome.php'; // Set the source of iframe
+        iframe.src = 'adminhomedashboard.php'; // Set the source of iframe
     }
 
     // Automatically change content on page load
@@ -26,8 +34,8 @@
     @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
     :root {
-      --color-default: #004f83;
-      --color-second: #004f83;
+      --color-default: #013050;
+      --color-second: #013050;
       --color-white: #fff;
       --color-body: #e4e9f7;
       --color-light: #e0e0e0;
@@ -334,54 +342,42 @@
   <div class="sidebar">
     <div class="logo_details">
       <i class="bx bxl-audible icon"></i>
-      <div class="logo_name">HANAPKITA</div>
+      <div class="logo_name">DASHBOARD</div>
       <i class="bx bx-menu" id="btn"></i>
     </div>
     <ul class="nav-list">
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('jobseekerdashboardhome.php')">
+        <a href="javascript:void(0)" onclick="changeContent('adminhomedashboard.php')">
           <i class="bx bx-grid-alt"></i>
           <span class="link_name">Home</span>
         </a>
       </li>
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('jobseekerinbox.php')">
-          <i class="bx bx-chat"></i>
-          <span class="link_name">Inbox</span>
+        <a href="javascript:void(0)" onclick="changeContent('adminregistration.php')">
+          <i class="bx bxs-user-check"></i>
+          <span class="link_name">Registration</span>
         </a>
       </li>
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('jobseekerhiring.php')">
-          <i class="bx bx-search"></i>
-          <span class="link_name">Job Hiring</span>
+        <a href="javascript:void(0)" onclick="changeContent('admdashboardjobseeker.php')">
+          <i class="bx bxs-user-circle"></i>
+          <span class="link_name">Jobseeker</span>
         </a>
       </li>
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('joboffer.php')">
-          <i class="bx bx-news"></i>
-          <span class="link_name">Job Offer</span>
+        <a href="javascript:void(0)" onclick="changeContent('admdashboardemployer.php')">
+          <i class="bx bxs-group"></i>
+          <span class="link_name">Employer</span>
         </a>
       </li>
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('jobseeker_feedbacks_entry.php')">
-          <i class="bx bx-folder"></i>
-          <span class="link_name">Feedback</span>
-        </a>
-      </li>
-      <li>
-        <a href="javascript:void(0)" onclick="changeContent('jobseeker_calendar.php')">
-          <i class="bx bx-calendar"></i>
-          <span class="link_name">Calendar</span>
-        </a>
-      </li>
-      <li>
-        <a href="javascript:void(0)" onclick="changeContent('profile_jobseeker.php')">
+        <a href="javascript:void(0)" onclick="changeContent('profile_admin.php')">
           <i class="bx bxs-user-circle"></i>
           <span class="link_name">Profile</span>
         </a>
       </li>
       <li class="profile">
-        <a href="../logout.php">
+        <a href="adminlogout.php">
           <i class="bx bx-log-out"></i>
           <span class="link_name">Logout</span>
         </a>

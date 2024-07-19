@@ -33,13 +33,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $proof_img = $_FILES['image_proof']['name'];
     $img_destination = '../jobseeker/assets/image_proofs/' . $proof_img;
     $points = $sentiment->getSentiment($reviewStr);
+    $negative = $points['neg'];
+    $neutral = $points['neu'];
     $positivePts = $points['pos'];
+    $compound = $points['compound'];
     // print_r(['review' => $reviewStr, 'img' => $proof_img, 'points' => $points['pos'], 'job_req_id' => $job_req_id, 'user_id' => $user_id]);
     // die();
 
-    $update_rating = "UPDATE ratings SET points = ?, reviews = ?, proof_img = ? WHERE user_id = ? AND job_req_id = ?";
+    $update_rating = "UPDATE ratings SET points = ?, neu = ? , neg = ?, compound = ?, reviews = ?, proof_img = ? WHERE user_id = ? AND job_req_id = ?";
     if ($update = $conn->prepare($update_rating)){
-      $update->bind_param('dssii', $positivePts, $reviewStr, $proof_img, $user_id, $job_req_id);
+      $update->bind_param('ddddssii', $positivePts, $neutral, $negative, $compound, $reviewStr, $proof_img, $user_id, $job_req_id);
       if($update->execute()){
         // if success move file to directory
         move_uploaded_file($_FILES['image_proof']['tmp_name'], $img_destination);
