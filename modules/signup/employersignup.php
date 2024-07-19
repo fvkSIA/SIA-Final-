@@ -332,7 +332,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="column">
                 <div class="input-box">
                     <label><b>Phone Number:</b></label>
-                    <input type="text" name="phone_number" placeholder="Enter your phone number" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                    <input type="text" name="phone_number" id="phone_number" placeholder="(09**-***-****)" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                 </div>
                 <div class="input-box">
                     <label><b>Birth Date:</b></label>
@@ -419,6 +419,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
 <?php endif; ?>
     <script>
+
+        function handlePhoneNumber(input) {
+            if (!input.value.startsWith('09')) {
+                input.value = '09' + input.value.substring(2);
+            }
+            if (input.value.length > 11) {
+                input.value = input.value.slice(0, 11);
+            }
+        }
+
+        // Add event listeners when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            var phoneInput = document.getElementById('phone_number');
+            
+            // Set default value
+            if (!phoneInput.value) {
+                phoneInput.value = '09';
+            }
+
+            // Add event listeners
+            phoneInput.addEventListener('input', function() {
+                handlePhoneNumber(this);
+            });
+
+            phoneInput.addEventListener('focus', function() {
+                if (this.value === '') {
+                    this.value = '09';
+                }
+            });
+
+            phoneInput.addEventListener('blur', function() {
+                if (this.value === '09') {
+                    this.value = '';
+                }
+            });
+        });
+        
         // Get the modal
         var modal = document.getElementById("myModal");
 
