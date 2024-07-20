@@ -8,7 +8,6 @@ $users = "SELECT users.*, user_types.id as user_type_id, user_types.description 
     WHERE type = 2 AND verified = 1";
 
 if ($stmt = $conn->prepare($users)) {
-    // $stmt->bind_param("ss", $job_type, $param);
     $stmt->execute();
     $result = $stmt->get_result() ?? null;
 
@@ -28,11 +27,8 @@ $conn->close();
     <!-- Icon Links -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
-  
     
-
     <style>
         body {
             margin: 0;
@@ -88,6 +84,7 @@ $conn->close();
 
                         <div class="search">
                             <a class="btn btn-primary" href="admin-jobseek-signup.php">&#43; ADD NEW JOBSEEKER</a>
+                            <button class="btn btn-secondary" onclick="printJobseekers()">Print Jobseekers List</button>
                         </div>
                     </div>
                     <div class="card-body table-responsive">
@@ -122,7 +119,6 @@ $conn->close();
                                             <td><?php echo $user['phone_number'];?></td>
                                             <td><?php echo $user['email'];?></td>
                                             <td><?php echo $user['home_address'];?></td>
-                                            
                                             <td><?php $date=date_create($user['created_at']); echo date_format($date,"M d, Y H:i:s");?></td>
                                             <td>
                                                 <a href="userviewprofile.php?id=<?php echo $user['id'];?>" class="btn btn-success btn-sm">View</a>
@@ -131,31 +127,6 @@ $conn->close();
                                         </tr>
                                     <?php endforeach;?>
                                 <?php endif;?>
-                                
-                                <!-- <tr>
-                                    <td>2</td>
-                                    <td>John Carlo Javalla</td>
-                                    <td>09123456789</td>
-                                    <td>jcmasarape@gmail.com</td>
-                                    <td>6995 Kantunan St. Tondo Manila</td>
-                                    <td>05/18/2024</td>
-                                    <td>
-                                        <a href="adminviewapplicantsdetails.html?id=2" class="btn btn-success btn-sm">View</a>
-                                        <button class="btn btn-danger btn-sm" onclick="removeApplicant(this)"><i class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Ken Cruz</td>
-                                    <td>1234567890</td>
-                                    <td>kenmasarap@example.com</td>
-                                    <td>123 Main St, City</td>
-                                    <td>06/10/2024</td>
-                                    <td>
-                                        <a href="adminviewapplicantsdetails.html" class="btn btn-success btn-sm">View</a>
-                                        <button class="btn btn-danger btn-sm" onclick="removeApplicant(this)"><i class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                </tr> -->
                             </tbody>
                         </table>
                         <div class="status mb-3">
@@ -183,36 +154,46 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <script>
         let table = new DataTable('#applicantsTable', {
             responsive: true
         });
-        // function removeApplicant(btn) {
-        //     var row = btn.closest('tr');
-        //     row.remove();
-        // }
 
-        // function searchTable() {
-        //     var input, filter, table, tr, td, i, j, txtValue;
-        //     input = document.getElementById("search");
-        //     filter = input.value.toUpperCase();
-        //     table = document.getElementById("applicantsTable");
-        //     tr = table.getElementsByTagName("tr");
+        function printJobseekers() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
             
-        //     for (i = 1; i < tr.length; i++) {
-        //         tr[i].style.display = "none";
-        //         td = tr[i].getElementsByTagName("td");
-        //         for (j = 0; j < td.length; j++) {
-        //             if (td[j]) {
-        //                 txtValue = td[j].textContent || td[j].innerText;
-        //                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        //                     tr[i].style.display = "";
-        //                     break;
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+            // Get table data excluding the Action column
+            let data = [];
+            document.querySelectorAll('#applicantsTable tbody tr').forEach(row => {
+                let rowData = [];
+                row.querySelectorAll('td').forEach((cell, index) => {
+                    if (index < 8) { // Exclude the last column (Action)
+                        rowData.push(cell.innerText);
+                    }
+                });
+                data.push(rowData);
+            });
+
+            // Define table headers excluding the Action column
+            let headers = [['#', 'Availability', 'Work Type', 'Name', 'Contact No.', 'Email Address', 'Address', 'Applied Date']];
+
+            // Add table to PDF
+            doc.autoTable({
+                head: headers,
+                body: data,
+                startY: 10,
+                theme: 'grid',
+                headStyles: { fillColor: [22, 160, 133] },
+                alternateRowStyles: { fillColor: [240, 240, 240] },
+                styles: { cellPadding: 3, fontSize: 8 },
+            });
+
+            // Save the PDF
+            doc.save('Jobseekers_List.pdf');
+        }
     </script>
 </body>
 </html>
