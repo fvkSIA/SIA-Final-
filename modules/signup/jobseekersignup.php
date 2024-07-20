@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background: #4481eb;
+            background: #8391c6;;
         }
         .btn.prev {
             position: fixed;
