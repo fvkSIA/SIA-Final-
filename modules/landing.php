@@ -85,6 +85,7 @@
             padding: 40px; /* Adjusted padding for better spacing */
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
+            text-align: justify;
         }
 
 

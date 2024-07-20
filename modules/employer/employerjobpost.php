@@ -49,8 +49,10 @@ $conn->close();
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Poppins", sans-serif;
     }
 
     .container {
@@ -62,6 +64,7 @@ $conn->close();
       font-size: 32px;
       color: #1E3B85;
       margin-bottom: 20px;
+      font-weight: bold;
       text-align: left;
     }
 
@@ -162,10 +165,10 @@ $conn->close();
       background-color: #d7dfee;
       color: black;
       font-weight: bold;
-      font-size: 25px;
+      font-size: 18px;
       border: none;
       border-radius: 25px;
-      padding: 10px 20px;
+      padding: 10px 60px;
       cursor: pointer;
       float: right; /* Align to the right */
       margin-top: 20px;
