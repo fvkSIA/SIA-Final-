@@ -1,0 +1,51 @@
+.otp-field {
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.625rem; /* 10px */
+  align-items: center;
+  justify-content: center;
+}
+
+.otp-field input {
+  height: 2.8125rem; /* 45px */
+  width: 2.625rem; /* 42px */
+  border-radius: 1.125rem; /* 18px */
+  outline: none;
+  font-size: 1.125rem;
+  text-align: center;
+  border: 1px solid #d1efff;
+  background-color: #d1efff;
+}
+
+.otp-field input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.otp-field input::-webkit-inner-spin-button,
+.otp-field input::-webkit-outer-spin-button {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .otp-field {
+    column-gap: 0.3125rem; /* Reduce gap for smaller screens */
+  }
+
+  .otp-field input {
+    height: 2.5rem; /* Slightly smaller height */
+    width: 2.25rem; /* Slightly smaller width */
+    font-size: 1rem; /* Slightly smaller font size */
+  }
+}
+
+@media (max-width: 480px) {
+  .otp-field {
+    column-gap: 0.25rem; /* Further reduce gap for very small screens */
+  }
+
+  .otp-field input {
+    height: 2.25rem; /* Further smaller height */
+    width: 2rem; /* Further smaller width */
+    font-size: 0.875rem; /* Further smaller font size */
+  }
+}
