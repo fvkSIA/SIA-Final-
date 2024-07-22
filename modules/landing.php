@@ -341,21 +341,31 @@ nav {
     border: 2px solid #000;
 }
   .main-content {
+            margin-left: 7em;
             display: flex;
-            padding: 50px;
+            padding-left: 50px;
             align-items: center;
+            max-width: 1200px;
         }
         .text-content {
             flex: 1;
+            margin-top: -5em;
         }
         .image-content {
             flex: 1;
-            text-align: right;
+            display: flex;
+            margin-right: -15em;
+            justify-content: flex-end;
+            align-items: center;
+
         }
         h1 {
-            font-size: 48px;
-            color: #4B0082;
+            font-size: 80px;
+            color: #3D52A0;
             margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            padding-right: 50px;
         }
         .search-bar {
             display: flex;
@@ -374,14 +384,6 @@ nav {
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-        }
-        .icon {
-            width: 50px;
-            height: 50px;
-            background-color: #4169E1;
-            border-radius: 100%;
-            display: inline-block;
-            margin: 10px;
         }
 
 @media (max-width: 768px) {
@@ -416,7 +418,7 @@ nav {
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <div class="nav-left">
-            <img class="logo" src="../hanapKITA.png">
+            <img class="logo" src="hanapKITA.png">
             <h2 class="title">HANAPKITA</h2>
             </div>
             <div class="nav-center">
@@ -464,7 +466,7 @@ nav {
             </div>
         </div>
         <div class="image-content">
-            <img src="1.png"  style="max-width: 100%; height: 10%;">
+            <img src="right.png"  style="height: 550px; padding-right: -100px;">
         </div>
     </div>
 </body>
@@ -496,9 +498,7 @@ nav {
     </div>
 
     <br><br>
-    <div id="middle"></div>
-    
-        
+    <div id="middle"></div>   
 
     </div>
 <br>
