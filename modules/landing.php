@@ -14,7 +14,6 @@
             background-color: #E9F1FA; /* Updated background color */
 
         }
-
         .right-half {
         position: absolute;
         top: 0px;
@@ -182,8 +181,7 @@
             border-radius: 5px;
             width: 90%;
             margin: 0 auto;
-            margin-top: -100px; /* Adjust this value as needed */
-
+            margin-top: -100px;   Adjust this value as needed
             text-align: center;
         }
         .content p {
@@ -246,82 +244,145 @@
 }
 
 nav {
-    background-color: #7091E6;
-    padding: 10px 20px;
-    font-family: 'Arial', sans-serif;
+  background-color: #7091E6;
+  color: #fff;
+  padding: 10px 20px;
+  font-family: 'Arial', sans-serif;
 }
 
 .container-fluid {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav-left {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
 }
 
 .logo {
-    width: 40px; /* Adjust size as needed */
-    height: auto;
-    margin-right: 10px;
-
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
 }
 
 .title {
-    font-size: 1.5em;
-    margin: 0;
-    color: #fff;
-    font-weight: bold;
+  font-size: 1.5em;
+  margin: 0;
+  color: #fff;
+  font-weight: bold;
 }
 
-.nav-center {   
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.nav-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px;
 }
 
-.link {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 14px;
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 14px;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #fff;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }
 
 .nav-right {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
 }
 
 .btn-link {
-    display: inline-block;
-    padding: 8px 16px;
-    text-decoration: none;
-    color: #ffffff;
-    background-color: transparent;
-    border: 2px solid #ffffff;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    font-weight: bold;
-    margin-left: 10px;
-    font-size: 14px;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: bold;
+  margin-left: 10px;
+  font-size: 14px;
 }
 
 .btn-signin {
-    background-color: #ffffff;
-    color: #7091E6;
+    color: #ffffff;
+    background-color: transparent;
 }
 
 .btn-link:hover {
     background-color: #5a7ad1;
     color: #ffffff;
+    border: 2px solid #000;
 }
 
 .btn-signin:hover {
-    background-color: #f0f0f0;
-    color: #5a7ad1;
+    background-color: #5a7ad1;
+    color: #ffffff;
+    border: 2px solid #000;
 }
+  .main-content {
+            display: flex;
+            padding: 50px;
+            align-items: center;
+        }
+        .text-content {
+            flex: 1;
+        }
+        .image-content {
+            flex: 1;
+            text-align: right;
+        }
+        h1 {
+            font-size: 48px;
+            color: #4B0082;
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            display: flex;
+            margin-top: 30px;
+        }
+        .search-bar input, .search-bar select {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-bar button {
+            background-color: #4169E1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .icon {
+            width: 50px;
+            height: 50px;
+            background-color: #4169E1;
+            border-radius: 100%;
+            display: inline-block;
+            margin: 10px;
+        }
 
 @media (max-width: 768px) {
     .container-fluid {
@@ -352,36 +413,33 @@ nav {
       
       <!-- Main Content -->
       <header>
-  <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-      <div class="nav-left">
-      <img class="logo" src="../hanapKITA.png">
-        <h2 class="title">HANAPKITA</h2>
-      </div>
-      <div class="links-container">
-                <a class="link" href="../modules/landing.php"> HOME </a>
-                <a class="link" href="#top"> JOB SEARCH </a>
-                <a class="link" href="#middle"> WORKER </a>
-                <!-- <a class="link" href="#middle"> JOB HIRING </a>   -->
-                <a class="link" href="#bottom"> ABOUT </a>
-
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="nav-left">
+            <img class="logo" src="../hanapKITA.png">
+            <h2 class="title">HANAPKITA</h2>
             </div>
-      <div class="nav-right">
-        <a class="btn-link" href="#">Create Account</a>
-        <a class="btn-link btn-signin" href="./login/login.html">Sign In</a>
-      </div>
-    </div>
-  </nav>
+            <div class="nav-center">
+            <a class="nav-link" href="../modules/landing.php">HOME</a>
+            <a class="nav-link" href="#top">JOB SEARCH</a>
+            <a class="nav-link" href="#middle">WORKER</a>
+            <a class="nav-link" href="#bottom">ABOUT</a>
+            </div>
+            <div class="nav-right">
+            <a class="btn-link" href="#">Create Account</a>
+            <a class="btn-link btn-signin" href="./login/login.html">Sign In</a>
+            </div>
+        </div>
+    </nav>
 </header>
 
-    <div  style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto; width: 100%; padding-bottom: 20px;">
-        <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
-            <h1 style="font-family: Georgia, serif; font-size: 2.5em; font-weight: bold; color: #333; padding-top: 30px;">
-                Search, Find, and Apply!
-            </h1>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 10px; background-color: #f0f0f0; padding: 10px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                <input type="text" style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;" placeholder="Enter Types of Job: Driver">
-                <select style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: white;">
+<div class="main-content">
+        <div class="text-content">
+            <h1>Search, Find,<br>and Apply!</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id lectus sit amet augue aliquet consectetur. Donec interdum, sem et facilisis luctus, neque sapien tincidunt odio, et efficitur tellus lacus tincidunt metus.</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Job title or Keyword">
+                <select>
                     <option value="">Location</option>
                     <option value="manila">Manila</option>
                     <option value="caloocan">Caloocan</option>
@@ -401,13 +459,16 @@ nav {
                     <option value="taguig">Taguig</option>
                     <option value="valenzuela">Valenzuela</option>
                     <option value="pateros">Pateros</option>
-                </select>
-                <button style="flex: 1 1 auto; padding: 8px 20px; width: 20px; background-color: #4661a8; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;" onclick="window.location.href='./login/login.html'">
-                    Find Now!
-                </button>
+                    </select>
+                <button>Find Now!</button>
             </div>
         </div>
+        <div class="image-content">
+            <img src="1.png"  style="max-width: 100%; height: 10%;">
+        </div>
     </div>
+</body>
+</html>
 
     <div class="container my-3">
         
