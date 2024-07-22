@@ -57,8 +57,8 @@
 
         .container {
             display: flex;
-            background-color: #f8f9fa;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: transparent;
+            /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
             width: 100%; 
             /* max-width: 1200px;  */
             margin: 0 auto; 
@@ -68,6 +68,7 @@
         .image-section {
             flex: 1; /* Adjusted width to make it flexible */
             position: relative; /* Needed for absolute positioning within */
+            padding-right: 20px;
         }
 
         .image-section img {
@@ -80,7 +81,7 @@
             flex: 1; /* Adjusted width to make it flexible */
             padding: 40px; /* Adjusted padding for better spacing */
             font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
+            background-color: transparent;
             text-align: justify;
         }
 
@@ -346,15 +347,17 @@ nav {
             padding-left: 50px;
             align-items: center;
             max-width: 1200px;
+            margin-top: 2em;
+            margin-bottom: 3em;
         }
         .text-content {
             flex: 1;
-            margin-top: -5em;
         }
         .image-content {
             flex: 1;
             display: flex;
-            margin-right: -15em;
+            padding-left: 2em;
+            margin-right: -12em;
             justify-content: flex-end;
             align-items: center;
 
@@ -370,6 +373,7 @@ nav {
         .search-bar {
             display: flex;
             margin-top: 30px;
+            
         }
         .search-bar input, .search-bar select {
             padding: 10px;
@@ -438,7 +442,7 @@ nav {
 <div class="main-content">
         <div class="text-content">
             <h1>Search, Find,<br>and Apply!</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id lectus sit amet augue aliquet consectetur. Donec interdum, sem et facilisis luctus, neque sapien tincidunt odio, et efficitur tellus lacus tincidunt metus.</p>
+            <p>HanapKITA aims to revolutionize the job search experience by providing an intuitive, efficient, and comprehensive platform for job seekers and employers alike.</p>
             <div class="search-bar">
                 <input type="text" placeholder="Job title or Keyword">
                 <select>
@@ -466,13 +470,13 @@ nav {
             </div>
         </div>
         <div class="image-content">
-            <img src="right.png"  style="height: 550px; padding-right: -100px;">
+            <img src="pst.png"  style="height: 550px; padding-right: -100px;">
         </div>
     </div>
 </body>
 </html>
 
-    <div class="container my-3">
+    <!-- <div class="container my-3">
         
         <div class="image-section">
             <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
@@ -495,8 +499,8 @@ nav {
             <p>Moreover, HanapKITA seeks to foster a community where employers and job seekers can connect seamlessly and effectively. We prioritize creating a transparent and supportive environment that allows employers to find the right candidates quickly and efficiently. By leveraging technology and a deep understanding of the job market, HanapKITA aspires to become the go-to platform for anyone looking to advance their career or find the perfect candidate for their organization, thereby contributing to a more dynamic and thriving workforce.</p>
 
           </div>
-    </div>
-
+    </div> -->
+<!-- 
     <br><br>
     <div id="middle"></div>   
 
@@ -514,7 +518,7 @@ nav {
         <h2><b>OUR VISION </b></h2>
         <p style="font-size: 16px;">Our vision is to become the leading job search platform in the region, known for its commitment to inclusivity, innovation, and excellence. We aspire to transform the job-seeking experience for skilled and unskilled workers, ensuring that everyone has equal access to opportunities that allow them to thrive and succeed in their careers. Through continuous improvement and community engagement, we aim to build a future where employment is accessible to all, and every individual can realize their full potential.</p>
     
-    </div>
+    </div> -->
     
 
 

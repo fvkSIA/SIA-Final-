@@ -13,6 +13,8 @@
         window.location.href = 'signup.html';
       });
     </script>
+
+
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
     * {
@@ -20,7 +22,107 @@
       padding: 0;
       box-sizing: border-box;
     }
+    h2 {
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+        }
+  nav {
+  background-color: #7091E6;
+  color: #fff;
+  padding: 10px 20px;
+  font-family: 'Arial', sans-serif;
+}
 
+.container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.logo {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 1.5em;
+  margin: 0;
+  color: #fff;
+  font-weight: bold;
+}
+
+.nav-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 14px;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #fff;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.btn-link {
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: bold;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.btn-signin {
+    color: #ffffff;
+    background-color: transparent;
+}
+
+.btn-link:hover {
+    background-color: #5a7ad1;
+    color: #ffffff;
+    border: 2px solid #000;
+}
+
+.btn-signin:hover {
+    background-color: #5a7ad1;
+    color: #ffffff;
+    border: 2px solid #000;
+}
     body,
     input {
       font-family: "Poppins", sans-serif;
@@ -197,7 +299,7 @@
       top: -10%;
       right: 48%;
       transform: translateY(-50%);
-      background-image: linear-gradient(-45deg, #4481eb 0%, #04befe 100%);
+      background-image: linear-gradient(-45deg, #7091E6 0%, #B4D4FF 100%);
       transition: 1.8s ease-in-out;
       border-radius: 50%;
       z-index: 6;
@@ -380,7 +482,30 @@
       }
     }
   </style>
+
+
     <title>Login</title>
+     <!-- Main Content -->
+     <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="nav-left">
+            <img class="logo" src="hanapKITA.png">
+            <h2 class="title">HANAPKITA</h2>
+            </div>
+            <div class="nav-center">
+            <a class="nav-link" href="../modules/landing.php">HOME</a>
+            <a class="nav-link" href="#top">JOB SEARCH</a>
+            <a class="nav-link" href="#middle">WORKER</a>
+            <a class="nav-link" href="#bottom">ABOUT</a>
+            </div>
+            <div class="nav-right">
+            <a class="btn-link" href="#">Create Account</a>
+            <a class="btn-link btn-signin" href="./login/login.html">Sign In</a>
+            </div>
+        </div>
+    </nav>
+</header>
   </head>
   <body>
     <div class="container">
