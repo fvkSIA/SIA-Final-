@@ -246,16 +246,18 @@
 }
 
 nav {
-    background-color: #7091E6   ;
-    color: #fff;
+    background-color: #7091E6;
+    padding: 10px 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.container-fluid {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    font-family: 'Arial', sans-serif; /* dagdag na font family */
 }
 
-.logo-container {
+.nav-left {
     display: flex;
     align-items: center;
 }
@@ -264,72 +266,81 @@ nav {
     width: 40px; /* Adjust size as needed */
     height: auto;
     margin-right: 10px;
+
 }
 
 .title {
     font-size: 1.5em;
     margin: 0;
+    color: #fff;
+    font-weight: bold;
 }
 
-.links-container {
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
+.nav-center {   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.link {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 14px;
+}
+
+.nav-right {
     display: flex;
     align-items: center;
 }
 
-.link, .btn-link {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-}
-.btn-container {
-display: inline-block;
-padding: 10px 20px;
-background-color: #f0f0f0; /* default background color */
-border: 1px solid #ccc;
-border-radius: 5px;
-transition: background-color 0.3s ease; /* smooth background color transition */
-}
-
-.btn-container:hover {
-background-color: #e0e0e0; /* background color when hovered */
-}
-
 .btn-link {
-display: inline-block;
-padding: 10px 20px;
-text-decoration: none;
-color: #000000;
-background-color: #007bff;
-border: 2px solid #007bff; 
-border-radius: 5px;
-transition: background-color 0.3s ease, border-color 0.3s ease; 
-font-weight: bold;
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: transparent;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: bold;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.btn-signin {
+    background-color: #ffffff;
+    color: #7091E6;
 }
 
 .btn-link:hover {
-background-color: #a0ceff;
-border-color: #000101; 
+    background-color: #5a7ad1;
+    color: #ffffff;
+}
+
+.btn-signin:hover {
+    background-color: #f0f0f0;
+    color: #5a7ad1;
 }
 
 @media (max-width: 768px) {
-    nav {
+    .container-fluid {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
     }
 
-    .logo-container {
+    .nav-left, .nav-center, .nav-right {
+        width: 100%;
+        justify-content: center;
         margin-bottom: 10px;
     }
 
-    .links-container {
-        flex-direction: column;
-        align-items: flex-start;
+    .nav-center {
+        flex-wrap: wrap;
     }
 
     .link, .btn-link {
-        margin: 5px 0;
+        margin: 5px;
     }
 }
 </style>
@@ -341,22 +352,27 @@ border-color: #000101;
       
       <!-- Main Content -->
       <header>
-      <nav>
-        <div class="logo-container">
-            <img class="logo"
-            src="../hanapKITA.png">
-            <h2 class="title"> HANAPKITA</h2>
-        </div>
-            <div class="links-container">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <div class="nav-left">
+      <img class="logo" src="../hanapKITA.png">
+        <h2 class="title">HANAPKITA</h2>
+      </div>
+      <div class="links-container">
                 <a class="link" href="../modules/landing.php"> HOME </a>
                 <a class="link" href="#top"> JOB SEARCH </a>
                 <a class="link" href="#middle"> WORKER </a>
                 <!-- <a class="link" href="#middle"> JOB HIRING </a>   -->
                 <a class="link" href="#bottom"> ABOUT </a>
-                <a class="btn-link text-white" href="./login/login.html"> SIGN IN </a>
+
             </div>
-        </nav>
-      </header>
+      <div class="nav-right">
+        <a class="btn-link" href="#">Create Account</a>
+        <a class="btn-link btn-signin" href="./login/login.html">Sign In</a>
+      </div>
+    </div>
+  </nav>
+</header>
 
     <div  style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto; width: 100%; padding-bottom: 20px;">
         <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
