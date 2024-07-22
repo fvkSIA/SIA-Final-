@@ -27,20 +27,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $profile = $_FILES['profile']['name'];
     $resume = $_FILES['resume']['name'];
     $valid_ids = $_FILES['valid']['name'];
-    $recent_job_experience = $_FILES['recent']['name'];
+    $recent = $_FILES['recent']['name'];
     
     // Set file upload paths
-    $target_dir = "../jobseeker/assets/";
-    $profile_target = $target_dir . 'images/'. basename($profile);
-    // $resume_target = $target_dir . 'files/'. basename($resume);
-    // $valid_target = $target_dir . 'files/'. basename($valid_ids);
-    // $recent_target = $target_dir . 'files/'. basename($recent_job_experience);
+    $profile_destination = '../jobseeker/assets/images/' . $profile;
+    $resume_destination = '../jobseeker/assets/image_proofs/' . $resume;
+    $valid_destination = '../jobseeker/assets/image_proofs/' . $valid_ids;
+    $recent_destination = '../jobseeker/assets/image_proofs/' . $recent;
 
     // Move uploaded files to target directory
-    move_uploaded_file($_FILES['profile']['tmp_name'], $profile_target);
-    // move_uploaded_file($_FILES['resume']['tmp_name'], $resume_target);
-    // move_uploaded_file($_FILES['valid']['tmp_name'], $valid_target);
-    // move_uploaded_file($_FILES['recent']['tmp_name'], $recent_target);
+    move_uploaded_file($_FILES['profile']['tmp_name'], $profile_destination);
+    move_uploaded_file($_FILES['resume']['tmp_name'], $resume_destination);
+    move_uploaded_file($_FILES['valid']['tmp_name'], $valid_destination);
+    move_uploaded_file($_FILES['recent']['tmp_name'], $recent_destination);
+
+    $resume = $resume_destination;
+    $valid_ids = $valid_destination;
+    $recent_job_experience = $recent_destination;
 
     // Check if email already exists
     $checkEmailQuery = "SELECT email FROM users WHERE email = ?";
@@ -53,9 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $showModal = false;
         } else {
             // Prepare SQL insert statement
-            $sql = "INSERT INTO users (profile, email, firstname, middlename, lastname, phone_number, birthdate, gender, home_address, city, password, type, worker_type_id, job_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO users (profile, email, firstname, middlename, lastname, phone_number, birthdate, gender, home_address, city, password, type, worker_type_id, job_type, resume, valid_ids, recent_job_experience) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             if ($stmt = $conn->prepare($sql)) {
-                $stmt->bind_param("ssssssssssssss",$profile, $email, $first_name, $middle_name, $last_name, $phone_number, $birth_date, $sex, $address, $city, $password, $employer_id, $worker_type, $type_of_work);
+                $stmt->bind_param("sssssssssssssssss", $profile, $email, $first_name, $middle_name, $last_name, $phone_number, $birth_date, $sex, $address, $city, $password, $employer_id, $worker_type, $type_of_work, $resume, $valid_ids, $recent_job_experience);
                 if ($stmt->execute()) {
                     $showModal = true;
                 } else {
@@ -64,7 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->close();
             }
         }
-        // $stmt->close();
     }
     $conn->close();
 }

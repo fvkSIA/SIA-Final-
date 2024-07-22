@@ -154,12 +154,39 @@ $conn->close();
             </div>
         </div>
         <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span>Files</span></div><br>
-                <div class="col-md-12"><label class="labels">Resume</label><br><a href="../employer/assets/files/order_summary.pdf">resume.pdf</a></div> <br>
-                <!-- <div class="col-md-12"><label class="labels">Birth Certificate</label><input type="text" class="form-control" placeholder="" value=""></div> -->
-            </div>
-        </div>
+    <div class="p-3 py-5">
+        <div class="d-flex justify-content-between align-items-center experience"><span>Files</span></div><br>
+        <?php if($data['type'] == 2): // Assuming 2 is the type for jobseekers ?>
+            <?php if(!empty($data['resume'])): ?>
+                <div class="col-md-12">
+                    <label class="labels">Resume</label><br>
+                    <a href="<?php echo $data['resume']; ?>" target="_blank">View Resume</a>
+                </div>
+            <?php endif; ?>
+            <br>
+            <?php if(!empty($data['valid_ids'])): ?>
+                <div class="col-md-12">
+                    <label class="labels">Valid IDs / Birth Certificate</label><br>
+                    <a href="<?php echo $data['valid_ids']; ?>" target="_blank">View Valid IDs/Birth Certificate</a>
+                </div>
+            <?php endif; ?>
+            <br>
+            <?php if(!empty($data['recent_job_experience'])): ?>
+                <div class="col-md-12">
+                    <label class="labels">Recent Job Experience</label><br>
+                    <a href="<?php echo $data['recent_job_experience']; ?>" target="_blank">View Recent Job Experience</a>
+                </div>
+            <?php endif; ?>
+        <?php elseif($data['type'] == 3): // Assuming 3 is the type for employers ?>
+            <?php if(!empty($data['valid_id_path'])): ?>
+                <div class="col-md-12">
+                    <label class="labels">Valid ID / Birth Certificate</label><br>
+                    <a href="<?php echo $data['valid_id_path']; ?>" target="_blank">View Valid ID/Birth Certificate</a>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+</div>
     </div>
 </div>
 </div>

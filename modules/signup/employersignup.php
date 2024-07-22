@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Move uploaded files to their respective destinations
     move_uploaded_file($_FILES['profile_image_path']['tmp_name'], $profile_destination);
     move_uploaded_file($_FILES['valid_id_path']['tmp_name'], $valid_destination);
+    $valid_id_path = $valid_destination;
 
     // Check if email already exists
     $checkEmailQuery = "SELECT email FROM users WHERE email = '$email'";
@@ -43,10 +44,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Prepare SQL insert statement
         // $sql = "INSERT INTO users (first_name, middle_name, last_name, email, phone_number, birth_date, sex, address, password, profile_image_path, valid_id_path) 
         //         VALUES ('$first_name', '$middle_name', '$last_name', '$email', '$phone_number', '$birth_date', '$sex', '$address', '$hashed_password', '$profile_destination', '$valid_destination')";
-        $sql = "INSERT INTO users (profile, email, firstname, middlename, lastname, phone_number, birthdate, gender, home_address, city, password, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users (profile, email, firstname, middlename, lastname, phone_number, birthdate, gender, home_address, city, password, type, valid_id_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = $conn->prepare($sql)){
-            $stmt->bind_param("ssssssssssss",$profile_image_path, $email, $first_name, $middle_name, $last_name, $phone_number, $birth_date, $sex, $address, $city, $password, $employer_id);
+            $stmt->bind_param("sssssssssssss",$profile_image_path, $email, $first_name, $middle_name, $last_name, $phone_number, $birth_date, $sex, $address, $city, $password, $employer_id, $valid_id_path);
            
             
             if ($stmt->execute()){
