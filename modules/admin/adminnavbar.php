@@ -371,6 +371,18 @@ if (!isset($_SESSION['user_id'])){
         </a>
       </li>
       <li>
+        <a href="javascript:void(0)" onclick="changeContent('adminviewtoprank.php')">
+          <i class="bx bxs-group"></i>
+          <span class="link_name">Top Rank</span>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:void(0)" onclick="changeContent('adminviewongoingjob.php')">
+          <i class="bx bxs-group"></i>
+          <span class="link_name">On Going Jobs</span>
+        </a>
+      </li>
+      <li>
         <a href="javascript:void(0)" onclick="changeContent('profile_admin.php')">
           <i class="bx bxs-user-circle"></i>
           <span class="link_name">Profile</span>

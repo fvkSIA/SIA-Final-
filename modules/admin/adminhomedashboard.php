@@ -286,7 +286,7 @@ $conn->close();
                     <div class="card-body">
                         <h5 class="card-title text-secondary">PENDING APPLICANTS</h5>
                         <p class="card-text h2"><?php  $num_padded = sprintf("%02d", $pending['pending']); echo $num_padded;?></p>
-                        <a href="#" class="card-link float-right">VIEW</a>
+                        <a href="adminregistration.php" class="card-link float-right">VIEW</a>
                     </div>
                     </div>
                 </div>
@@ -295,7 +295,7 @@ $conn->close();
                     <div class="card-body">
                         <h5 class="card-title text-secondary">ONGOING JOBS</h5>
                         <p class="card-text h2"><?php  $num_padded = sprintf("%02d", $ongoing['ongoing']); echo $num_padded;?></p>
-                        <a href="#" class="card-link float-right">VIEW</a>
+                        <a href="adminviewongoingjob.php" class="card-link float-right">VIEW</a>
                     </div>
                     </div>
                 </div>
@@ -304,7 +304,7 @@ $conn->close();
                     <div class="card-body">
                         <h5 class="card-title text-secondary">TOTAL JOBSEEKERS</h5>
                         <p class="card-text h2"><?php  $num_padded = sprintf("%02d", $jobseekers['jobseekers']); echo $num_padded;?></p>
-                        <a href="#" class="card-link float-right">VIEW</a>
+                        <a href="admdashboardjobseeker.php" class="card-link float-right">VIEW</a>
                     </div>
                     </div>
                 </div>
@@ -313,7 +313,7 @@ $conn->close();
                     <div class="card-body">
                         <h5 class="card-title text-secondary">TOTAL EMPLOYERS</h5>
                         <p class="card-text h2"><?php $num_padded = sprintf("%02d", $employers['employers']); echo $num_padded?></p>
-                        <a href="#" class="card-link float-right">VIEW</a>
+                        <a href="admdashboardemployer.php" class="card-link float-right">VIEW</a>
                     </div>
                     </div>
                 </div>
