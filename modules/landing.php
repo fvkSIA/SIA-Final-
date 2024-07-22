@@ -66,9 +66,6 @@
             align-items: center;
         }
 
-
-
-
         .image-section {
             flex: 1; /* Adjusted width to make it flexible */
             position: relative; /* Needed for absolute positioning within */
@@ -88,8 +85,6 @@
             text-align: justify;
         }
 
-
-        
         .text-section h1 {
             margin-top: 0;
             font-size: 2em;
@@ -115,7 +110,6 @@
             text-align: center;
             margin: 0 auto; /* This centers the container horizontally */
         }
-
 
         .top-job-seekers h2 {
             margin-bottom: 20px;
@@ -252,7 +246,7 @@
 }
 
 nav {
-    background-color: #4661a8;
+    background-color: #7091E6   ;
     color: #fff;
     display: flex;
     justify-content: space-between;
@@ -315,7 +309,7 @@ font-weight: bold;
 }
 
 .btn-link:hover {
-/* background-color: ; */
+background-color: #a0ceff;
 border-color: #000101; 
 }
 
@@ -347,7 +341,7 @@ border-color: #000101;
       
       <!-- Main Content -->
       <header>
-        <nav>
+      <nav>
         <div class="logo-container">
             <img class="logo"
             src="../hanapKITA.png">
