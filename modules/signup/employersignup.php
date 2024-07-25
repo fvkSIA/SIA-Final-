@@ -386,12 +386,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <i class="fas fa-eye eye-icon" id="confirmPasswordIcon" onclick="togglePasswordVisibility('confirm_password', 'confirmPasswordIcon')"></i>
             </div>
             <div class="input-box info picture">
-                <label><b>Profile:</b></label>
+                <label><b>Profile Picture:</b></label>
                 <input type="file" id="profile" name="profile_image_path" accept=".jpg, .png"  required >
             </div>
           
             <div class="input-box info">
-                <label><b>2 Valid IDs / Birth Certificate:</b></label>
+                <label><b>2 Valid IDs (ex; Drivers License, National ID):</b></label>
                 <input type="file" id="valid" name="valid_id_path" accept=".pdf" required  >
             </div>
             

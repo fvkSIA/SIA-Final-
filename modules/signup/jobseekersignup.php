@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $worker_type = $_POST['worker_type'];
     $type_of_work = $_POST['type_of_work'];
+    $educational_background = $_POST['educational_background'];
     
     // File uploads
     $profile = $_FILES['profile']['name'];
@@ -56,9 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $showModal = false;
         } else {
             // Prepare SQL insert statement
-            $sql = "INSERT INTO users (profile, email, firstname, middlename, lastname, phone_number, birthdate, gender, home_address, city, password, type, worker_type_id, job_type, resume, valid_ids, recent_job_experience) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO users (profile, email, firstname, middlename, lastname, phone_number, birthdate, gender, home_address, city, password, type, worker_type_id, job_type, resume, valid_ids, recent_job_experience, educational_background) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             if ($stmt = $conn->prepare($sql)) {
-                $stmt->bind_param("sssssssssssssssss", $profile, $email, $first_name, $middle_name, $last_name, $phone_number, $birth_date, $sex, $address, $city, $password, $employer_id, $worker_type, $type_of_work, $resume, $valid_ids, $recent_job_experience);
+                $stmt->bind_param("ssssssssssssssssss", $profile, $email, $first_name, $middle_name, $last_name, $phone_number, $birth_date, $sex, $address, $city, $password, $employer_id, $worker_type, $type_of_work, $resume, $valid_ids, $recent_job_experience, $educational_background);
                 if ($stmt->execute()) {
                     $showModal = true;
                 } else {
@@ -328,6 +329,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .input-box {
             position: relative;
         }
+
+        .skilled, .unskilled, .educational-background {
+            margin-top: 20px;
+        }
+
+        .skilled label, .unskilled label, .educational-background label {
+            display: block;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .skilled select, .unskilled select, .educational-background select {
+            position: relative;
+            height: 50px;
+            width: 100%;
+            outline: none;
+            font-size: 1rem;
+            color: black;
+            margin-top: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0 15px;
+        }
+
+        .skilled select:focus, .unskilled select:focus, .educational-background select:focus {
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -404,6 +432,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" required />
                 <i class="fas fa-eye eye-icon" id="confirmPasswordIcon" onclick="togglePasswordVisibility('confirm_password', 'confirmPasswordIcon')"></i>
             </div>
+            <div class="educational-background">
+                <label><b>Educational Background:</b></label>
+                <select name="educational_background" required>
+                    <option value="">Select type of educational background</option>
+                    <option value="1">Uneducated</option>
+                    <option value="2">Elementary</option>
+                    <option value="3">High School</option>
+                    <option value="4">Senior Highschool</option>
+                    <option value="4">Undergraduate</option>
+                    <option value="5">College</option>
+                </select>
+            </div>
             <div class="skilled">
                 <label><b>Select Type of Workers:</b></label>
                 <select name="worker_type" id="workerType" onchange="updateWorkType()">
@@ -419,7 +459,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>                  
             </div>
             <div class="input-box info picture">
-                <label><b>Profile:</b></label>
+                <label><b>Profile Picture:</b></label>
                 <input type="file" id="profile" name="profile" accept=".jpg, .png" required>
             </div>
             <div class="input-box info resume">
@@ -427,11 +467,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="file" id="resume" name="resume" accept=".pdf" required>
             </div>
             <div class="input-box info">
-                <label><b>2 Valid IDs / Birth Certificate:</b></label>
+                <label><b>2 Valid IDs (ex; Drivers License, National ID):</b></label>
                 <input type="file" id="valid" name="valid" accept=".pdf" required>
             </div>
             <div class="input-box info">
-                <label><b>Recent Job Experience:</b></label>
+                <label><b>Certificate (ex; NCII):</b></label>
                 <input type="file" id="recent" name="recent" accept=".pdf" required>
             </div>
             <button type="submit">SUBMIT</button>

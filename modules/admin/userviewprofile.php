@@ -113,6 +113,16 @@ $conn->close();
     </style>
 </head>
 <body>
+<?php
+if (isset($_SESSION['flash'])) {
+    $flash = $_SESSION['flash'];
+    echo "<div class='alert alert-{$flash['type']} alert-dismissible fade show' role='alert'>
+            {$flash['message']}
+            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+          </div>";
+    unset($_SESSION['flash']);
+}
+?>
 <?php 
       $data = [];
       if ($result != null)
@@ -183,7 +193,7 @@ $conn->close();
                             <button class="btn btn-primary" type="submit">Update</button>
                             <a href="profile_admin.php" class="btn btn-danger mx-2" type="button">Cancel</a>
                         <?php else:?>
-                            <button class="btn btn-danger" type="button">Remove</button>
+                            <button class="btn btn-danger" type="button" onclick="removeUser(<?php echo $data['id']; ?>)">Remove</button>
                             <a href="<?php echo $data['type'] == 3 ? 'admdashboardemployer.php' : 'admdashboardjobseeker.php' ?>" class="btn btn-secondary mx-2" type="button">Cancel</a>
                         <?php endif;?>
                     </div>
@@ -195,11 +205,38 @@ $conn->close();
             </div>
         </div>
         <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span>Files</span></div><br>
-                <div class="col-md-12"><label class="labels">Resume</label><br><a href="../employer/assets/files/order_summary.pdf">resume.pdf</a></div> <br>
-                <!-- <div class="col-md-12"><label class="labels">Birth Certificate</label><input type="text" class="form-control" placeholder="" value=""></div> -->
-            </div>
+        <div class="p-3 py-5">
+        <div class="d-flex justify-content-between align-items-center experience"><span>Files</span></div><br>
+        <?php if($data['type'] == 2): // Assuming 2 is the type for jobseekers ?>
+            <?php if(!empty($data['resume'])): ?>
+                <div class="col-md-12">
+                    <label class="labels">Resume</label><br>
+                    <a href="<?php echo $data['resume']; ?>" target="_blank">View Resume</a>
+                </div>
+            <?php endif; ?>
+            <br>
+            <?php if(!empty($data['valid_ids'])): ?>
+                <div class="col-md-12">
+                    <label class="labels">Valid IDs / Birth Certificate</label><br>
+                    <a href="<?php echo $data['valid_ids']; ?>" target="_blank">View Valid IDs/Birth Certificate</a>
+                </div>
+            <?php endif; ?>
+            <br>
+            <?php if(!empty($data['recent_job_experience'])): ?>
+                <div class="col-md-12">
+                    <label class="labels">Recent Job Experience</label><br>
+                    <a href="<?php echo $data['recent_job_experience']; ?>" target="_blank">View Recent Job Experience</a>
+                </div>
+            <?php endif; ?>
+        <?php elseif($data['type'] == 3): // Assuming 3 is the type for employers ?>
+            <?php if(!empty($data['valid_id_path'])): ?>
+                <div class="col-md-12">
+                    <label class="labels">Valid ID / Birth Certificate</label><br>
+                    <a href="<?php echo $data['valid_id_path']; ?>" target="_blank">View Valid ID/Birth Certificate</a>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
         </div>
     </div>
 </div>
@@ -290,6 +327,24 @@ $conn->close();
             // Handle decline button action
             console.log('Declined');
         }
+
+        function removeUser(userId) {
+            if (confirm("Do you really wish to delete this user?")) {
+                // If user confirms, submit a form to delete the user
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'delete_user.php';
+            
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'user_id';
+                input.value = userId;
+            
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+    }
     </script>
 </body>
 </html>

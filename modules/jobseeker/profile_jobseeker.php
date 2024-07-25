@@ -114,21 +114,30 @@ if ($stmt = $conn->prepare($sql)) {
                 <div class="p-4">
             <div class="mb-6">
                 <h2 class="text-2xl font-semibold text-[#4B5EAB]">Resume</h2>
-                <p class="text-gray-500 mt-1"><?php echo $data['bio'];?></p>
+                <div class="mt-2 flex items-center">
+            <i class="far fa-file-pdf text-red-500 text-2xl mr-2"></i>
+            <a href="<?php echo $data['resume']; ?>" target="_blank" class="text-blue-500 hover:underline">View Resume</a>
+        </div>
                 <!-- <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button> -->
             </div>
             </div>
             <div class="p-4">
             <div class="mb-6">
                 <h2 class="text-2xl font-semibold text-[#4B5EAB]">2 Valid ID'S</h2>
-                <p class="text-gray-500 mt-1"><?php echo $data['bio'];?></p>
+                <div class="mt-2 flex items-center">
+            <i class="far fa-id-card text-green-500 text-2xl mr-2"></i>
+            <a href="<?php echo $data['valid_ids']; ?>" target="_blank" class="text-blue-500 hover:underline">View Valid IDs/Birth Certificate</a>
+        </div>
                 <!-- <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button> -->
             </div>
         </div>
         <div class="p-4">
             <div class="mb-6">
                 <h2 class="text-2xl font-semibold text-[#4B5EAB]">Certification</h2>
-                <p class="text-gray-500 mt-1"><?php echo $data['bio'];?></p>
+                <div class="mt-2 flex items-center">
+            <i class="fas fa-certificate text-yellow-500 text-2xl mr-2"></i>
+            <a href="<?php echo $data['recent_job_experience']; ?>" target="_blank" class="text-blue-500 hover:underline">View Recent Job Experience</a>
+        </div>
                 <!-- <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button> -->
             </div>
     </div>
