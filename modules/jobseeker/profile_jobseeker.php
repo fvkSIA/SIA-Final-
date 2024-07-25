@@ -111,8 +111,26 @@ if ($stmt = $conn->prepare($sql)) {
                 <!-- <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button> -->
             </div>
                 </div>
+                <div class="p-4">
+            <div class="mb-6">
+                <h2 class="text-2xl font-semibold text-[#4B5EAB]">Resume</h2>
+                <p class="text-gray-500 mt-1"><?php echo $data['bio'];?></p>
+                <!-- <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button> -->
+            </div>
+            </div>
+            <div class="p-4">
+            <div class="mb-6">
+                <h2 class="text-2xl font-semibold text-[#4B5EAB]">2 Valid ID'S</h2>
+                <p class="text-gray-500 mt-1"><?php echo $data['bio'];?></p>
+                <!-- <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button> -->
             </div>
         </div>
+        <div class="p-4">
+            <div class="mb-6">
+                <h2 class="text-2xl font-semibold text-[#4B5EAB]">Certification</h2>
+                <p class="text-gray-500 mt-1"><?php echo $data['bio'];?></p>
+                <!-- <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button> -->
+            </div>
     </div>
 
     <!-- Modal Areas -->
