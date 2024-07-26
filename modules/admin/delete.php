@@ -10,17 +10,12 @@ $sql = "DELETE FROM users WHERE id = ?";
 if($stmt = $conn->prepare($sql)){
     $stmt->bind_param("i", $id);
     if($stmt->execute()){
-        if (isset($_SESSION['flash_message'])) {
-            unset($_SESSION['flash_message']);
-        }
-
-        $_SESSION["flash"] = ["type" => "success", "message" => "You are great!"];
-        header('refresh: 0 ; url = adminregistration.php');
-        $stmt->close();
+        $_SESSION['delete_success'] = true;
+        header('Location: adminregistration.php');
+        exit();
     }
+    $stmt->close();
 }
 
 $conn->close();
-
-
 ?>
