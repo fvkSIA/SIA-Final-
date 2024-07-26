@@ -1,6 +1,11 @@
 <?php 
 $db = mysqli_connect('localhost', 'root', '', 'hanapkita_db');
 
+// Check database connection
+if (!$db) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
 // Fetch all unique job types
 $job_types_query = "SELECT DISTINCT job_type FROM users WHERE job_type IS NOT NULL ORDER BY job_type";
 $job_types_result = mysqli_query($db, $job_types_query);
@@ -90,7 +95,7 @@ if (!$result) {
         }
         .worker-name {
             font-weight: 600;
-            color: var(--secondary-color);
+            color: var (--secondary-color);
         }
         .top-rank {
             font-size: 1.2rem;
@@ -109,18 +114,24 @@ if (!$result) {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .custom-container {
+            max-width: calc(100% - 10px); /* Add 5px to each side */
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
     </style>
 </head>
 <body>
-        <br>
-        <br>
-    <div class="container">
+    <br>
+    <div class="container custom-container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="card animate-in mb-4">
                     <div class="card-header">
-                        <h2 class="mb-0 fw-bold">
-                            <i class="fas fa-star me-2"></i>Top Performers
+                        <h2 class="mb-0 fw-bold text-center">
+                            <i class="fas fa-user-tie me-2"></i>Top Performers
                         </h2>
                     </div>
                     <div class="card-body">
@@ -165,10 +176,14 @@ if (!$result) {
                                             $ratings[] = $value;
                                         }
                                         
+                                        // Debug output
+                                        if (empty($ratings)) {
+                                            echo "<tr><td colspan='4' class='text-center'>No data found.</td></tr>";
+                                        }
+                                        
                                         // Second pass to display data
                                         foreach ($ratings as $value) {
                                             $index++;
-                                            $percentage = ($value['total_rating'] / $max_rating) * 100;
                                             $rankClass = $index <= 3 ? 'bg-warning' : 'bg-secondary';
                                             $rankStyle = $index <= 3 ? 'color: #000;' : '';
                                             
@@ -176,14 +191,7 @@ if (!$result) {
                                             echo "<td><span class='top-rank {$rankClass}' style='{$rankStyle}'>{$index}</span></td>";
                                             echo "<td class='worker-name'>" . htmlspecialchars($value['firstname'] . ' ' . $value['lastname']) . "</td>";
                                             echo "<td><span class='badge bg-info'>" . (isset($value['job_type']) ? htmlspecialchars($value['job_type']) : 'N/A') . "</span></td>";
-                                            echo "<td>
-                                                    <div class='d-flex align-items-center'>
-                                                        <div class='progress flex-grow-1 me-3' style='height: 8px;'>
-                                                            <div class='progress-bar bg-success' role='progressbar' style='width: {$percentage}%' aria-valuenow='{$value['total_rating']}' aria-valuemin='0' aria-valuemax='{$max_rating}'></div>
-                                                        </div>
-                                                        <span class='fw-bold'>" . number_format($value['total_rating'], 2) . "</span>
-                                                    </div>
-                                                  </td>";
+                                            echo "<td class='fw-bold'>" . number_format($value['total_rating'], 2) . "</td>";
                                             echo "</tr>";
                                         }
                                     } else {
@@ -202,3 +210,4 @@ if (!$result) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

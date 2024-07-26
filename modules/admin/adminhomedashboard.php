@@ -339,15 +339,15 @@ $conn->close();
                 </div>
                 <div class="occupation">
                     <div class="occupation-bar labandera" style="width: 20%;"></div>
-                    <p>Labandera</p>
+                    <p>Welder</p>
                 </div>
                 <div class="occupation">
                     <div class="occupation-bar tubero" style="width: 25%;"></div>
-                    <p>Tubero</p>
+                    <p>Lineman</p>
                 </div>
                 <div class="occupation">
                     <div class="occupation-bar sales-assistant" style="width: 25%;"></div>
-                    <p>Sales Assistant</p>
+                    <p>Laundry Staff</p>
                 </div>
             </div>
 
