@@ -182,7 +182,7 @@
             border-radius: 5px;
             width: 90%;
             margin: 0 auto;
-            margin-top: -100px;   Adjust this value as needed
+            margin-top: -100px;
             text-align: center;
         }
         .content p {
@@ -466,7 +466,7 @@ nav {
                     <option value="valenzuela">Valenzuela</option>
                     <option value="pateros">Pateros</option>
                     </select>
-                <button>Find Now!</button>
+                <button onclick="window.location.href='./login/login.html'">Find Now!</button>
             </div>
         </div>
         <div class="image-content">
