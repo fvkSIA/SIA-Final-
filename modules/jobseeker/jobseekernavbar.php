@@ -1,3 +1,25 @@
+<?php
+require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
+session_start(); // Simulan ang session sa simula ng file
+
+// Check if the notification count session variable is set
+$notification_count = isset($_SESSION['inbox_notification_count']) ? $_SESSION['inbox_notification_count'] : 0;
+$user_id = $_SESSION['user_id']; // Assuming you store user ID in session
+
+$sql = "SELECT firstname, lastname, profile, type FROM users WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+$first_name = $user['firstname'];
+$profile_pic = $user['profile'] ? '../jobseeker/assets/images/' . $user['profile'] : '../jobseeker/assets/images/';
+$user_type = ($user['type'] == 3) ? 'Employer' : 'Job Seeker';
+
+$stmt->close();
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,6 +66,7 @@
       min-height: 100vh;
       background-color: var(--color-body);
       display: flex;
+      overflow-x: hidden;
     }
 
     .sidebar {
@@ -57,6 +80,9 @@
       top: 0;
       left: 0;
       overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     .sidebar.open {
@@ -214,23 +240,24 @@
       height: 60px;
       width: 78px;
       left: 0;
-      bottom: -8px;
+      bottom: 0;
       padding: 10px 14px;
       overflow: hidden;
       transition: all .5s ease;
+      background: var(--color-default);
     }
 
     .sidebar.open li.profile {
       width: 250px;
     }
 
-    .sidebar .profile .profile_details {
+    .sidebar .profile_details {
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
     }
 
-    .sidebar li img {
+    .sidebar li.profile img {
       height: 45px;
       width: 45px;
       object-fit: cover;
@@ -244,6 +271,12 @@
       font-weight: 400;
       color: var(--color-white);
       white-space: nowrap;
+      display: none;
+    }
+    
+    .sidebar.open li.profile .name,
+    .sidebar.open li.profile .designation {
+      display: block;
     }
 
     .sidebar li.profile .designation {
@@ -259,14 +292,18 @@
       width: 100%;
       height: 60px;
       line-height: 60px;
-      border-radius: 5px;
-      cursor: pointer;
+      border-radius: 0;
+      text-align: center;
       transition: all 0.5s ease;
     }
 
-    .sidebar.open .profile #log_out {
+    .sidebar.open #log_out {
       width: 50px;
       background: none;
+    }
+
+    .sidebar.open #log_out i {
+    font-size: 25px;
     }
 
     .main-content {
@@ -381,11 +418,16 @@
         </a>
       </li>
       <li class="profile">
-        <a href="../logout.php">
+        <div class="profile_details">
+          <img src="<?php echo $profile_pic; ?>" alt="profile image">
+          <div class="profile_content">
+            <div class="name"><?php echo $first_name; ?></div>
+            <div class="designation"><?php echo $user_type; ?></div>
+          </div>
+        </div>
+        <a href="../logout.php" id="log_out">
           <i class="bx bx-log-out"></i>
-          <span class="link_name">Logout</span>
         </a>
-        <i class="bx bx-log-out" id="log_out"></i>
       </li>
     </ul>
   </div>
