@@ -1,35 +1,78 @@
-<?php 
-
-require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
+<?php
 session_start();
-$error = '';
-$result = null;
+require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-  $job_type = $_POST['job_type'];
+// Kunin ang user information
+$user_job_type = '';
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $user_query = "SELECT job_type FROM users WHERE id = ?";
+    $stmt = $conn->prepare($user_query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($user = $result->fetch_assoc()) {
+        $user_job_type = $user['job_type'];
+    }
+    $stmt->close();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $location = $_POST['location'] ?? '';
 
-  $param = "%{$location}%";
-  
-//   $sql = "SELECT  * FROM users where type = 3 AND job_type = ? AND city = ?";
+  $sql = "SELECT job_listings.*, users.id as user_id, users.profile, users.firstname, users.lastname, users.middlename, users.email 
+          FROM job_listings 
+          INNER JOIN users ON users.id = job_listings.employer_id
+          WHERE users.type = 3 AND job_listings.job = ?";
 
-  $sql = "SELECT job_listings.*, users.id as user_id, users.profile, users.firstname, users.lastname, users.middlename, users.email FROM job_listings 
-            INNER JOIN users ON users.id = job_listings.employer_id
-            WHERE users.type = 3
-            AND job_listings.job = ?
-            AND job_listings.location LIKE ?";
+  $types = "s";
+  $params = array($user_job_type);
 
-  // echo $job_type . " " . $location . ' query: ' . $sql; die();
+  // Add location condition if specified
+  if (!empty($location) && $location != "Select location") {
+      $sql .= " AND job_listings.location = ?";
+      $types .= "s";
+      $params[] = $location;
+  }
+
+  // Prepare and execute the SQL statement
   if ($stmt = $conn->prepare($sql)) {
-    $stmt->bind_param("ss", $job_type, $param);
-    $stmt->execute();
-    $result = $stmt->get_result() ?? null;
-    
-    $stmt->close();
+      $stmt->bind_param($types, ...$params);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $stmt->close();
+
+      // Check if there are no results
+      if ($result->num_rows === 0) {
+          $noJobsMessage = 'No job posts available matching your job type and criteria.';
+      }
+  } else {
+      $noJobsMessage = 'Error preparing the SQL query: ' . $conn->error;
+  }
+} else {
+  // If it's not a POST request, show all jobs matching the user's job type
+  $sql = "SELECT job_listings.*, users.id as user_id, users.profile, users.firstname, users.lastname, users.middlename, users.email 
+          FROM job_listings 
+          INNER JOIN users ON users.id = job_listings.employer_id
+          WHERE users.type = 3 AND job_listings.job = ?";
+  
+  if ($stmt = $conn->prepare($sql)) {
+      $stmt->bind_param("s", $user_job_type);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $stmt->close();
+
+      if ($result->num_rows === 0) {
+          $noJobsMessage = 'No job posts available matching your job type.';
+      }
+  } else {
+      $noJobsMessage = 'Error preparing the SQL query: ' . $conn->error;
   }
 }
-$conn->close();
 ?>
+
+
+
 
 
 <!DOCTYPE html>
@@ -41,6 +84,14 @@ $conn->close();
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+        // Check if PHP has set a noJobsMessage and alert it
+        <?php if (!empty($noJobsMessage)): ?>
+            window.onload = function() {
+                alert('<?php echo addslashes($noJobsMessage); ?>');
+            };
+        <?php endif; ?>
+    </script>
   <style>
     .apply-now-container {
       position: relative;
@@ -64,111 +115,512 @@ $conn->close();
     .apply-now-button:hover {
       background-color: #1E3A8A; /* Tailwind's blue-800 */
     }
+    .container1 {
+      position: relative;
+      width: 100%;
+      max-width: 1200px; /* Max width for larger screens */
+      height: 1100px; /* Adjust height to fit 10 job boxes */
+      overflow: hidden;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .slider-container {
+      position: relative;
+      width: 60%; /* Full width for responsiveness */
+      height: auto; /* Adjust this height according to your design */
+      overflow: hidden;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .slider {
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.5s ease-in-out;
+    }
+    .job-box {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      width: 95%;
+      margin: 10px auto; /* Center the job box horizontally */
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      flex: 0 0 auto;
+      display: block;
+      border: 2px solid transparent; /* Default border color */
+      transition: border-color 0.3s ease; /* Smooth transition for border color */
+    }
+    .job-box:hover {
+      border-color: #007bff; /* Border color on hover */
+    }
+    .job-box:focus {
+      border-color: #28a745; /* Border color on focus (if the element can be focused) */
+    }
+    /* Optional: Style the border when clicked or selected (depends on user interactions) */
+    .job-box:active {
+      border-color: #dc3545; /* Border color on active (when clicked) */
+    }
+    .job-title {
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #333;
+    }
+    .responsibilities {
+      font-size: 14px;
+      color: #555;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .column {
+      flex: 1;
+      text-align: center;
+    }
+    .column h2 {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    .column p {
+      font-size: 14px;
+      color: #555;
+    }
+    .icon {
+      margin-right: 5px;
+    }
+    .piso-sign {
+      font-family: Arial, sans-serif;
+    }
+    button.prev, button.next {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      width: 80%; /* Adjust width to fit within the container */
+      max-width: 90%; /* Ensure the buttons stay within the slider-container */
+      box-sizing: border-box;
+      text-align: center;
+      font-size: 16px; /* Adjust font size for better readability */
+    }
+    button.prev {
+      bottom: 20px; /* Adjust spacing from the bottom */
+    }
+    button.next {
+      bottom: 70px; /* Adjust spacing from the bottom to separate the buttons */
+    }
+    /* Additional media query for smaller screens */
+    @media (max-width: 600px) {
+      .slider-container {
+        width: 90%; /* Make the slider container wider on smaller screens */
+      }
+      button.prev, button.next {
+        width: 100%; /* Increase button width for smaller screens */
+        font-size: 14px; /* Adjust font size for smaller screens */
+      }
+    }
+    .apply-button {
+      background-color: #4CAF50; /* Green background */
+      border: none; /* Remove border */
+      color: white; /* White text */
+      padding: 10px 20px; /* Some padding */
+      text-align: center; /* Center text */
+      text-decoration: none; /* Remove underline */
+      display: inline-block; /* Inline block */
+      font-size: 16px; /* Increase font size */
+      margin: 10px 0; /* Margin around the button */
+      cursor: pointer; /* Pointer cursor on hover */
+      border-radius: 5px; /* Rounded corners */
+    }
+    .apply-button:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+    .button-container {
+    margin-top: 65%;
+      display: flex;
+      justify-content: space-between; /* Ensures the buttons are at opposite ends */
+      align-items: center; /* Aligns buttons vertically in the center */
+      width: 100%; /* Adjust width as needed */
+      padding: 10px; /* Adds padding around the container */
+      box-sizing: border-box; /* Ensures padding is included in the width */
+    }
+    .button-container button {
+      background-color: #007bff; /* Button background color */
+      color: white; /* Text color */
+      border: none; /* Removes border */
+      border-radius: 5px; /* Rounds corners */
+      padding: 10px 20px; /* Adds padding inside the button */
+      cursor: pointer; /* Changes cursor to pointer on hover */
+      font-size: 16px; /* Sets font size */
+    }
+    .button-container .prev {
+      /* Additional styles for 'Prev' button if needed */
+    }
+    .button-container .next {
+      /* Additional styles for 'Next' button if needed */
+    }
+    .button-container button:hover {
+      background-color: #0056b3; /* Changes background on hover */
+    }
+
+
+
+    .container2 {
+      position: relative;
+      width: 100%;
+      max-width: 1200px; /* Max width for larger screens */
+      height: 1100px; /* Adjust height to fit 10 job boxes */
+      overflow: hidden;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .slider-container2 {
+      position: relative;
+      width: 50%; /* Full width for responsiveness */
+      height: auto; /* Adjust this height according to your design */
+      overflow: hidden;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .slider1 {
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.5s ease-in-out;
+    }
+    .job-box1 {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      width: 95%;
+      margin: 10px auto; /* Center the job box horizontally */
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      flex: 0 0 auto;
+      display: block;
+      border: 2px solid transparent; /* Default border color */
+      transition: border-color 0.3s ease; /* Smooth transition for border color */
+    }
+    .job-box1:hover {
+      border-color: #007bff; /* Border color on hover */
+    }
+    .job-box1:focus {
+      border-color: #28a745; /* Border color on focus (if the element can be focused) */
+    }
+    /* Optional: Style the border when clicked or selected (depends on user interactions) */
+    .job-box1:active {
+      border-color: #dc3545; /* Border color on active (when clicked) */
+    }
+    .job-title1 {
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #333;
+    }
+    .responsibilities1 {
+      font-size: 14px;
+      color: #555;
+    }
+    .row1 {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .column1 {
+      flex: 1;
+      text-align: center;
+    }
+    .column1 h2 {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    .column1 p {
+      font-size: 14px;
+      color: #555;
+    }
+    .icon1 {
+      margin-right: 5px;
+    }
+    .piso-sign1 {
+      font-family: Arial, sans-serif;
+    }
+    button.prev1, button.next1 {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      width: 80%; /* Adjust width to fit within the container */
+      max-width: 90%; /* Ensure the buttons stay within the slider-container */
+      box-sizing: border-box;
+      text-align: center;
+      font-size: 16px; /* Adjust font size for better readability */
+    }
+    button.prev1 {
+      bottom: 20px; /* Adjust spacing from the bottom */
+    }
+    button.next1 {
+      bottom: 70px; /* Adjust spacing from the bottom to separate the buttons */
+    }
+    /* Additional media query for smaller screens */
+    @media (max-width: 600px) {
+      .slider-container2 {
+        width: 90%; /* Make the slider container wider on smaller screens */
+      }
+      button.prev1, button.next1 {
+        width: 100%; /* Increase button width for smaller screens */
+        font-size: 14px; /* Adjust font size for smaller screens */
+      }
+    }
+    .apply-button1 {
+      background-color: #4CAF50; /* Green background */
+      border: none; /* Remove border */
+      color: white; /* White text */
+      padding: 10px 20px; /* Some padding */
+      text-align: center; /* Center text */
+      text-decoration: none; /* Remove underline */
+      display: inline-block; /* Inline block */
+      font-size: 16px; /* Increase font size */
+      margin: 10px 0; /* Margin around the button */
+      cursor: pointer; /* Pointer cursor on hover */
+      border-radius: 5px; /* Rounded corners */
+    }
+    .apply-button1:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+    .button-container2 {
+    margin-top: 65%;
+      display: flex;
+      justify-content: space-between; /* Ensures the buttons are at opposite ends */
+      align-items: center; /* Aligns buttons vertically in the center */
+      width: 100%; /* Adjust width as needed */
+      padding: 10px; /* Adds padding around the container */
+      box-sizing: border-box; /* Ensures padding is included in the width */
+    }
+    .button-container2 button {
+      background-color: #007bff; /* Button background color */
+      color: white; /* Text color */
+      border: none; /* Removes border */
+      border-radius: 5px; /* Rounds corners */
+      padding: 10px 20px; /* Adds padding inside the button */
+      cursor: pointer; /* Changes cursor to pointer on hover */
+      font-size: 16px; /* Sets font size */
+    }
+    .button-container2 .prev1 {
+      /* Additional styles for 'Prev' button if needed */
+    }
+    .button-container2 .next1 {
+      /* Additional styles for 'Next' button if needed */
+    }
+    .button-container2 button:hover {
+      background-color: #0056b3; /* Changes background on hover */
+    }
   </style>
 </head>
 <body>
-  <main class="flex-1 p-8">
+<main class="flex-1 p-8">
     <div class="bg-blue-100 p-6 rounded-lg mb-2 flex justify-center">
-        <form action="jobseekerhiring.php" method="post">
-            <div class="flex space-x-4 items-center">
-                <select class="py-2 px-4 rounded bg-white border border-gray-300" name="job_type">
-                    <option>Select type of worker</option>
-                        <option>Welder</option>
-                        <option>Plumber</option>
-                        <option>Lineman</option>
-                        <option>Security Guard</option>
-                        <option>Electrician</option>
-                        <option>Carpenter</option>
-                        <option>Driver</option>
-                        <option>Refrigerator and Aircon Service</option>
-                        <option>Food Service</option>
-                        <option>Laundry Staff</option>
-                        <option>Factory Worker</option>
-                        <option>Housekeeper</option>
-                        <option>Janitor</option>
-                        <option>Construction Worker</option>
-                </select>
-                <select class="py-2 px-4 rounded bg-white border border-gray-300" name="location">
-                    <option value="">Location</option>
-                    <option value="manila">Manila</option>
-                    <option value="caloocan">Caloocan</option>
-                    <option value="valenzuela">Valenzuela</option>
-                    <option value="pasay">Pasay</option>
-                    <option value="makati">Makati</option>
-                    <option value="quezon_city">Quezon City</option>
-                    <option value="navotas">Navotas</option>
-                    <option value="las_piñas">Las Piñas</option>
-                    <option value="malabon">Malabon</option>
-                    <option value="mandaluyong">Mandaluyong</option>
-                    <option value="marikina">Marikina</option>
-                    <option value="muntinlupa">Muntinlupa</option>
-                    <option value="parañaque">Parañaque</option>
-                    <option value="pasig">Pasig</option>
-                    <option value="san_juan">San Juan</option>
-                    <option value="taguig">Taguig</option>
-                    <option value="valenzuela">Valenzuela</option>
-                    <option value="pateros">Pateros</option>
-                </select>
+    <form action="jobseekerhiring.php" method="post">
+    <div class="flex space-x-4 items-center">
+        <label>Your Job Type: <?php echo htmlspecialchars($user_job_type); ?></label>
+        <select class="py-2 px-4 rounded bg-white border border-gray-300" name="location">
+            <option value="">Select location</option>
+            <option value="Manila">Manila</option>
+            <option value="Caloocan">Caloocan</option>
+            <option value="Valenzuela">Valenzuela</option>
+            <option value="Pasay">Pasay</option>
+            <option value="Makati">Makati</option>
+            <option value="Quezon City">Quezon City</option>
+            <option value="Navotas">Navotas</option>
+            <option value="Las Piñas">Las Piñas</option>
+            <option value="Malabon">Malabon</option>
+            <option value="Mandaluyong">Mandaluyong</option>
+            <option value="Marikina">Marikina</option>
+            <option value="Muntinlupa">Muntinlupa</option>
+            <option value="Parañaque">Parañaque</option>
+            <option value="Pasig">Pasig</option>
+            <option value="San Juan">San Juan</option>
+            <option value="Taguig">Taguig</option>
+            <option value="Pateros">Pateros</option>
+        </select>
                 <button class="py-2 px-6 bg-blue-900 text-white rounded hover:bg-blue-800" type="submit">Find Now!</button>
             </div>
         </form>
         
     </div>
-    <?php 
-      $data = [];
-      if ($result != null)
+    <div class="mx-auto mt-8 p-4 border-t-4 border-indigo-200 shadow-lg rounded-lg bg-white">
+            <div class="flex items-top justify-between">
+            <?php 
+    $data = [];
+    if ($result != null) {
         $data = $result->fetch_all(MYSQLI_ASSOC);
-      else 
-        echo '';
-    ?>
+        
+        // Sort the data array by created_at in descending order
+        usort($data, function($a, $b) {
+            return strtotime($b['created_at']) - strtotime($a['created_at']);
+        });
+    }
 
-    <?php if($data):?>
-        <?php foreach($data as $row): ?>
-            <div class="bg-purple-100 p-8 rounded-lg mb-4 apply-now-container">
-                <div class="bg-#f1f1f1 p-4 mb-1">
-                    <div style="display: flex; justify-content: space-between; max-width: 100%; ">
-                        <div style="width: 10%; margin-left: 20px; box-sizing: border-box;">
-                            <img src="../employer/assets/images/<?php echo $row['profile'] ?? 'no-image.png'?>" alt="Circular Image" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;">
-                            <a href="employerhiringprofile.php?id=<?php echo $row['employer_id'];?>" style="text-decoration: underline; display: flex; justify-content: center; margin-top: 10px;">View Profile</a>
-                        </div>
-                        <div style="width: 15%; margin: 1px; box-sizing: border-box;">
-                            <p style="font-weight: bold;">
-                                LOOKING FOR:
-                            </p><p style="margin-top: 15px; font-weight: bold;">
-                                LOCATION:
-                        </div>
-                        <div style="width: 25%;  box-sizing: border-box;">
-                            <p>
-                                <?php echo $row['job'];?>
-                            </p><p style="margin-top: 10px;">
-                                <?php echo $row['location'];?>
-                        </div>
-                        <div style="width: 15%; margin: 1px; box-sizing: border-box;">
-                            <p style="font-weight: bold;">
-                                SALARY:
-                            </p><p style="margin-top: 15px; font-weight: bold;">
-                                DATE:
-                            </p>
-                        </div>
-                        <div style="width: 25%;  box-sizing: border-box;">
-                            <p>
-                                <?php echo $row['salary_offer'];?>
-                            </p><p style="margin-top: 10px;">
-                                <?php echo $row['date'];?>
-                            </p>
+    // Function to format salary
+    function formatSalary($salary) {
+        return number_format($salary, 2);
+    }
+?>
+
+<?php if ($data): ?>
+    <div class='slider-container2'>
+        <div class='slider1'>
+            <?php foreach ($data as $row): ?>
+                <?php $formatted_salary_offer = formatSalary($row["salary_offer"]); ?>
+                <a href='#' data-id='<?= $row['id'] ?>' class='job-box1' onclick='loadJobDetails(<?= $row['id'] ?>)'>
+                    <div class='job-box-content1'>
+                        <h3 class='job-title1'><?= htmlspecialchars($row["job"], ENT_QUOTES, 'UTF-8') ?></h3>
+                        <div class='row1'>
+                            <div class='column1'>
+                                <h4>Type</h4>
+                                <p class='icon1 fas fa-briefcase'> <?= htmlspecialchars($row["type"], ENT_QUOTES, 'UTF-8') ?></p>
+                            </div>
+                            <div class='column1'>
+                                <h4>Location</h4>
+                                <p class='icon1 fas fa-map-marker-alt'> <?= htmlspecialchars($row["location"], ENT_QUOTES, 'UTF-8') ?></p>
+                            </div>
+                            <div class='column1'>
+                                <h4>Salary Offer</h4>
+                                <p><span class='piso-sign1'>&#8369;</span> <?= htmlspecialchars($formatted_salary_offer, ENT_QUOTES, 'UTF-8') ?></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <a href="applydetails.php?id=<?php echo $row['id']?>" class="apply-now-button">Apply Now</a>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <div class="container mx-auto mt-8 p-4 border-t-4 border-indigo-200 shadow-lg rounded-lg bg-white">
-            <div class="flex items-center justify-between">
-            <p>NO RESULTS FOUND</p>
-            </div>
+                </a>
+            <?php endforeach; ?>
         </div>
-    <?php endif;?>
+        <div class='button-container2'>
+            <button class='prev1' onclick='slide(-1)'>Prev</button>
+            <button class='next1' onclick='slide(1)'>Next</button>
+        </div>
+    </div>
+    <script>
+        function loadJobDetails(id) {
+            const container = document.querySelector('.container2');
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'jobdetails.php?id=' + id, true);
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    container.innerHTML = this.responseText;
+                } else {
+                    container.innerHTML = '<p>Error loading job details.</p>';
+                }
+            };
+            xhr.send();
+        }
+    </script>
+    <div class="container2"></div>
+<?php else: ?>
+  <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hanapkita_db";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Kunin ang job_type ng user
+$user_job_type = '';
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $user_query = "SELECT job_type FROM users WHERE id = ?";
+    $stmt = $conn->prepare($user_query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $user_result = $stmt->get_result();
+    if ($user = $user_result->fetch_assoc()) {
+        $user_job_type = $user['job_type'];
+    }
+    $stmt->close();
+}
+
+// I-update ang query para i-filter base sa job_type ng user
+$sql = "SELECT id, job, type, responsibilities, location, salary_offer 
+        FROM job_listings 
+        WHERE job = ? 
+        ORDER BY created_at DESC";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $user_job_type);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    echo "<div class='slider-container'>";
+    echo "<div class='slider'>";
+    while ($row = $result->fetch_assoc()) {
+        $formatted_salary_offer = number_format($row["salary_offer"]);
+        $jobLink = "?id=" . $row['id'];
+        echo "<a href='#' data-id='" . $row['id'] . "' class='job-box' onclick='loadJobDetails(" . $row['id'] . ")'>";
+        echo "<div class='job-box-content'>";
+        echo "<h3 class='job-title'>" . htmlspecialchars($row["job"]) . "</h3>"
+            . "<div class='row'>"
+                . "<div class='column'>"
+                    . "<h4>Type</h4>"
+                    . "<p class='icon fas fa-briefcase'> " . htmlspecialchars($row["type"]) . "</p>"
+                . "</div>"
+                . "<div class='column'>"
+                    . "<h4>Location</h4>"
+                    . "<p class='icon fas fa-map-marker-alt'> " . htmlspecialchars($row["location"]) . "</p>"
+                . "</div>"
+                . "<div class='column'>"
+                    . "<h4>Salary Offer</h4>"
+                    . "<p><span class='piso-sign'>&#8369;</span> " . $formatted_salary_offer . "</p>"
+                . "</div>"
+            . "</div>"
+        . "</div>";
+        echo "</a>";
+    }
+    echo "</div>";
+    echo "<div class='button-container'>";
+    echo "<button class='prev' onclick='slide(-1)'>Prev</button>";
+    echo "<button class='next' onclick='slide(1)'>Next</button>";
+    echo "</div>";
+    echo "</div>";
+} else {
+    echo "<p>No job listings found matching your job type.</p>";
+}
+
+$stmt->close();
+$conn->close();
+?>
+
+<script>
+    function loadJobDetails(id) {
+        const container = document.querySelector('.container1');
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'jobdetails.php?id=' + id, true);
+        xhr.onload = function () {
+            if (this.status === 200) {
+                container.innerHTML = this.responseText;
+            } else {
+                container.innerHTML = '<p>Error loading job details.</p>';
+            }
+        };
+        xhr.send();
+    }
+</script>
+<div class="container1"></div>
+<?php endif; ?>
+
     
 
 </main>
@@ -178,9 +630,54 @@ $conn->close();
         const aside = document.querySelector('aside');
         aside.classList.toggle('folded');
     }
+    let currentSlide = 0;
+
+    function slide(direction) {
+    const slider = document.querySelector('.slider');
+    const jobBoxes = document.querySelectorAll('.job-box');
+    const totalBoxes = jobBoxes.length;
+    const visibleBoxes = 5;
+    const totalSlides = Math.ceil(totalBoxes / visibleBoxes);
+
+    currentSlide += direction;
+
+    if (currentSlide < 0) {
+        currentSlide = totalSlides - 1;
+    } else if (currentSlide >= totalSlides) {
+        currentSlide = 0;
+    }
+
+    // Update the display of the boxes
+    jobBoxes.forEach((box, index) => {
+        const startIndex = currentSlide * visibleBoxes;
+        const endIndex = startIndex + visibleBoxes;
+        if (index >= startIndex && index < endIndex) {
+            box.style.display = 'block';
+        } else {
+            box.style.display = 'none';
+        }
+    });
+
+    // Adjust slider position
+    const boxHeight = jobBoxes[0].offsetHeight;
+    const offset = -(currentSlide * boxHeight * visibleBoxes);
+    slider.style.transform = 'translateY(' + offset + 'px)';
+}
+
+// Initialize the display for the first set of boxes
+slide(0);
+
 </script>
 
   <!-- Scripts -->
   <script src="script.js"></script>
+
+
+
+
+
+  
+    
+
 </body>
 </html>

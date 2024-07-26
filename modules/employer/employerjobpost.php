@@ -1,63 +1,65 @@
-<?php 
-
+<?php
 require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
 $error = '';
 $result = null;
 $showModal = false;
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-  // print_r($_POST);
-  // die();
   $emp_id = $_POST['emp_id'];
-  // $jobseeker_id = $_POST['jobseeker_id'];
   $job = $_POST['job'];
   $date = $_POST['date'];
   $time = $_POST['time'];
   $job_type = $_POST['job_type'];
   $salary = $_POST['salary'];
-  $location = $_POST['location'];
+  $location = isset($_POST['location']) ? $_POST['location'] : ''; // Ensure location is set
   $job_desc = $_POST['job_responsibilities'];
   $job_quali = $_POST['job_qualifications'];
 
-  $sql = "INSERT INTO job_listings (job, date, time, type, salary_offer, location, responsibilities, qualifications, employer_id) VALUES (?,?,?,?,?,?,?,?,?)";
+  // Ensure all required fields are filled
+  if (empty($emp_id) || empty($job) || empty($date) || empty($time) || empty($job_type) || empty($salary) || empty($location) || empty($job_desc) || empty($job_quali)) {
+    $error = "All fields are required.";
+  } else {
+    $sql = "INSERT INTO job_listings (job, date, time, type, salary_offer, location, responsibilities, qualifications, employer_id) VALUES (?,?,?,?,?,?,?,?,?)";
 
-  if ($stmt = $conn->prepare($sql)){
-    $stmt->bind_param('ssssssssi', $job, $date, $time, $job_type, $salary, $location, $job_desc, $job_quali, $emp_id);
-    if ($stmt->execute()){
-      $showModal = true;
-    } else {
+    if ($stmt = $conn->prepare($sql)){
+      $stmt->bind_param('ssssssssi', $job, $date, $time, $job_type, $salary, $location, $job_desc, $job_quali, $emp_id);
+      if ($stmt->execute()){
+        $showModal = true;
+      } else {
         $errorMessage = "Error: " . $sql . "<br>" . mysqli_error($conn);
+      }
+      $stmt->close();
     }
-    $stmt->close();
   }
-  // $showModal = true;
-  // die();
 }
 
 $conn->close();
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Employer Dashboard</title>
-  <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
     body {
       font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
     .container {
-      max-width: 100%;
-      border-radius: 10px;
+      width: 95%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     .title {
@@ -65,32 +67,29 @@ $conn->close();
       color: #1E3B85;
       margin-bottom: 20px;
       font-weight: bold;
-      text-align: left;
+      text-align: center;
     }
 
     .post-box {
-      background-color: #d7dfee00;
-      width: 85%;
-      padding-left: 30px;
-      padding-top: 2%;
-      padding-right: 10%;
-      padding-bottom: 10%;
+      background-color: #f9f9f9;
+      padding: 20px;
       border-radius: 10px;
-      margin-bottom: 20px;
-      display: inline-block;
+      margin-bottom: 10px;
+      display: block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     .post-box h2 {
-      font-size: 30px;
-      color: #333333;
+      font-size: 28px;
+      color: #333;
       font-weight: bold;
+      margin-bottom: 15px;
     }
 
     .post-box label {
-      font-size: 20px;
-      color: #333333;
+      font-size: 16px;
+      color: #333;
       font-weight: bold;
-      text-align: left;
       display: block;
       margin-bottom: 5px;
     }
@@ -106,77 +105,53 @@ $conn->close();
       display: block;
       width: 100%;
       border: 1px solid #ccc;
-      border-radius: 20px;
-      box-sizing: border-box;
-      margin-bottom: 10px;
+      border-radius: 5px;
+      margin-bottom: 15px;
       padding: 10px;
+      box-sizing: border-box;
     }
 
     .post-box textarea {
-      height: 100px;
+      height: 120px;
+      resize: vertical;
     }
 
     .form-group {
-      margin-bottom: 20px;
-    }
-
-    .textarea-container {
       display: flex;
-      align-items: flex-start;
-      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
-    textarea {
+    .form-group > div {
       flex: 1;
-      height: 100px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 10px;
-      font-size: 14px;
-      margin-right: 10px;
+      min-width: 200px;
     }
 
-    .delete-button {
-      background-color: transparent;
-      color: #ff4d4d;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 20px;
-      align-self: center;
-      display: none; /* Hide delete button by default */
-    }
-
-    .delete-button:hover {
-      color: #ff1a1a;
-    }
-
-    .add-other {
-      color: #007bff;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .add-other:hover {
-      text-decoration: underline;
+    .button-container {
+      display: flex;
+      justify-content: right;
+      align-items: center;
     }
 
     .post-button {
-      background-color: #d7dfee;
-      color: black;
+      width: 20%;
+      background-color: #1E3B85;
+      color: #fff;
       font-weight: bold;
       font-size: 18px;
       border: none;
       border-radius: 25px;
-      padding: 10px 60px;
+      padding: 10px 20px;
       cursor: pointer;
-      float: right; /* Align to the right */
-      margin-top: 20px;
     }
 
-    /* Modal Styles */
+    .post-button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
     .modal {
-      display: none; /* Hidden by default */
+      display: none;
       position: fixed;
       z-index: 1;
       left: 0;
@@ -184,12 +159,11 @@ $conn->close();
       width: 100%;
       height: 100%;
       overflow: auto;
-      background-color: rgb(0,0,0);
       background-color: rgba(0,0,0,0.4);
     }
 
     .modal-content {
-      background-color: #fefefe;
+      background-color: #fff;
       margin: 15% auto;
       padding: 20px;
       border: 1px solid #888;
@@ -200,7 +174,7 @@ $conn->close();
     }
 
     .modal-content p {
-      font-size: 20px;
+      font-size: 18px;
     }
 
     .close {
@@ -212,189 +186,221 @@ $conn->close();
 
     .close:hover,
     .close:focus {
-      color: black;
+      color: #000;
       text-decoration: none;
       cursor: pointer;
     }
 
     .modal-button {
       background-color: #1E3B85;
-      color: white;
+      color: #fff;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 16px;
       border: none;
-      border-radius: 10px;
+      border-radius: 5px;
       padding: 10px 20px;
       cursor: pointer;
-      margin-top: 20px;
+      margin-top: 15px;
     }
 
     .modal-button:hover {
-      background-color: #3c5fa4;
+      background-color: #163a6b;
     }
 
+    .back-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .back-button a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .back-button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
+<div class="back-button">
+  <a href="/SIA-Final-/modules/employer/employer_jobpost_history.php">Back to Job List</a>
+</div>
 <div class="container">
-  <form action="employerjobpost.php" method="post">
+  <form id="jobForm" action="employerjobpost.php" method="post">
     <div class="title">POST A JOB</div>
     <div class="post-box">
-      <label>Hiring for:</label>
-      <input type="hidden" name="emp_id" value="<?php echo $_SESSION['user_id'];?>">
-      <select id="selectJob" onchange="stateSelected();" class="selector" name="job">
-        <option value="" selected="selected">Choose job</option>
-        <option value="Welder">Welder</option>
-        <option value="Plumber">Plumber</option>
-        <option value="Lineman">Lineman</option>
-        <option value="Guard">Security Guard</option>
-        <option value="Electrician">Electrician</option>
-        <option value="Driver">Driver</option>
-        <option value="Refservice">Refrigarator and Aircon Service</option>
-        <option value="Foodservice">Food Service</option>
-        <option value="Laundry">Laundry Staff</option>
-        <option value="Factory">Factory Worker</option>
-        <option value="Hosekeeper">Housekeeper</option>
-        <option value="Janitor">Janitor</option>
-        <option value="Construction">Construction Worker</option>
-
-      </select><br>
-
-      <label>Date:</label>
-      <input type="date" id="date" name="date"><br>
-
-      <label>Time:</label>
-      <input type="time" id="time" name="time"><br>
-
-      <label>Job Type:</label>
-      <select id="selectJobType" onchange="stateSelected();" class="selector" name="job_type">
-        <option value="" selected="selected">Choose Job Type</option>
-        <option value="fulltime">Full Time</option>
-        <option value="parttime">Part Time</option>
-        <option value="onetime">One Time</option>
-      </select><br>
-
-      <label>Salary Offer:</label>
-      <input type="text" id="salary" name="salary"><br>
-
-      <label>Location:</label>
-      <select id="selectLocation" onchange="stateSelected();" class="selector" name="location">
-        <option value="" selected="selected">Choose location</option>
-        <!-- <option value="">Location</option> -->
-        <option value="manila">Manila</option>
-        <option value="caloocan">Caloocan</option>
-        <option value="valenzuela">Valenzuela</option>
-        <option value="pasay">Pasay</option>
-        <option value="makati">Makati</option>
-        <option value="quezon_city">Quezon City</option>
-        <option value="navotas">Navotas</option>
-        <option value="las_piñas">Las Piñas</option>
-        <option value="malabon">Malabon</option>
-        <option value="mandaluyong">Mandaluyong</option>
-        <option value="marikina">Marikina</option>
-        <option value="muntinlupa">Muntinlupa</option>
-        <option value="parañaque">Parañaque</option>
-        <option value="pasig">Pasig</option>
-        <option value="san_juan">San Juan</option>
-        <option value="taguig">Taguig</option>
-        <option value="valenzuela">Valenzuela</option>
-        <option value="pateros">Pateros</option>
-      </select><br>
-
       <div class="form-group">
-        <label for="job-description">Responsibilities:</label>
-        <div class="textarea-container">
-          <textarea id="job-description" name="job_responsibilities"></textarea>
-          <button class="delete-button" onclick="deleteTextarea(this)"><i class="bx bx-x"></i></button>
+        <div>
+          <label for="job">Hiring for:</label>
+          <input type="hidden" name="emp_id" value="<?php echo htmlspecialchars($_SESSION['user_id']);?>">
+          <select id="job" name="job" required>
+            <option value="" selected="selected">Choose job</option>
+            <option value="Welder">Welder</option>
+            <option value="Plumber">Plumber</option>
+            <option value="Lineman">Lineman</option>
+            <option value="Guard">Security Guard</option>
+            <option value="Electrician">Electrician</option>
+            <option value="Driver">Driver</option>
+            <option value="Refservice">Refrigerator and Aircon Service</option>
+            <option value="Foodservice">Food Service</option>
+            <option value="Laundry">Laundry Staff</option>
+            <option value="Factory">Factory Worker</option>
+            <option value="Housekeeper">Housekeeper</option>
+            <option value="Janitor">Janitor</option>
+            <option value="Carpenter">Carpenter</option>
+            <option value="Construction">Construction Worker</option>
+          </select>
         </div>
-        <a href="#" class="add-other" onclick="addOther('job-description')">Add "Other"</a>
-      </div>
+        <div>
+          <label for="job_type">Job Type:</label>
+          <select id="job_type" name="job_type" required>
+            <option value="" selected="selected">Choose Job Type</option>
+            <option value="fulltime">Full Time</option>
+            <option value="parttime">Part Time</option>
+            <option value="onetime">One Time</option>
+          </select>
+        </div>
+        <div>
+        <?php
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    die("User not logged in");
+}
 
+$user_id = $_SESSION['user_id'];
+
+// Database connection
+$conn = new mysqli('localhost', 'root', '', 'hanapkita_db');
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch user city
+$stmt = $conn->prepare("SELECT city FROM users WHERE id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$stmt->bind_result($user_city);
+
+$user_city = '';
+if ($stmt->fetch()) {
+    $user_city = htmlspecialchars($user_city);
+}
+$stmt->close();
+
+// Fetch all cities for the dropdown
+$cities = [];
+$stmt = $conn->prepare("SELECT DISTINCT city FROM users ORDER BY city");
+$stmt->execute();
+$stmt->bind_result($city);
+
+while ($stmt->fetch()) {
+    $cities[] = htmlspecialchars($city);
+}
+$stmt->close();
+$conn->close();
+?>
+
+<label for="location">Location:</label>
+<select id="location" name="location" required disabled>
+    <option value="" <?php echo $user_city == '' ? 'selected="selected"' : ''; ?>>Select your city</option>
+    <?php foreach ($cities as $city): ?>
+        <option value="<?php echo $city; ?>" <?php echo $city == $user_city ? 'selected="selected"' : ''; ?>>
+            <?php echo $city; ?>
+        </option>
+    <?php endforeach; ?>
+</select>
+
+        </div>
+      </div>
       <div class="form-group">
-        <label for="job-qualifications">Qualifications:</label>
-        <div class="textarea-container">
-          <textarea id="job-qualifications" name="job_qualifications"></textarea>
-          <button class="delete-button" onclick="deleteTextarea(this)"><i class="bx bx-x"></i></button>
+        <div>
+          <label for="salary">Salary Offer:</label>
+          <input type="number" id="salary" name="salary" min="0" required>
         </div>
-        <a href="#" class="add-other" onclick="addOther('job-qualifications')">Add "Other"</a>
+        <div>
+          <label for="date">Date:</label>
+          <input type="date" id="date" name="date" required>
+        </div>
+        <div>
+          <label for="time">Time:</label>
+          <input type="time" id="time" name="time" required>
+        </div>
       </div>
-
-      <button class="post-button" type="submit">POST</button>
+      <div>
+        <label for="job_responsibilities">Job Responsibilities:</label>
+        <textarea id="job_responsibilities" name="job_responsibilities" required></textarea>
+      </div>
+      
+      <div>
+        <label for="job_qualifications">Job Qualifications:</label>
+        <textarea id="job_qualifications" name="job_qualifications" required></textarea>
+      </div>
+      
+      <div class="button-container">
+        <button type="submit" class="post-button">Post Job</button>
+      </div>
     </div>
-
   </form>
-  
 </div>
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
+<!-- Modal -->
+<div id="successModal" class="modal">
   <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <p>The job post you posted has been successfully posted!</p>
-    <button class="modal-button" onclick="closeModal()">Continue</button>
+    <span class="close">&times;</span>
+    <p>Job posted successfully!</p>
+    <button class="modal-button" onclick="window.location.href='employer_jobpost_history.php'">View Job List</button>
   </div>
 </div>
 
+
 <script>
-  const modal = document.getElementById("myModal");
-   <?php if ($showModal) : ?>
-        document.addEventListener('DOMContentLoaded', function() {
-            modal.style.display = 'block';
-        });
-  <?php endif; ?>
+document.getElementById('job_responsibilities').addEventListener('input', function() {
+  let lines = this.value.split('\n');
+  let formattedLines = lines.map(line => line.startsWith('• ') ? line : '• ' + line);
+  this.value = formattedLines.join('\n');
+});
+document.getElementById('job_qualifications').addEventListener('input', function() {
+  let lines = this.value.split('\n');
+  let formattedLines = lines.map(line => line.startsWith('• ') ? line : '• ' + line);
+  this.value = formattedLines.join('\n');
+});
 
-  function addOther(name) {
-    const formContainer = document.querySelector(`textarea[name="${name}"]`).parentNode.parentNode;
 
-    // Create a new container for the textarea and delete button
-    const newContainer = document.createElement('div');
-    newContainer.className = 'textarea-container';
-
-    // Create a new textarea element
-    const newTextarea = document.createElement('textarea');
-    newTextarea.name = name;
-
-    // Create a delete button
-    const deleteButton = document.createElement('button');
-    deleteButton.className = 'delete-button';
-    deleteButton.innerHTML = '<i class="bx bx-x"></i>';
-    deleteButton.onclick = function() {
-        formContainer.removeChild(newContainer);
-    };
-
-    // Append the textarea and delete button to the new container
-    newContainer.appendChild(newTextarea);
-    newContainer.appendChild(deleteButton);
-
-    // Insert the new container into the form container before the "add Other" link
-    formContainer.insertBefore(newContainer, formContainer.querySelector('.add-other'));
-
-    // Show the delete button
-    deleteButton.style.display = 'inline-block';
+document.getElementById('jobForm').addEventListener('submit', function(event) {
+  const form = event.target;
+  // Check if all required fields are filled
+  if (form.checkValidity() === false) {
+    event.preventDefault();
+    event.stopPropagation();
   }
+});
 
-  function deleteTextarea(button) {
-    const container = button.parentNode;
-    container.parentNode.removeChild(container);
-  }
+window.onload = function() {
+  // Show modal if there is a success flag
+  <?php if ($showModal): ?>
+    const modal = document.getElementById('successModal');
+    const closeModal = document.querySelector('.close');
+    modal.style.display = 'block';
 
-  // function showModal() {
-  //   const modal = document.getElementById("myModal");
-  //   modal.style.display = "block";
-  // }
-
-  function closeModal() {
-    const modal = document.getElementById("myModal");
-    modal.style.display = "none";
-  }
-
-  // Close the modal when clicking outside of the modal content
-  window.onclick = function(event) {
-    const modal = document.getElementById("myModal");
-    if (event.target == modal) {
-      modal.style.display = "none";
+    closeModal.onclick = function() {
+      modal.style.display = 'none';
     }
-  }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    }
+  <?php endif; ?>
+};
 </script>
 </body>
 </html>

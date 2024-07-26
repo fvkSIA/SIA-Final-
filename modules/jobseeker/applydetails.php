@@ -39,6 +39,9 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
   }
 
 }
+function formatSalary($salary) {
+  return number_format($salary, 2);
+}
 $conn->close();
 ?>
 

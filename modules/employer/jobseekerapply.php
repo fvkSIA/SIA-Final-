@@ -3,139 +3,258 @@ require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
 $error = '';
 $result = null;
-$showModal = false;
 
-if($_SERVER["REQUEST_METHOD"] == "GET") {
-  $id = $_GET['id'];
-  $jr_id = $_GET['jrid'];
-  
-  $sql = "SELECT  * FROM users where id = ?";
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $id = $_GET['id'];
+    $jr_id = $_GET['jrid'];
 
-  // echo $id . ' query: ' . $sql; die();
-  if ($stmt = $conn->prepare($sql)) {
-    $stmt->bind_param("s", $id);
-    $stmt->execute();
-    $result = $stmt->get_result() ?? null;
-    $stmt->close();
-  }
-
-} 
-
+    $sql = "SELECT * FROM users WHERE id = ?";
+    
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result() ?? null;
+        $stmt->close();
+    }
+}
+$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Jobseeker Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobseeker Profile</title>
   <!-- Link Styles -->
-  <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Your custom button styles */
-    #myButton {
-      position: relative;
-      border-radius: 50px;
-      cursor: pointer;
-      width: 100px;
-      background-color: white;
-      color: #000000;
-      font-weight: 500;
-      padding: 0.5rem 1rem;
-      border: 1px solid #000000;
-      align-items: center;
-      margin-left: auto;
-      margin-right: auto;
-      font-size: 16px;
-      transition: transform 0.3s;
-    }
-
-    #myButton:hover {
-      background-color: rgb(235, 235, 235);
-    }
-
-    @media screen and (max-width: 768px) {
-      #myButton {
-        transform: scale(0.9);
-      }
-    }
-
-    @media screen and (max-width: 640px) {
-      #myButton {
-        transform: scale(0.8);
-      }
-    }
-
-    .rounded-lg {
-      max-width: 100%;
-      overflow: hidden;
-      word-wrap: break-word;
-    }
-
     body {
-      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      font-family: Arial, sans-serif;
     }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .profile-card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    .profile-card img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 4px solid #007bff;
+    }
+
+    .profile-card h1 {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .profile-card .info {
+      margin-bottom: 5px;
+    }
+
+    .profile-card .info div {
+      margin-bottom: 12px;
+    }
+
+    .profile-card .info span.label {
+      font-weight: bold;
+      color: #333;
+      display: inline-block;
+      width: 150px;
+    }
+
+    .profile-card .info span.value {
+      color: #555;
+    }
+
+    .btn-hire {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      text-align: right;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-hire:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+
+    .close-button {
+      background-color: #ff4d4d;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .close-button:hover {
+      background-color: #cc0000;
+      transform: scale(1.05);
+    }
+    .profile-container {
+    display: flex;
+    align-items: flex-start; /* Align items to the start vertically */
+    gap: 20px; /* Adjust space between image and text as needed */
+}
+
+.profile-image {
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%; 
+}
+
+.profile-info {
+    flex: 1; 
+    padding-top: 8%;
+}
+
+.info {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    flex-wrap: wrap; /* Allow wrapping to next line if needed */
+    gap: 10px; /* Optional: Adjust spacing between items */
+}
+
+.info > div {
+    flex: 1;
+    min-width: 200px; /* Optional: Adjust minimum width if needed */
+    text-align: center; /* Center text within each item */
+}
+
+.hr-container {
+    text-align: center; /* Center the horizontal rule */
+    margin-bottom: 10px; /* Optional: Adjust spacing below the horizontal rule */
+}
+
+hr {
+    border: 0;
+    border-top: 2px solid #ccc; /* Adjust color and thickness as needed */
+    margin: 0 auto; /* Center the horizontal rule */
+    width: 100%; /* Adjust width as needed */
+}
+
+.label {
+    font-weight: bold;
+}
+
+.value {
+    margin-left: 5px; /* Space between label and value */
+}
+.file{
+  align-items: center;
+}
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* Optional: to add space between buttons */
+}
+.resume-section, .valid-id-section, .work-experience-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .resume-section label, .valid-id-section label, .work-experience-section label {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        iframe {
+            border-radius: 8px;
+        }
   </style>
 </head>
-<body class="bg-gray-100">
-<?php 
-    $data = [];
-    if ($result != null) {
-      $user = $result->fetch_assoc();
-    } else {
-      echo '';
-    }
-
-  ?>
-  <div class="flex justify-center mt-10">
-    <div class="rounded-lg shadow-lg p-6 bg-white w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/5">
-      <div class="flex items-center mb-4">
-        <img src="../jobseeker/assets/images/<?php echo $user['profile'] ?? 'no-image.png';?>" class="w-20 h-20 rounded-full mr-4" alt="Profile picture of driver">
-        <div>
-          <h1 class="text-xl font-bold mb-2"><?php echo $user['firstname'] . ' ' . $user['lastname'];?></h1>
-          <div class="flex items-center text-sm text-gray-600 mb-2">
-            <span class="mr-2 font-bold">SKILLS:</span>
-            <a href="#" class="text-yellow-500 font-semibold underline"><?php echo $user['job_type'];?></a>
-          </div>
-          <!-- <div class="flex items-center mb-2">
-            <span class="text-sm text-gray-600 mr-2 font-bold">RATING:</span>
-            <div class="flex">
-              <i class="fas fa-star text-yellow-500"></i>
-              <i class="fas fa-star text-yellow-500"></i>
-              <i class="fas fa-star text-yellow-500"></i>
-              <i class="fas fa-star text-yellow-500"></i>
-              <i class="fas fa-star text-yellow-500"></i>
-            </div>
-          </div> -->
-        </div>
-      </div>
-      <div class="space-y-2 text-sm text-gray-600">
-        <div class="flex">
-          <span class="font-semibold">PHONE NUMBER:</span>
-          <span class="ml-2"><?php echo $user['phone_number'];?></span>
-        </div>
-        <div class="flex">
-          <span class="font-semibold">EMAIL ADDRESS:</span>
-          <span class="ml-2"><?php echo $user['email'];?></span>
-        </div>
-        <div class="flex">
-          <span class="font-semibold">GENDER:</span>
-          <span class="ml-2"><?php echo $user['gender'];?></span>
-        </div>
-        <div class="flex">
-          <span class="font-semibold">Location:</span>
-          <span class="ml-2"><?php echo $user['city'];?></span>
-        </div>
-      </div>
-      <div class="mt-4 p-4 border-t border-gray-300 flex justify-between items-center">
-       
-        <div class="flex items-center">
-          <!-- <span class="font-semibold text-gray-600 mr-2">RESUME:</span>
-          <a href="#" class="text-sm text-blue-500 underline"><i class="far fa-file-alt mr-1"></i> JAVALLA, JOHN CARLO</a> -->
-        </div>
-        <a id="myButton" href="jobseekerapplication.php?id=<?php echo $jr_id?>">HIRE</a>
-      </div>
+<body>
+  <div class="container">
+    <?php 
+      $user = $result ? $result->fetch_assoc() : null;
+      if ($user): 
+    ?>
+      <div class="profile-card">
+      <div class="profile-container">
+    <img src="../jobseeker/assets/images/<?php echo htmlspecialchars($user['profile'] ?? 'no-image.png'); ?>" alt="Profile Image" class="profile-image">
+    <div class="profile-info">
+        <h1><?php echo htmlspecialchars($user['lastname']) . ', ' . htmlspecialchars($user['firstname']); ?></h1>
     </div>
+</div>
+
+      <div class="info">
+            <div><span class="label"><span class="value"><?php echo htmlspecialchars($user['phone_number']); ?></span></div>
+            <div><span class="label"><span class="value"><?php echo htmlspecialchars($user['email']); ?></span></div>
+            <div><span class="label"><span class="value"><?php echo htmlspecialchars($user['gender']); ?></span></div>
+            <div><span class="label"><span class="value"><?php echo htmlspecialchars($user['city']); ?></span></div>
+            <div>HISTORY ITO</span></div>
+        </div>
+        <div class="hr-container">
+    <hr>
+</div>
+
+<div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12 resume-section">
+                <label class="labels">Resume</label>
+                <iframe src="<?php echo htmlspecialchars($user['resume']); ?>" width="100%" height="600px" style="border: none;"></iframe>
+            </div>
+
+            <div class="col-md-12 valid-id-section">
+                <label class="labels">Valid ID</label>
+                <iframe src="<?php echo htmlspecialchars($user['valid_ids']); ?>" width="100%" height="600px" style="border: none;"></iframe>
+            </div>
+
+            <div class="col-md-12 work-experience-section">
+                <label class="labels">Certificate</label>
+                <iframe src="<?php echo htmlspecialchars($user['recent_job_experience']); ?>" width="100%" height="600px" style="border: none;"></iframe>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<div class="action-buttons">
+    <a href="jobseekerapplication.php?id=<?php echo $jr_id?>" class="btn-hire" onclick="return confirm('Are you sure you want to hire this seeker?');">Hire</a>
+    <button class="close-button" onclick="window.location.href='findworkers.php'">Close</button>
+</div>
+
+        
+      </div>
+
+    <?php else: ?>
+      <p>No user data found.</p>
+    <?php endif; ?>
+    
   </div>
+  
 </body>
 </html>

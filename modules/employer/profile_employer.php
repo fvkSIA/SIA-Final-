@@ -14,7 +14,63 @@ if ($stmt = $conn->prepare($sql)) {
 
     $stmt->close();
 }
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hanapkita_db";
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo "User not logged in.";
+    exit;
+}
+
+// User ID from session
+$user_id = $_SESSION['user_id'];
+
+// Function to sanitize user inputs
+function sanitize_input($conn, $input) {
+    return htmlspecialchars(strip_tags(mysqli_real_escape_string($conn, $input)));
+}
+
+// Query to get distinct job types associated with the user
+$sql_jobs = "SELECT DISTINCT job FROM job_listings WHERE employer_id = ?";
+$stmt_jobs = $conn->prepare($sql_jobs);
+$stmt_jobs->bind_param("i", $user_id);
+$stmt_jobs->execute();
+$result_jobs = $stmt_jobs->get_result();
+
+// Prepare an array of job types
+$jobs = [];
+while ($row = $result_jobs->fetch_assoc()) {
+    $jobs[] = $row['job'];
+}
+
+// Handle form submission
+$selected_job = isset($_POST['job']) ? sanitize_input($conn, $_POST['job']) : '';
+if (isset($_POST['filter'])) {
+    // Query to get job posts associated with the selected job
+    $sql_posts = "SELECT id, job, type, salary_offer, location FROM job_listings WHERE employer_id = ? AND job = ?";
+    $stmt_posts = $conn->prepare($sql_posts);
+    $stmt_posts->bind_param("is", $user_id, $selected_job);
+    $stmt_posts->execute();
+    $result_posts = $stmt_posts->get_result();
+} else {
+    // Default query to get all job posts
+    $sql_posts = "SELECT id, job, type, salary_offer, location FROM job_listings WHERE employer_id = ?";
+    $stmt_posts = $conn->prepare($sql_posts);
+    $stmt_posts->bind_param("i", $user_id);
+    $stmt_posts->execute();
+    $result_posts = $stmt_posts->get_result();
+}
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +119,35 @@ if ($stmt = $conn->prepare($sql)) {
             text-decoration: none;
             cursor: pointer;
         }
-        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .filter-button {
+            background-color: #0099d9; 
+            border: none;
+            color: white;
+            padding: 5px 32px;
+            text-align: center;
+            text-decoration: none; 
+            display: inline-block;
+            font-size: 16px; 
+            margin: 4px 2px; 
+            cursor: pointer;
+            border-radius: 8px; 
+        }
+
+        .filter-button:hover {
+            background-color: #195772; 
+        }
+
     </style>
 </head>
 <body>
@@ -87,7 +171,22 @@ if ($stmt = $conn->prepare($sql)) {
                         <i class="fas fa-phone mr-3"></i>&nbsp;<?php echo $data['phone_number'];?>
                     </p>
                     <p class="text-2xl text-gray-600 flex items-center">
-                        <i class="fas fa-map-marker-alt mr-4"></i>&nbsp;<?php echo $data['home_address'];?>
+                        <i class="fas fa-map-marker-alt mr-4"></i>&nbsp;<?php echo $data['home_address'].',';?>
+                        <?php 
+                        $sql_city = "SELECT city FROM users WHERE id = ?";
+                        $stmt_city = $conn->prepare($sql_city);
+                        $stmt_city->bind_param("i", $user_id);
+                        $stmt_city->execute();
+                        $result_city = $stmt_city->get_result();
+                        
+                        if ($result_city->num_rows > 0) {
+                            while($row = $result_city->fetch_assoc()) {
+                                echo htmlspecialchars($row["city"]) . "<br>";
+                            }
+                        } else {
+                            echo "0 results";
+                        }
+                        ?>
                     </p>
                 </div>
             </div>
@@ -100,8 +199,7 @@ if ($stmt = $conn->prepare($sql)) {
                 <p class="text-gray-500 mb-4"><?php echo $data['bio'];?></p>
                 <!-- <button class="text-blue-500 border border-blue-500 rounded-lg px-4 py-2 mt-1" id="addsummaryBtn">Add Summary</button> -->
             </div>
-            
-            
+        </div>
     
                     
                     
@@ -137,13 +235,7 @@ if ($stmt = $conn->prepare($sql)) {
     </div>
   
     
-    <div id="summaryModal" class="modal">
-      <div class="modal-content">
-          <span class="close">&times;</span>
-          <h1 style="font-weight: bold;">Add Summary</h1>
-          <iframe src="em_modalsummary.html" width="100%" height="400"></iframe>
-      </div>
-    </div>
+   
 
     
     
@@ -153,10 +245,7 @@ if ($stmt = $conn->prepare($sql)) {
     
 
     <script>
-        const modals = {
-            editBtn: 'editModal',
-            addsummaryBtn: 'summaryModal',
-        };
+    
 
         Object.keys(modals).forEach(id => {
             document.getElementById(id).onclick = function() {

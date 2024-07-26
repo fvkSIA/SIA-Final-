@@ -302,7 +302,7 @@ session_start();
 
   <section class="home-section">
     
-    <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto; max-width: 1000px; padding-bottom: 20px;">
+    <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto; max-width: 100%; padding-bottom: 20px;">
         <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
             <h1 style="font-family: Georgia, serif; font-size: 2.5em; font-weight: bold; color: #333; padding-top: 30px;">
                 Search, Find, and Apply!
@@ -375,6 +375,16 @@ session_start();
 
           </div>
     </div>
+    <br>
+    <div class="container">
+        <?php include '../metromanila.php' ?>
+    </div>
+
+
+
+
+
+
     <!-- <div class="top-job-seekers">
         <h2>Top Job Seekers</h2>
         <div class="job-seeker">

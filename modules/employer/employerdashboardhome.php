@@ -251,49 +251,6 @@ session_start();
         .navigation .active {
             background-color: #3D52A0;
         }
-
-.footer {
-    width: 100%;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    margin-top: 70px;
-    border-radius: 5px;
-}
-.footer-section {
-    display: flex;
-    justify-content: space-around;
-    width: 100%; /* Changed from max-width to width */
-    margin: 0 auto;
-}
-.footer-column {
-    list-style: none;
-    padding: 0;
-}
-.footer-column li {
-    margin-bottom: 10px;
-}
-.footer-column li a {
-    text-decoration: none;
-    color: #000;
-}
-.footer-column h4 {
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.footer-bottom {
-    text-align: center;
-    padding-top: 10px;
-    border-top: 1px solid #ccc;
-    font-size: 0.9em;
-    color: #6c757d;
-}
-.footer-bottom a {
-    text-decoration: none;
-    color: inherit;
-}
-.footer-bottom a:hover {
-    text-decoration: underline;
-}
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -327,14 +284,8 @@ body {
   </style>
 </head>
 <body>
-  <!-- <div class="topnav">
-    <a href="../logout.php">Log out</a>
-    <a href="#">Welcome! <?php echo $_SESSION['name'];?></a>
-    
-  </div> -->
   <section class="home-section">
-    
-    <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto; max-width: 1000px; padding-bottom: 20px;">
+    <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto;  padding-bottom: 20px;">
         <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
             <h1 style="font-family: Georgia, serif; font-size: 2.5em; font-weight: bold; color: #333; padding-top: 30px;">
                 Search, Find, and Apply!
@@ -371,14 +322,6 @@ body {
         </div>
     </div>
     <br>
-    
-    
-    
-    
-    
-    
-
-    
     <div class="container">
         <div class="image-section">
             <img src="pic1.jpg">
@@ -390,74 +333,11 @@ body {
 
           </div>
     </div>
-    <!-- <div class="top-job-seekers">
-        <h2>Top Job Seekers</h2>
-        <div class="job-seeker">
-        <img src="../employer/assets/images/no-image.png" alt="Job Seeker">
-            <div class="job-seeker-info">
-                <h3>GALE KAREN PARTOS</h3>
-            </div>
-            <div class="rank">
-                RANK 1
-                <span>SEE MORE DETAILS</span>
-            </div>
-        </div>
-        <div class="job-seeker">
-            <img src="../employer/assets/images/no-image.png" alt="Job Seeker">
-            <div class="job-seeker-info">
-                <h3>JOSEPH CARLO BERSOTO</h3>
-            </div>
-            <div class="rank">
-                RANK 2
-                <span>SEE MORE DETAILS</span>
-            </div>
-        </div>
-    </div> -->
-        <!-- <div class="navigation">
-            <span class="active"></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </div> -->
 
-        
           <!-- <iframe src="/slide/index.html" frameborder="0" style="width: 100%; height: 540px;"></iframe> -->
-      
+</section>
+<?php include '../employer/em_footer.html'; ?>
 
-                    <footer class="footer">
-                        <div class="footer-section">
-                            <ul class="footer-column">
-                                <h4>Job Seekers</h4>
-                                <li><a href="#top">Job Search</a></li>
-                                <li><a href="#">Profile</a></li>
-                                <li><a href="#">Recommended Jobs</a></li>
-                                <li><a href="#">Saved Searches</a></li>
-                                <li><a href="#">Saved Jobs</a></li>
-                                <li><a href="#">Job Applications</a></li>
-                            </ul>
-                            <ul class="footer-column">
-                                <h4>Employers</h4>
-                                <li><a href="#">Registration for Free</a></li>
-                                <li><a href="#">Post a Job ad</a></li>
-                            </ul>
-                            <ul class="footer-column">
-                                <h4>About Jobstreet</h4>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Work for Jobstreet</a></li>
-                            </ul>
-                            <ul class="footer-column">
-                                <h4>Contact</h4>
-                                <li><a href="#">Contact Us</a></li>
-                            </ul>
-                        </div>
-                        <div class="footer-bottom">
-                            <a href="#">Terms & conditions</a> | <a href="#">Security & Privacy</a>
-                        </div>
-                    </footer>
-
-  </section>
-  <!-- Scripts -->
   <script src="script.js"></script>
 </body>
 </html>

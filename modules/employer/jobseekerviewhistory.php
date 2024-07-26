@@ -156,25 +156,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     text-decoration: none;
     cursor: pointer;
     }
-    .icon-link {
-    display: inline-block;
-    text-decoration: none;
-    color: #000; /* Color of the icon */
-    font-size: 24px; /* Size of the icon */
-    padding: 10px;
-    border-radius: 50%;
-    background-color: #f0f0f0; /* Background color */
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.icon-link:hover {
-    background-color: #ddd; /* Background color on hover */
-    color: #333; /* Icon color on hover */
-}
-
-.icon-link i {
-    margin: 0; /* Remove default margin */
-}
 
   </style>
 </head>
@@ -184,9 +165,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
 
   <div class="custom-div">
   <div class="top-left-container">
-    <a id="myButton" href="employerskilledworker.php" class="icon-link">
-      <i class="fas fa-arrow-left"></i>
-    </a>
+    <a id="myButton" href='jobseekerviewprofile.php?id=<?php echo $user['id'];?>'>Back</a>
   </div>
     <div class="flex flex-col items-center mb-4">
       <img src="../jobseeker/assets/images/<?php echo $user['profile'] ?? 'no-image.png';?>" class="w-32 h-32 rounded-full mb-2" alt="Profile picture of driver">
@@ -194,6 +173,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     </div>
     <div class="space-y-2 text-sm text-gray-600 ml-5">
       <div class="flex flex-col md:flex-row justify-center">
+        <div class="flex-item pr-8">
+          <span class="font-semibold">Work Type:</span>
+          <span class="ml-2 text-blue-500 font-semibold underline"><?php echo $user['job_type'];?></span>
+        </div>
         <div class="flex-item pr-8">
           <span class="font-semibold">Age:</span>
           <span class="ml-2">
@@ -213,12 +196,16 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
           <span class="font-semibold">Location:</span>
           <span class="ml-2"><?php echo $user['city'];?></span>
         </div>
+        <div class="flex-item">
+          <span class="font-semibold">View:</span>
+          <a class="ml-2 underline" href='jobseekerviewhistory.php?id=<?php echo $user['id'];?>'>History</a>
+        </div>
       </div>
-    </div><hr class="mt-2">
+    </div>
     <!-- Display Unique Proof Image(s) -->
     <?php if (!empty($unique_images)): ?>
-  <div class="mt-2">
-    <h2 class="text-lg font-semibold mb-2">My Proof of Work as an <?php echo $user['job_type'];?>.</h2>
+  <div class="mt-4">
+    <h2 class="text-lg font-semibold mb-2">Proof Images</h2>
     <div class="flex flex-wrap gap-2">
       <?php foreach ($unique_images as $image): ?>
         <div class="relative w-24 h-24 bg-gray-200 rounded-lg overflow-hidden">
@@ -230,10 +217,12 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
 <?php endif; ?>
 
 
-      <div class="button-container mt-10">
+    <div class="mt-4 p-4 border-t border-gray-300 flex justify-center">
+      <div class="button-container">
         <a id="myButton" href='hireform.php?id=<?php echo $user['id'];?>'>Give Offer</a>
         <!-- Removed the Back button from here -->
       </div>
+    </div>
   </div>
 
 <script>

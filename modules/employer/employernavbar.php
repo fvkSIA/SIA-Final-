@@ -1,3 +1,11 @@
+<?php
+session_start(); // Simulan ang session sa simula ng file
+
+// Check if the notification count session variable is set
+$notification_count = isset($_SESSION['inbox_notification_count']) ? $_SESSION['inbox_notification_count'] : 0;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -326,6 +334,16 @@
         margin-left: 0;
       }
     }
+    .badge {
+        background-color: #ff0000;
+        color: #fff;
+        font-size: 12px;
+        border-radius: 50%;
+        padding: 2px 8px;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+    }
   </style>
 </head>
 <body>
@@ -344,12 +362,17 @@
         <span class="tooltip">Home</span>
       </li>
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('employerinbox.php')">
-          <i class="bx bx-chat"></i>
-          <span class="link_name">Inbox</span>
-        </a>
-        <span class="tooltip">Inbox</span>
-      </li>
+    <a href="javascript:void(0)" onclick="changeContent('employerinbox.php')">
+        <i class="bx bx-chat"></i>
+        <span class="link_name">Inbox</span>
+        <?php if ($notification_count > 0): ?>
+            <span class="badge"><?php echo $notification_count; ?></span>
+        <?php endif; ?>
+    </a>
+    <span class="tooltip">Inbox</span>
+</li>
+
+
       <li>
         <a href="javascript:void(0)" onclick="changeContent('employerskilledworker.php')">
           <i class="bx bx-id-card"></i>
@@ -377,6 +400,13 @@
           <span class="link_name">History</span>
         </a>
         <span class="tooltip">History</span>
+      </li>
+      <li>
+        <a href="javascript:void(0)" onclick="changeContent('employer_jobpost_history.php')">
+          <i class="bx bx-briefcase"></i>
+          <span class="link_name">Job Posted</span>
+        </a>
+        <span class="tooltip">Job Posted</span>
       </li>
       <li>
         <a href="javascript:void(0)" onclick="changeContent('profile_employer.php')">
