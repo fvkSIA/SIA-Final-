@@ -56,7 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "<script>
                 alert('Invalid email or password.');
-                window.location.href = 'login.html';
+                window.location.href = 'login_seeker.php';
               </script>";
     }
     $stmt->close();

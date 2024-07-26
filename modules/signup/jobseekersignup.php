@@ -514,7 +514,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="modal-body">
                 <h2>New record created successfully!</h2>
                 <p>Your data has been successfully saved.</p>
-                <a href="../login/login.html">
+                <a href="../login/login_seeker.php">
                     <button id="continueBtn" class="login-now">LOGIN NOW</button>
                 </a>
             </div>

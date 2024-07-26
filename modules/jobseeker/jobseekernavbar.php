@@ -411,21 +411,17 @@ $conn->close();
           <span class="link_name">Calendar</span>
         </a>
       </li>
-      <li>
-        <a href="javascript:void(0)" onclick="changeContent('profile_jobseeker.php')">
-          <i class="bx bxs-user-circle"></i>
-          <span class="link_name">Profile</span>
-        </a>
-      </li>
       <li class="profile">
         <div class="profile_details">
+        <a href="javascript:void(0)" onclick="changeContent('profile_jobseeker.php')">
           <img src="<?php echo $profile_pic; ?>" alt="profile image">
           <div class="profile_content">
             <div class="name"><?php echo $first_name; ?></div>
             <div class="designation"><?php echo $user_type; ?></div>
           </div>
+          </a>
         </div>
-        <a href="../logout.php" id="log_out">
+        <a href="../logout_seeker.php" id="log_out">
           <i class="bx bx-log-out"></i>
         </a>
       </li>

@@ -529,7 +529,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
              // When the user clicks the button, redirect them to the login page
         continueBtn.onclick = function() {
-            window.location.href = "../login/login.html";
+            window.location.href = "../login/login_emp.php";
         }
 
     // Add event listener for phone number input

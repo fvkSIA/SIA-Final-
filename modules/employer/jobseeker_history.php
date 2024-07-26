@@ -8,7 +8,6 @@ $unique_images = [];
 if($_SERVER["REQUEST_METHOD"] == "GET") {
   $id = $_GET['id'];
   
-  // Query to fetch user data and associated proof_img
   $sql = "
     SELECT users.*, ratings.proof_img 
     FROM users 
@@ -26,7 +25,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
         $user = $row;
         $proof_img = $row['proof_img'];
         if ($proof_img && !in_array($proof_img, $unique_images)) {
-          $unique_images[] = $proof_img;  // Store unique proof_img
+          $unique_images[] = $proof_img;  
         }
       }
     }
@@ -78,7 +77,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
       justify-content: center;
       align-items: center;
       height: 100vh;
-      position: relative; /* Make sure the body is positioned relatively */
+      position: relative; 
     }
     .custom-div {
       margin-top: 15%;
@@ -95,54 +94,47 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
       text-transform: capitalize;
     }
     .responsive-text {
-      font-size: 2.5rem; /* Default size */
+      font-size: 2.5rem;
     }
     .button-container {
       text-align: center;
     }
     .top-left-container {
-      position: flex; /* Positioning it absolutely */
-      top: 20px; /* Distance from the top */
-      left: 20px; /* Distance from the left */
+      position: flex; 
+      top: 20px; 
+      left: 20px;
     }
     @media (max-width: 768px) {
       .responsive-text {
-        font-size: 2rem; /* Smaller size for tablets */
+        font-size: 2rem; 
       }
     }
     @media (max-width: 640px) {
       .responsive-text {
-        font-size: 1.5rem; /* Smaller size for phones */
+        font-size: 1.5rem;
       }
     }
-    /* Modal styles */
     .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
+    display: none; 
+    position: fixed;
+    z-index: 1000;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.7); /* Black background with opacity */
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.7);
     }
-
-    /* Modal content */
     .modal-content {
     margin: auto;
     display: block;
-    width: 80%; /* Adjust as needed */
+    width: 80%; 
     max-width: 700px;
     }
-
-    /* Image inside modal */
     .modal img {
     width: 100%;
     height: auto;
     }
-
-    /* Close button */
     .close {
     position: absolute;
     top: 10px;
@@ -161,32 +153,31 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     .icon-link {
     display: inline-block;
     text-decoration: none;
-    color: #000; /* Color of the icon */
-    font-size: 24px; /* Size of the icon */
+    color: #000; 
+    font-size: 24px;
     padding: 10px;
     border-radius: 50%;
-    background-color: #f0f0f0; /* Background color */
+    background-color: #f0f0f0;
     transition: background-color 0.3s, color 0.3s;
 }
 
 .icon-link:hover {
-    background-color: #ddd; /* Background color on hover */
-    color: #333; /* Icon color on hover */
+    background-color: #ddd;
+    color: #333;
 }
 
 .icon-link i {
-    margin: 0; /* Remove default margin */
+    margin: 0;
 }
 
   </style>
 </head>
 <body>
-  <!-- Back Button Positioned at Top-Left -->
  
 
   <div class="custom-div">
   <div class="top-left-container">
-    <a id="myButton" href="employerskilledworker.php" class="icon-link">
+    <a id="myButton" href="employerinbox.php" class="icon-link">
       <i class="fas fa-arrow-left"></i>
     </a>
   </div>
@@ -230,12 +221,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     </div>
   </div>
 <?php endif; ?>
-
-
-      <div class="button-container mt-10">
-        <a id="myButton" href='hireform.php?id=<?php echo $user['id'];?>'>Give Offer</a>
-        <!-- Removed the Back button from here -->
-      </div>
+<br>
   </div>
 
 <script>

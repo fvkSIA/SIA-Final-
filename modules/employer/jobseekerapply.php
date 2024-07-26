@@ -1,22 +1,29 @@
-<?php 
+<?php
 require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
 $error = '';
 $result = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $id = $_GET['id'];
-    $jr_id = $_GET['jrid'];
+    $id = $_GET['id'] ?? null; // Get user ID from URL
+    $jr_id = $_GET['jrid'] ?? null; // Get job request ID if available
 
-    $sql = "SELECT * FROM users WHERE id = ?";
-    
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("s", $id);
-        $stmt->execute();
-        $result = $stmt->get_result() ?? null;
-        $stmt->close();
+    if ($id) {
+        $sql = "SELECT * FROM users WHERE id = ?";
+
+        if ($stmt = $conn->prepare($sql)) {
+            $stmt->bind_param("s", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+        } else {
+            echo "Error preparing statement: " . $conn->error;
+        }
+    } else {
+        echo "User ID is missing.";
     }
 }
+
 $conn->close();
 ?>
 
@@ -31,7 +38,7 @@ $conn->close();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
+body {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -142,12 +149,12 @@ $conn->close();
     display: flex;
     justify-content: center; /* Center items horizontally */
     flex-wrap: wrap; /* Allow wrapping to next line if needed */
-    gap: 10px; /* Optional: Adjust spacing between items */
+    gap: 2px; /* Optional: Adjust spacing between items */
 }
 
 .info > div {
     flex: 1;
-    min-width: 200px; /* Optional: Adjust minimum width if needed */
+    min-width: 100px; /* Optional: Adjust minimum width if needed */
     text-align: center; /* Center text within each item */
 }
 
@@ -192,69 +199,61 @@ hr {
         }
         iframe {
             border-radius: 8px;
-        }
-  </style>
+        }  </style>
 </head>
 <body>
   <div class="container">
-    <?php 
-      $user = $result ? $result->fetch_assoc() : null;
-      if ($user): 
-    ?>
+    <?php if ($result && $user = $result->fetch_assoc()): ?>
       <div class="profile-card">
-      <div class="profile-container">
-    <img src="../jobseeker/assets/images/<?php echo htmlspecialchars($user['profile'] ?? 'no-image.png'); ?>" alt="Profile Image" class="profile-image">
-    <div class="profile-info">
-        <h1><?php echo htmlspecialchars($user['lastname']) . ', ' . htmlspecialchars($user['firstname']); ?></h1>
-    </div>
-</div>
-
-      <div class="info">
-            <div><span class="label"><span class="value"><?php echo htmlspecialchars($user['phone_number']); ?></span></div>
-            <div><span class="label"><span class="value"><?php echo htmlspecialchars($user['email']); ?></span></div>
-            <div><span class="label"><span class="value"><?php echo htmlspecialchars($user['gender']); ?></span></div>
-            <div><span class="label"><span class="value"><?php echo htmlspecialchars($user['city']); ?></span></div>
-            <div>HISTORY ITO</span></div>
+        <div class="profile-container">
+          <img src="../jobseeker/assets/images/<?php echo htmlspecialchars($user['profile'] ?? 'no-image.png'); ?>" alt="Profile Image" class="profile-image">
+          <div class="profile-info">
+            <h1><?php echo htmlspecialchars($user['lastname']) . ', ' . htmlspecialchars($user['firstname']); ?></h1>
+          </div>
         </div>
-        <div class="hr-container">
-    <hr>
-</div>
 
-<div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12 resume-section">
-                <label class="labels">Resume</label>
-                <iframe src="<?php echo htmlspecialchars($user['resume']); ?>" width="100%" height="600px" style="border: none;"></iframe>
-            </div>
-
-            <div class="col-md-12 valid-id-section">
-                <label class="labels">Valid ID</label>
-                <iframe src="<?php echo htmlspecialchars($user['valid_ids']); ?>" width="100%" height="600px" style="border: none;"></iframe>
-            </div>
-
-            <div class="col-md-12 work-experience-section">
-                <label class="labels">Certificate</label>
-                <iframe src="<?php echo htmlspecialchars($user['recent_job_experience']); ?>" width="100%" height="600px" style="border: none;"></iframe>
-            </div>
+        <div class="info">
+          <div><span class="label">Phone:</span> <span class="value"><?php echo htmlspecialchars($user['phone_number']); ?></span></div>
+          <div><span class="label">Email:</span> <span class="value"><?php echo htmlspecialchars($user['email']); ?></span></div>
+          <div><span class="label">Gender:</span> <span class="value"><?php echo htmlspecialchars($user['gender']); ?></span></div>
+          <div><span class="label">City:</span> <span class="value"><?php echo htmlspecialchars($user['city']); ?></span></div>
+          <div>
+            <!-- Corrected View Button Link -->
+            <a href='jobseeker_history.php?id=<?php echo htmlspecialchars($user['id']); ?>'>
+              <button style='display: inline-block; padding: 6px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;'>
+              <i class='bx bx-show-alt' style='vertical-align: middle; margin-right: 5px;'></i> View History
+              </button> 
+            </a>
+          </div>
         </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<div class="action-buttons">
-    <a href="jobseekerapplication.php?id=<?php echo $jr_id?>" class="btn-hire" onclick="return confirm('Are you sure you want to hire this seeker?');">Hire</a>
-    <button class="close-button" onclick="window.location.href='findworkers.php'">Close</button>
-</div>
-
         
-      </div>
+        <div class="hr-container">
+          <hr>
+        </div>
 
+        <div class="resume-section">
+          <label>Resume</label>
+          <iframe src="<?php echo htmlspecialchars($user['resume']); ?>" width="100%" height="600px" style="border: none;"></iframe>
+        </div>
+
+        <div class="valid-id-section">
+          <label>Valid ID</label>
+          <iframe src="<?php echo htmlspecialchars($user['valid_ids']); ?>" width="100%" height="600px" style="border: none;"></iframe>
+        </div>
+
+        <div class="work-experience-section">
+          <label>Certificate</label>
+          <iframe src="<?php echo htmlspecialchars($user['recent_job_experience']); ?>" width="100%" height="600px" style="border: none;"></iframe>
+        </div>
+
+        <div class="action-buttons">
+          <a href="jobseekerapplication.php?id=<?php echo htmlspecialchars($jr_id); ?>" class="btn-hire" onclick="return confirm('Are you sure you want to hire this seeker?');">Hire</a>
+          <button class="close-button" onclick="window.location.href='findworkers.php'">Close</button>
+        </div>
+      </div>
     <?php else: ?>
       <p>No user data found.</p>
     <?php endif; ?>
-    
   </div>
-  
 </body>
 </html>

@@ -5,14 +5,13 @@ $error = '';
 $result = null;
 $showModal = false;
 
-$jr_id = $_GET['jrid'];
+$jr_id = isset($_GET['jrid']) ? $_GET['jrid'] : '';
 
 if($_SERVER["REQUEST_METHOD"] == "GET") {
-  $id = $_GET['id'];
-  
-  $sql = "SELECT  * FROM job_offers where id = ?";
+  $id = isset($_GET['id']) ? $_GET['id'] : '';
 
-  // echo $id . ' query: ' . $sql; die();
+  $sql = "SELECT * FROM job_offers WHERE id = ?";
+
   if ($stmt = $conn->prepare($sql)) {
     $stmt->bind_param("s", $id);
     $stmt->execute();
@@ -21,8 +20,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
   }
 
 } else if ($_SERVER['REQUEST_METHOD'] == "POST"){
-    $id = $_POST['job_id'];
-    $job_req_id = $_POST['job_req_id'];
+    $id = isset($_POST['job_id']) ? $_POST['job_id'] : '';
+    $job_req_id = isset($_POST['job_req_id']) ? $_POST['job_req_id'] : '';
 
     $sql = "UPDATE job_offers SET accepted = 1 WHERE id = ?";
     $sql2 = "UPDATE job_requests SET is_accepted = 1 WHERE id = ?";
@@ -35,17 +34,18 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
                     $showModal = true;
                 }
             }
-            
         } else {    
             $error = 'Error encountered. Try again later';
         }
     } else{
         $error = 'Error encountered. Try again later';
     }
-
 }
 
-
+$job = [];
+if ($result != null) {
+    $job = $result->fetch_assoc();
+}
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <style>
-        body {
+body {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -261,28 +261,18 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
 
         .modal-button:hover {
         background-color: #3c5fa4;
-        }
-    </style>
+        }  </style>
 </head>
 <body>
-<?php 
-    $data = [];
-    if ($result != null) {
-      $job = $result->fetch_assoc();
-    } else {
-      echo '';
-    }
-
-  ?>
   <div class="container">
     <form action="jobseekerofferdetails.php" method="post">
         <input type="hidden" name="job_id" value="<?php echo $job['id'] ?? '';?>">
-        <input type="hidden" name="job_req_id" value="<?php echo $jr_id ?? '';?>">
+        <input type="hidden" name="job_req_id" value="<?php echo $jr_id;?>">
         <div class="job-offer">
             <h1>Job Offer</h1>
             <div class="header">
-                <h2><?php echo $job['job'] ?? '';?></h2>
-                <p><?php echo $job['date'] ?? '';?> at <?php echo $job['time'] ?? '';?> </p>
+                <h2><?php echo $job['job'] ?? 'Job Title';?></h2>
+                <p><?php echo $job['date'] ?? 'Date';?> at <?php echo $job['time'] ?? 'Time';?></p>
             </div>
 
             <div class="details">
@@ -291,25 +281,29 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
                     <div class="job-type">
                         <img src="../jobseeker/assets/images/job-icon.png" alt="Job Type">
                         <h4>Job Type</h4>
-                        <?php if ($job['type'] == 'parttime'):?>
-                            <span>Part-time</span>
-                        <?php elseif($job['type'] == 'fulltime'):?>
-                            <span>Full-time</span>
-                        <?php elseif($job['type'] == 'onetime'):?>
-                            <span>One-time</span>
-                        <?php else:?>
-                        <?php endif;?>
-                        
+                        <?php if (isset($job['type'])): ?>
+                            <?php if ($job['type'] == 'parttime'): ?>
+                                <span>Part-time</span>
+                            <?php elseif ($job['type'] == 'fulltime'): ?>
+                                <span>Full-time</span>
+                            <?php elseif ($job['type'] == 'onetime'): ?>
+                                <span>One-time</span>
+                            <?php else: ?>
+                                <span>Not specified</span>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <span>Not specified</span>
+                        <?php endif; ?>
                     </div>
                     <div class="salary">
                         <img src="../jobseeker/assets/images/salary-icon.png" alt="Salary">
                         <h4>Salary</h4>
-                        <span><?php echo $job['salary_offer'] ?? '';?></span>
+                        <span><?php echo $job['salary_offer'] ?? 'Not specified';?></span>
                     </div>  
                     <div class="location">
                         <img src="../jobseeker/assets/images/location-icon.png" alt="Location">
                         <h4>Location</h4>
-                        <span><?php echo $job['location'] ?? '';?></span>
+                        <span><?php echo $job['location'] ?? 'Not specified';?></span>
                     </div>
                 </div>
             </div>
@@ -318,57 +312,39 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
                 <h3>Full Job Description</h3>
                 <h4>Responsibilities:</h4>
                 <ul>
-                    <?php echo $job['responsibilities'] ?? '';?>
+                    <?php echo isset($job['responsibilities']) ? nl2br(htmlspecialchars($job['responsibilities'])) : '<li>No responsibilities listed.</li>';?>
                 </ul>
                 <h4>Qualifications:</h4>
                 <ul>
-                    <?php echo $job['qualifications'] ?? '';?>
+                    <?php echo isset($job['qualifications']) ? nl2br(htmlspecialchars($job['qualifications'])) : '<li>No qualifications listed.</li>';?>
                 </ul>
             </div>
         </div>
         <div class="buttons">
             <button class="accept" id="" type="submit">Accept</button>
             <a class="decline" href="javascript:history.back()">Decline</a>
-
         </div>
-
     </form>
-    
-</div>
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <p>Congratulations on your new job!</p>
-    <a class="modal-button" href="jobseekerinbox.php">Continue</a>
   </div>
-</div>
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <p>Congratulations on your new job!</p>
+      <a class="modal-button" href="jobseekerinbox.php">Continue</a>
+    </div>
+  </div>
 
-<script>
-    const modal = document.getElementById("myModal");
-    <?php if ($showModal) : ?>
-          document.addEventListener('DOMContentLoaded', function() {
-              modal.style.display = 'block';
-          });
-    <?php endif; ?>
-
-    function closeModal() {
+  <script>
       const modal = document.getElementById("myModal");
-      modal.style.display = "none";
-    }
-  document.addEventListener('DOMContentLoaded', function() {
-      // Get references to the accept and decline buttons
-      var acceptButton = document.getElementById('acceptButton');
-      var declineButton = document.getElementById('declineButton');
-  
-      // Add click event listeners
-      acceptButton.addEventListener('click', function() {
-        //   window.location.href = 'jobseeker_calendar.html';  // Redirect to jc.html
-      });
-  
-      declineButton.addEventListener('click', function() {
-          window.location.href = 'jobseekerinbox.php';  // Redirect to addemployer.html
-      });
-  });
+      <?php if ($showModal) : ?>
+            document.addEventListener('DOMContentLoaded', function() {
+                modal.style.display = 'block';
+            });
+      <?php endif; ?>
+
+      function closeModal() {
+        modal.style.display = "none";
+      }
   </script>
   
   <!-- Scripts -->

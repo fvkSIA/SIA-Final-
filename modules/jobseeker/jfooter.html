@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .footer {
+      width: 100%;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      margin-top: 30px;
+      border-top: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .footer-section {
+      display: flex;
+      justify-content: space-around;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-column {
+      list-style: none;
+      padding: 0;
+    }
+    .footer-column li {
+      margin-bottom: 10px;
+    }
+    .footer-column li a {
+      text-decoration: none;
+      color: #333;
+    }
+    .footer-column h4 {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 10px;
+      font-size: 0.9em;
+      color: #6c757d;
+    }
+    .footer-bottom a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .footer-bottom a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+      .footer-section {
+        flex-wrap: wrap;
+      }
+      .footer-column {
+        flex: 1 50%;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+
+<footer class="footer">
+  <div class="footer-section">
+    <ul class="footer-column">
+      <h4>Job Seekers</h4>
+      <li><a href="#top">Job Search</a></li>
+      <li><a href="#">Profile</a></li>
+      <li><a href="#">Recommended Jobs</a></li>
+      <li><a href="#">Saved Searches</a></li>
+      <li><a href="#">Saved Jobs</a></li>
+      <li><a href="#">Job Applications</a></li>
+    </ul>
+    <ul class="footer-column">
+      <h4>Employers</h4>
+      <li><a href="#">Registration for Free</a></li>
+      <li><a href="#">Post a Job ad</a></li>
+    </ul>
+    <ul class="footer-column">
+      <h4>About Jobstreet</h4>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Work for Jobstreet</a></li>
+    </ul>
+    <ul class="footer-column">
+      <h4>Contact</h4>
+      <li><a href="#">Contact Us</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <a href="#">Terms & conditions</a> | <a href="#">Security & Privacy</a>
+  </div>
+</footer>
+
+</body>
+</html>
+

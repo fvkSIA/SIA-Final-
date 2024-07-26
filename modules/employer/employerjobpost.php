@@ -2,41 +2,63 @@
 require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
 $error = '';
-$result = null;
 $showModal = false;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-  $emp_id = $_POST['emp_id'];
-  $job = $_POST['job'];
-  $date = $_POST['date'];
-  $time = $_POST['time'];
-  $job_type = $_POST['job_type'];
-  $salary = $_POST['salary'];
-  $location = isset($_POST['location']) ? $_POST['location'] : ''; // Ensure location is set
-  $job_desc = $_POST['job_responsibilities'];
-  $job_quali = $_POST['job_qualifications'];
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    die("User not logged in");
+}
 
-  // Ensure all required fields are filled
-  if (empty($emp_id) || empty($job) || empty($date) || empty($time) || empty($job_type) || empty($salary) || empty($location) || empty($job_desc) || empty($job_quali)) {
-    $error = "All fields are required.";
-  } else {
-    $sql = "INSERT INTO job_listings (job, date, time, type, salary_offer, location, responsibilities, qualifications, employer_id) VALUES (?,?,?,?,?,?,?,?,?)";
+$user_id = $_SESSION['user_id'];
 
-    if ($stmt = $conn->prepare($sql)){
-      $stmt->bind_param('ssssssssi', $job, $date, $time, $job_type, $salary, $location, $job_desc, $job_quali, $emp_id);
-      if ($stmt->execute()){
-        $showModal = true;
-      } else {
-        $errorMessage = "Error: " . $sql . "<br>" . mysqli_error($conn);
-      }
-      $stmt->close();
+// Database connection
+$conn = new mysqli('localhost', 'root', '', 'hanapkita_db');
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch user city
+$stmt = $conn->prepare("SELECT city FROM users WHERE id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$stmt->bind_result($user_city);
+$user_city = '';
+
+if ($stmt->fetch()) {
+    $user_city = htmlspecialchars($user_city);
+}
+$stmt->close();
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $emp_id = $_POST['emp_id'];
+    $job = $_POST['job'];
+    $date = $_POST['date'];
+    $time = $_POST['time'];
+    $job_type = $_POST['job_type'];
+    $salary = $_POST['salary'];
+    $location = $_POST['location']; // Use the submitted location
+    $job_desc = $_POST['job_responsibilities'];
+    $job_quali = $_POST['job_qualifications'];
+
+    $sql = "INSERT INTO job_listings (job, date, time, type, salary_offer, location, responsibilities, qualifications, employer_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param('ssssssssi', $job, $date, $time, $job_type, $salary, $location, $job_desc, $job_quali, $emp_id);
+        if ($stmt->execute()) {
+            $showModal = true;
+        } else {
+            $error = "Error: " . $stmt->error;
+        }
+        $stmt->close();
+    } else {
+        $error = "Error preparing statement: " . $conn->error;
     }
-  }
 }
 
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,185 +69,185 @@ $conn->close();
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
-    body {
-      font-family: "Poppins", sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-    .container {
-      width: 95%;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+.container {
+  width: 95%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
-    .title {
-      font-size: 32px;
-      color: #1E3B85;
-      margin-bottom: 20px;
-      font-weight: bold;
-      text-align: center;
-    }
+.title {
+  font-size: 32px;
+  color: #1E3B85;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
 
-    .post-box {
-      background-color: #f9f9f9;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      display: block;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+.post-box {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: block;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
-    .post-box h2 {
-      font-size: 28px;
-      color: #333;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
+.post-box h2 {
+  font-size: 28px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
 
-    .post-box label {
-      font-size: 16px;
-      color: #333;
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-    }
+.post-box label {
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
 
-    .post-box input[type=text],
-    .post-box input[type=number],
-    .post-box input[type=date],
-    .post-box input[type=time],
-    .post-box select,
-    .post-box textarea {
-      height: 40px;
-      font-size: 16px;
-      display: block;
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-bottom: 15px;
-      padding: 10px;
-      box-sizing: border-box;
-    }
+.post-box input[type=text],
+.post-box input[type=number],
+.post-box input[type=date],
+.post-box input[type=time],
+.post-box select,
+.post-box textarea {
+  height: 40px;
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+}
 
-    .post-box textarea {
-      height: 120px;
-      resize: vertical;
-    }
+.post-box textarea {
+  height: 120px;
+  resize: vertical;
+}
 
-    .form-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
 
-    .form-group > div {
-      flex: 1;
-      min-width: 200px;
-    }
+.form-group > div {
+  flex: 1;
+  min-width: 200px;
+}
 
-    .button-container {
-      display: flex;
-      justify-content: right;
-      align-items: center;
-    }
+.button-container {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
 
-    .post-button {
-      width: 20%;
-      background-color: #1E3B85;
-      color: #fff;
-      font-weight: bold;
-      font-size: 18px;
-      border: none;
-      border-radius: 25px;
-      padding: 10px 20px;
-      cursor: pointer;
-    }
+.post-button {
+  width: 20%;
+  background-color: #1E3B85;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
 
-    .post-button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
+.post-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
 
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.4);
-    }
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
 
-    .modal-content {
-      background-color: #fff;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 500px;
-      border-radius: 10px;
-      text-align: center;
-    }
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
+  text-align: center;
+}
 
-    .modal-content p {
-      font-size: 18px;
-    }
+.modal-content p {
+  font-size: 18px;
+}
 
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
 
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-    .modal-button {
-      background-color: #1E3B85;
-      color: #fff;
-      font-weight: bold;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      cursor: pointer;
-      margin-top: 15px;
-    }
+.modal-button {
+  background-color: #1E3B85;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 15px;
+}
 
-    .modal-button:hover {
-      background-color: #163a6b;
-    }
+.modal-button:hover {
+  background-color: #163a6b;
+}
 
-    .back-button {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background-color: #007bff;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 5px;
-      text-decoration: none;
-    }
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+}
 
-    .back-button a {
-      color: white;
-      text-decoration: none;
-    }
+.back-button a {
+  color: white;
+  text-decoration: none;
+}
 
-    .back-button:hover {
-      background-color: #0056b3;
-    }
+.back-button:hover {
+  background-color: #0056b3;
+}
   </style>
 </head>
 <body>
@@ -268,56 +290,9 @@ $conn->close();
           </select>
         </div>
         <div>
-        <?php
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    die("User not logged in");
-}
-
-$user_id = $_SESSION['user_id'];
-
-// Database connection
-$conn = new mysqli('localhost', 'root', '', 'hanapkita_db');
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Fetch user city
-$stmt = $conn->prepare("SELECT city FROM users WHERE id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$stmt->bind_result($user_city);
-
-$user_city = '';
-if ($stmt->fetch()) {
-    $user_city = htmlspecialchars($user_city);
-}
-$stmt->close();
-
-// Fetch all cities for the dropdown
-$cities = [];
-$stmt = $conn->prepare("SELECT DISTINCT city FROM users ORDER BY city");
-$stmt->execute();
-$stmt->bind_result($city);
-
-while ($stmt->fetch()) {
-    $cities[] = htmlspecialchars($city);
-}
-$stmt->close();
-$conn->close();
-?>
-
-<label for="location">Location:</label>
-<select id="location" name="location" required disabled>
-    <option value="" <?php echo $user_city == '' ? 'selected="selected"' : ''; ?>>Select your city</option>
-    <?php foreach ($cities as $city): ?>
-        <option value="<?php echo $city; ?>" <?php echo $city == $user_city ? 'selected="selected"' : ''; ?>>
-            <?php echo $city; ?>
-        </option>
-    <?php endforeach; ?>
-</select>
-
+          <label for="location">Location:</label>
+          <input type="hidden" id="location" name="location" value="<?php echo htmlspecialchars($user_city);?>">
+          <input style="color: #8D8D8E;" type="text" id="locationDisplay" value="<?php echo htmlspecialchars($user_city);?>" readonly>
         </div>
       </div>
       <div class="form-group">
@@ -360,7 +335,6 @@ $conn->close();
   </div>
 </div>
 
-
 <script>
 document.getElementById('job_responsibilities').addEventListener('input', function() {
   let lines = this.value.split('\n');
@@ -373,18 +347,16 @@ document.getElementById('job_qualifications').addEventListener('input', function
   this.value = formattedLines.join('\n');
 });
 
-
 document.getElementById('jobForm').addEventListener('submit', function(event) {
   const form = event.target;
-  // Check if all required fields are filled
-  if (form.checkValidity() === false) {
+  if (!form.checkValidity()) {
     event.preventDefault();
     event.stopPropagation();
+    // Optionally show some error messages
   }
 });
 
 window.onload = function() {
-  // Show modal if there is a success flag
   <?php if ($showModal): ?>
     const modal = document.getElementById('successModal');
     const closeModal = document.querySelector('.close');
