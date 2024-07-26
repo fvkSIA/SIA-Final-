@@ -94,7 +94,12 @@ if ($result === false) {
           <td style='padding: 10px; text-align: center;'><?php echo $row["gender"]; ?></td>
           <td style='padding: 10px; text-align: center;'><?php echo $row["job_type"]; ?></td>
           <td style='padding: 10px; text-align: center;'><?php echo $row["city"]; ?></td>
-          <td style='padding: 10px; text-align: center;'><a href='jobseekerviewprofile.php?id=<?php echo $row['id']; ?>'>View</a></td>
+          <td style='padding: 10px; text-align: center;'>
+          <a href='jobseekerviewprofile.php?id=<?php echo $row['id']; ?>' 
+          style='display: inline-block; padding: 6px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;'>
+          <i class='bx bx-show-alt' style='vertical-align: middle; margin-right: 5px;'></i> View
+          </a>
+          </td>
         </tr>
         <?php $rank++; ?>
       <?php endwhile; ?>

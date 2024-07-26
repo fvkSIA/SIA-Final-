@@ -61,11 +61,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bind_param("ssssssssssssssssss", $profile, $email, $first_name, $middle_name, $last_name, $phone_number, $birth_date, $sex, $address, $city, $password, $employer_id, $worker_type, $type_of_work, $resume, $valid_ids, $recent_job_experience, $educational_background);
                 if ($stmt->execute()) {
-                    $showModal = true;
+                    $user_id = $conn->insert_id; // Get the ID of the newly inserted user
+                
+                // Map educational background to compound rating
+                $education_to_compound = [
+                    "1.00" => 0.10, // Uneducated
+                    "2.00" => 0.20, // Elementary
+                    "3.00" => 0.30, // High School
+                    "4.00" => 0.40, // Senior Highschool
+                    "4.50" => 0.45, // Undergraduate
+                    "5.00" => 0.50  // College
+                ];
+                
+                $compound = $education_to_compound[$educational_background];
+                
+                // Prepare and execute INSERT into ratings table
+                $ratings_sql = "INSERT INTO ratings (user_id, compound) VALUES (?, ?)";
+                if ($ratings_stmt = $conn->prepare($ratings_sql)) {
+                    $ratings_stmt->bind_param("id", $user_id, $compound);
+                    if ($ratings_stmt->execute()) {
+                        $showModal = true;
+                    } else {
+                        $errorMessage = "Error inserting into ratings table: " . $ratings_stmt->error;
+                    }
+                    $ratings_stmt->close();
                 } else {
-                    $errorMessage = "Error: " . $stmt->error;
+                    $errorMessage = "Error preparing ratings statement: " . $conn->error;
                 }
-                $stmt->close();
+            } else {
+                $errorMessage = "Error: " . $stmt->error;
+            }
+            $stmt->close();
             }
         }
     }
@@ -436,12 +462,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label><b>Educational Background:</b></label>
                 <select name="educational_background" required>
                     <option value="">Select type of educational background</option>
-                    <option value="1">Uneducated</option>
-                    <option value="2">Elementary</option>
-                    <option value="3">High School</option>
-                    <option value="4">Senior Highschool</option>
-                    <option value="4">Undergraduate</option>
-                    <option value="5">College</option>
+                    <option value="1.00">Uneducated</option>
+                    <option value="2.00">Elementary</option>
+                    <option value="3.00">High School</option>
+                    <option value="4.00">Senior Highschool</option>
+                    <option value="4.50">Undergraduate</option>
+                    <option value="5.00">College</option>
                 </select>
             </div>
             <div class="skilled">
