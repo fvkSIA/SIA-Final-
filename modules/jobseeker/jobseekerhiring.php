@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $sql = "SELECT job_listings.*, users.id as user_id, users.profile, users.firstname, users.lastname, users.middlename, users.email 
           FROM job_listings 
           INNER JOIN users ON users.id = job_listings.employer_id
-          WHERE users.type = 3 AND job_listings.job = ?";
+          WHERE users.type = 3 AND job_listings.job = ? AND job_listings.accepted = 0";
 
   $types = "s";
   $params = array($user_job_type);
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $sql = "SELECT job_listings.*, users.id as user_id, users.profile, users.firstname, users.lastname, users.middlename, users.email 
           FROM job_listings 
           INNER JOIN users ON users.id = job_listings.employer_id
-          WHERE users.type = 3 AND job_listings.job = ?";
+          WHERE users.type = 3 AND job_listings.job = ? AND job_listings.accepted = 0";
   
   if ($stmt = $conn->prepare($sql)) {
       $stmt->bind_param("s", $user_job_type);
@@ -70,10 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 ?>
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -204,26 +200,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       border: none;
       padding: 10px;
       cursor: pointer;
-      width: 80%; /* Adjust width to fit within the container */
-      max-width: 90%; /* Ensure the buttons stay within the slider-container */
+      width: 80%; 
+      max-width: 90%; 
       box-sizing: border-box;
       text-align: center;
-      font-size: 16px; /* Adjust font size for better readability */
+      font-size: 16px; 
     }
     button.prev {
-      bottom: 20px; /* Adjust spacing from the bottom */
+      bottom: 20px; 
     }
     button.next {
-      bottom: 70px; /* Adjust spacing from the bottom to separate the buttons */
+      bottom: 70px; 
     }
-    /* Additional media query for smaller screens */
     @media (max-width: 600px) {
       .slider-container {
-        width: 90%; /* Make the slider container wider on smaller screens */
+        width: 90%; 
       }
       button.prev, button.next {
-        width: 100%; /* Increase button width for smaller screens */
-        font-size: 14px; /* Adjust font size for smaller screens */
+        width: 100%;
+        font-size: 14px;
       }
     }
     .apply-button {
@@ -309,7 +304,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       transition: border-color 0.3s ease; /* Smooth transition for border color */
     }
     .job-box1:hover {
-      border-color: #007bff; /* Border color on hover */
+      border-color: #007bff; 
     }
     .job-box1:focus {
       border-color: #28a745; /* Border color on focus (if the element can be focused) */
@@ -435,7 +430,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="flex space-x-4 items-center">
         <label>Your Job Type: <?php echo htmlspecialchars($user_job_type); ?></label>
         <select class="py-2 px-4 rounded bg-white border border-gray-300" name="location">
-            <option value="">Select location</option>
+            <option value="">All Cities</option>
             <option value="Manila">Manila</option>
             <option value="Caloocan">Caloocan</option>
             <option value="Valenzuela">Valenzuela</option>
@@ -454,28 +449,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Taguig">Taguig</option>
             <option value="Pateros">Pateros</option>
         </select>
-                <button class="py-2 px-6 bg-blue-900 text-white rounded hover:bg-blue-800" type="submit">Find Now!</button>
-            </div>
-        </form>
-        
+            <button class="py-2 px-6 bg-blue-900 text-white rounded hover:bg-blue-800" type="submit">Find Now!</button>
+        </div>
+    </form>
+    
     </div>
     <div class="mx-auto mt-8 p-4 border-t-4 border-indigo-200 shadow-lg rounded-lg bg-white">
-            <div class="flex items-top justify-between">
-            <?php 
-    $data = [];
-    if ($result != null) {
-        $data = $result->fetch_all(MYSQLI_ASSOC);
-        
-        // Sort the data array by created_at in descending order
-        usort($data, function($a, $b) {
-            return strtotime($b['created_at']) - strtotime($a['created_at']);
-        });
-    }
+        <div class="flex items-top justify-between">
+        <?php 
+$data = [];
+if ($result != null) {
+    $data = $result->fetch_all(MYSQLI_ASSOC);
+    
+    // Sort the data array by created_at in descending order
+    usort($data, function($a, $b) {
+        return strtotime($b['created_at']) - strtotime($a['created_at']);
+    });
+}
 
-    // Function to format salary
-    function formatSalary($salary) {
-        return number_format($salary, 2);
-    }
+// Function to format salary
+function formatSalary($salary) {
+    return number_format($salary, 2);
+}
 ?>
 
 <?php if ($data): ?>
@@ -552,132 +547,31 @@ if (isset($_SESSION['user_id'])) {
     $stmt->close();
 }
 
-// I-update ang query para i-filter base sa job_type ng user
-$sql = "SELECT id, job, type, responsibilities, location, salary_offer 
+// Ipakita ang lahat ng job posts na hindi pa tinanggap
+$sql = "SELECT job_listings.*, users.id as user_id, users.profile, users.firstname, users.lastname, users.middlename, users.email 
         FROM job_listings 
-        WHERE job = ? 
-        ORDER BY created_at DESC";
+        INNER JOIN users ON users.id = job_listings.employer_id
+        WHERE users.type = 3 AND job_listings.job = ? AND job_listings.accepted = 0";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $user_job_type);
 $stmt->execute();
 $result = $stmt->get_result();
 
+$jobs = [];
 if ($result->num_rows > 0) {
-    echo "<div class='slider-container'>";
-    echo "<div class='slider'>";
-    while ($row = $result->fetch_assoc()) {
-        $formatted_salary_offer = number_format($row["salary_offer"]);
-        $jobLink = "?id=" . $row['id'];
-        echo "<a href='#' data-id='" . $row['id'] . "' class='job-box' onclick='loadJobDetails(" . $row['id'] . ")'>";
-        echo "<div class='job-box-content'>";
-        echo "<h3 class='job-title'>" . htmlspecialchars($row["job"]) . "</h3>"
-            . "<div class='row'>"
-                . "<div class='column'>"
-                    . "<h4>Type</h4>"
-                    . "<p class='icon fas fa-briefcase'> " . htmlspecialchars($row["type"]) . "</p>"
-                . "</div>"
-                . "<div class='column'>"
-                    . "<h4>Location</h4>"
-                    . "<p class='icon fas fa-map-marker-alt'> " . htmlspecialchars($row["location"]) . "</p>"
-                . "</div>"
-                . "<div class='column'>"
-                    . "<h4>Salary Offer</h4>"
-                    . "<p><span class='piso-sign'>&#8369;</span> " . $formatted_salary_offer . "</p>"
-                . "</div>"
-            . "</div>"
-        . "</div>";
-        echo "</a>";
-    }
-    echo "</div>";
-    echo "<div class='button-container'>";
-    echo "<button class='prev' onclick='slide(-1)'>Prev</button>";
-    echo "<button class='next' onclick='slide(1)'>Next</button>";
-    echo "</div>";
-    echo "</div>";
-} else {
-    echo "<p>No job listings found matching your job type.</p>";
+    $jobs = $result->fetch_all(MYSQLI_ASSOC);
 }
 
 $stmt->close();
 $conn->close();
 ?>
-
-<script>
-    function loadJobDetails(id) {
-        const container = document.querySelector('.container1');
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'jobdetails.php?id=' + id, true);
-        xhr.onload = function () {
-            if (this.status === 200) {
-                container.innerHTML = this.responseText;
-            } else {
-                container.innerHTML = '<p>Error loading job details.</p>';
-            }
-        };
-        xhr.send();
-    }
-</script>
-<div class="container1"></div>
+<h2 class="text-xl font-bold mb-4">
+  There are no <?php foreach ($jobs as $job): ?>
+    <?php echo htmlspecialchars($job['job']); ?>
+    <?php endforeach; ?> Jobs in that City</h2>
 <?php endif; ?>
-
-    
-
+    </div>
 </main>
-
-<script>
-    function foldAside() {
-        const aside = document.querySelector('aside');
-        aside.classList.toggle('folded');
-    }
-    let currentSlide = 0;
-
-    function slide(direction) {
-    const slider = document.querySelector('.slider');
-    const jobBoxes = document.querySelectorAll('.job-box');
-    const totalBoxes = jobBoxes.length;
-    const visibleBoxes = 5;
-    const totalSlides = Math.ceil(totalBoxes / visibleBoxes);
-
-    currentSlide += direction;
-
-    if (currentSlide < 0) {
-        currentSlide = totalSlides - 1;
-    } else if (currentSlide >= totalSlides) {
-        currentSlide = 0;
-    }
-
-    // Update the display of the boxes
-    jobBoxes.forEach((box, index) => {
-        const startIndex = currentSlide * visibleBoxes;
-        const endIndex = startIndex + visibleBoxes;
-        if (index >= startIndex && index < endIndex) {
-            box.style.display = 'block';
-        } else {
-            box.style.display = 'none';
-        }
-    });
-
-    // Adjust slider position
-    const boxHeight = jobBoxes[0].offsetHeight;
-    const offset = -(currentSlide * boxHeight * visibleBoxes);
-    slider.style.transform = 'translateY(' + offset + 'px)';
-}
-
-// Initialize the display for the first set of boxes
-slide(0);
-
-</script>
-
-  <!-- Scripts -->
-  <script src="script.js"></script>
-
-
-
-
-
-  
-    
-
 </body>
 </html>

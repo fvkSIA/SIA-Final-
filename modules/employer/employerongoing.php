@@ -1,9 +1,9 @@
-
 <?php 
 require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
 $error = '';
 $result = null;
+$data = []; // Initialize $data as an empty array
 
 $id = $_SESSION['user_id'];
 
@@ -17,152 +17,88 @@ $sql = "SELECT job_requests.id as job_req_id, job_requests.user_id as job_req_us
 if ($stmt = $conn->prepare($sql)){
     $stmt->bind_param("i", $id);
     $stmt->execute();
-    $result = $stmt->get_result() ?? null;
+    $result = $stmt->get_result();
+    
+    if ($result) {
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+    }
     
     $stmt->close();
 }
 
 $conn->close();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Employer Dashboard</title>
-  <!-- Link Styles -->
+  <title>Employer Dashboard - Ongoing Jobs</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-:root{
-  --color-default:#004f83;
-  --color-second:#0067ac;
-  --color-white:#fff;
-  --color-body:#e4e9f7;
-  --color-light:#e0e0e0;
-}
-
-*{
-  padding: 0%;
-  margin: 0%;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
-body{
-  min-height: 100vh;
-            display: flex;
-            font-family: 'Poppins', sans-serif;
-            flex-direction: column; /* Changed to column to stack elements vertically */
-            align-items: center;
-            background-color: #7cbeea00;
-}
-
-
-        .fold-lines {
-            position: absolute;
-            left: -20px;
-            height: 100%;
-            width: 20px;
-            background-color: #f1f1f1;
-            cursor: pointer;
-            z-index: 10;
-        }
-        .fold-lines:before, .fold-lines:after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            height: 2px;
-            width: 100%;
-            background-color: #333;
-            transform-origin: center;
-        }
-        .fold-lines:before {
-            transform: translate(-50%, -50%) rotate(45deg);
-        }
-        .fold-lines:after {
-            transform: translate(-50%, -50%) rotate(-45deg);
-        }
-        main {
-            width: 98%;
-        }
-
-  </style>
-  
-</head>
-<body>
-<?php 
-      $data = [];
-      if ($result != null)
-        $data = $result->fetch_all(MYSQLI_ASSOC);
-      else 
-        echo '';
-    ?>
-
-<main><br>
-
-    <span class="text-blue-500" style="font-size: 25px; font-weight: bold;">JOB ORDER</span>
-    
-    <?php if($data):?>
-        <?php foreach($data as $row):?>
-            <div class="bg-purple-100 p-8 rounded-lg mb-4">
-                <div class="bg-#f1f1f1 p-4 mb-1">
-                    <div style="display: flex; justify-content: space-between; max-width: 100%; ">
-                        <div style="width: 20%; margin: 1px; box-sizing: border-box;">
-                            <p style="font-weight: bold; font-size: 25px;">
-                                <?php echo $row['job'] ?? $row['job_list_job'];?>
-                            </p><p style="margin-top: 15px; font-weight: bold;">
-                                <?php echo $row['location'];?>
-                            </p><p style="margin-top: 15px; font-weight: bold;">
-                                <?php if($row['job_req_stat'] == 0) :?>
-                                    <button class="bg-green-500 text-white font-bold py-2 px-4 rounded-full text-lg" style="height: 28px; padding-top: 1px;">
-                                    ONGOING
-                                </button>
-                                <?php endif;?>
-                            </p>
-                        </div>
-                        <!-- <div style="width: 45%; margin: 1px; box-sizing: border-box;">
-                            <p style="font-size: 25px;">
-                                <i style="color: red;"> <--- backend echo</i>
-                            </p><p style="margin-top: 15px;">
-                                <i style="color: red;"> <--- backend echo</i>
-                            </p><p style="margin-top: 15px;">
-                                <i style="color: red;"> <--- backend echo</i>
-                            </p>
-                        </div> -->
-                        <div style="width: 10%; margin-left: 20px; box-sizing: border-box;">
-                            <a href="employerongoingdetails.php?id=<?php echo $row['job_req_id'];?>" style="text-decoration: underline; display: flex; justify-content: center; margin-top: 100px;">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach;?>
-    <?php else:?>
-        <div class="container mx-auto mt-8 p-4 border-t-4 border-indigo-200 shadow-lg rounded-lg bg-white">
-        <div class="flex items-center justify-between">
-          <p>NO ONGOING JOB</p>
-        </div>
-      </div>
-    <?php endif;?>
-    
-</main>
-
-<script>
-    function foldAside() {
-        const aside = document.querySelector('aside');
-        aside.classList.toggle('folded');
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f0f4f8;
     }
-</script>
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .ongoing-title {
+      font-size: 32px;
+      color: #1e40af;
+      margin-bottom: 30px;
+      border-bottom: 3px solid #3b82f6;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+    .job-card {
+      transition: all 0.3s ease;
+    }
+    .job-card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="container">
+    <h1 class="ongoing-title">Ongoing Jobs</h1>
 
+    <?php if ($data): ?>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <?php foreach ($data as $row): ?>
+          <div class="job-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl">
+            <h3 class="font-bold text-xl text-gray-800 mb-3">
+              <?php echo $row['job'] ?? $row['job_list_job']; ?>
+            </h3>
+            <p class="text-gray-600 mb-3">
+              <i class="fas fa-map-marker-alt mr-2 text-blue-500"></i>
+              <?php echo $row['job_list_loc']; ?>
+            </p>
+            <?php if ($row['job_req_stat'] == 0): ?>
+              <span class="inline-block bg-green-500 text-white font-semibold py-1 px-3 rounded-full text-sm mb-4">
+                ONGOING
+              </span>
+            <?php endif; ?>
+            <a href="employerongoingdetails.php?id=<?php echo $row['job_req_id']; ?>" 
+               class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 w-full text-center">
+              View Details
+            </a>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php else: ?>
+      <div class="bg-white p-8 rounded-lg shadow-md text-center">
+        <i class="fas fa-briefcase text-5xl text-gray-400 mb-4"></i>
+        <p class="text-xl text-gray-700">No ongoing jobs at the moment.</p>
+      </div>
+    <?php endif; ?>
+  </div>
 
-
-
-
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

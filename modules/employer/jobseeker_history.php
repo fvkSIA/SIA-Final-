@@ -177,7 +177,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
 
   <div class="custom-div">
   <div class="top-left-container">
-    <a id="myButton" href="employerinbox.php" class="icon-link">
+    <a id="myButton" href='jobseekerapply.php?id=<?php echo htmlspecialchars($user['id']); ?>' class="icon-link">
       <i class="fas fa-arrow-left"></i>
     </a>
   </div>
