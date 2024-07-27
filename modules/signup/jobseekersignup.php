@@ -428,24 +428,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
              <label><b>City:</b></label>
                     <select name="city" required>
                     <option value="">Select Location</option>
-                    <option value="manila">Manila</option>
-                    <option value="caloocan">Caloocan</option>
-                    <option value="valenzuela">Valenzuela</option>
-                    <option value="pasay">Pasay</option>
-                    <option value="makati">Makati</option>
-                    <option value="quezon_city">Quezon City</option>
-                    <option value="navotas">Navotas</option>
-                    <option value="las_piñas">Las Piñas</option>
-                    <option value="malabon">Malabon</option>
-                    <option value="mandaluyong">Mandaluyong</option>
-                    <option value="marikina">Marikina</option>
-                    <option value="muntinlupa">Muntinlupa</option>
-                    <option value="parañaque">Parañaque</option>
-                    <option value="pasig">Pasig</option>
-                    <option value="san_juan">San Juan</option>
-                    <option value="taguig">Taguig</option>
-                    <option value="valenzuela">Valenzuela</option>
-                    <option value="pateros">Pateros</option>
+                    <option value="Manila">Manila</option>
+                    <option value="Caloocan">Caloocan</option>
+                    <option value="Pasay">Pasay</option>
+                    <option value="Makati">Makati</option>
+                    <option value="QuezonㅤCity">Quezon City</option>
+                    <option value="Navotas">Navotas</option>
+                    <option value="LasㅤPiñas">Las Piñas</option>
+                    <option value="Malabon">Malabon</option>
+                    <option value="Mandaluyong">Mandaluyong</option>
+                    <option value="Marikina">Marikina</option>
+                    <option value="Muntinlupa">Muntinlupa</option>
+                    <option value="Parañaque">Parañaque</option>
+                    <option value="Pasig">Pasig</option>
+                    <option value="SanㅤJuan">San Juan</option>
+                    <option value="Taguig">Taguig</option>
+                    <option value="Valenzuela">Valenzuela</option>
+                    <option value="Pateros">Pateros</option>
                   </select>
                 </div>
             <div class="input-box info">
