@@ -22,17 +22,6 @@
             bottom: 0; 
             width: 100%; 
         }
-        .leaflet-container .leaflet-tile-pane,
-        .leaflet-container .leaflet-overlay-pane,
-        .leaflet-container .leaflet-shadow-pane,
-        .leaflet-container .leaflet-marker-pane,
-        .leaflet-container .leaflet-popup-pane {
-            background-color: darkblue !important;
-        }
-
-        .leaflet-container .leaflet-vector-layer path {
-            stroke: darkblue !important;
-        }
     </style>
 </head>
 <body>
@@ -82,9 +71,9 @@
 
                 const cityCoords = {
                     "Manila": [14.6091, 120.9822],
-                    "QuezonㅤCity": [14.6760, 121.0437],
+                    "Quezon City": [14.6760, 121.0437],
                     "Caloocan": [14.7402, 120.9780],
-                    "LasㅤPiñas": [14.4334, 120.9935],
+                    "Las Piñas": [14.4334, 120.9935],
                     "Makati": [14.5504, 121.0244],
                     "Malabon": [14.6516, 120.9555],
                     "Mandaluyong": [14.5824, 121.0360],
@@ -94,7 +83,7 @@
                     "Parañaque": [14.4911, 121.0190],
                     "Pasay": [14.5538, 120.9830],
                     "Pasig": [14.5734, 121.0605],
-                    "SanㅤJuan": [14.6096, 121.0204],
+                    "San Juan": [14.6096, 121.0204],
                     "Taguig": [14.5355, 121.0545],
                     "Valenzuela": [14.6833, 120.9667],
                     "Pateros": [14.5581, 121.0678]

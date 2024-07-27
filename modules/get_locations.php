@@ -1,31 +1,41 @@
 <?php
-header('Content-Type: application/json');
+session_start();
+require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hanapkita_db";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Get user information
+$user_job_type = '';
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $user_query = "SELECT job_type FROM users WHERE id = ?";
+    $stmt = $conn->prepare($user_query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($user = $result->fetch_assoc()) {
+        $user_job_type = $user['job_type'];
+    }
+    $stmt->close();
 }
 
-$sql = "SELECT location, COUNT(*) as count FROM job_listings GROUP BY location";
-$result = $conn->query($sql);
+// Fetch job postings based on job type
+$sql = "SELECT location, COUNT(*) as count FROM job_listings 
+        WHERE job = ? AND accepted = 0
+        GROUP BY location";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $user_job_type);
+$stmt->execute();
+$result = $stmt->get_result();
 
 $locations = [];
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $locations[] = $row;
-    }
+while ($row = $result->fetch_assoc()) {
+    $locations[] = $row;
 }
 
+$stmt->close();
 $conn->close();
 
+// Return locations data in JSON format
+header('Content-Type: application/json');
 echo json_encode($locations);
 ?>
