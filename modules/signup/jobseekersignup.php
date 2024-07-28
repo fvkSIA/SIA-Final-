@@ -493,7 +493,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="input-box info">
                 <label><b>2 Valid IDs (ex; Drivers License, National ID):</b></label>
-                <input type="file" id="valid" name="valid" accept=".pdf" required>
+                <input type="file" id="valid" name="valid" accept=".jpg, .png" required>
             </div>
             <div class="input-box info">
                 <label><b>Certificate (ex; NCII):</b></label>
