@@ -2,18 +2,14 @@
 require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
 
-$sql_pending = "SELECT count(*) as pending FROM users
-    WHERE users.verified = 0";
+// Fetch the count of various user statuses
+$sql_pending = "SELECT count(*) as pending FROM users WHERE users.verified = 0";
+$sql_jobseekers = "SELECT count(*) as jobseekers FROM users WHERE users.type = 2 AND users.verified = 1";
+$sql_employers = "SELECT count(*) as employers FROM users WHERE users.type = 3 AND users.verified = 1";
+$sql_ongoing = "SELECT count(*) as ongoing FROM job_requests WHERE job_requests.status = 0 AND is_accepted = 1";
 
-$sql_jobseekers = "SELECT count(*) as jobseekers FROM users
-    WHERE users.type = 2 AND users.verified = 1";
-
-$sql_employers = "SELECT count(*) as employers FROM users
-    WHERE users.type = 3 AND users.verified = 1";
-
-$sql_ongoing = "SELECT count(*) as ongoing FROM job_requests
-    WHERE job_requests.status = 0 AND is_accepted = 1";
-
+// Fetch job occupations
+$sql_job_occupations = "SELECT job_type, COUNT(*) as count FROM users WHERE job_type IS NOT NULL GROUP BY job_type";
 
 $stmt1 = $conn->prepare($sql_pending);
 $stmt1->execute();
@@ -35,9 +31,10 @@ $stmt4->execute();
 $result4 = $stmt4->get_result() ?? null;
 $stmt4->close();
 
-
-
-
+$stmt5 = $conn->prepare($sql_job_occupations);
+$stmt5->execute();
+$result5 = $stmt5->get_result() ?? null;
+$stmt5->close();
 
 $conn->close();
 ?>
@@ -51,7 +48,6 @@ $conn->close();
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="https://bootstrapmade.com/assets/css/demo.css?v=31"> -->
     <style>
         .dashboard {
             margin-left: 115px;
@@ -139,6 +135,7 @@ $conn->close();
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%; /* Adjusted width */
         }
 
         .occupation {
@@ -258,6 +255,38 @@ $conn->close();
             text-decoration: none;
             color: inherit;
         }
+        .job-occupations {
+            margin-top: 20px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%; /* Adjusted width */
+        }
+
+        .occupation {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .occupation-bar-container {
+            width: 100%; /* Set to 100% to use available space */
+            background-color: #e0e0e0; /* Light grey background */
+            height: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .occupation-bar {
+            height: 100%;
+            background-color: #119aaf;
+        }
+
+        .occupation p {
+            margin-left: 10px;
+            min-width: 150px;
+        }
     </style>
 </head>
 <body>
@@ -319,36 +348,35 @@ $conn->close();
                 </div>
             </div>
             
-            <!-- <div class="total-container">
-                <a href="#total-jobs" class="total-box">
-                    <h2>Total Jobseeker</h2>
-                    <p>250</p>
-                </a>
-                <a href="#total-companies" class="total-box">
-                    <h2>Total Employer</h2>
-                    <p>400</p>
-                </a>
-            </div> -->
-            
-
             <div class="job-occupations">
                 <h2>Job Occupations</h2>
-                <div class="occupation">
-                    <div class="occupation-bar driver" style="width: 30%;"></div>
-                    <p>Driver</p>
-                </div>
-                <div class="occupation">
-                    <div class="occupation-bar labandera" style="width: 20%;"></div>
-                    <p>Welder</p>
-                </div>
-                <div class="occupation">
-                    <div class="occupation-bar tubero" style="width: 25%;"></div>
-                    <p>Lineman</p>
-                </div>
-                <div class="occupation">
-                    <div class="occupation-bar sales-assistant" style="width: 25%;"></div>
-                    <p>Laundry Staff</p>
-                </div>
+                <?php
+                $maxCount = 0;
+                $jobData = [];
+
+                if ($result5 && $result5->num_rows > 0) {
+                    while ($row = $result5->fetch_assoc()) {
+                        $jobData[] = $row;
+                        if ($row['count'] > $maxCount) {
+                            $maxCount = $row['count'];
+                        }
+                    }
+                }
+
+                foreach ($jobData as $job) {
+                    $percentage = ($job['count'] / $maxCount) * 100;
+                    echo "<div class='occupation'>";
+                    echo "<div class='occupation-bar-container'>";
+                    echo "<div class='occupation-bar' style='width: {$percentage}%;'></div>";
+                    echo "</div>";
+                    echo "<p>" . htmlspecialchars($job['job_type']) . " (" . $job['count'] . ")</p>";
+                    echo "</div>";
+                }
+
+                if (empty($jobData)) {
+                    echo "<p>No job occupations found.</p>";
+                }
+                ?>
             </div>
 
             <div class="top-jobs">
