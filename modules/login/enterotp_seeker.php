@@ -1,14 +1,22 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
 include '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 if (!isset($_SESSION['temp_user'])) {
-    header("Location: login.html");
+    header("Location: login_seeker.php");
     exit();
 }
 ob_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $user_otp = implode("", $_POST['otp']); // Convert OTP array to string
+    // Concatenate the OTP input values into a single string
+    $user_otp_array = $_POST['otp'];
+    $user_otp = implode('', $user_otp_array);
+
     $stored_otp = $_SESSION['temp_user']['otp'];
+    if (is_array($stored_otp)) {
+        $stored_otp = implode('', $stored_otp);
+    }
     $user_id = $_SESSION['temp_user']['id'];
 
     $sql = "SELECT * FROM users WHERE id='$user_id' AND otp='$user_otp'";
@@ -18,25 +26,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($user) {
         $otp_expiry = strtotime($user['otp_expiry']);
         if ($otp_expiry >= time()) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['profile'] = $user['profile'];
             $_SESSION['email'] = $user['email'];
-            $_SESSION['name'] = $user['lastname'] . ', ' . $user['firstname'];
-            $_SESSION['phone'] = $user['phone_number'];
-            $_SESSION['address'] = $user['home_address'];
-            $_SESSION['type'] = $user['type'];
             unset($_SESSION['temp_user']);
-            if ($user['type'] == 2) {
-                header('location: ../jobseeker/jobseekernavbar.php');
-            } else if ($user['type'] == 3) {
-                header('location: ../employer/employernavbar.php');
-            }
+            header('Location: newpass_seeker.php');
         } else {
             ?>
             <script>
                 alert("OTP has expired. Please try again.");
                 function navigateToPage() {
-                    window.location.href = 'login.html';
+                    window.location.href = 'login_seeker.php';
                 }
                 window.onload = function() {
                     navigateToPage();
@@ -51,7 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,57 +70,129 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         window.location.href = 'signup.html';
       });
     </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-        .login-container {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none; /* Hidden by default */
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        .overlay.active {
-            display: flex; /* Show overlay when active */
-        }
-        .overlay-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
-        .otp-field input {
-            width: 40px;
-            text-align: center;
-            font-size: 18px;
-            margin: 0 5px;
-        }
-        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+    h2 {
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+        }
+  nav {
+  background-color: #3D52A0;
+  color: #fff;
+  padding: 10px 20px;
+  font-family: 'Arial', sans-serif;
+}
 
+.container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.logo {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 1.5em;
+  margin: 0;
+  color: #fff;
+  font-weight: bold;
+}
+.title1 {
+    font-family: 'Roboto', sans-serif; 
+    font-size: 2.5rem; 
+    font-weight: bold; 
+    color: #3D52A0; 
+    text-transform: uppercase;
+    letter-spacing: 2px; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    margin: 2px 0;
+}
+
+
+
+.nav-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 14px;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #fff;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.btn-link {
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: bold;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.btn-signin {
+    color: #ffffff;
+    background-color: transparent;
+}
+
+.btn-link:hover {
+    background-color: #5a7ad1;
+    color: #ffffff;
+    border: 2px solid #000;
+}
+
+.btn-signin:hover {
+    background-color: #5a7ad1;
+    color: #ffffff;
+    border: 2px solid #000;
+}
     body,
     input {
       font-family: "Poppins", sans-serif;
@@ -178,10 +247,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .title {
-      font-size: 2.2rem;
-      color: #444;
-      margin-bottom: 10px;
-    }
+        font-size: 1.5em;
+        margin: 0;
+        color: #fff;
+        font-weight: bold;
+      }
 
     .input-field {
       max-width: 380px;
@@ -230,7 +300,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .social-text a:hover {
-      color: #4481eb;
+      color: #931717;
     }
 
     .social-media {
@@ -254,13 +324,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .social-icon:hover {
-      color: #4481eb;
-      border-color: #4481eb;
+      color: #931717;
+      border-color: #931717;
     }
 
     .btn {
       width: 170px;
-      background-color: #5995fd;
+      background-color: #3D52A0;
       border: none;
       outline: none;
       height: 49px;
@@ -279,7 +349,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .btn:hover {
-      background-color: #4d84e2;
+      background-color: #4C82E4;
     }
     .panels-container {
       position: absolute;
@@ -299,7 +369,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       top: -10%;
       right: 48%;
       transform: translateY(-50%);
-      background-image: linear-gradient(-45deg, #4481eb 0%, #04befe 100%);
+      background-image: linear-gradient(-45deg, #3D52A0 0%, #B4D4FF 100%);
       transition: 1.8s ease-in-out;
       border-radius: 50%;
       z-index: 6;
@@ -378,7 +448,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .btn.prev:hover {
-      background-color: #4481eb;
+      background-color: #3D52A0;
     }
     @media (max-width: 870px) {
       .container {
@@ -481,66 +551,182 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         left: 50%;
       }
     }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .overlay.active {
+            display: flex; /* Show overlay when active */
+        }
+        .overlay-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .otp-field input {
+            width: 40px;
+            text-align: center;
+            font-size: 18px;
+            margin: 0 5px;
+        }
+        
+    h1 {
+        color: #3a4a7b;
+        font-size: 30px;
+        margin-top: 15px;
+    }
+    p {
+        color: #fff;
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+    h6 {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+    .code-inputs {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+    .code-input {
+        width: 50px;
+        height: 50px;
+        border: none;
+        border-radius: 25px;
+        background-color: #e8eef9;
+        font-size: 24px;
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+    }
+    button {
+        padding: 10px 30px;
+        background-color: white;
+        color: #3a4a7b;
+        border: 2px solid #3a4a7b;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        font-family: 'Poppins', sans-serif;
+    }
+    button:hover {
+        background-color: #3a4a7b;
+        color: white;
+    }
   </style>
 </head>
 <body>
 <div class="container">
-      <div class="forms-container">
-        <div class="signin-signup">
-          <form action="login.php" method="post" class="sign-in-form">
-            <h2 class="title">Sign in</h2>
-            <div class="input-field">
-              <i class="fas fa-envelope"></i>
-              <input type="text" placeholder="Email" name="email" />
-            </div>
-            <div class="input-field">
-              <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" name="password"/>
-            </div>
-            <div class="social-text">
-              <a href="forgotpassword.html">Forgot Password?</a>
-            </div>
-            <button type="submit" class="btn solid">Login</button>
-          </form>
-        </div>
-      </div>
-  
-      <div class="panels-container">
-        <div class="panel left-panel">
-          <div class="content">
-            <h3>New here ?</h3>
-            <p>
-              Welcome to our community! Join us now by creating an account to unlock a world of exciting opportunities and exclusive features tailored just for you.
-
-            </p>
-            <a href="create.php" class="btn transparent" id="sign-up-btn"> Sign up</a>
-            <button onclick="goBack()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
-
+    <div class="forms-container">
+      <div class="signin-signup">
+        <form action="login_j.php" method="post" class="sign-in-form">
+          <h2 class="title1">Sign in</h2>
+          <div class="input-field">
+            <i class="fas fa-envelope"></i>
+            <input type="text" placeholder="Email" name="email" />
           </div>
-          <img src="img/log.svg" class="image" alt="" />
-        </div>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" name="password"/>
+          </div>
+          <div class="social-text">
+            <a href="enteremail.html">Forgot Password?</a>
+          </div>
+          <button type="submit" class="btn solid">Login</button>
+        </form>
       </div>
     </div>
-    <button onclick="goBack()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
 
-    <script src="app.js"></script>
+    <div class="panels-container">
+      <div class="panel left-panel">
+        <div class="content">
+          <h3>New here ?</h3>
+          <p>
+            Welcome to our community! Join us now by creating an account to unlock a world of exciting opportunities and exclusive features tailored just for you.
+
+          </p>
+          <div class="button-container">
+          <button class="btn transparent" type="button" onclick="selectOption('JOBSEEKER', this)"><b>Sign up</b></button>
+          </div>
+          <form id="registrationForm" method="POST" action="">
+          <input type="hidden" id="selectedOption" name="selectedOption">
+          </form>
+
+
+          <button onclick="goBack()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
+
+        </div>
+        <img src="img/log.svg" class="image" alt="" />
+      </div>
+    </div>
+  </div>
+  <button onclick="goBack()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
+
+  <script src="app.js"></script>
+  <script>
+      function selectOption(option, button) {
+          document.getElementById('selectedOption').value = option;
+          
+          // Remove selected class from all buttons
+          var buttons = document.querySelectorAll('.button-container button');
+          buttons.forEach(function(btn) {
+              btn.classList.remove('selected');
+          });
+
+          // Add selected class to the clicked button
+          button.classList.add('selected');
+
+          // Submit the form
+          document.getElementById('registrationForm').submit();
+      }
+  </script>
+
+
+
 
 
     <div id="otp-overlay" class="overlay">
         <div class="overlay-content">
-            <h4>Enter Verification Code</h4>
-            <p>Make sure the verification code is correct.</p>
-            <form method="post" action="">
-                <div class="otp-field mb-4">
-                    <input type="number" name="otp[]" maxlength="1" required />
-                    <input type="number" name="otp[]" maxlength="1" disabled />
-                    <input type="number" name="otp[]" maxlength="1" disabled />
-                    <input type="number" name="otp[]" maxlength="1" disabled />
-                    <input type="number" name="otp[]" maxlength="1" disabled />
-                    <input type="number" name="otp[]" maxlength="1" disabled />
-                </div>
-                <button type="submit" class="btn btn-primary mb-3">Verify</button>
-            </form>
+        <h1>Enter Verification Code</h1>
+        <h6>Make sure the verification code is correct.</h6>
+        <form method="post" action="">
+            <div class="otp-field mb-4">
+                <input type="text" name="otp[]" maxlength="1" required />
+                <input type="text" name="otp[]" maxlength="1" disabled />
+                <input type="text" name="otp[]" maxlength="1" disabled />
+                <input type="text" name="otp[]" maxlength="1" disabled />
+                <input type="text" name="otp[]" maxlength="1" disabled />
+                <input type="text" name="otp[]" maxlength="1" disabled />
+            </div>
+            <button type="submit" name="verify_otp">Verify OTP</button>
+        </form>
         </div>
     </div>
 

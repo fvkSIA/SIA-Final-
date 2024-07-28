@@ -1,19 +1,17 @@
-<?php 
+<?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require './PHPMailer/src/Exception.php';
 require './PHPMailer/src/PHPMailer.php';
 require './PHPMailer/src/SMTP.php';
-
 include '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
 $error = '';
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+if( isset($_POST['email'])) {
    
     // username and password sent from form 
     $email = mysqli_real_escape_string($conn,$_POST['email']);
-    $pass = mysqli_real_escape_string($conn,$_POST['password']); 
 
     $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
@@ -21,11 +19,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    if ($user && password_verify($_POST['password'], $user['password'])) {
+    if ($_POST['email']== $user['email']) {
 
         $otp = rand(100000, 999999);
         $otp_expiry = date("Y-m-d H:i:s", strtotime("+3 minute"));
-        $subject= "Your OTP for Login";
+        $subject= "Your OTP for Password Reset";
         $message="Your OTP is: $otp";
         $f_name = $row['firstname'];
         
@@ -50,16 +48,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $_SESSION['email']=$user['email'];
         $_SESSION['temp_user'] = ['id' => $user['id'], 'otp' => $otp];
-        header('Location:otp_verification_seeker.php');
-        
-        
-    } else {
-        echo "<script>
-                alert('Invalid email or password.');
-                window.location.href = 'login_seeker.php';
-              </script>";
-    }
-    $stmt->close();
-
-}
+        header('Location:enterotp_emp.php');
+        }else{
+          ?>
+            <script type="text/javascript">alert("Incorrect email or password, please try again.");</script>
+            <?php 
+        }
+      }else{
+        ?>
+          <script type="text/javascript">alert("Incorrect email or password, please try again.");</script>
+          <?php 
+        }
 ?>

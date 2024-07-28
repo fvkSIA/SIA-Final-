@@ -1,6 +1,66 @@
+<?php
+session_start();
+include '/xampp/htdocs/SIA-Final-/db/db_connection.php';
+if (!isset($_SESSION['temp_user'])) {
+    header("Location: login_seeker.php");
+    exit();
+}
+ob_start();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $user_otp = implode("", $_POST['otp']); // Convert OTP array to string
+    $stored_otp = $_SESSION['temp_user']['otp'];
+    $user_id = $_SESSION['temp_user']['id'];
+
+    $sql = "SELECT * FROM users WHERE id='$user_id' AND otp='$user_otp'";
+    $query = mysqli_query($conn, $sql);
+    $user = mysqli_fetch_array($query);
+
+    if ($user) {
+        $otp_expiry = strtotime($user['otp_expiry']);
+        if ($otp_expiry >= time()) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['profile'] = $user['profile'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['name'] = $user['lastname'] . ', ' . $user['firstname'];
+            $_SESSION['phone'] = $user['phone_number'];
+            $_SESSION['address'] = $user['home_address'];
+            $_SESSION['type'] = $user['type'];
+            unset($_SESSION['temp_user']);
+            if ($user['type'] == 2) {
+                header('location: ../jobseeker/jobseekernavbar.php');
+            } else if ($user['type'] == 3) {
+                header('location: ../employer/employernavbar.php');
+            }
+        } else {
+            ?>
+            <script>
+                alert("OTP has expired. Please try again.");
+                function navigateToPage() {
+                    window.location.href = 'login_seeker.php';
+                }
+                window.onload = function() {
+                    navigateToPage();
+                }
+            </script>
+            <?php
+        }
+    } else {
+        ?>
+        <script type="text/javascript">alert("Incorrect OTP, please try again.");</script>
+        <?php
+    }
+}
+?>
+
 <!DOCTYPE html>
-<html lang>
-  <head>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="CodeHim">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'>
     <script
       src="https://kit.fontawesome.com/64d58efce2.js"
       crossorigin="anonymous">
@@ -27,7 +87,7 @@
             font-family: 'Poppins', sans-serif;
         }
   nav {
-  background-color: #7091E6;
+  background-color: #3D52A0;
   color: #fff;
   padding: 10px 20px;
   font-family: 'Arial', sans-serif;
@@ -57,6 +117,19 @@
   color: #fff;
   font-weight: bold;
 }
+.title1 {
+    font-family: 'Roboto', sans-serif; 
+    font-size: 2.5rem; 
+    font-weight: bold; 
+    color: #3D52A0; 
+    text-transform: uppercase;
+    letter-spacing: 2px; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    margin: 2px 0;
+}
+
+
 
 .nav-center {
   display: flex;
@@ -133,7 +206,6 @@
       width: 100%;
       background-color: #fff;
       min-height: 100vh;
-      overflow: hidden;
     }
 
     .forms-container {
@@ -178,10 +250,11 @@
     }
 
     .title {
-      font-size: 2.2rem;
-      color: #444;
-      margin-bottom: 10px;
-    }
+        font-size: 1.5em;
+        margin: 0;
+        color: #fff;
+        font-weight: bold;
+      }
 
     .input-field {
       max-width: 380px;
@@ -230,7 +303,7 @@
     }
 
     .social-text a:hover {
-      color: #4481eb;
+      color: #931717;
     }
 
     .social-media {
@@ -254,13 +327,13 @@
     }
 
     .social-icon:hover {
-      color: #4481eb;
-      border-color: #4481eb;
+      color: #931717;
+      border-color: #931717;
     }
 
     .btn {
       width: 170px;
-      background-color: #5995fd;
+      background-color: #3D52A0;
       border: none;
       outline: none;
       height: 49px;
@@ -279,7 +352,7 @@
     }
 
     .btn:hover {
-      background-color: #4d84e2;
+      background-color: #4C82E4;
     }
     .panels-container {
       position: absolute;
@@ -299,7 +372,7 @@
       top: -10%;
       right: 48%;
       transform: translateY(-50%);
-      background-image: linear-gradient(-45deg, #7091E6 0%, #B4D4FF 100%);
+      background-image: linear-gradient(-45deg, #3D52A0 0%, #B4D4FF 100%);
       transition: 1.8s ease-in-out;
       border-radius: 50%;
       z-index: 6;
@@ -378,7 +451,7 @@
     }
 
     .btn.prev:hover {
-      background-color: #4481eb;
+      background-color: #3D52A0;
     }
     @media (max-width: 870px) {
       .container {
@@ -481,38 +554,59 @@
         left: 50%;
       }
     }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .overlay.active {
+            display: flex; /* Show overlay when active */
+        }
+        .overlay-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .otp-field input {
+            width: 40px;
+            text-align: center;
+            font-size: 18px;
+            margin: 0 5px;
+        }
+
+
   </style>
-
-
-    <title>Login</title>
-     <!-- Main Content -->
-     <header>
-      <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <div class="nav-left">
-            <img class="logo" src="hanapKITA.png">
-            <h2 class="title">HANAPKITA</h2>
-            </div>
-            <div class="nav-center">
-            <a class="nav-link" href="../modules/landing.php">HOME</a>
-            <a class="nav-link" href="#top">JOB SEARCH</a>
-            <a class="nav-link" href="#middle">WORKER</a>
-            <a class="nav-link" href="#bottom">ABOUT</a>
-            </div>
-            <div class="nav-right">
-            <a class="btn-link" href="#">Create Account</a>
-            <a class="btn-link btn-signin" href="./login/login.html">Sign In</a>
-            </div>
-        </div>
-    </nav>
-</header>
-  </head>
-  <body>
-    <div class="container">
+</head>
+<body>
+<div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-          <form action="login.php" method="post" class="sign-in-form">
-            <h2 class="title">Sign in</h2>
+          <form action="login_j.php" method="post" class="sign-in-form">
+            <h2 class="title1">Sign in</h2>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
               <input type="text" placeholder="Email" name="email" />
@@ -537,7 +631,14 @@
               Welcome to our community! Join us now by creating an account to unlock a world of exciting opportunities and exclusive features tailored just for you.
 
             </p>
-            <a href="create.php" class="btn transparent" id="sign-up-btn"> Sign up</a>
+            <div class="button-container">
+            <button class="btn transparent" type="button" onclick="selectOption('JOBSEEKER', this)"><b>Sign up</b></button>
+            </div>
+            <form id="registrationForm" method="POST" action="">
+            <input type="hidden" id="selectedOption" name="selectedOption">
+            </form>
+
+
             <button onclick="goBack()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
 
           </div>
@@ -548,5 +649,84 @@
     <button onclick="goBack()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
 
     <script src="app.js"></script>
-  </body>
-  </html>
+    <script>
+        function selectOption(option, button) {
+            document.getElementById('selectedOption').value = option;
+            
+            // Remove selected class from all buttons
+            var buttons = document.querySelectorAll('.button-container button');
+            buttons.forEach(function(btn) {
+                btn.classList.remove('selected');
+            });
+
+            // Add selected class to the clicked button
+            button.classList.add('selected');
+
+            // Submit the form
+            document.getElementById('registrationForm').submit();
+        }
+    </script>
+
+
+
+
+
+
+    <div id="otp-overlay" class="overlay">
+        <div class="overlay-content">
+            <h4>Enter Verification Code</h4>
+            <p>Make sure the verification code is correct.</p>
+            <form method="post" action="">
+                <div class="otp-field mb-4">
+                    <input type="number" name="otp[]" maxlength="1" required />
+                    <input type="number" name="otp[]" maxlength="1" disabled />
+                    <input type="number" name="otp[]" maxlength="1" disabled />
+                    <input type="number" name="otp[]" maxlength="1" disabled />
+                    <input type="number" name="otp[]" maxlength="1" disabled />
+                    <input type="number" name="otp[]" maxlength="1" disabled />
+                </div>
+                <button type="submit" class="btn btn-primary mb-3">Verify</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showOtpOverlay() {
+            document.getElementById('otp-overlay').classList.add('active');
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            showOtpOverlay();
+
+            const inputs = document.querySelectorAll(".otp-field input");
+
+            inputs[0].focus();
+
+            inputs.forEach((input, index) => {
+                input.addEventListener("input", () => {
+                    if (input.value.length === 1) {
+                        if (index !== inputs.length - 1) {
+                            inputs[index + 1].disabled = false;
+                            inputs[index + 1].focus();
+                        }
+                    }
+                });
+
+                input.addEventListener("keydown", (e) => {
+                    if (e.key === "Backspace" && input.value.length === 0) {
+                        if (index !== 0) {
+                            inputs[index - 1].focus();
+                        }
+                    }
+                });
+
+                input.addEventListener("click", () => {
+                    if (index !== 0 && inputs[index - 1].value.length === 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

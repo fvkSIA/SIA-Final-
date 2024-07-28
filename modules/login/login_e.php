@@ -50,7 +50,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $_SESSION['email']=$user['email'];
         $_SESSION['temp_user'] = ['id' => $user['id'], 'otp' => $otp];
-        header('Location:otp_verification.php');
+        header('Location:otp_verification_emp.php');
         
         
     } else {

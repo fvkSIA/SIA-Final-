@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 session_start();
 include '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 if (!isset($_SESSION['temp_user'])) {
-    header("Location: login.html");
+    header("Location: login_emp.php");
     exit();
 }
 ob_start();
@@ -28,13 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($otp_expiry >= time()) {
             $_SESSION['email'] = $user['email'];
             unset($_SESSION['temp_user']);
-            header('Location: newpass.php');
+            header('Location: newpass_emp.php');
         } else {
             ?>
             <script>
                 alert("OTP has expired. Please try again.");
                 function navigateToPage() {
-                    window.location.href = 'login.html';
+                    window.location.href = 'login_emp.php';
                 }
                 window.onload = function() {
                     navigateToPage();
@@ -70,57 +70,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         window.location.href = 'signup.html';
       });
     </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-        .login-container {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none; /* Hidden by default */
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        .overlay.active {
-            display: flex; /* Show overlay when active */
-        }
-        .overlay-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
-        .otp-field input {
-            width: 40px;
-            text-align: center;
-            font-size: 18px;
-            margin: 0 5px;
-        }
-        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+    h2 {
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+        }
+  nav {
+  background-color: #691111;
+  color: #fff;
+  padding: 10px 20px;
+  font-family: 'Arial', sans-serif;
+}
 
+
+.title1 {
+    font-family: 'Roboto', sans-serif; 
+    font-size: 2.5rem; 
+    font-weight: bold; 
+    color: #410303; 
+    text-transform: uppercase;
+    letter-spacing: 2px; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    margin: 2px 0;
+}
+
+
+
+
+.btn-signin {
+    color: #ffffff;
+    background-color: transparent;
+}
+
+
+
+.btn-signin:hover {
+    background-color: #8C1212;
+    color: #ffffff;
+    border: 2px solid #000;
+}
     body,
     input {
       font-family: "Poppins", sans-serif;
@@ -174,11 +171,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       z-index: 2;
     }
 
-    .title {
-      font-size: 2.2rem;
-      color: #444;
-      margin-bottom: 10px;
-    }
 
     .input-field {
       max-width: 380px;
@@ -227,7 +219,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .social-text a:hover {
-      color: #4481eb;
+      color: #931717;
     }
 
     .social-media {
@@ -251,13 +243,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .social-icon:hover {
-      color: #4481eb;
-      border-color: #4481eb;
+      color: #931717;
+      border-color: #931717;
     }
 
     .btn {
       width: 170px;
-      background-color: #5995fd;
+      background-color: #931717;
       border: none;
       outline: none;
       height: 49px;
@@ -276,7 +268,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .btn:hover {
-      background-color: #4d84e2;
+      background-color: #410303;
     }
     .panels-container {
       position: absolute;
@@ -296,7 +288,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       top: -10%;
       right: 48%;
       transform: translateY(-50%);
-      background-image: linear-gradient(-45deg, #4481eb 0%, #04befe 100%);
+      background-image: linear-gradient(-45deg, #410303 0%, #B4D4FF 100%);
       transition: 1.8s ease-in-out;
       border-radius: 50%;
       z-index: 6;
@@ -375,7 +367,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .btn.prev:hover {
-      background-color: #4481eb;
+      background-color: #931717;
     }
     @media (max-width: 870px) {
       .container {
@@ -478,6 +470,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         left: 50%;
       }
     }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .overlay.active {
+            display: flex; /* Show overlay when active */
+        }
+        .overlay-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .otp-field input {
+            width: 40px;
+            text-align: center;
+            font-size: 18px;
+            margin: 0 5px;
+        }
     h1 {
         color: #3a4a7b;
         font-size: 30px;
@@ -527,45 +562,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 <div class="container">
-      <div class="forms-container">
-        <div class="signin-signup">
-          <form action="login.php" method="post" class="sign-in-form">
-            <h2 class="title">Sign in</h2>
-            <div class="input-field">
-              <i class="fas fa-envelope"></i>
-              <input type="text" placeholder="Email" name="email" />
-            </div>
-            <div class="input-field">
-              <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" name="password"/>
-            </div>
-            <div class="social-text">
-              <a href="forgotpassword.html">Forgot Password?</a>
-            </div>
-            <button type="submit" class="btn solid">Login</button>
-          </form>
-        </div>
-      </div>
-  
-      <div class="panels-container">
-        <div class="panel left-panel">
-          <div class="content">
-            <h3>New here ?</h3>
-            <p>
-              Welcome to our community! Join us now by creating an account to unlock a world of exciting opportunities and exclusive features tailored just for you.
-
-            </p>
-            <a href="create.php" class="btn transparent" id="sign-up-btn"> Sign up</a>
-            <button onclick="goBack()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
-
+        <div class="forms-container">
+          <div class="signin-signup">
+            <form action="login_e.php" method="post" class="sign-in-form">
+              <h2 class="title1">Sign in</h2>
+              <div class="input-field">
+                <i class="fas fa-envelope"></i>
+                <input type="text" placeholder="Email" name="email" />
+              </div>
+              <div class="input-field">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Password" name="password"/>
+              </div>
+              <div class="social-text">
+                <a href="enteremail.html">Forgot Password?</a>
+              </div>
+              <button type="submit" class="btn solid">Login</button>
+            </form>
           </div>
-          <img src="img/log.svg" class="image" alt="" />
+        </div>
+    
+        <div class="panels-container">
+          <div class="panel left-panel">
+            <div class="content">
+              <h3>New here ?</h3>
+              <p>
+                Welcome to our community! Join us now by creating an account to unlock a world of exciting opportunities and exclusive features tailored just for you.
+  
+              </p>
+              <div class="button-container">
+              <button class="btn transparent" type="button" onclick="selectOption('EMPLOYER', this)"><b>Sign up</b></button>
+              </div>
+              <form id="registrationForm" method="POST" action="">
+              <input type="hidden" id="selectedOption" name="selectedOption">
+              </form>
+  
+  
+              <button onclick="goBack()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
+  
+            </div>
+            <img src="img/log.svg" class="image" alt="" />
+          </div>
         </div>
       </div>
-    </div>
-    <button onclick="goBack()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
+      <button onclick="goBack()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
+  
+      <script src="app.js"></script>
+      <script>
+          function selectOption(option, button) {
+              document.getElementById('selectedOption').value = option;
+              
+              // Remove selected class from all buttons
+              var buttons = document.querySelectorAll('.button-container button');
+              buttons.forEach(function(btn) {
+                  btn.classList.remove('selected');
+              });
+  
+              // Add selected class to the clicked button
+              button.classList.add('selected');
+  
+              // Submit the form
+              document.getElementById('registrationForm').submit();
+          }
+      </script>
 
-    <script src="app.js"></script>
+
+
 
 
     <div id="otp-overlay" class="overlay">

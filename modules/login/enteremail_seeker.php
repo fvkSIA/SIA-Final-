@@ -48,7 +48,7 @@ if( isset($_POST['email'])) {
 
         $_SESSION['email']=$user['email'];
         $_SESSION['temp_user'] = ['id' => $user['id'], 'otp' => $otp];
-        header('Location:enterotp.php');
+        header('Location:enterotp_seeker.php');
         }else{
           ?>
             <script type="text/javascript">alert("Incorrect email or password, please try again.");</script>

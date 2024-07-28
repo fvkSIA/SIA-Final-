@@ -546,7 +546,7 @@ if (isset($_POST['selectedOption'])){
               <input type="password" placeholder="Password" name="password"/>
             </div>
             <div class="social-text">
-              <a href="enteremail.html">Forgot Password?</a>
+              <a href="enteremail_emp.html">Forgot Password?</a>
             </div>
             <button type="submit" class="btn solid">Login</button>
           </form>
