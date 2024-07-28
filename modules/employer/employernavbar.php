@@ -392,17 +392,12 @@ $conn->close();
         <span class="tooltip">Home</span>
       </li>
       <li>
-    <a href="javascript:void(0)" onclick="changeContent('employerinbox.php')">
-        <i class="bx bx-chat"></i>
-        <span class="link_name">Inbox</span>
-        <?php if ($notification_count > 0): ?>
-            <span class="badge"><?php echo $notification_count; ?></span>
-        <?php endif; ?>
-    </a>
-    <span class="tooltip">Inbox</span>
-</li>
-
-
+          <a href="javascript:void(0)" onclick="changeContent('employerinbox.php')">
+              <i class="bx bx-chat"></i>
+              <span class="link_name">Inbox</span>
+          </a>
+          <span class="tooltip">Inbox</span>
+      </li>
       <li>
         <a href="javascript:void(0)" onclick="changeContent('employerskilledworker.php')">
           <i class="bx bx-id-card"></i>
