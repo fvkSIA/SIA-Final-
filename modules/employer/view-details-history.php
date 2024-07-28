@@ -43,134 +43,165 @@ $conn->close();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="styles.css"> <!-- Link to your custom stylesheet -->
   <style>
-    body{
-      font-family: 'Poppins', sans-serif;
-    }
-    .stars {
-      color: #ffc107;
-      font-size: 30px;
-    }
     body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    }
+    background-color: #f0f2f5;
+    color: #333;
+    line-height: 1.6;
+}
 
-    .container {
+.container {
     display: flex;
     justify-content: center;
-    padding: 20px;
-    }
+    padding: 40px 20px;
+}
 
-    .content {
+.content {
     width: 100%;
     max-width: 800px;
-    }
+}
 
-    .header {
-    font-size: 25px;
+.header {
+    font-size: 28px;
     font-weight: bold;
-    color: #1d4ed8; /* Blue-500 */
-    display: block;
-    }
+    color: #1d4ed8;
+    margin-bottom: 20px;
+    padding-bottom: 0px;
+}
 
-    .card {
-    background-color: #ebf8ff; /* Blue-100 */
-    padding: 24px;
-    border-radius: 8px;
-    }
+.card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-    .job-title {
-    font-size: 1.125rem; /* Text-lg */
+.job-title {
+    font-size: 24px;
     font-weight: bold;
-    color: #1d4ed8; /* Blue-500 */
-    }
+    color: #1d4ed8;
+    margin-bottom: 10px;
+}
 
-    .job-date {
-    font-size: 0.875rem; /* Text-sm */
-    color: #4b5563; /* Gray-600 */
-    }
+.job-date {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 15px;
+}
 
-    .status-button {
-    background-color: #f59e0b; /* Yellow-500 */
+.status-button {
+    background-color: #10b981;
     color: white;
     font-weight: bold;
-    padding: 8px 16px;
-    border-radius: 9999px; /* Rounded-full */
-    font-size: 1.125rem; /* Text-lg */
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-size: 16px;
     border: none;
     cursor: pointer;
-    }
+    transition: background-color 0.3s ease;
+}
 
-    .employed-worker {
-    margin-top: 16px;
-    }
+.status-button:hover {
+    background-color: #059669;
+}
 
-    .worker-label {
+.employed-worker {
+    margin-top: 20px;
+}
+
+.worker-label {
     font-weight: bold;
-    color: #4b5563; /* Gray-700 */
-    }
+    color: #4b5563;
+}
 
-    .worker-name {
-    color: #10b981; /* Green-500 */
-    }
+.worker-name {
+    color: #10b981;
+}
 
-    .divider {
-    margin: 16px 0;
-    }
+.divider {
+    margin: 25px 0;
+    border: none;
+    border-top: 1px solid #e5e7eb;
+}
 
-    .section-title {
-    font-size: 1.25rem; /* Text-xl */
+.section-title {
+    font-size: 20px;
     font-weight: bold;
-    color: #111827; /* Gray-900 */
-    }
+    color: #111827;
+    margin-bottom: 15px;
+}
 
-    .detail-item {
+.detail-item {
     display: flex;
     align-items: center;
-    margin-top: 8px;
-    color: #4b5563; /* Gray-600 */
-    }
+    margin-top: 12px;
+    color: #4b5563;
+}
 
-    .icon {
-    margin-right: 8px;
-    }
+.icon {
+    margin-right: 12px;
+    font-size: 18px;
+    color: #3b82f6;
+}
 
-    .detail-text {
-    font-size: 0.875rem; /* Text-sm */
-    }
+.detail-text {
+    font-size: 16px;
+}
 
-    .salary-section {
-    margin-top: 16px;
-    }
 
-    .salary-text {
-    font-size: 0.875rem; /* Text-sm */
-    background-color: #f3f4f6; /* Gray-100 */
-    padding: 4px 8px;
-    border-radius: 4px;
-    color: #374151; /* Gray-700 */
-    font-weight: 600;
-    }
 
-    .description-label,
-    .description-list,
-    .qualification-section,
-    .qualification-list,
-    .review-section,
-    .review-text {
-    font-size: 0.875rem; /* Text-sm */
-    color: #4b5563; /* Gray-600 */
-    }
+.description-list,
+.qualification-section,
+.qualification-list,
+.review-section,
+.review-text {
+    font-size: 16px;
+    color: #4b5563;
+}
 
-    .description-list,
-    .qualification-list {
-    list-style-type: disc;
+.description-list,
+.qualification-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.description-list li,
+.qualification-list li {
+    position: relative;
     padding-left: 20px;
-    }
+    margin-bottom: 10px;
+}
 
+.description-list li:before,
+.qualification-list li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #3b82f6;
+}
+.job-details-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: -20px;
+    margin-bottom: -30px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    margin-right: 10px;
+}
   </style>
 </head>
 <body>
@@ -186,53 +217,55 @@ $conn->close();
         <span class="header">JOB ORDER HISTORY</span>
         
         <div class="card">
-            <h1 class="job-title"><?php echo $data['job'] ?? $data['job_offer_job'];?></h1>
-            <p class="job-date"><?php echo $data['date'] ?? $data['job_offer_date'];?></p>
-            <button class="status-button">
+        <button class="status-button">
                 COMPLETED
             </button>
+            <h1 class="job-title"><?php echo $data['job'] ?? $data['job_offer_job'];?></h1>
+            <p class="job-date"><?php echo $data['date'] ?? $data['job_offer_date'];?></p>
             <div class="employed-worker">
                 <p class="worker-label">Employed Worker: <span class="worker-name"><?php echo $data['user_fname']?> <?php echo $data['user_lname'];?></span></p>
             </div>
 
             <hr class="divider">
-
             <h2 class="section-title">Job details</h2>
+            <div class="job-details-container">
+                <div class="detail-item">
+                    <i class="fas fa-briefcase icon"></i>
+                    <?php $type = $data['type'] ?? $data['job_offer_type']; ?>
+                    <p class="detail-text"><?php echo $type == 'parttime' ? 'Part-time' : 'Full-time';?></p>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-map-marker-alt icon"></i>
+                    <p class="detail-text"><?php echo $data['location'] ?? $data['job_offer_loc'];?></p>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-peso-sign icon"></i>
+                    <p class="detail-text">
+                        <?php 
+                            $salary = $data['salary_offer'] ?? $data['job_offer_sal'];
+                            echo number_format($salary, 2, '.', ',');
+                        ?>
+                    </p>
+                </div>
+            </div>
 
-            <div class="detail-item">
-                <i class="fas fa-briefcase icon"></i>
-                <?php $type = $data['type'] ?? $data['job_offer_type']; ?>
-                <p class="detail-text"><?php echo $type == 'parttime' ? 'Part-time' : 'Full-time';?></p>
-            </div>
-            <div class="detail-item">
-                <i class="fas fa-map-marker-alt icon"></i>
-                <p class="detail-text"><?php echo $data['location'] ?? $data['job_offer_loc'];?></p>
-            </div>
 
-            <div class="salary-section">
-                <h3 class="section-title">Salary</h3>
-                <p class="salary-text"><?php echo $data['salary_offer'] ?? $data['job_offer_sal']?></p>
-            </div>
 
             <hr class="divider">
 
-            <h2 class="section-title">Full Job description</h2>
-            <p class="description-label">Responsibilities:</p>
+            <h2 class="section-title">Responsibilities:</h2>
             <ul class="description-list">
-                <?php echo $data['responsibilities'] ?? $data['job_offer_respo'];?>
+                <?php echo nl2br($data['responsibilities'] ?? $data['job_offer_respo']);?>
             </ul>
             <div class="qualification-section">
                 <h2 class="section-title">Qualifications:</h2>
                 <ul class="qualification-list">
-                    <?php echo $data['qualifications'] ?? $data['job_offer_quali'];?>
+                    <?php echo nl2br($data['qualifications'] ?? $data['job_offer_quali']);?>
                 </ul>
             </div>
 
             <div class="review-section">
                 <h2 class="section-title">Review:</h2>
-                <!-- <div class="stars">
-                    ★★★★☆
-                </div> -->
                 <p class="review-text">
                     <?php echo $data['reviews'] ?? 'no reviews';?>
                 </p>
