@@ -34,7 +34,6 @@ $conn->close();
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,92 +42,198 @@ $conn->close();
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"> <!-- Link to your custom stylesheet -->
   <style>
-
-
-body{
-  font-family: 'Roboto', sans-serif;
-  font-family: 'Poppins', sans-serif;
-}
-
-.stars {
+    body{
+      font-family: 'Poppins', sans-serif;
+    }
+    .stars {
       color: #ffc107;
       font-size: 30px;
     }
+    body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    }
 
-</style>
+    .container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    }
+
+    .content {
+    width: 100%;
+    max-width: 800px;
+    }
+
+    .header {
+    font-size: 25px;
+    font-weight: bold;
+    color: #1d4ed8; /* Blue-500 */
+    display: block;
+    }
+
+    .card {
+    background-color: #ebf8ff; /* Blue-100 */
+    padding: 24px;
+    border-radius: 8px;
+    }
+
+    .job-title {
+    font-size: 1.125rem; /* Text-lg */
+    font-weight: bold;
+    color: #1d4ed8; /* Blue-500 */
+    }
+
+    .job-date {
+    font-size: 0.875rem; /* Text-sm */
+    color: #4b5563; /* Gray-600 */
+    }
+
+    .status-button {
+    background-color: #f59e0b; /* Yellow-500 */
+    color: white;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 9999px; /* Rounded-full */
+    font-size: 1.125rem; /* Text-lg */
+    border: none;
+    cursor: pointer;
+    }
+
+    .employed-worker {
+    margin-top: 16px;
+    }
+
+    .worker-label {
+    font-weight: bold;
+    color: #4b5563; /* Gray-700 */
+    }
+
+    .worker-name {
+    color: #10b981; /* Green-500 */
+    }
+
+    .divider {
+    margin: 16px 0;
+    }
+
+    .section-title {
+    font-size: 1.25rem; /* Text-xl */
+    font-weight: bold;
+    color: #111827; /* Gray-900 */
+    }
+
+    .detail-item {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    color: #4b5563; /* Gray-600 */
+    }
+
+    .icon {
+    margin-right: 8px;
+    }
+
+    .detail-text {
+    font-size: 0.875rem; /* Text-sm */
+    }
+
+    .salary-section {
+    margin-top: 16px;
+    }
+
+    .salary-text {
+    font-size: 0.875rem; /* Text-sm */
+    background-color: #f3f4f6; /* Gray-100 */
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: #374151; /* Gray-700 */
+    font-weight: 600;
+    }
+
+    .description-label,
+    .description-list,
+    .qualification-section,
+    .qualification-list,
+    .review-section,
+    .review-text {
+    font-size: 0.875rem; /* Text-sm */
+    color: #4b5563; /* Gray-600 */
+    }
+
+    .description-list,
+    .qualification-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    }
+
+  </style>
 </head>
 <body>
 <?php 
-      $data = [];
-      if ($result != null)
-        $data = $result->fetch_assoc();
-      else 
-        echo '';
-    ?>
-
-  <main class=" justify-center">
-
-    <div class=" mx-auto">
-        <span class="text-blue-500" style="font-size: 25px; font-weight: bold;">JOB ORBER HISTORY</span>
+  $data = [];
+  if ($result != null)
+    $data = $result->fetch_assoc();
+  else 
+    echo '';
+?>
+  <main class="container">
+    <div class="content">
+        <span class="header">JOB ORDER HISTORY</span>
         
-        <div class="bg-blue-100 p-6 rounded-lg" style="width: 100%;">
-            
-            <h1 class="text-lg font-bold text-blue-500"><?php echo $data['job'] ?? $data['job_offer_job'];?></h1>
-            <p class="text-sm text-gray-600"><?php echo $data['date'] ?? $data['job_offer_date'];?></p>
-            <button class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-full text-lg" style="height: 28px; padding-top: 1px;">
+        <div class="card">
+            <h1 class="job-title"><?php echo $data['job'] ?? $data['job_offer_job'];?></h1>
+            <p class="job-date"><?php echo $data['date'] ?? $data['job_offer_date'];?></p>
+            <button class="status-button">
                 COMPLETED
             </button>
-            <div class="mt-4">
-                <p class="font-bold text-gray-700">Employed Worker: <span class="text-green-500"><?php echo $data['user_fname']?> <?php echo $data['user_lname'];?></span></p>
+            <div class="employed-worker">
+                <p class="worker-label">Employed Worker: <span class="worker-name"><?php echo $data['user_fname']?> <?php echo $data['user_lname'];?></span></p>
             </div>
 
-            <hr class="my-4">
+            <hr class="divider">
 
-            <h2 class="text-xl font-bold text-gray-900">Job details</h2>
+            <h2 class="section-title">Job details</h2>
 
-            <div class="flex items-center mt-2 text-gray-600">
-                <i class="fas fa-briefcase mr-2"></i>
+            <div class="detail-item">
+                <i class="fas fa-briefcase icon"></i>
                 <?php $type = $data['type'] ?? $data['job_offer_type']; ?>
-                <?php if ($type == 'parttime'):?>
-                    <p class="text-sm">Part-time</p>
-                <?php else:?>
-                    <p class="text-sm">Full-time</p>
-                <?php endif;?>
-                
+                <p class="detail-text"><?php echo $type == 'parttime' ? 'Part-time' : 'Full-time';?></p>
             </div>
-            <div class="flex items-center mt-2 text-gray-600">
-                <i class="fas fa-map-marker-alt mr-2"></i>
-                <p class="text-sm"><?php echo $data['location'] ?? $data['job_offer_loc'];?></p>
+            <div class="detail-item">
+                <i class="fas fa-map-marker-alt icon"></i>
+                <p class="detail-text"><?php echo $data['location'] ?? $data['job_offer_loc'];?></p>
             </div>
 
-            <div class="mt-4">
-                <h3 class="text-lg font-bold text-gray-900">Salary</h3>
-                <p class="text-sm bg-gray-100 px-2 py-1 rounded text-gray-700 font-semibold"><?php echo $data['salary_offer'] ?? $data['job_offer_sal']?></p>
+            <div class="salary-section">
+                <h3 class="section-title">Salary</h3>
+                <p class="salary-text"><?php echo $data['salary_offer'] ?? $data['job_offer_sal']?></p>
             </div>
 
-            <hr class="my-4">
+            <hr class="divider">
 
-            <h2 class="text-xl font-bold text-gray-900">Full Job description</h2>
-            <p class="text-sm mt-2 text-gray-600">Responsibilities:</p>
-            <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
+            <h2 class="section-title">Full Job description</h2>
+            <p class="description-label">Responsibilities:</p>
+            <ul class="description-list">
                 <?php echo $data['responsibilities'] ?? $data['job_offer_respo'];?>
             </ul>
-            <div class="mb-4">
-                <h2 class="font-bold text-lg">Qualifications:</h2>
-                <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
+            <div class="qualification-section">
+                <h2 class="section-title">Qualifications:</h2>
+                <ul class="qualification-list">
                     <?php echo $data['qualifications'] ?? $data['job_offer_quali'];?>
                 </ul>
             </div>
 
-            <div class="mb-4">
-                <h2 class="font-bold text-lg">Review:</h2>
+            <div class="review-section">
+                <h2 class="section-title">Review:</h2>
                 <!-- <div class="stars">
                     ★★★★☆
                 </div> -->
-                <p class="text-sm bg-gray-100 mt-2 text-gray-600">
+                <p class="review-text">
                     <?php echo $data['reviews'] ?? 'no reviews';?>
                 </p>
             </div>
