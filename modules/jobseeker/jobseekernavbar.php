@@ -400,9 +400,9 @@ $conn->close();
         </a>
       </li>
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('jobseeker_feedbacks_entry.php')">
+        <a href="javascript:void(0)" onclick="changeContent('jobseeker_history_entry.php')">
           <i class="bx bx-folder"></i>
-          <span class="link_name">Feedback</span>
+          <span class="link_name">History</span>
         </a>
       </li>
       <li>
