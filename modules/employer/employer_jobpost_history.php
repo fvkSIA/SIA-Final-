@@ -56,21 +56,46 @@ while ($row = $result_jobs->fetch_assoc()) {
 
 // Handle form submission
 $selected_job = isset($_POST['job']) ? sanitize_input($conn, $_POST['job']) : '';
-if (isset($_POST['filter'])) {
-    // Query to get job posts associated with the selected job
-    $sql_posts = "SELECT id, job, type, salary_offer, location FROM job_listings WHERE employer_id = ? AND job = ?";
-    $stmt_posts = $conn->prepare($sql_posts);
-    $stmt_posts->bind_param("is", $user_id, $selected_job);
-    $stmt_posts->execute();
-    $result_posts = $stmt_posts->get_result();
-} else {
-    // Default query to get all job posts
-    $sql_posts = "SELECT id, job, type, salary_offer, location FROM job_listings WHERE employer_id = ?";
-    $stmt_posts = $conn->prepare($sql_posts);
-    $stmt_posts->bind_param("i", $user_id);
-    $stmt_posts->execute();
-    $result_posts = $stmt_posts->get_result();
+$filter_type = isset($_POST['filter_type']) ? $_POST['filter_type'] : 'all';
+
+if (isset($_POST['filter']) || isset($_POST['accepted_jobs']) || isset($_POST['pending_jobs']) || isset($_POST['all_jobs'])) {
+    if (isset($_POST['accepted_jobs'])) {
+        $filter_type = 'accepted';
+    } elseif (isset($_POST['pending_jobs'])) {
+        $filter_type = 'pending';
+    } elseif (isset($_POST['all_jobs'])) {
+        $filter_type = 'all';
+    }
 }
+
+// Prepare the base query
+$sql_posts = "SELECT id, job, type, salary_offer, location, accepted FROM job_listings WHERE employer_id = ?";
+$params = [$user_id];
+$param_types = "i";
+
+// Add job filter if a specific job is selected
+if (!empty($selected_job)) {
+    $sql_posts .= " AND job = ?";
+    $params[] = $selected_job;
+    $param_types .= "s";
+}
+
+// Modify the query based on the filter type
+switch ($filter_type) {
+    case 'accepted':
+        $sql_posts .= " AND accepted = 1";
+        break;
+    case 'pending':
+        $sql_posts .= " AND accepted = 0";
+        break;
+    // For 'all', we don't need to modify the query
+}
+
+// Prepare and execute the query
+$stmt_posts = $conn->prepare($sql_posts);
+$stmt_posts->bind_param($param_types, ...$params);
+$stmt_posts->execute();
+$result_posts = $stmt_posts->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -78,110 +103,203 @@ if (isset($_POST['filter'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>JobPulse - Manage Your Job Posts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #6C63FF;
+            --secondary-color: #4CAF50;
+            --accent-color: #FF6B6B;
+            --background-color: #F0F2F5;
+            --text-color: #333333;
+        }
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
         }
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
         }
-        table, th, td {
-            border: 1px solid black;
-            padding: 8px;
+        .navbar-brand {
+            font-weight: 800;
+            color: white !important;
+            font-size: 1.5rem;
         }
-        th {
-            background-color: #f2f2f2;
+        .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
-        .filter-button {
-            background-color: #0099d9; 
+        .nav-link:hover, .nav-link.active {
+            color: white !important;
+            transform: translateY(-2px);
+        }
+        .card {
             border: none;
+            border-radius: 15px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.12);
+        }
+        .card-header {
+            background-color: var(--primary-color);
             color: white;
-            padding: 5px 32px;
-            text-align: center;
-            text-decoration: none; 
-            display: inline-block;
-            font-size: 16px; 
-            margin: 4px 2px; 
-            cursor: pointer;
-            border-radius: 8px; 
+            border-radius: 15px 15px 0 0 !important;
+            font-weight: 700;
         }
-
-        .filter-button:hover {
-            background-color: #195772; 
+        .card.mb-4 {
+            height: 120px;
+            padding: 20px;
         }
-
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #5753D9;
+            border-color: #5753D9;
+            transform: translateY(-2px);
+        }
+        .table {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+        .table td {
+            vertical-align: middle;
+        }
+        .badge {
+            font-weight: 600;
+            padding: 0.5em 1em;
+            border-radius: 15px;
+        }
+        .badge-fulltime {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .badge-parttime {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .btn-action {
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .btn-action:hover {
+            transform: scale(1.1);
+        }
+        .form-control, .form-select {
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in;
+            margin-top: 50px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
-<?php 
-      $data = [];
-      if ($result != null)
-        $data = $result->fetch_assoc();
-      else 
-        echo '';
-    ?>
-    <div class="mx-auto p-4 bg-white rounded-lg shadow-md">
-        <div class="p-6">
-            <div class="mb-1">
-                <h2 class="text-2xl font-semibold text-[#4B5EAB]">Your Job Post List</h2>
-                <p class="text-gray-500 mb-4">Table displaying job posts.</p>
-            <div class="p-6">
-            <div class="mb-1">
 
-                <form method="post">
-                    <label for="job">Select Job:</label>
-                    <select name="job" id="job">
-                        <option value="">All Jobs</option>
-                        <?php
-                        foreach ($jobs as $job) {
-                            $selected = ($selected_job == $job) ? 'selected' : '';
-                            echo "<option value='" . htmlspecialchars($job) . "' $selected>" . htmlspecialchars($job) . "</option>";
-                        }
-                        ?>
-                    </select>
-                    <button type="submit" name="filter" class="filter-button">Filter</button>
-                    </form>
-
-                <br>
-
-                <table>
-                    <tr>
-                        <th>Job</th>
-                        <th>Type</th>
-                        <th>Salary Offer</th>
-                        <th>Location</th>
-                        <th>Actions</th>
-                    </tr>
-
-                    <?php
-                    if ($result_posts->num_rows > 0) {
-                        while ($row = $result_posts->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['job']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['type']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['salary_offer']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['location']) . "</td>";
-                            echo "<td>";
-                            echo "<a href='jobpost_view_job.php?id=" . $row['id'] . "' style='margin-right: 10px;'>View</a>";
-                            echo "<a href='jobpost_delete_job.php?id=" . $row['id'] . "' onclick='return confirm(\"Are you sure you want to delete this job?\")'>Delete</a>";
-                            echo "</td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='5'>No Job Posts</td></tr>";
-                    }
-                    ?>
-
-                </table>
-
+    <div class="container animate-fade-in">
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="display-4 fw-bold text-primary">Your Job Posts</h1>
+                <p class="lead">Manage and track your job listings with ease.</p>
             </div>
         </div>
+
+        <div class="card mb-4">
+            <div class="card-body d-flex justify-content-end">
+                <form method="post" class="row g-3 align-items-end justify-content-end">
+                <div class="col-auto">
+                        <p>asd</p>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" name="accepted_jobs" class="btn btn-success"><i class="fas fa-check-circle me-2"></i>Accepted Jobs</button>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" name="pending_jobs" class="btn btn-warning"><i class="fas fa-clock me-2"></i>Pending Jobs</button>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" name="all_jobs" class="btn btn-info"><i class="fas fa-list me-2"></i>All Jobs</button>
+                    </div>
+                    <input type="hidden" name="filter_type" value="<?php echo $filter_type; ?>">
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Job Listings</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Type</th>
+                                <th>Salary Offer</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($result_posts->num_rows > 0) {
+                                while ($row = $result_posts->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td><strong>" . htmlspecialchars($row['job']) . "</strong></td>";
+                                    $badgeClass = ($row['type'] == 'Full Time') ? 'badge-fulltime' : 'badge-parttime';
+                                    echo "<td><span class='badge {$badgeClass}'>" . htmlspecialchars($row['type']) . "</span></td>";
+                                    echo "<td><i class='fas fa-money-bill-wave me-2 text-success'></i>" . htmlspecialchars($row['salary_offer']) . "</td>";
+                                    echo "<td><i class='fas fa-map-marker-alt me-2 text-danger'></i>" . htmlspecialchars($row['location']) . "</td>";
+                                    $statusBadge = $row['accepted'] ? '<span class="badge bg-success">Accepted</span>' : '<span class="badge bg-warning">Pending</span>';
+                                    echo "<td>{$statusBadge}</td>";
+                                    echo "<td>";
+                                    echo "<a href='jobpost_view_job.php?id=" . $row['id'] . "' class='btn btn-action btn-outline-primary me-2' title='View'><i class='fas fa-eye'></i></a>";
+                                    echo "<a href='jobpost_delete_job.php?id=" . $row['id'] . "' class='btn btn-action btn-outline-danger' onclick='return confirm(\"Are you sure you want to delete this job?\")' title='Delete'><i class='fas fa-trash-alt'></i></a>";
+                                    echo "</td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='6' class='text-center py-5'>No Job Posts Found</td></tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

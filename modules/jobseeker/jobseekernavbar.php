@@ -6,7 +6,7 @@ session_start(); // Simulan ang session sa simula ng file
 $notification_count = isset($_SESSION['inbox_notification_count']) ? $_SESSION['inbox_notification_count'] : 0;
 $user_id = $_SESSION['user_id']; // Assuming you store user ID in session
 
-$sql = "SELECT firstname, lastname, profile, type FROM users WHERE id = ?";
+$sql = "SELECT firstname, lastname, profile, type, job_type FROM users WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -15,7 +15,7 @@ $user = $result->fetch_assoc();
 
 $first_name = $user['firstname'];
 $profile_pic = $user['profile'] ? '../jobseeker/assets/images/' . $user['profile'] : '../jobseeker/assets/images/';
-$user_type = ($user['type'] == 3) ? 'Employer' : 'Job Seeker';
+$user_type = $user['job_type'];
 
 $stmt->close();
 $conn->close();
