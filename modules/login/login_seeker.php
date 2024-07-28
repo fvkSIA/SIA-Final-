@@ -508,6 +508,41 @@ if (isset($_POST['selectedOption'])){
         left: 50%;
       }
     }
+    .input-field {
+  max-width: 380px;
+  width: 100%;
+  background-color: #f0f0f0;
+  margin: 10px 0;
+  height: 55px;
+  border-radius: 55px;
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
+  padding: 0 0.4rem;
+  position: relative;
+}
+
+.input-field i {
+  text-align: center;
+  line-height: 55px;
+  color: #acacac;
+  transition: 0.5s;
+  font-size: 1.1rem;
+}
+
+.input-field input {
+  background: none;
+  outline: none;
+  border: none;
+  line-height: 1;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.input-field input::placeholder {
+  color: #aaa;
+  font-weight: 500;
+}
   </style>
 
 
@@ -545,7 +580,8 @@ if (isset($_POST['selectedOption'])){
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" name="password"/>
+              <input type="password" placeholder="Password" name="password" id="password"/>
+              <i class="fas fa-eye" id="togglePassword" style="cursor: pointer;"></i>
             </div>
             <div class="social-text">
               <a href="enteremail_seeker.html">Forgot Password?</a> 
@@ -597,6 +633,18 @@ if (isset($_POST['selectedOption'])){
             // Submit the form
             document.getElementById('registrationForm').submit();
         }
+
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function (e) {
+        // Toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // Toggle the eye icon
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+        });
     </script>
   </body>
   </html>
