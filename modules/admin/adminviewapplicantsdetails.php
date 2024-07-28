@@ -1,7 +1,18 @@
-<?php 
+<?php
 
 require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
-$id = $_GET['id'];
+require './PHPMailer/src/Exception.php';
+require './PHPMailer/src/PHPMailer.php';
+require './PHPMailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+$id = $_GET['id'] ?? null;
+
+if (!$id) {
+    die("Invalid ID");
+}
 
 $users = "SELECT users.*, user_types.id as user_type_id, user_types.description as user_type_desc FROM users
     INNER JOIN user_types ON users.type = user_types.id
@@ -11,25 +22,58 @@ if ($stmt = $conn->prepare($users)) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result() ?? null;
-
     $stmt->close();
 }
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_POST['user_id'];
     $verify = $_POST['verify'];
 
     $sql = "UPDATE users SET verified=? WHERE id = ?";
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("ii", $verify, $user_id);
-        if ($stmt->execute()){
-            // success
-            header('location: adminregistration.php');
+        if ($stmt->execute()) {
+            // Fetch user email and other details to send in the email
+            $userQuery = "SELECT email, password FROM users WHERE id=?";
+            if ($userStmt = $conn->prepare($userQuery)) {
+                $userStmt->bind_param("i", $user_id);
+                $userStmt->execute();
+                $userResult = $userStmt->get_result();
+                $userData = $userResult->fetch_assoc();
+                $userStmt->close();
+
+                // Send verification email
+                $mail = new PHPMailer(true);
+
+                try {
+                    // Server settings
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com'; // Replace with your SMTP server
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'kjcruz0604@gmail.com'; // Replace with your SMTP username
+                    $mail->Password = 'qvxhyivnmoiiexum'; // Replace with your SMTP password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port = 587;
+
+                    // Recipients
+                    $mail->setFrom('kjcruz0604@gmail.com', 'HanapKITA Team');
+                    $mail->addAddress($userData['email']); // Add a recipient
+
+                    // Content
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Account Verification';
+                    $mail->Body    = "Your account has been verified. Please use your username and password that you made during registration.<br>Email: {$userData['email']}<br>Password: {$userData['password']}";
+
+                    $mail->send();
+                    header('location: adminregistration.php');
+                } catch (Exception $e) {
+                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                }
+            }
         } else {
             echo "ERROR APPROVING USER";
         }
-        
-    
+
         $stmt->close();
     }
 }
@@ -48,50 +92,45 @@ $conn->close();
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
-
-        
-
-.form-control:focus {
-    box-shadow: none;
-    border-color: #BA68C8
-}
-
-.profile-button {
-    background: rgb(99, 39, 120);
-    box-shadow: none;
-    border: none
-}
-
-.profile-button:hover {
-    background: #682773
-}
-
-.profile-button:focus {
-    background: #682773;
-    box-shadow: none
-}
-
-.profile-button:active {
-    background: #682773;
-    box-shadow: none
-}
-
-.back:hover {
-    color: #682773;
-    cursor: pointer
-}
-
-.labels {
-    font-size: 11px
-}
-
-.add-experience:hover {
-    background: #BA68C8;
-    color: #fff;
-    cursor: pointer;
-    border: solid 1px #BA68C8
-}
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #BA68C8;
+        }
+        .profile-button {
+            background: rgb(99, 39, 120);
+            box-shadow: none;
+            border: none;
+        }
+        .profile-button:hover {
+            background: #682773;
+        }
+        .profile-button:focus {
+            background: #682773;
+            box-shadow: none;
+        }
+        .profile-button:active {
+            background: #682773;
+            box-shadow: none;
+        }
+        .back:hover {
+            color: #682773;
+            cursor: pointer;
+        }
+        .labels {
+            font-size: 11px;
+        }
+        .add-experience:hover {
+            background: #BA68C8;
+            color: #fff;
+            cursor: pointer;
+            border: solid 1px #BA68C8;
+        }
     </style>
+    <script>
+        function showAlert() {
+            alert("Account verification message sent");
+        }
+    </script>
 </head>
 <body>
 <?php 
@@ -142,7 +181,7 @@ $conn->close();
                     <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div> -->
                 </div>
                 <div class="mt-5 text-center">
-                    <form action="adminviewapplicantsdetails.php" method="POST" id="approval_form">
+                    <form action="adminviewapplicantsdetails.php?id=1" method="POST" id="approval_form" onsubmit="showAlert()">
                         <input type="hidden" name="user_id" value="<?php echo $id;?>">
                         <input type="hidden" name="verify" value="1">
 
@@ -190,78 +229,6 @@ $conn->close();
     </div>
 </div>
 </div>
-</div>
-    <!-- <main class="view">
-        <div class="half-color-bg p-6">
-            <button class="close-btn" onclick="closeDiv()">X</button>
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <img src="1.jpg" alt="Circular Image" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover;">
-                <p style="padding-top: 50px; font-weight: bold; font-size: 35px;">JOHN CARLO JAVALLA</p>
-                <i style="color: red; padding-top: 50px;">backend echo</i>
-            </div>
-        </div>
-
-        <div class="bg-#f1f1f1 p-6 mb-3">
-            <div style="display: flex; justify-content: space-between; max-width: 100%; margin: 0 auto;">
-                <div style="width: 13%; margin-left: 30px; box-sizing: border-box;">
-                    <p style="font-weight: bold;">
-                        APPLIED FOR:
-                    </p>
-                    <p style="margin-top: 15px; font-weight: bold;">
-                        AGE:
-                    </p>
-                    <p style="margin-top: 15px; font-weight: bold;">
-                        ADDRESS:
-                    </p>
-                    <p style="margin-top: 15px; font-weight: bold;">
-                        SEX:
-                    </p>
-                    <p style="margin-top: 15px; font-weight: bold;">
-                        CONTACT NUMBER:
-                    </p>
-                    <p style="margin-top: 15px; font-weight: bold;">
-                        EMAIL ADDRESS:
-                    </p>
-                </div>
-                <div style="width: 25%; box-sizing: border-box;">
-                    <p>
-                        DRIVER <i style="color: red;">backend echo</i>
-                    </p>
-                    <p style="margin-top: 15px;">
-                        23 <i style="color: red;">backend echo</i>
-                    </p>
-                    <p style="margin-top: 15px;">
-                        DIMAKITA ST. <i style="color: red;">backend echo</i>
-                    </p>
-                    <p style="margin-top: 15px;">
-                        UNKNOWN <i style="color: red;">backend echo</i>
-                    </p>
-                    <p style="margin-top: 15px;">
-                        09123456789 <i style="color: red;">backend echo</i>
-                    </p>
-                    <p style="margin-top: 15px;">
-                        JCMASARAP123@GMAIL.COM <i style="color: red;">backend echo</i>
-                    </p>
-                </div>
-                <div style="width: 50%; margin-left: 20px; box-sizing: border-box;">
-                    <p style="font-weight: bold;">RESUME:</p>
-                    <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo</p>
-                    <p style="margin-top: 10px; font-weight: bold;">2 VALID ID'S</p>
-                    <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo 1 backend echo 2</p>
-                    <p style="margin-top: 10px; font-weight: bold;">BIRTH CERTIFICATE:</p>
-                    <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo</p>
-                    <p style="margin-top: 10px; font-weight: bold;">RECENT JOB:</p>
-                    <p style="margin-top: 5px; margin-left: 170px; color: red;">backend echo</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="btn-container">
-            <button class="approve-btn" onclick="approve()">APPROVE</button>
-            <button class="decline-btn" onclick="decline()">DECLINE</button>
-        </div>
-    </main> -->
-
     <script>
         function closeDiv() {
             window.location.href = 'adminregistration.php';
