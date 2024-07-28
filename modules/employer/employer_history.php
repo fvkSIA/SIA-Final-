@@ -166,7 +166,7 @@ $conn->close();
             <div class="history-item">
                 <div>
                     <h3><?php echo htmlspecialchars($row['job_req_type'] == 1 ? $row['job_offer_job'] : $row['job']); ?></h3>
-                    <p>Applicant: <?php echo htmlspecialchars($row['user_fname'] . ' ' . $row['user_lname']); ?></p>
+                    <p>Jobseeker: <?php echo htmlspecialchars($row['user_fname'] . ' ' . $row['user_lname']); ?></p>
                     <p>Date & Time: <?php echo htmlspecialchars($row['job_req_type'] == 1 ? $row['job_offer_date'] : $row['date']); ?> 
                        <?php echo htmlspecialchars($row['job_req_type'] == 1 ? $row['job_offer_time'] : $row['time']); ?></p>
                 </div>
