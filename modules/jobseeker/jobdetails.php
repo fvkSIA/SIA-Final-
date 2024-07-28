@@ -180,19 +180,17 @@ $conn->close();
         width: 95%;
       }
     }
-    /* Container styling */
 .detail-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px; /* Adjust spacing between items */
+    gap: 20px; 
 }
 
-/* Styling for each detail item */
 .detail-item {
     display: flex;
     align-items: center;
-    font-size: 1.2em; /* Increase font size for text and icons */
+    font-size: 1.2em; 
 }
 
 .icon {
@@ -227,7 +225,6 @@ $conn->close();
             margin: 10px 0;
             font-weight: bold;
         }
-
   </style>
 </head>
 <body>

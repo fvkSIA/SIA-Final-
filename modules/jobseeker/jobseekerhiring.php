@@ -98,7 +98,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       bottom: 10px;
       right: 10px;
       padding: 10px 20px;
-      background-color: #1E40AF; /* Tailwind's blue-900 */
       color: white;
       border: none;
       border-radius: 5px;
@@ -413,14 +412,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       font-size: 16px; /* Sets font size */
     }
     .button-container2 .prev1 {
-      /* Additional styles for 'Prev' button if needed */
     }
     .button-container2 .next1 {
-      /* Additional styles for 'Next' button if needed */
     }
     .button-container2 button:hover {
-      background-color: #0056b3; /* Changes background on hover */
+      background-color: #0056b3;
     }
+    .custom-label {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  color: #4A4A4A;
+  font-weight: 600;
+  margin: 15px 0;
+  line-height: 1.5;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 5px 10px;
+  border-left: 4px solid #007BFF;
+  background-color: #F9F9F9;
+  border-radius: 5px;
+}
+
   </style>
 </head>
 <body>
@@ -428,7 +439,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="bg-blue-100 p-6 rounded-lg mb-2 flex justify-center">
     <form action="jobseekerhiring.php" method="post">
     <div class="flex space-x-4 items-center">
-        <label>Your Job Type: <?php echo htmlspecialchars($user_job_type); ?></label>
+        <label class="custom-label">Here ar the job post for <?php echo htmlspecialchars($user_job_type); ?></label>
         <select class="py-2 px-4 rounded bg-white border border-gray-300" name="location">
             <option value="">All Cities</option>
             <option value="Manila">Manila</option>
