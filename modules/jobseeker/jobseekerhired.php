@@ -113,7 +113,7 @@ session_start();
     </div>
     <div class="greeting">Hi! <?php echo $_SESSION['name'];?></div>
     <div class="congratulations">
-        Congratulations! You've been accepted as our driver. Your professionalism and commitment impressed us. Looking forward to smooth rides ahead. Welcome!
+        Congratulations! Your professionalism and commitment impressed us. Looking forward to smooth work ahead. Welcome!
     </div>
     <div class="button-group">
       <!-- <button class="proceed-button" onclick="proceed()">Proceed</button> -->

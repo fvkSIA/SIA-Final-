@@ -119,10 +119,10 @@ $jrid = $_GET['jrid'];
     </div>
     <div class="greeting">Hi <?php echo $_SESSION['name'];?>!</div>
     <div class="congratulations">
-      Exciting Opportunity: Join our team as a company driver! If you have a clean driving record and a passion for safe, reliable transportation, we want to hear from you. Apply now and become an essential part of our team, ensuring the smooth movement of people and goods every day.
+      Exciting Opportunity: binigyan ka ng offer kasi magaling ka
     </div>
     <div class="button-group">
-      <a class="proceed-button" href="jobseekerofferdetails.php?id=<?php echo $id;?>&jrid=<?php echo $jrid;?>">Proceed</button>
+      <a class="proceed-button" href="employerviewprofile.php?id=<?php echo $id;?>&jrid=<?php echo $jrid;?>">Proceed</button>
       <a class="close-button" href="jobseekerinbox.php">x</a>
     </div>
   </div>
@@ -132,7 +132,7 @@ $jrid = $_GET['jrid'];
       window.location.href = "jobseekerinbox.php";
     }
     function proceed() {
-      window.location.href = "jobseekerofferdetails.php";
+      window.location.href = "employerviewprofile.php";
     }
   </script>
   <!-- Scripts -->

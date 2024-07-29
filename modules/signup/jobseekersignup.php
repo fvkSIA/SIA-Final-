@@ -412,7 +412,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="input-box">
                     <label><b>Birth Date:</b></label>
-                    <input type="date" name="birth_date" placeholder="Enter birth date" min="1995-01-01" max="2005-12-31" required />
+                    <input type="date" name="birth_date" placeholder="Enter birth date" min="1960-01-01" max="2005-12-31" required />
                 </div>
             </div>
             <div class="input-box info" style="margin-bottom: 10px;">
