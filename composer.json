@@ -1,6 +1,0 @@
-{
-    "require": {
-        "davmixcool/php-sentiment-analyzer": "^1.2",
-        "phpmailer/phpmailer": "^6.9"
-    }
-}

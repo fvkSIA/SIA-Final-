@@ -6,85 +6,74 @@
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <style>
-    .container {
-      width: 100%;
-      height: 90vh; /* Full viewport height */
+    body {
+      margin: 0;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      border-radius: 10px;
-      background-color: #f0f0f0; /* Optional: a background for the container */
+      height: 100vh;
     }
-    .title {
-      font-size: 32px;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      color: #1E3B85;
-      margin-bottom: 20px;
-      text-align: left;
-      width: 80%;
+    .container {
+      width: 90%;
+      max-width: 800px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      padding: 20px;
+      box-sizing: border-box;
     }
     .message-box {
       background-color: #d7dfee;
-      width: 80%;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 5px; /* Optional: padding for inner spacing */
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      text-align: center;
     }
     .message-box h2 {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      font-size: 30px;
-      color: #333333;
-      font-weight: bold;
+      font-size: 24px;
+      color: #333;
+      margin: 0;
     }
     .message-box p {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      font-size: 40px;
-      color: #333333;
-      font-weight: bold;
+      font-size: 18px;
+      color: #333;
+      margin: 10px 0 0;
     }
-    .greeting {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    .greeting, .congratulations {
       font-size: 16px;
-      margin: 25px 0 15px;
-      text-align: left;
-      width: 80%;
-    }
-    .congratulations {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      font-size: 16px;
-      width: 80%;
-      text-align: left;
-    }
-    .see-more:hover {
-      text-decoration: underline;
+      color: #333;
+      margin-bottom: 20px;
     }
     .button-group {
       display: flex;
-      justify-content: flex-end;
-      width: 80%;
-      margin-bottom: 10px;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .proceed-button, .close-button {
+      text-decoration: none;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
     }
     .proceed-button {
       background-color: #1E3B85;
       color: #ffffff;
-      border: none;
-      border-radius: 20px;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-right: 10px;
+    }
+    .proceed-button:hover {
+      background-color: #163e6e;
     }
     .close-button {
-      background-color: transparent;
-      color: #333333;
-      border: none;
+      background-color: #f3f3f3;
+      color: #333;
       font-size: 20px;
-      cursor: pointer;
+    }
+    .close-button:hover {
+      background-color: #d0d0d0;
     }
   </style>
 </head>

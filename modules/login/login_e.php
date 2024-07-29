@@ -26,7 +26,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $otp = rand(100000, 999999);
         $otp_expiry = date("Y-m-d H:i:s", strtotime("+3 minute"));
         $subject= "Your OTP for Login";
-        $message="Your OTP is: $otp";
+        $message = "Your HanapKita OTP is <b>$otp</b>. It expires in 3 minutes.<br>
+            Please do not share your OTP with anyone. If you did not make this request, kindly contact us via email.";
+
         $f_name = $row['firstname'];
         
         $mail = new PHPMailer(true);
