@@ -242,9 +242,8 @@ $conn->close();
         </div>
         <div class="col-md-4">
             <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span>Files</span></div><br>
-                <div class="col-md-12"><label class="labels">Resume</label><br><a href="../employer/assets/files/order_summary.pdf">resume.pdf</a></div> <br>
-                <!-- <div class="col-md-12"><label class="labels">Birth Certificate</label><input type="text" class="form-control" placeholder="" value=""></div> -->
+                <label class="labels">Valid ID / Birth Certificate</label><br>
+                <a href="<?php echo $data['valid_id_path']; ?>" target="_blank">View Valid ID/Birth Certificate</a>
             </div>
         </div>
     </div>

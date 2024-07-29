@@ -2,9 +2,17 @@
 require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start(); // Simulan ang session sa simula ng file
 
-// Check if the notification count session variable is set
-$notification_count = isset($_SESSION['inbox_notification_count']) ? $_SESSION['inbox_notification_count'] : 0;
 $user_id = $_SESSION['user_id']; // Assuming you store user ID in session
+
+// Query to count unread messages
+$unread_query = "SELECT COUNT(*) as unread_count FROM job_requests 
+                 WHERE user_id = ? AND is_read = 0";
+$stmt = $conn->prepare($unread_query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$unread_count = $result->fetch_assoc()['unread_count'];
+$stmt->close();
 
 $sql = "SELECT firstname, lastname, profile, type, job_type FROM users WHERE id = ?";
 $stmt = $conn->prepare($sql);
@@ -365,6 +373,16 @@ $conn->close();
         margin-left: 0;
       }
     }
+    .unread-count {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+  }
   </style>
 </head>
 <body>
@@ -382,11 +400,14 @@ $conn->close();
         </a>
       </li>
       <li>
-        <a href="javascript:void(0)" onclick="changeContent('jobseekerinbox.php')">
-          <i class="bx bx-chat"></i>
-          <span class="link_name">Inbox</span>
-        </a>
-      </li>
+  <a href="javascript:void(0)" onclick="changeContent('jobseekerinbox.php')">
+    <i class="bx bx-chat"></i>
+    <span class="link_name">Inbox</span>
+    <?php if ($unread_count > 0): ?>
+      <span class="unread-count"><?php echo $unread_count; ?></span>
+    <?php endif; ?>
+  </a>
+</li>
       <li>
         <a href="javascript:void(0)" onclick="changeContent('jobseekerhiring.php')">
           <i class="bx bx-search"></i>
@@ -436,6 +457,31 @@ $conn->close();
     document.getElementById("btn").onclick = function() {
       document.querySelector(".sidebar").classList.toggle("open");
     };
+
+    function checkNewMessages() {
+    fetch('check_new_messages.php')
+      .then(response => response.json())
+      .then(data => {
+        const inboxLink = document.querySelector('a[onclick="changeContent(\'jobseekerinbox.php\')"]');
+        const existingCount = inboxLink.querySelector('.unread-count');
+        
+        if (data.unread_count > 0) {
+          if (existingCount) {
+            existingCount.textContent = data.unread_count;
+          } else {
+            const countSpan = document.createElement('span');
+            countSpan.className = 'unread-count';
+            countSpan.textContent = data.unread_count;
+            inboxLink.appendChild(countSpan);
+          }
+        } else if (existingCount) {
+          existingCount.remove();
+        }
+      });
+  }
+
+  // Check for new messages every 3 seconds
+  setInterval(checkNewMessages, 3000);
   </script>
 </body>
 </html>
