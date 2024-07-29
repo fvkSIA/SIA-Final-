@@ -268,17 +268,17 @@ body {
             <option value="Welder">Welder</option>
             <option value="Plumber">Plumber</option>
             <option value="Lineman">Lineman</option>
-            <option value="Guard">Security Guard</option>
+            <option value="Security Guard">Security Guard</option>
             <option value="Electrician">Electrician</option>
             <option value="Driver">Driver</option>
-            <option value="Refservice">Refrigerator and Aircon Service</option>
-            <option value="Foodservice">Food Service</option>
-            <option value="Laundry">Laundry Staff</option>
-            <option value="Factory">Factory Worker</option>
-            <option value="Housekeeper">Housekeeper</option>
+            <option value="Refrigerator and Aircon Service">Refrigerator and Aircon Service</option> 
+            <option value="Food service">Food service (Dishwasher and Waiter)</option>
+            <option value="Laundry Staff">Laundry Staff</option>
+            <option value="Factory Worker">Factory Worker</option>
+            <option value="House Keeper">House Keeper</option>
             <option value="Janitor">Janitor</option>
             <option value="Carpenter">Carpenter</option>
-            <option value="Construction">Construction Worker</option>
+            <option value="Construction Worker">Construction Worker</option>
           </select>
         </div>
         <div>

@@ -4,49 +4,56 @@ session_start();
 $error = '';
 $result = null;
 
-if($_SERVER["REQUEST_METHOD"] == "GET") {
-  $jrid = $_GET['id'];
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $jrid = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
   
-  $sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_requests.job_id as jr_jobid, job_requests.employer_id as jr_empid, job_requests.type as jr_type, job_requests.status as jr_comp, job_requests.is_accepted, users.id as user_id, users.firstname, users.lastname, job_listings.*, job_offers.id as job_offer_id, job_offers.job as job_offer_job, job_offers.date as job_offer_date, job_offers.time as job_offer_time, job_offers.type as job_offer_type, job_offers.salary_offer as job_offer_sal, job_offers.location as job_offer_loc, job_offers.responsibilities as job_offer_respo, job_offers.qualifications as job_offer_quali, a.firstname as job_seek_fname, a.lastname as job_seek_lname, a.middlename as job_seek_mname, a.email as job_seek_email, a.phone_number as job_seek_phone FROM job_requests
-        LEFT JOIN users ON job_requests.employer_id = users.id
-        LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
-        LEFT JOIN users as a ON job_requests.user_id = a.id
-        LEFT JOIN job_offers ON job_requests.job_id = job_offers.id
-        WHERE job_requests.id = ?";
+    $sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_requests.job_id as jr_jobid, job_requests.employer_id as jr_empid, job_requests.type as jr_type, job_requests.status as jr_comp, job_requests.is_accepted, users.id as user_id, users.firstname, users.lastname, job_listings.*, job_offers.id as job_offer_id, job_offers.job as job_offer_job, job_offers.date as job_offer_date, job_offers.time as job_offer_time, job_offers.type as job_offer_type, job_offers.salary_offer as job_offer_sal, job_offers.location as job_offer_loc, job_offers.responsibilities as job_offer_respo, job_offers.qualifications as job_offer_quali, a.firstname as job_seek_fname, a.lastname as job_seek_lname, a.middlename as job_seek_mname, a.email as job_seek_email, a.phone_number as job_seek_phone FROM job_requests
+            LEFT JOIN users ON job_requests.employer_id = users.id
+            LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
+            LEFT JOIN users as a ON job_requests.user_id = a.id
+            LEFT JOIN job_offers ON job_requests.job_id = job_offers.id
+            WHERE job_requests.id = ?";
 
-  if ($stmt = $conn->prepare($sql)) {
-    $stmt->bind_param("s", $jrid);
-    $stmt->execute();
-    $result = $stmt->get_result() ?? null;
-    $stmt->close();
-  }
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("i", $jrid);
+        $stmt->execute();
+        $result = $stmt->get_result() ?? null;
+        $stmt->close();
+    }
 
-} else if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['job_id'];
-    $job_req_id = $_POST['job_req_id'];
+} elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = filter_input(INPUT_POST, 'job_id', FILTER_SANITIZE_NUMBER_INT);
+    $job_req_id = filter_input(INPUT_POST, 'job_req_id', FILTER_SANITIZE_NUMBER_INT);
 
     $sql = "UPDATE job_listings SET accepted = 1 WHERE id = ?";
     $sql2 = "UPDATE job_requests SET is_accepted = 1 WHERE id = ?";
-    if ($stmt = $conn->prepare($sql)){
+    if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("i", $id);
-        if ($stmt->execute()){
-            if($stmt2 = $conn->prepare($sql2)){
+        if ($stmt->execute()) {
+            if ($stmt2 = $conn->prepare($sql2)) {
                 $stmt2->bind_param("i", $job_req_id);
-                if ($stmt2->execute()){
-                  $stmt->close();
-                  $stmt2->close();
-                  header('Location: employerongoing.php');
+                if ($stmt2->execute()) {
+                    $stmt->close();
+                    $stmt2->close();
+                    header('Location: employerongoing.php');
+                    exit();
+                } else {
+                    $error = 'Error encountered while updating job request. Try again later.';
                 }
+            } else {
+                $error = 'Error preparing statement for updating job request.';
             }
-        } else {    
-            $error = 'Error encountered. Try again later';
+        } else {
+            $error = 'Error encountered while updating job listing. Try again later.';
         }
-    } else{
-        $error = 'Error encountered. Try again later';
+    } else {
+        $error = 'Error preparing statement for updating job listing.';
     }
 }
 $conn->close();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -305,7 +312,7 @@ $conn->close();
     if ($result != null) {
       $user = $result->fetch_assoc();
     } else {
-      echo '';
+      echo '<p>No data found.</p>';
     }
 
     function formatMoney($amount) {
@@ -336,32 +343,32 @@ $conn->close();
         
         <div class="responsibilities">
   <h3><i class='bx bx-list-ul'></i> Responsibilities</h3>
-  <ul style="list-style-type: none; padding: 0; margin: 0;">
+  <div>
     <?php 
       $responsibilities = explode("\n", $user['responsibilities']);
       foreach ($responsibilities as $responsibility) {
         $trimmedResponsibility = htmlspecialchars(trim($responsibility));
         if ($trimmedResponsibility) {
-          echo "<li>{$trimmedResponsibility}</li>";
+          echo "$trimmedResponsibility<br>";
         }
       }
     ?>
-  </ul>
+  </div>
 </div>
 
 <div class="qualifications">
   <h3><i class='bx bx-badge-check'></i> Qualifications</h3>
-  <ul style="list-style-type: none; padding: 0; margin: 0;">
+  <div>
     <?php 
       $qualifications = explode("\n", $user['qualifications']);
       foreach ($qualifications as $qualification) {
         $trimmedQualification = htmlspecialchars(trim($qualification));
         if ($trimmedQualification) {
-          echo "<li>{$trimmedQualification}</li>";
+          echo "$trimmedQualification<br>";
         }
       }
     ?>
-  </ul>
+  </div>
 </div>
 
         
@@ -386,9 +393,11 @@ $conn->close();
     document.getElementById('acceptButton').addEventListener('click', function() {
       document.getElementById('confirmationBox').style.display = 'flex';
     });
+
     document.getElementById('confirmButton').addEventListener('click', function() {
       document.getElementById('jobseeker_apply_form').submit();
     });
+
     document.getElementById('cancelButton').addEventListener('click', function() {
       document.getElementById('confirmationBox').style.display = 'none';
     });

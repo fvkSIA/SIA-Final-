@@ -40,55 +40,57 @@ $conn->close();
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jobseeker Dashboard</title>
   <!-- Link Styles -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
   <style>
-    .home-section {
-      position: relative;
-      background-color: var(--color-body);
-      min-height: 100vh;
-      top: 0;
-      left: 50px;
-      width: calc(100% - 78px);
-      transition: all .5s ease;
-      z-index: 2;
-      padding-bottom: 5%;
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
     }
-
-    .home-section .text {
-      display: inline-block;
-      color: var(--color-default);
-      font-size: 25px;
-      font-weight: 500;
-      margin: 18px;
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
     }
-
-    #myButton {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 99;
-      padding: 10px 20px;
-      background-color: #9399b6;
-      color: black;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      font-weight: bold;
-      width: 150px;
+    .job-details {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
     }
-
-    #myButton:hover {
-      background-color: white;
+    .job-details h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #1E3B85;
     }
-
-    /* Modal Styles */
+    .job-details h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    .job-details p {
+      margin-bottom: 0.5rem;
+    }
+    .job-details .details {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .job-details .details div {
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      flex: 1;
+      margin: 0 5px;
+    }
     .modal {
-      display: none; /* Hidden by default */
+      display: none;
       position: fixed;
       z-index: 1;
       left: 0;
@@ -96,113 +98,86 @@ $conn->close();
       width: 100%;
       height: 100%;
       overflow: auto;
-      background-color: rgb(0,0,0);
       background-color: rgba(0,0,0,0.4);
+      align-items: center;
+      justify-content: center;
     }
-
     .modal-content {
-      background-color: #fefefe;
-      margin: 15% auto;
+      background: #fff;
+      border-radius: 8px;
       padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 500px;
-      border-radius: 10px;
+      max-width: 400px;
       text-align: center;
     }
-
     .modal-content p {
-      font-size: 20px;
+      font-size: 1.25rem;
+      margin-bottom: 20px;
     }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
     .modal-button {
       background-color: #1E3B85;
-      color: white;
-      font-weight: bold;
-      font-size: 20px;
-      border: none;
-      border-radius: 10px;
+      color: #fff;
       padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
+      font-size: 1rem;
+    }
+    .modal-button:hover {
+      background-color: #1a2b6c;
+    }
+    .apply-button {
+      background-color: #1E3B85;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
       margin-top: 20px;
     }
-
-    .modal-button:hover {
-      background-color: #3c5fa4;
+    .apply-button:hover {
+      background-color: #1a2b6c;
     }
-    .form-container {
-    text-align: right; /* Aligns the form to the right */
-    }
-
-    #applyForm {
-        display: inline-block; /* Makes the form fit its content */
-    }
-    
   </style>
 </head>
 <body>
-  <section class="home-section">
+  <section class="container">
     <?php if ($result != null && $result->num_rows > 0): ?>
       <?php $job = $result->fetch_assoc(); ?>
-      <h1 class="title text-2xl mb-3" style="padding-top: 15px; font-size: 2em; padding-top: 50px; margin-bottom: 25px;">Job Post</h1>
-      <div class="max-w-4xl" style="max-width: 100%; margin: 0 auto; padding-left: 50px;">
-          <h2 class="title text-lg mb-1" style="font-size: 1.5em;"><?php echo htmlspecialchars($job['job']); ?></h2>
-          <p class="location mb-6" style="margin-bottom: 25px;"><?php echo htmlspecialchars($job['date']); ?></p>
-          <p class="location mb-6" style="margin-bottom: 25px;"><?php echo htmlspecialchars($job['location']); ?></p>
+      <div class="job-details">
+        <h1>Job Post</h1>
+        <h2><?php echo htmlspecialchars($job['job']); ?></h2>
+        <p><i class='bx bx-briefcase'></i> <?php echo htmlspecialchars($job['date']); ?> at <?php echo htmlspecialchars($job['time']); ?></p>
+        <p><i class='bx bx-map'></i> <?php echo htmlspecialchars($job['location']); ?></p>
 
-          <div class="mb-6" style="margin-bottom: 15px;">
-              <h3 class="details mb-2" style="font-size: 1.25em; margin-bottom: 10px;">Job details</h3>
-              <div class="flex justify-between" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
-                  <div style="flex: 1 1 45%; margin-bottom: 15px;">
-                      <p class="font-bold text-gray" style="font-weight: bold; color: rgb(71, 71, 71);">Job type</p>
-                      <p class="bgcolor" style="background-color: #f0f0f0; padding: 5px;"><?php echo htmlspecialchars($job['type']); ?></p>
-                  </div>
-                  <div style="flex: 1 1 45%; margin-bottom: 15px;">
-                      <p class="font-bold text-gray" style="font-weight: bold; color: rgb(71, 71, 71);">Salary</p>
-                      <p class="bgcolor" style="background-color: #f0f0f0; padding: 5px;"><?php echo htmlspecialchars(number_format($job['salary_offer'], 2, '.', ',')); ?></p>
-                  </div>
-              </div>
+        <div class="details">
+          <div>
+            <p class="font-bold">Job Type</p>
+            <p><?php echo htmlspecialchars($job['type']); ?></p>
           </div>
-
-          <div class="mb-6" style="margin-bottom: 25px;">
-              <h3 class="section-title mb-2" style="font-size: 1.25em; margin-bottom: 10px;">Full Job description</h3>
-              <p class="mb-4" style="margin-bottom: 15px;">Responsibilities:</p>
-              <ul class="list-disc pl-5 mb-6" style="list-style-type: disc; padding-left: 20px; margin-bottom: 25px;">
-                  <?php echo nl2br(htmlspecialchars($job['responsibilities'])); ?>
-              </ul>
-
-              <p class="mb-4" style="margin-bottom: 15px;">Qualifications:</p>
-              <ul class="list-disc pl-5 mb-6" style="list-style-type: disc; padding-left: 20px; margin-bottom: 25px;">
-                  <?php echo nl2br(htmlspecialchars($job['qualifications'])); ?>
-              </ul>
-
-
+          <div>
+            <p class="font-bold"><i class="bx bx-money"></i> Salary</p>
+            <p><?php echo htmlspecialchars(number_format($job['salary_offer'], 2, '.', ',')); ?></p>
           </div>
-          
-          <!-- Apply Button Form -->
-          <div class="form-container">
-              <form id="applyForm" action="jobdetails.php" method="post">
-                  <input type="hidden" name="job_id" value="<?php echo htmlspecialchars($job['id']); ?>">
-                  <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($_SESSION['user_id']); ?>">
-                  <input type="hidden" name="emp_id" value="<?php echo htmlspecialchars($job['employer_id']); ?>">
-                  <button type="submit" id="applyButton" class="modal-button">Apply</button>
-              </form>
-          </div>
+        </div>
 
+        <h3>Full Job Description</h3>
+        <p><strong><i class='bx bx-list-ul pt-5'></i> Responsibilities:</strong></p>
+        <ul>
+          <?php echo nl2br(htmlspecialchars($job['responsibilities'])); ?>
+        </ul>
+
+        <p><strong><i class='bx bx-badge-check pt-5'></i> Qualifications:</strong></p>
+        <ul>
+          <?php echo nl2br(htmlspecialchars($job['qualifications'])); ?>
+        </ul>
+
+        <form id="applyForm" action="jobdetails.php" method="post">
+          <input type="hidden" name="job_id" value="<?php echo htmlspecialchars($job['id']); ?>">
+          <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($_SESSION['user_id']); ?>">
+          <input type="hidden" name="emp_id" value="<?php echo htmlspecialchars($job['employer_id']); ?>">
+          <button type="submit" class="apply-button">Apply</button>
+        </form>
       </div>
     <?php endif; ?>
 
@@ -220,7 +195,7 @@ $conn->close();
       // Show modal if necessary
       <?php if ($showModal) : ?>
         const modal = document.getElementById("myModal");
-        modal.style.display = 'block';
+        modal.style.display = 'flex';
       <?php endif; ?>
       
       // Handle apply button click
@@ -233,7 +208,7 @@ $conn->close();
         xhr.onload = function () {
           if (this.status === 200) {
             // Show success modal
-            document.getElementById('myModal').style.display = 'block';
+            document.getElementById('myModal').style.display = 'flex';
           } else {
             alert('Error applying for the job. Please try again.');
           }

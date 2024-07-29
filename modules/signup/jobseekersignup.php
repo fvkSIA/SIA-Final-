@@ -574,7 +574,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 "Plumber",
                 "Carpenter",
                 "Refrigerator and Aircon Service Provider",
-                "Professional Driver",
+                "Driver",
                 "Lineman"
             ],
             2: [
