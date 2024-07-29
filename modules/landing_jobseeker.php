@@ -16,10 +16,13 @@ if (isset($_POST['selectedOption'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HANAPKITA</title>
+    <head>
+    <link rel="icon" type="image/png" href="../img/hanapKITA.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
+         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
         body{
             margin: 0;
             background-color: #E9F1FA;
@@ -98,7 +101,7 @@ nav {
   background-color: #3D52A0;
   color: #fff;
   padding: 10px 20px;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .container-fluid {
@@ -208,7 +211,7 @@ nav {
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #f5f5f5;
     color: #333;
 }
@@ -341,7 +344,7 @@ body {
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <div class="nav-left">
-            <img class="logo" src="hanapKITA.png">
+            <img class="logo" src="..//img/hanapKITA.png">
             <h2 class="title">HANAPKITA</h2>
             </div>
             <div class="nav-center">
@@ -440,7 +443,7 @@ body {
         <p style="font-size: 16px;">Our vision is to become the leading job search platform in the region, known for its commitment to inclusivity, innovation, and excellence. We aspire to transform the job-seeking experience for skilled and unskilled workers, ensuring that everyone has equal access to opportunities that allow them to thrive and succeed in their careers. Through continuous improvement and community engagement, we aim to build a future where employment is accessible to all, and every individual can realize their full potential.</p>
     
     </div> 
-    
+    <br>
     
     <div class="container">
         <?php include 'metromanila.php' ?>
