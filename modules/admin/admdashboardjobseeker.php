@@ -111,9 +111,10 @@ $conn->close();
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Jobseekers</h5>
                     <div>
-                        <a class="btn btn-light btn-sm me-2" href="admin-emp-signup.php">
-                            <i class="bx bx-plus me-1"></i>Add New Jobseeker
-                        </a>
+                    <a class="btn btn-light btn-sm me-2" href="admin-jobseek-signup.php">
+    <i class="bx bx-plus me-1"></i>Add New Jobseeker
+</a>
+
                         <button class="btn btn-light btn-sm" onclick="printJobseekers()">
                             <i class="bx bx-printer me-1"></i>Print Jobseekers List
                         </button>
