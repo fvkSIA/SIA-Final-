@@ -28,6 +28,8 @@ $conn->close();
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
     body, html {
       margin: 0;
       padding: 0;
@@ -47,7 +49,7 @@ $conn->close();
       display: flex;
       border: 1px solid black;
       align-items: center;
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       position: relative;
       justify-content: center;
     }
@@ -68,7 +70,7 @@ $conn->close();
       margin: 0;
       margin-left: 25px;
       font-size: 34px;
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-family: 'Poppins', sans-serif;
       color: #1a3e6e;
       margin-bottom: 10px;
     }

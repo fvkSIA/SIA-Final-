@@ -43,8 +43,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Admin Login</title>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Poppins', sans-serif;
         background-color: #f0f0f5;
         display: flex;
         justify-content: center;
@@ -65,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     .login-container h1 {
         margin-bottom: 30px;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-family: 'Poppins', sans-serif;
         font-size: 38px;
         margin-top: -10px;
         color: #2f2f75;

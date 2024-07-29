@@ -55,6 +55,9 @@ if ($result != null) {
     <title>Job Offer Details</title>
     <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
     <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -62,7 +65,7 @@ if ($result != null) {
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: #f4f4f4;
             display: flex;
             justify-content: center;

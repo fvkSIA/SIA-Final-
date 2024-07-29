@@ -345,7 +345,7 @@ body {
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <div class="nav-left">
-            <img class="logo" src="hanapKITA.png">
+            <img class="logo" src="HanapKITA.png">
             <h2 class="title">HANAPKITA</h2>
             </div>
             <div class="nav-center">

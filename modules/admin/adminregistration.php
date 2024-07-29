@@ -30,10 +30,12 @@ $conn->close();
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
 
     <style>
+                @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: #f4f6f9;
         }
 

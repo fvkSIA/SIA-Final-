@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
     
     <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
         body {
             background-color: #f8f9fa;
             background-size: cover;

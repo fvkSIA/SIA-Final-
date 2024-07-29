@@ -28,6 +28,7 @@ $conn->close();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Employer Dashboard</title>
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="icon" type="image/png" href="../HanapKITA.png">
   <script>
     // Function to change content automatically
     function changeContentAutomatically() {

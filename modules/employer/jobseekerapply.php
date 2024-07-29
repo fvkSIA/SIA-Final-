@@ -35,15 +35,18 @@ $conn->close();
   <title>Jobseeker Profile</title>
   <!-- Link Styles -->
   <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+  <link rel="icon" type="image/png" href="../HanapKITA.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
 body {
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
 
     .container {

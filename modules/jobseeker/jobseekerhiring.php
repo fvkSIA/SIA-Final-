@@ -188,7 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       margin-right: 5px;
     }
     .piso-sign {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
     button.prev, button.next {
       position: absolute;
@@ -344,7 +344,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       margin-right: 5px;
     }
     .piso-sign1 {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
     button.prev1, button.next1 {
       position: absolute;
@@ -419,7 +419,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       background-color: #0056b3;
     }
     .custom-label {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
   font-size: 18px;
   color: #4A4A4A;
   font-weight: 600;

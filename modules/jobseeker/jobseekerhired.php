@@ -11,6 +11,8 @@ session_start();
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
     .container {
       width: 100%;
       height: 100vh; /* Full viewport height */
@@ -23,7 +25,7 @@ session_start();
     }
     .title {
       font-size: 32px;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       color: #1E3B85;
       margin-bottom: 20px;
       text-align: left;
@@ -40,26 +42,26 @@ session_start();
       padding: 5px; /* Optional: padding for inner spacing */
     }
     .message-box h2 {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 30px;
       color: #333333;
       font-weight: bold;
     }
     .message-box p {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 40px;
       color: #333333;
       font-weight: bold;
     }
     .greeting {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 16px;
       margin: 25px 0 15px;
       text-align: left;
       width: 80%;
     }
     .congratulations {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 16px;
       width: 80%;
       text-align: left;
@@ -68,7 +70,7 @@ session_start();
       color: #1E3B85;
       text-decoration: none;
       font-size: 14px;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin-bottom: 20px;
     }
     .see-more:hover {
@@ -86,7 +88,7 @@ session_start();
       color: #ffffff;
       border: none;
       border-radius: 20px;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;

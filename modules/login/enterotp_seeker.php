@@ -57,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="author" content="CodeHim">
     <title>Login Page</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" type="image/png" href="../HanapKITA.png">
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'>
     <script
       src="https://kit.fontawesome.com/64d58efce2.js"

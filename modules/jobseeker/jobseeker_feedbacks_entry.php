@@ -32,8 +32,10 @@ if($stmt = $conn->prepare($sql)){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback</title>
     <style>
+              @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: #f0f0f0;
             padding: 20px;
             margin: 0;

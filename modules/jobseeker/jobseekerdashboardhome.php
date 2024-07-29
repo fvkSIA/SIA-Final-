@@ -13,6 +13,7 @@ session_start();
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 
 
@@ -44,7 +45,7 @@ session_start();
   margin: 0;
   color: #3D52A0;
   font-size: 120px;
-  font-family: Georgia, 'Times New Roman', Times, serif; 
+  font-family: 'Poppins', sans-serif;
   position: absolute;
   top: -600px;
   left: 70px; /* Adjusted value to position the title relative to the logo */
@@ -54,7 +55,7 @@ session_start();
   margin: 0;
   color: #3D52A0;
   font-size: 15px;
-  font-family: Georgia, 'Times New Roman', Times, serif; 
+  font-family: 'Poppins', sans-serif;
   font-style: italic;
   position: absolute;
   top: -295px;
@@ -256,7 +257,7 @@ session_start();
 .footer {
     width: 100%;
     padding: 20px;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin-top: 70px;
     border-radius: 5px;
 }
@@ -304,7 +305,7 @@ session_start();
     
     <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto; max-width: 100%; padding-bottom: 20px; border: 1px solid;">
         <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
-            <h1 style="font-family: Georgia, serif; font-size: 3.5em; font-weight: bold; color: #004f83; padding-top: 30px;">
+            <h1 style="font-family: 'Poppins', sans-serif; font-size: 3.5em; font-weight: bold; color: #004f83; padding-top: 30px;">
                 Search, Find, and Apply!
             </h1>
             <form action="jobseekerhiring.php" method="post">

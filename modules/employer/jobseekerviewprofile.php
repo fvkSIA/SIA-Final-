@@ -41,9 +41,12 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jobseeker Dashboard</title>
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="icon" type="image/png" href="../HanapKITA.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
+ @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
     #myButton {
       display: inline-block;
       padding: 10px 20px;

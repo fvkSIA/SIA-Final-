@@ -46,6 +46,7 @@ $conn->close();
     <title>Employer Dashboard</title>
     <!-- Link Styles -->
     <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="icon" type="image/png" href="../HanapKITA.png">
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
         :root {
@@ -63,8 +64,8 @@ $conn->close();
         }
         body {
             min-height: 100vh;
-            font-family: Arial, sans-serif;
             display: flex;
+            font-family: 'Poppins', sans-serif;
             flex-direction: column; /* Changed to column to stack elements vertically */
             align-items: center;
             height: 100vh;
@@ -80,14 +81,14 @@ $conn->close();
         }
         td {
             border: 1px solid #ddd;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-size: 18px;
             padding: 8px 8px 8px 50px; /* Adjusted padding to move text to the right */
             height: 40px;
         }
         .details {
             text-align: right;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-size: 15px;
             width: 100%;
             display: flex;

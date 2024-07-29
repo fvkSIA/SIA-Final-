@@ -38,6 +38,9 @@ $conn->close();
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
         /* Your existing styles... */
         table {
             border-collapse: collapse;
@@ -48,7 +51,7 @@ $conn->close();
 
         td {
             border: 1px solid #ddd;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-size: 18px;
             padding: 8px 8px 8px 50px; /* Adjusted padding to move text to the right */
             height: 40px;
@@ -56,7 +59,7 @@ $conn->close();
 
         .details {
             text-align: right;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-size: 15px;
             width: 100%;
             display: flex;

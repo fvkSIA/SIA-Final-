@@ -106,7 +106,9 @@ $result_posts = $stmt_posts->get_result();
     <title>JobPulse - Manage Your Job Posts</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="../HanapKITA.png">
     <style>
+         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
         :root {
             --primary-color: #6C63FF;
             --secondary-color: #4CAF50;
@@ -115,7 +117,7 @@ $result_posts = $stmt_posts->get_result();
             --text-color: #333333;
         }
         body {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
         }

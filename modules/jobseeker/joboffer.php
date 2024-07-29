@@ -35,8 +35,9 @@ $conn->close();
   <title>Job Offers</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 20px;
       background-color: #f0f2f5;

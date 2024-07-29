@@ -34,6 +34,7 @@ $conn->close();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jobseeker Dashboard</title>
+  <link rel="icon" type="image/png" href="../HanapKITA.png">
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <script>
     // Function to change content automatically

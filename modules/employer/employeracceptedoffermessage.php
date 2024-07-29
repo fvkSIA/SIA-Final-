@@ -5,10 +5,13 @@
   <title>Jobseeker Dashboard</title>
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="icon" type="image/png" href="../HanapKITA.png">
+
   <style>
+     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
     body {
       margin: 0;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;

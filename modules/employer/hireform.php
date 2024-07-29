@@ -99,6 +99,7 @@ $conn->close(); // Close the database connection
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Offer</title>
     <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="icon" type="image/png" href="../HanapKITA.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
         body {

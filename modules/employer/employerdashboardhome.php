@@ -10,11 +10,9 @@ session_start();
   <title>Employer Dashboard</title>
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="icon" type="image/png" href="../HanapKITA.png">
   <style>
-
-
-
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
     .home-section {
       position: relative;
       background-color: var(--color-body);
@@ -25,8 +23,6 @@ session_start();
       z-index: 2;
       margin: 0 auto;
     }
-    
-
 .home-section .text{
   display: inline-block;
   color:var(--color-default);
@@ -43,7 +39,7 @@ session_start();
   margin: 0;
   color: #3D52A0;
   font-size: 120px;
-  font-family: Georgia, 'Times New Roman', Times, serif; 
+  font-family: 'Poppins', sans-serif;
   position: absolute;
   top: -600px;
   left: 70px; /* Adjusted value to position the title relative to the logo */
@@ -53,7 +49,7 @@ session_start();
   margin: 0;
   color: #3D52A0;
   font-size: 15px;
-  font-family: Georgia, 'Times New Roman', Times, serif; 
+  font-family: 'Poppins', sans-serif;
   font-style: italic;
   position: absolute;
   top: -295px;
@@ -253,7 +249,7 @@ session_start();
         }
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 .topnav {
   overflow: hidden;
@@ -287,7 +283,7 @@ body {
   <section class="home-section">
     <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto;  padding-bottom: 20px; border: 1px solid;">
         <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
-            <h1 style="font-family: Georgia, serif; font-size: 3.5em; font-weight: bold; color: #6b0d0d; padding-top: 30px;">
+            <h1 style="font-family: 'Poppins', sans-serif; font-size: 3.5em; font-weight: bold; color: #6b0d0d; padding-top: 30px;">
                 Search, Find, and Apply!
             </h1>
             <form action="findworkers.php" method="post" >

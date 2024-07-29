@@ -110,7 +110,9 @@ $conn->close();
   <title>Employer Dashboard</title>
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="icon" type="image/png" href="../HanapKITA.png">
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
     .review-container {
       background-color: #ffffff;
       margin-top: 80px;
@@ -134,7 +136,7 @@ $conn->close();
     }
     .work {
       color: #1E3B85;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 36px; /* Adjusted font size */
       padding-top: 6%;
     }
@@ -146,18 +148,18 @@ $conn->close();
     }
     .worker {
       color: #000;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 18px; /* Adjusted font size */
       margin-top: 10px;
     }
     .name {
       color: #00b300;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 18px; /* Adjusted font size */
       margin-top: -5px; /* Adjusted margin */
     }
     .tag {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 13px;
       margin-top: 20px; /* Adjusted margin */
       font-style: italic;
@@ -185,7 +187,7 @@ $conn->close();
     .send-button {
       background-color: #3b5998;
       color: #ffffff;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       padding: 10px;
       width: 25%;
       border: none;
@@ -198,7 +200,7 @@ $conn->close();
   }
   
     .label {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 13px;
       font-style: italic;
       margin-top: 20px; /* Adjusted margin */

@@ -52,12 +52,12 @@ $conn->close();
   <!-- <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'>
   <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'> -->
   <style>
-    
+      @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
     html, body {
       margin: 0;
       padding: 0;
-      font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 14px;
     }
 

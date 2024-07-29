@@ -13,7 +13,8 @@ if (isset($_POST['selectedOption'])){
 
 <!DOCTYPE html>
 <html lang>
-  <head>
+<link rel="icon" type="image/png" href="../HanapKITA.png">
+<head>
     <script
       src="https://kit.fontawesome.com/64d58efce2.js"
       crossorigin="anonymous">
@@ -43,7 +44,7 @@ if (isset($_POST['selectedOption'])){
   background-color: #3D52A0;
   color: #fff;
   padding: 10px 20px;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .container-fluid {
@@ -71,8 +72,8 @@ if (isset($_POST['selectedOption'])){
   font-weight: bold;
 }
 .title1 {
-    font-family: 'Roboto', sans-serif; 
-    font-size: 2.5rem; 
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5rem; 
     font-weight: bold; 
     color: #3D52A0; 
     text-transform: uppercase;
@@ -552,7 +553,7 @@ if (isset($_POST['selectedOption'])){
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <div class="nav-left">
-            <img class="logo" src="hanapKITA.png">
+            <img class="logo" src="../HanapKITA.png">
             <h2 class="title">HANAPKITA</h2>
             </div>
             <div class="nav-center">

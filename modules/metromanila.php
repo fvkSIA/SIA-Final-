@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Map of Metro Manila</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="icon" type="image/png" href="../HanapKITA.png">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         body { margin: 0; padding: 0; }
