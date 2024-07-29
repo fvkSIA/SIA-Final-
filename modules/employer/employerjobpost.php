@@ -86,7 +86,7 @@ body {
 
 .title {
   font-size: 32px;
-  color: #1E3B85;
+  color: #6b0d0d;
   margin-bottom: 20px;
   font-weight: bold;
   text-align: center;
@@ -157,7 +157,7 @@ body {
 
 .post-button {
   width: 20%;
-  background-color: #1E3B85;
+  background-color: #6b0d0d;
   color: #fff;
   font-weight: bold;
   font-size: 18px;
@@ -233,7 +233,7 @@ body {
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: #007bff;
+  background-color: #6b0d0d;
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
@@ -246,7 +246,7 @@ body {
 }
 
 .back-button:hover {
-  background-color: #0056b3;
+  background-color: #8b1b0d;
 }
   </style>
 </head>

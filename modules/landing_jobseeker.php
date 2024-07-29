@@ -227,13 +227,15 @@ body {
 }
 
 .text-content h1 {
-    font-size: 2.5em;
+    font-size: 4.5em;
     margin-bottom: 20px;
+    padding-left: 20px;
 }
 
 .text-content p {
     font-size: 1.2em;
     margin-bottom: 30px;
+    padding-left: 20px;
 }
 
 .search-bar {
@@ -241,6 +243,8 @@ body {
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
+    padding-left: 20px;
+    padding-bottom: 100px;
 }
 
 .search-bar input[type="text"] {
@@ -426,7 +430,6 @@ body {
 <br>
 <iframe src="../slide/index.html" frameborder="0" style="width: 100%; height: 540px;"></iframe>
 
-
     
     <div id="bottom" style="padding: 30px; background-color: #f8f9fa; border: 1px solid #ccc; border-radius: 5px; width: 90%; margin: 0 auto; text-align: center;">
 
@@ -439,6 +442,9 @@ body {
     </div> 
     
     
+    <div class="container">
+        <?php include 'metromanila.php' ?>
+    </div>
 <?php include '../chatbot/index.html';?>
 <?php include '../modules/landing_footer.html'; ?>
 

@@ -56,7 +56,7 @@ foreach ($data as $row) {
             padding: 0;
         }
         .container {
-            width: 90%;
+            width: 95%;
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
@@ -67,7 +67,7 @@ foreach ($data as $row) {
             margin-bottom: 30px;
             border-bottom: 2px solid #3b82f6;
             padding-bottom: 10px;
-        }
+        } 
         .history-item {
             background-color: #ffffff;
             border-radius: 8px;
@@ -121,7 +121,7 @@ foreach ($data as $row) {
 </head>
 <body>
     <div class="container">
-        <h1 class="history-title">history</h1>
+        <h1 class="history-title">History</h1>
         <?php if($error): ?>
             <p class="error"><?php echo $error; ?></p>
         <?php endif; ?>

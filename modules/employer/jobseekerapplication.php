@@ -3,7 +3,6 @@ require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
 $error = '';
 $result = null;
-$showModal = false;
 
 if($_SERVER["REQUEST_METHOD"] == "GET") {
   $jrid = $_GET['id'];
@@ -15,14 +14,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
         LEFT JOIN job_offers ON job_requests.job_id = job_offers.id
         WHERE job_requests.id = ?";
 
-  // echo $id . ' query: ' . $sql; die();
   if ($stmt = $conn->prepare($sql)) {
     $stmt->bind_param("s", $jrid);
     $stmt->execute();
     $result = $stmt->get_result() ?? null;
-
-    // print_r($result);
-    // die();
     $stmt->close();
   }
 
@@ -41,10 +36,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
                   $stmt->close();
                   $stmt2->close();
                   header('Location: employerongoing.php');
-                  
                 }
             }
-            
         } else {    
             $error = 'Error encountered. Try again later';
         }
@@ -55,96 +48,258 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
 $conn->close();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Employer Dashboard</title>
-  <!-- Link Styles -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employer Dashboard - Job Post</title>
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
     :root {
-      --color-default: #004f83;
-      --color-second: #0067ac;
-      --color-white: #fff;
-      --color-body: #e4e9f7;
-      --color-light: #e0e0e0;
+      --primary-color: #1a73e8;
+      --secondary-color: #5f6368;
+      --background-color: #f0f2f5;
+      --card-background: #ffffff;
+      --text-color: #333333;
     }
 
     * {
-      padding: 0%;
-      margin: 0%;
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
     }
 
     body {
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #7cbeea;
-      padding: 20px;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
     }
 
     main {
-      width: 100%;
       max-width: 800px;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin: 40px auto;
+      padding: 30px;
+      background-color: var(--card-background);
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
-    .search-bar {
-      background-color: #7091E6;
-      padding: 20px;
-      border-radius: 20px;
+    .header {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .job-post {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 10px;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .job-post:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .job-post h1 {
+      font-size: 24px;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .job-post p {
+      font-size: 16px;
+      color: var(--secondary-color);
+    }
+
+    .employee-info {
+      background-color: #e8f0fe;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
       display: flex;
       align-items: center;
-      gap: 15px;
     }
 
-    .search-bar input, .search-bar select, .search-bar button {
-      border: none;
-      border-radius: 10px;
-      padding: 13px;
+    .employee-info i {
+      font-size: 24px;
+      margin-right: 10px;
+      color: var(--primary-color);
+    }
+
+    .employee-info p {
+      font-weight: 500;
+      margin: 0;
+    }
+
+    .employee-info span {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .job-details {
+      margin-top: 25px;
+    }
+
+    .job-details h2 {
+      font-size: 20px;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 5px;
+    }
+
+    .job-details p {
+      font-size: 16px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .job-details i {
+      margin-right: 10px;
+      color: var(--secondary-color);
       font-size: 20px;
     }
 
-    .search-bar input:focus, .search-bar select:focus, .search-bar button:focus {
-      outline: none;
+    .salary, .responsibilities, .qualifications {
+      margin-top: 20px;
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
     }
 
-    .search-bar input {
-      flex: 1;
+    .salary h3, .responsibilities h3, .qualifications h3 {
+      font-size: 18px;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
     }
 
-    .search-bar select {
-      flex: 1.5;
+    .salary h3 i, .responsibilities h3 i, .qualifications h3 i {
+      margin-right: 10px;
     }
 
-    .search-bar button {
-      background-color: #3D52A0;
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    .accept-button {
+      background-color: var(--primary-color);
       color: white;
+      font-weight: 500;
+      font-size: 16px;
+      padding: 12px 24px;
+      border-radius: 25px;
+      border: none;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 25px;
+      display: block;
+      width: 100%;
     }
 
-    .search-bar button:hover {
-      background-color: #2d3d82;
+    .accept-button:hover {
+      background-color: #1557b0;
+    }
+
+    .confirmation-box {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .confirmation-box .box {
+      background-color: var(--card-background);
+      padding: 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .confirmation-box .box p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .confirmation-box .box button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .confirmation-box .box button#confirmButton {
+      background-color: var(--primary-color);
+      color: white;
+      margin-right: 10px;
+    }
+
+    .confirmation-box .box button#confirmButton:hover {
+      background-color: #1557b0;
+    }
+
+    .confirmation-box .box button#cancelButton {
+      background-color: #f1f3f4;
+      color: var(--secondary-color);
+    }
+
+    .confirmation-box .box button#cancelButton:hover {
+      background-color: #e8eaed;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 20px;
+        margin: 20px;
+      }
+
+      .job-post {
+        padding: 20px;
+      }
+
+      .job-post h1 {
+        font-size: 22px;
+      }
+
+      .job-details h2 {
+        font-size: 18px;
+      }
+
+      .employee-info {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .employee-info i {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
     }
   </style>
 </head>
 <body>
-<?php 
+  <?php 
     $data = [];
     if ($result != null) {
       $user = $result->fetch_assoc();
@@ -152,72 +307,89 @@ $conn->close();
       echo '';
     }
 
+    function formatMoney($amount) {
+      return '₱ ' . number_format($amount, 2, '.', ',');
+    }
   ?>
-  <main class="p-10">
-  <form action="jobseekerapplication.php" method="post" id="jobseeker_apply_form">
-        <input type="hidden" name="job_id" value="<?php echo $user['jr_jobid'] ?? '';?>">
-        <input type="hidden" name="job_req_id" value="<?php echo $jrid ?? '';?>">
-  </form>
-    <span class="text-blue-500" style="font-size: 25px;">JOB POST</span>
-    <div class="bg-blue-100 p-6 rounded-lg mt-4">
-      <h1 class="text-lg font-bold text-blue-500">Looking for <?php echo $user['job']?></h1>
-      <p class="text-sm text-gray-600"><?php echo $user['date']?> at <?php echo $user['time']?></p>
-      <div class="mt-4">
-        <p class="font-bold text-gray-700">Employed Worker: <span class="text-green-500"><?php echo $user['job_seek_fname']?> <?php echo $user['job_seek_lname']?></span></p>
+
+  <main>
+    <h1 class="header">Job Post Details</h1>
+    <div class="job-post">
+      <h1><?php echo htmlspecialchars($user['job']) ?></h1>
+      <p><i class='bx bx-calendar'></i> <?php echo htmlspecialchars($user['date']) ?> at <?php echo htmlspecialchars($user['time']) ?></p>
+      
+      <div class="employee-info">
+        <i class='bx bx-user-circle'></i>
+        <p>Employed Worker: <span><?php echo htmlspecialchars($user['job_seek_fname']) ?> <?php echo htmlspecialchars($user['job_seek_lname']) ?></span></p>
       </div>
-      <hr class="my-4">
-      <h2 class="text-xl font-bold text-gray-900">Job details</h2>
-      <div class="flex items-center mt-2 text-gray-600">
-        <i class="fas fa-briefcase mr-2"></i>
-        <p class="text-sm"><?php echo $user['type']?></p>
-      </div>
-      <div class="flex items-center mt-2 text-gray-600">
-        <i class="fas fa-map-marker-alt mr-2"></i>
-        <p class="text-sm"><?php echo $user['location']?></p>
-      </div>
-      <div class="mt-4">
-        <h3 class="text-lg font-bold text-gray-900">Salary</h3>
-        <p class="text-sm bg-gray-100 px-2 py-1 rounded text-gray-700 font-semibold"><?php echo $user['salary_offer']?></p>
-      </div>
-      <hr class="my-4">
-      <h2 class="text-xl font-bold text-gray-900">Full Job description</h2>
-      <p class="text-sm mt-2 text-gray-600">Responsibilities:</p>
-      <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
-        <?php echo $user['responsibilities']?>
-      </ul>
-      <div class="mb-4">
-        <h2 class="font-bold text-lg">Qualifications:</h2>
-        <ul class="list-disc list-inside text-sm text-gray-600 mt-2 mb-4">
-          <?php echo $user['qualifications']?>
-        </ul>
-      </div>
-      <div class="text-center mt-4">
-        <button id="acceptButton" class="bg-[#FFCC00] text-white font-bold py-2 px-6 rounded-full">ACCEPT WORKER</button>
-      </div>
-      <div id="confirmationBox" class="hidden absolute inset-0 bg-opacity-50 flex justify-center items-center">
-        <div class="bg-white p-6 rounded-lg" style="width: 30%;">
-          <p class="text-lg font-bold mb-4">Are you sure you want to accept this worker?</p>
-          <div class="flex justify-center">
-            <button id="confirmButton" class="bg-blue-500 text-white py-2 px-6 rounded-full mr-2">Yes</button>
-            <button id="cancelButton" class="bg-gray-300 py-2 px-6 rounded-full">No</button>
-          </div>
+
+      <div class="job-details">
+        <h2>Job Details</h2>
+        <p><i class='bx bx-briefcase'></i> <?php echo htmlspecialchars($user['type']) ?></p>
+        <p><i class='bx bx-map'></i> <?php echo htmlspecialchars($user['location']) ?></p>
+        
+        <div class="salary">
+          <h3><i class='bx bx-money'></i> Salary</h3>
+          <p><?php echo formatMoney($user['salary_offer']) ?></p>
         </div>
+        
+        <div class="responsibilities">
+  <h3><i class='bx bx-list-ul'></i> Responsibilities</h3>
+  <ul style="list-style-type: none; padding: 0; margin: 0;">
+    <?php 
+      $responsibilities = explode("\n", $user['responsibilities']);
+      foreach ($responsibilities as $responsibility) {
+        $trimmedResponsibility = htmlspecialchars(trim($responsibility));
+        if ($trimmedResponsibility) {
+          echo "<li>{$trimmedResponsibility}</li>";
+        }
+      }
+    ?>
+  </ul>
+</div>
+
+<div class="qualifications">
+  <h3><i class='bx bx-badge-check'></i> Qualifications</h3>
+  <ul style="list-style-type: none; padding: 0; margin: 0;">
+    <?php 
+      $qualifications = explode("\n", $user['qualifications']);
+      foreach ($qualifications as $qualification) {
+        $trimmedQualification = htmlspecialchars(trim($qualification));
+        if ($trimmedQualification) {
+          echo "<li>{$trimmedQualification}</li>";
+        }
+      }
+    ?>
+  </ul>
+</div>
+
+        
+        <button id="acceptButton" class="accept-button">ACCEPT WORKER</button>
+      </div>
+    </div>
+    
+    <div id="confirmationBox" class="confirmation-box">
+      <div class="box">
+        <p>Are you sure you want to accept this worker?</p>
+        <form id="jobseeker_apply_form" method="POST">
+          <input type="hidden" name="job_id" value="<?php echo htmlspecialchars($user['job_offer_id']); ?>">
+          <input type="hidden" name="job_req_id" value="<?php echo htmlspecialchars($user['jr_id']); ?>">
+          <button type="submit" id="confirmButton">Yes, Accept</button>
+        </form>
+        <button id="cancelButton">Cancel</button>
       </div>
     </div>
   </main>
-  <!-- JS Scripts -->
+
   <script>
     document.getElementById('acceptButton').addEventListener('click', function() {
-      document.getElementById('confirmationBox').classList.remove('hidden');
+      document.getElementById('confirmationBox').style.display = 'flex';
     });
     document.getElementById('confirmButton').addEventListener('click', function() {
-      // Redirect to jc.html
-      // window.location.href = 'employerongoing.html';
-      var form = document.getElementById('jobseeker_apply_form');
-      form.submit();
+      document.getElementById('jobseeker_apply_form').submit();
     });
     document.getElementById('cancelButton').addEventListener('click', function() {
-      document.getElementById('confirmationBox').classList.add('hidden');
+      document.getElementById('confirmationBox').style.display = 'none';
     });
   </script>
 </body>

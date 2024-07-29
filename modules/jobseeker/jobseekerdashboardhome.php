@@ -302,9 +302,9 @@ session_start();
 
   <section class="home-section">
     
-    <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto; max-width: 100%; padding-bottom: 20px;">
+    <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto; max-width: 100%; padding-bottom: 20px; border: 1px solid;">
         <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
-            <h1 style="font-family: Georgia, serif; font-size: 2.5em; font-weight: bold; color: #333; padding-top: 30px;">
+            <h1 style="font-family: Georgia, serif; font-size: 3.5em; font-weight: bold; color: #004f83; padding-top: 30px;">
                 Search, Find, and Apply!
             </h1>
             <form action="jobseekerhiring.php" method="post">
@@ -347,7 +347,7 @@ session_start();
                         <option value="valenzuela">Valenzuela</option>
                         <option value="pateros">Pateros</option>
                     </select>
-                    <button style="flex: 1 1 auto; padding: 8px 20px; width: 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;" type="submit">
+                    <button style="flex: 1 1 auto; padding: 8px 20px; width: 20px; background-color: #004f83; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;" type="submit">
                         Find Now!
                     </button>
                 </div>
@@ -364,7 +364,7 @@ session_start();
     
 
     
-    <div class="container">
+    <div class="container" style="border: 1px solid;">
         <div class="image-section">
             <img src="pic1.jpg">
         </div>

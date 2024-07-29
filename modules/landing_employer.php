@@ -193,9 +193,8 @@ nav {
 }
   
         h1 {
-            font-size: 80px;
             color: #691111;
-            margin-bottom: 20px;
+            margin-bottom: 2px;
             font-family: 'Poppins', sans-serif;
             font-weight: bold;
             padding-right: 50px;
@@ -227,13 +226,16 @@ body {
 }
 
 .text-content h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    padding-left: 20px;
+
 }
 
 .text-content p {
     font-size: 1.2em;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    padding-left: 24px;
 }
 
 .search-bar {
@@ -241,6 +243,9 @@ body {
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
+    padding-top: 0px;
+    padding-left: 20px;
+    margin-bottom: 100px;
 }
 
 .search-bar input[type="text"] {
@@ -357,7 +362,7 @@ body {
             </div>
         </div>
     </nav>
-</header>
+</header> 
 
 <div class="main-content">
         <div class="text-content">

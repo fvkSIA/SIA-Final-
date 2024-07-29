@@ -67,13 +67,13 @@ if ($result === false) {
       <option value="<?php echo htmlspecialchars($row_job_type['job_type']); ?>" <?php echo $selected; ?>><?php echo htmlspecialchars($row_job_type['job_type']); ?></option>
     <?php endwhile; ?>
   </select>
-  <button type="submit" style="padding: 8px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;">Filter</button>
+  <button type="submit" style="padding: 8px 20px; background-color: #6b0d0d; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;">Filter</button>
 </form>
 
 <?php if ($result->num_rows > 0): ?>
   <table border='0' style='border-collapse: collapse; width: 100%;'>
     <thead>
-      <tr style='background-color: #8bc2f0; align-items: center;'>
+      <tr style='background-color: #f6b4ab; align-items: center;'>
         <th style='padding: 10px; width: 2%;'>Rank</th>
         <th style='padding: 10px; width: 1%;'></th>
         <th style='padding: 10px; width: 10%; text-align: left;'>Name</th>
@@ -96,7 +96,7 @@ if ($result === false) {
           <td style='padding: 10px; text-align: center;'><?php echo $row["city"]; ?></td>
           <td style='padding: 10px; text-align: center;'>
           <a href='jobseekerviewprofile.php?id=<?php echo $row['id']; ?>' 
-          style='display: inline-block; padding: 6px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;'>
+          style='display: inline-block; padding: 6px 12px; background-color: #6b0d0d; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;'>
           <i class='bx bx-show-alt' style='vertical-align: middle; margin-right: 5px;'></i> View
           </a>
           </td>

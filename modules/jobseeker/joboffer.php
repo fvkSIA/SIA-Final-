@@ -27,8 +27,6 @@ $conn->close();
 
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,30 +38,35 @@ $conn->close();
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
+      padding: 20px;
+      background-color: #f0f2f5;
     }
 
     .job-offer-container {
-      width: 100%;
-      border-radius: 8px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .job-offer-container h2 {
-      font-size: 24px;
+      font-size: 2rem;
       color: #3D52A0;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #3b82f6;
+      padding-bottom: 10px;
     }
 
     .job-offer {
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      margin-bottom: 20px;
       background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      padding: 20px;
       position: relative;
+      transition: transform 0.2s;
+    }
+
+    .job-offer:hover {
+      transform: translateY(-5px);
     }
 
     .job-details {
@@ -71,36 +74,40 @@ $conn->close();
       flex-direction: column;
     }
 
+    .job-title-wrapper {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .job-title-wrapper .fas {
+      font-size: 24px;
+      color: #3D52A0;
+      margin-right: 10px;
+    }
+
     .job-title {
-      font-size: 38px;
+      font-size: 1.5rem;
       font-weight: bold;
       color: #3D52A0;
-      margin-top: -80px;
-      margin-left: -30px;
     }
 
     .job-location, .job-type, .job-salary {
-      font-size: 17px;
-      margin-top: -60px;
-      margin-left: 8px;
+      font-size: 1rem;
       margin-bottom: 10px;
-      color: #000;
-    }
-
-    .job-type, .job-salary {  
-      margin-top: 10px;
-      margin-left: 40px;
+      color: #333;
     }
 
     .job-type span, .job-salary span {
       background-color: #e9ecef;
       padding: 5px 10px;
       border-radius: 4px;
-      font-size: 14px;
+      font-size: 0.9rem;
+      margin-right: 5px;
     }
 
     .employee-name {
-      font-size: 18px;
+      font-size: 1rem;
       font-weight: bold;
       color: #333;
       position: absolute;
@@ -111,31 +118,46 @@ $conn->close();
     .view-offer {
       display: inline-block;
       padding: 10px 20px;
-      background-color: #007bff;
+      background-color: #3D52A0;
       color: #fff;
       border-radius: 4px;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 0.9rem;
       font-weight: bold;
       position: absolute;
       bottom: 20px;
       right: 20px;
+      transition: background-color 0.2s;
     }
 
     .view-offer:hover {
-      background-color: #0056b3;
+      background-color: #2C3E7F;
     }
 
-    .job-title-wrapper {
-      display: flex;
-      align-items: center;
-    }
+    @media (max-width: 768px) {
+      .job-offer {
+        padding: 15px;
+      }
 
-    .job-title-wrapper .fas {
-      font-size: 24px;
-      color: #000;
-      margin-top: 80px;
-      margin-right: 10px;
+      .job-title {
+        font-size: 1.2rem;
+      }
+
+      .job-location, .job-type, .job-salary {
+        font-size: 0.9rem;
+      }
+
+      .employee-name {
+        position: static;
+        margin-bottom: 10px;
+      }
+
+      .view-offer {
+        position: static;
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+      }
     }
   </style>
 </head>
@@ -158,7 +180,7 @@ $conn->close();
               <i class="fas fa-briefcase"></i>
               <div class="job-title"><?php echo $row['job']?></div>
             </div>
-            <div class="job-location"><?php echo $row['location']?></div>
+            <div class="job-location"><i class="fas fa-map-marker-alt"></i> <?php echo $row['location']?></div>
             <div class="job-type">
               <span>Job Type</span>
               <span><?php echo $row['jo_type']?></span>

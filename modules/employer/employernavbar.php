@@ -49,8 +49,8 @@ $conn->close();
     @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
     :root {
-      --color-default: #004f83;
-      --color-second: #004f83;
+      --color-default: #6b0d0d;
+      --color-second: #6b0d0d;
       --color-white: #fff;
       --color-body: #e4e9f7;
       --color-light: #e0e0e0;

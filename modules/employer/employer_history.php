@@ -81,9 +81,9 @@ $conn->close();
         }
         .history-title {
             font-size: 28px;
-            color: #1e3a8a;
+            color: #6b0d0d;
             margin-bottom: 30px;
-            border-bottom: 2px solid #3b82f6;
+            border-bottom: 2px solid #6b0d0d;
             padding-bottom: 10px;
         }
         .history-item {

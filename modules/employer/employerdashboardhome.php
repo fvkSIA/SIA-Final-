@@ -285,9 +285,9 @@ body {
 </head>
 <body>
   <section class="home-section">
-    <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto;  padding-bottom: 20px;">
+    <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto;  padding-bottom: 20px; border: 1px solid;">
         <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
-            <h1 style="font-family: Georgia, serif; font-size: 2.5em; font-weight: bold; color: #333; padding-top: 30px;">
+            <h1 style="font-family: Georgia, serif; font-size: 3.5em; font-weight: bold; color: #6b0d0d; padding-top: 30px;">
                 Search, Find, and Apply!
             </h1>
             <form action="findworkers.php" method="post" >
@@ -314,15 +314,15 @@ body {
                         <option value="valenzuela">Valenzuela</option>
                         <option value="pateros">Pateros</option>
                     </select>
-                    <button type="submit" style="flex: 1 1 auto; padding: 8px 20px; width: 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;" >
+                    <button type="submit" style="flex: 1 1 auto; padding: 8px 20px; width: 20px; background-color: #6b0d0d; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;" >
                         Find Now!
                     </button>
                 </div>
             </form>
         </div>
     </div>
-    <br>
-    <div class="container">
+    <br> 
+    <div class="container" style="border: 1px solid;">
         <div class="image-section">
             <img src="pic1.jpg">
         </div>

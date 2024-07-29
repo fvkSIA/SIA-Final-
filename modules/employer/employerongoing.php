@@ -7,7 +7,7 @@ $data = []; // Initialize $data as an empty array
 
 $id = $_SESSION['user_id'];
 
-$sql = "SELECT job_requests.id as job_req_id, job_requests.user_id as job_req_userid, job_requests.employer_id as job_req_empid, job_requests.type as job_req_type, job_requests.status as job_req_stat, job_requests.is_accepted as job_req_acc, job_listings.id as job_list_id, job_listings.job as job_list_job, job_listings.date as job_list_data, job_listings.time as job_list_time, job_listings.time as job_list_type, job_listings.salary_offer as job_list_sal, job_listings.location as job_list_loc, job_listings.responsibilities as job_list_respo, job_listings.qualifications as job_list_quali, job_listings.accepted as job_list_accept, job_offers.* FROM job_requests
+$sql = "SELECT job_requests.id as job_req_id, job_requests.user_id as job_req_userid, job_requests.employer_id as job_req_empid, job_requests.type as job_req_type, job_requests.status as job_req_stat, job_requests.is_accepted as job_req_acc, job_listings.id as job_list_id, job_listings.job as job_list_job, job_listings.date as job_list_data, job_listings.time as job_list_time, job_listings.time as job_list_type, job_listings.salary_offer as job_list_sal, job_listings.location as job_list_loc, job_offers.location as job_list_loca, job_listings.responsibilities as job_list_respo, job_listings.qualifications as job_list_quali, job_listings.accepted as job_list_accept, job_offers.* FROM job_requests
         LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
         LEFT JOIN job_offers ON job_requests.job_id = job_offers.id 
         WHERE job_requests.status = 0 
@@ -50,9 +50,9 @@ $conn->close();
     }
     .ongoing-title {
       font-size: 32px;
-      color: #1e40af;
+      color: #6b0d0d; 
       margin-bottom: 30px;
-      border-bottom: 3px solid #3b82f6;
+      border-bottom: 3px solid #6b0d0d;
       padding-bottom: 10px;
       text-align: center;
     }
@@ -77,7 +77,7 @@ $conn->close();
             </h3>
             <p class="text-gray-600 mb-3">
               <i class="fas fa-map-marker-alt mr-2 text-blue-500"></i>
-              <?php echo $row['job_list_loc']; ?>
+              <?php echo $row['job_list_loc']; ?><?php echo $row['job_list_loca']; ?>
             </p>
             <?php if ($row['job_req_stat'] == 0): ?>
               <span class="inline-block bg-green-500 text-white font-semibold py-1 px-3 rounded-full text-sm mb-4">
