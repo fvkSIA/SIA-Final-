@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['jr_id'])) {
     }
 
     $conn->close();
-    header("Location: jobseeker_dashboard.php"); // Redirect back to the dashboard
+    header("Location: jobseekerinbox.php"); // Redirect back to the dashboard
     exit();
 }
 ?>

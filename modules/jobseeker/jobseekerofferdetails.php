@@ -302,7 +302,7 @@ if ($result != null) {
             </div>
             <div class="buttons">
                 <button class="accept" type="submit">Accept</button>
-                <a class="decline" href="javascript:history.back()">Decline</a>
+                <a class="decline" href="jobseekerinbox.php">Decline</a>
             </div>
         </form>
     </div>
