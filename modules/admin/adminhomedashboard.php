@@ -246,18 +246,6 @@ $conn->close();
         ?>
     </div>
 
-    <div class="top-jobs">
-        <h2>Top Jobs Advertised</h2>
-        <div class="chart">
-            <div class="bar" style="height: 60%;"></div>
-            <div class="bar" style="height: 40%;"></div>
-            <div class="bar" style="height: 50%;"></div>
-            <div class="bar" style="height: 30%;"></div>
-            <div class="bar" style="height: 70%;"></div>
-        </div>
-    </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
