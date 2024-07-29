@@ -59,20 +59,23 @@ $conn->close();
         }
 
         .details {
-            text-align: right;
             font-family: 'Poppins', sans-serif;
             font-size: 15px;
             width: 100%;
             display: flex;
             justify-content: space-between;
+            align-items: center; /* Align items in the center */
         }
-
+        .details b {
+            flex: 1;
+        }
         .details span {
             margin-left: auto;
             text-decoration: underline;
             cursor: pointer;
         }
         .delete-button {
+            margin-left: 10px;
             color: red;
             border: none;
             background: none;

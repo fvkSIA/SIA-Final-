@@ -253,50 +253,6 @@ session_start();
         .navigation .active {
             background-color: #3D52A0;
         }
-
-.footer {
-    width: 100%;
-    padding: 20px;
-    font-family: 'Poppins', sans-serif;
-    margin-top: 70px;
-    border-radius: 5px;
-}
-.footer-section {
-    display: flex;
-    justify-content: space-around;
-    width: 100%; /* Changed from max-width to width */
-    margin: 0 auto;
-}
-.footer-column {
-    list-style: none;
-    padding: 0;
-}
-.footer-column li {
-    margin-bottom: 10px;
-}
-.footer-column li a {
-    text-decoration: none;
-    color: #000;
-}
-.footer-column h4 {
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.footer-bottom {
-    text-align: center;
-    padding-top: 10px;
-    border-top: 1px solid #ccc;
-    font-size: 0.9em;
-    color: #6c757d;
-}
-.footer-bottom a {
-    text-decoration: none;
-    color: inherit;
-}
-.footer-bottom a:hover {
-    text-decoration: underline;
-}
-
   </style>
 </head>
 <body>
@@ -329,24 +285,24 @@ session_start();
                     </select>          
                     <select style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: white;" name="location">
                         <option value="">Location</option>
-                        <option value="manila">Manila</option>
-                        <option value="caloocan">Caloocan</option>
-                        <option value="valenzuela">Valenzuela</option>
-                        <option value="pasay">Pasay</option>
-                        <option value="makati">Makati</option>
-                        <option value="quezon_city">Quezon City</option>
-                        <option value="navotas">Navotas</option>
-                        <option value="las_piñas">Las Piñas</option>
-                        <option value="malabon">Malabon</option>
-                        <option value="mandaluyong">Mandaluyong</option>
-                        <option value="marikina">Marikina</option>
-                        <option value="muntinlupa">Muntinlupa</option>
-                        <option value="parañaque">Parañaque</option>
-                        <option value="pasig">Pasig</option>
-                        <option value="san_juan">San Juan</option>
-                        <option value="taguig">Taguig</option>
-                        <option value="valenzuela">Valenzuela</option>
-                        <option value="pateros">Pateros</option>
+                        <option value="Manila">Manila</option>
+                        <option value="Caloocan">Caloocan</option>
+                        <option value="Valenzuela">Valenzuela</option>
+                        <option value="Pasay">Pasay</option>
+                        <option value="Makati">Makati</option>
+                        <option value="Quezon City">Quezon City</option>
+                        <option value="Navotas">Navotas</option>
+                        <option value="Las Piñas">Las Piñas</option>
+                        <option value="Malabon">Malabon</option>
+                        <option value="Mandaluyong">Mandaluyong</option>
+                        <option value="Marikina">Marikina</option>
+                        <option value="Muntinlupa">Muntinlupa</option>
+                        <option value="Parañaque">Parañaque</option>
+                        <option value="Pasig">Pasig</option>
+                        <option value="San Juan">San Juan</option>
+                        <option value="Taguig">Taguig</option>
+                        <option value="Valenzuela">Valenzuela</option>
+                        <option value="Pateros">Pateros</option>
                     </select>
                     <button style="flex: 1 1 auto; padding: 8px 20px; width: 20px; background-color: #004f83; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;" type="submit">
                         Find Now!
@@ -357,13 +313,6 @@ session_start();
         </div>
     </div>
     <br>
-    
-    
-    
-    
-    
-    
-
     
     <div class="container" style="border: 1px solid;">
         <div class="image-section">
@@ -381,78 +330,8 @@ session_start();
         <?php include '../metromanila.php' ?>
     </div>
 
+          <?php include '../employer/em_footer.html'; ?>
 
-
-
-
-
-    <!-- <div class="top-job-seekers">
-        <h2>Top Job Seekers</h2>
-        <div class="job-seeker">
-            <img src="asim.jpg" alt="Job Seeker">
-            <div class="job-seeker-info">
-                <h3>GALE KAREN PARTOS</h3>
-                <p>RATINGS: <span class="ratings">⭐⭐⭐⭐⭐</span></p>
-            </div>
-            <div class="rank">
-                RANK 1
-                <span>SEE MORE DETAILS</span>
-            </div>
-        </div>
-        <div class="job-seeker">
-            <img src="bersoto.jpg" alt="Job Seeker">
-            <div class="job-seeker-info">
-                <h3>JOSEPH CARLO BERSOTO</h3>
-                <p>RATINGS: <span class="ratings">⭐⭐⭐⭐⭐</span></p>
-            </div>
-            <div class="rank">
-                RANK 2
-                <span>SEE MORE DETAILS</span>
-            </div>
-        </div>
-    </div>
-        <div class="navigation">
-            <span class="active"></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </div> -->
-
-        
-          <!-- <iframe src="slide/index.html" frameborder="0" style="width: 100%; height: 540px;"></iframe> -->
-      
-
-                    <footer class="footer">
-                        <div class="footer-section">
-                            <ul class="footer-column">
-                                <h4>Job Seekers</h4>
-                                <li><a href="#top">Job Search</a></li>
-                                <li><a href="#">Profile</a></li>
-                                <li><a href="#">Recommended Jobs</a></li>
-                                <li><a href="#">Saved Searches</a></li>
-                                <li><a href="#">Saved Jobs</a></li>
-                                <li><a href="#">Job Applications</a></li>
-                            </ul>
-                            <ul class="footer-column">
-                                <h4>Employers</h4>
-                                <li><a href="#">Registration for Free</a></li>
-                                <li><a href="#">Post a Job ad</a></li>
-                            </ul>
-                            <ul class="footer-column">
-                                <h4>About Employers</h4>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Work for Us</a></li>
-                            </ul>
-                            <ul class="footer-column">
-                                <h4>Contact</h4>
-                                <li><a href="#">Contact Us</a></li>
-                            </ul>
-                        </div>
-                        <div class="footer-bottom">
-                            <a href="#">Terms & conditions</a> | <a href="#">Security & Privacy</a>
-                        </div>
-                    </footer>
 
   </section>
   <!-- Scripts -->

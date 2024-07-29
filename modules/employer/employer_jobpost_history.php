@@ -108,7 +108,7 @@ $result_posts = $stmt_posts->get_result();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="icon" type="image/png" href="../HanapKITA.png">
     <style>
-         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
         :root {
             --primary-color: #6C63FF;
             --secondary-color: #4CAF50;
@@ -150,7 +150,7 @@ $result_posts = $stmt_posts->get_result();
             box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.12);
         }
         .card-header {
-            background-color: var(--primary-color);
+            background-color: #6b0d0d; /* New color for Job Listings */
             color: white;
             border-radius: 15px 15px 0 0 !important;
             font-weight: 700;
@@ -224,6 +224,9 @@ $result_posts = $stmt_posts->get_result();
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        .text-primary {
+            color: #6b0d0d !important; /* New color for Your Job Posts */
+        }
     </style>
 </head>
 <body>
@@ -239,9 +242,6 @@ $result_posts = $stmt_posts->get_result();
         <div class="card mb-4">
             <div class="card-body d-flex justify-content-end">
                 <form method="post" class="row g-3 align-items-end justify-content-end">
-                <div class="col-auto">
-                        <p>asd</p>
-                    </div>
                     <div class="col-auto">
                         <button type="submit" name="accepted_jobs" class="btn btn-success"><i class="fas fa-check-circle me-2"></i>Accepted Jobs</button>
                     </div>
@@ -257,8 +257,8 @@ $result_posts = $stmt_posts->get_result();
         </div>
 
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Job Listings</h5>
+            <div class="card-header text-center">
+                <h5 class="card-title mb-0">JOB LISTING</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
