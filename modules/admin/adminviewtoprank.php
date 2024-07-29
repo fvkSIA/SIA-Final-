@@ -43,7 +43,7 @@ if (!$result) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6c63ff;
+            --primary-color: #007bff;
             --secondary-color: #3f3d56;
             --background-color: #f4f7fa;
             --card-bg-color: #ffffff;
