@@ -1,0 +1,103 @@
+<style type="text/css">
+    .icon {
+        /*            border: 1px solid red;*/
+        width: 60px;
+        height: 60px;
+        position: fixed;
+        right: 30px;
+        bottom: 30px;
+        background: #1686ff;
+        border-radius: 100px;
+        box-shadow: 0px 0px 15px gray;
+    }
+
+    .icon_img {
+        width: 100%;
+    }
+
+    .msg_box {
+        /*            border:1px red solid;*/
+        position: absolute;
+        right: 0px;
+        max-width: 620%;
+        width: 320px;
+        max-height: 830%;
+        height: 750px;
+        margin-top: -505px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 15px gray;
+        padding-inline: 10px;
+        background: white;
+        padding-top: 10px;
+        background-color: white;
+        /* For browsers that do not support gradients */
+        /*            background-image: linear-gradient(to bottom , #0084ff, white);*/
+    }
+
+    .chat_form {
+        position: absolute;
+        bottom: 10px;
+        width: 300px;
+    }
+
+    .chat_form input {
+        height: 40px;
+        padding-inline: 10px;
+    }
+
+    .chatbox {
+        /*            border:1px red solid;*/
+        width: 100%;
+        height: 380px;
+        overflow-y: scroll;
+    }
+
+    .user {
+        width: auto;
+        text-shadow: 2px 2px 5px white;
+        /*            background: #0084ff;*/
+        padding: 5px;
+        border-radius: 10px 10px 0px 10px;
+        /*            color: white;*/
+        position: relative;
+        text-align: right;
+        margin-top: 5px;
+    }
+
+    .chatbot {
+        width: auto;
+        padding: 5px;
+        border-radius: 0px 10px 10px 10px;
+        color: black;
+        text-align: left;
+        margin-top: 5px;
+        right: 30px;
+    }
+</style>
+
+<body>
+    <div class="icon">
+        <div class="msg_box" id="msg_box">
+            <span class="mbri-user mbr-iconfont mbr-iconfont-btn"
+                style="position:absolute;right: 10px; color: #0084ff; font-size: 32px;"></span>
+            <h2>HanapKITA Chatbot</h2>
+            <div id="chatbox" class="chatbox">
+                <div class="chatbot">Select your user type: </div>
+                <div class="chatbot" onclick="selectJob('employer')">Employer</div>
+                <div class="chatbot" onclick="selectJob('jobseeker')">Jobseeker</div>
+
+            </div>
+            <form onsubmit="return false" class="chat_form input-group">
+                <input type="text" id="userInput" placeholder="Type your message here..." class="form-control">
+                <button onclick="sendMessage()" class="input-group-text btn-primary"><span
+                        class="mbri-paper-plane mbr-iconfont mbr-iconfont-btn"></span> Send</button>
+
+            </form>
+        </div>
+        <a href="#chat" onclick="chat_bot()"> <img src="../chatbot/chatbot_icon.png" class="icon_img"></a>
+    </div>
+
+
+
+
+    <script src="chatbot/script.js"></script>

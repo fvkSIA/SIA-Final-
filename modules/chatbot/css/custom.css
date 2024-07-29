@@ -1,0 +1,87 @@
+.chat-icon {
+  background-image: linear-gradient(to right top, #007bff, #3395FF, #007bff);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.chat-box {
+  background-color: #f9f9f9;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.25);
+  position: fixed;
+  right: 2rem;
+  bottom: 7rem;
+  width: 400px;
+  height: 80vh;
+  z-index: 1000;
+  transition: all 0.3s ease-out;
+  transform: scaleY(0);
+}
+
+.chat-box.active {
+  transform: scaleY(1);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.title-wrapper {
+  background-color: rgba(85, 167, 255, 0.8);
+  width: 100%;
+  height: 50px;
+  text-align: center;
+}
+
+.title-wrapper p {
+  font-size: 0.8rem;
+  color: #fff;
+  padding: 5px;
+}
+
+.conv-form-wrapper {
+  margin-top: -50px;
+  z-index: -1;
+}
+
+.conv-form-wrapper textarea{
+  height: 30px;
+  overflow: hidden;
+  resize: none;
+}
+
+#messages {
+  padding: 20px;
+}
+
+.conv-form-wrapper div#messages div.message.from {
+  background: #007BFF !important;
+}
+
+.conv-form-wrapper div.options div.option {
+  display: block !important;    
+  border: 1px solid rgba(0,123,255,0.3) !important;
+  color: #007BFF !important;
+}
+
+.conv-form-wrapper div.options {
+  word-wrap: break-word !important;
+  white-space: normal !important;
+  pointer-events: none;
+}
+
+form.convFormDynamic button.submit:hover {
+  background: rgba(0,123,255,0.3) !important;
+}
