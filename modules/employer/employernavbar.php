@@ -17,6 +17,14 @@ $first_name = $user['firstname'];
 $profile_pic = $user['profile'] ? '../employer/assets/images/' . $user['profile'] : '../employer/assets/images/';
 $user_type = ($user['type'] == 3) ? 'Employer' : 'Job Seeker';
 
+// Fetch ongoing jobs count
+$ongoing_sql = "SELECT COUNT(*) AS ongoing_count FROM job_requests WHERE employer_id = ? AND status = 0 AND is_accepted = 1";
+$ongoing_stmt = $conn->prepare($ongoing_sql);
+$ongoing_stmt->bind_param("i", $user_id);
+$ongoing_stmt->execute();
+$ongoing_result = $ongoing_stmt->get_result();
+$ongoing_count = $ongoing_result->fetch_assoc()['ongoing_count'];
+
 $stmt->close();
 $conn->close();
 ?>
@@ -396,6 +404,9 @@ $conn->close();
           <a href="javascript:void(0)" onclick="changeContent('employerinbox.php')">
               <i class="bx bx-chat"></i>
               <span class="link_name">Inbox</span>
+              <?php if ($notification_count > 0): ?>
+                <span class="badge"><?php echo $notification_count; ?></span>
+              <?php endif; ?>
           </a>
           <span class="tooltip">Inbox</span>
       </li>
@@ -417,6 +428,10 @@ $conn->close();
         <a href="javascript:void(0)" onclick="changeContent('employerongoing.php')">
           <i class="bx bx-loader"></i>
           <span class="link_name">Ongoing</span>
+          <?php if ($ongoing_count > 0): ?>
+            <span class="badge"><?php echo $ongoing_count; ?></span>
+          <?php endif; ?>
+
         </a>
         <span class="tooltip">Ongoing</span>
       </li>
