@@ -110,7 +110,7 @@ function getResponse(input) {
 
     if (isEmployerQuestion) {
         selectedJob = 'employer';
-        return "Hi! I’m the HanapKITA Chatbot. I’m here to guide you on how to use our page.  <br>\
+        return "Hi! I’m the HanapKITA Chatbot. I’m here to guide you on how to use our page.  The employer account can create job posts and exclusively give offers to jobseekers from the pool of workers. Employers can hire their ideal candidate by giving them job orders. They can rate the performance of jobseekers in a particular job order. The options here below explain each employer feature.<br><br>\
                      EMPLOYER OPTIONS <br>\
                     • Find Jobseekers <br>\
                     • Hiring Jobseekers<br>\
@@ -119,7 +119,7 @@ function getResponse(input) {
                     • Job Order";
     } else if (isJobseekerQuestion) {
         selectedJob = 'jobseeker';
-        return "Hi! I’m the HanapKITA Chatbot. I’m here to guide you on how to use our page.  <br>\
+        return "Hi! I’m the HanapKITA Chatbot. I’m here to guide you on how to use our page. The jobseeker account allows skilled and unskilled workers to view various job posts created by employers. They may apply to job posts, and they can also accept offers from the employers. The options here below explain each feature. <br><br>\
                     JOBSEEKER OPTIONS <br>\
                     • Find Jobs <br>\
                     • Applying to Jobs<br>\
