@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <body>
 
-    <div class="container animate-fade-in">
+    <div class="container animate-fade-in"></div>
     <div class="row mb-4 align-items-center">
         <div class="col-md-6">
             <h1 class="display-4 fw-bold text-primary">Your Job Posts</h1>
@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <br>
     <br>
-
+    
     <div class="card">
             <div class="card-header text-center">
                 <h5 class="card-title mb-0">JOB LISTING</h5>
