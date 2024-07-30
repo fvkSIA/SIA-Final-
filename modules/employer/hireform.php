@@ -331,7 +331,7 @@ $conn->close(); // Close the database connection
                 <div class="form-group">
                     <div>
                         <label for="salary">Salary Offer:</label>
-                        <input type="text" id="salary" name="salary" required>
+                        <input type="number" id="salary" name="salary" required>
                     </div>
                     <div>
                         <label for="date">Date:</label>

@@ -233,25 +233,13 @@ hr {
         <div class="hr-container">
           <hr>
         </div>
-
-        <div class="resume-section">
-          <label>Resume</label>
-          <iframe src="<?php echo htmlspecialchars($user['resume']); ?>" width="100%" height="600px" style="border: none;"></iframe>
-        </div>
-
         <div class="valid-id-section">
           <label>Valid ID</label>
           <iframe src="<?php echo htmlspecialchars($user['valid_ids']); ?>" width="100%" height="600px" style="border: none;"></iframe>
         </div>
-
-        <div class="work-experience-section">
-          <label>Certificate</label>
-          <iframe src="<?php echo htmlspecialchars($user['recent_job_experience']); ?>" width="100%" height="600px" style="border: none;"></iframe>
-        </div>
-
         <div class="action-buttons">
-          <a href="jobseekerapplication.php?id=<?php echo htmlspecialchars($jr_id); ?>" class="btn-hire" onclick="return confirm('Are you sure you want to hire this seeker?');">Hire</a>
-          <button class="close-button" onclick="window.location.href='findworkers.php'">Close</button>
+          <a href="jobseekerofferdetails.php?id=<?php echo htmlspecialchars($jr_id); ?>" class="btn-hire" onclick="return confirm('Are you sure you want to view the job details?');">Proceed</a>
+          <button class="close-button" onclick="window.location.href='jobseekerinbox.php'">Back</button>
         </div>
       </div>
     <?php else: ?>
