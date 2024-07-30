@@ -4,6 +4,7 @@ session_start();
 $error = '';
 $result = null;
 
+$jrid = $_GET['jrid'];
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $id = $_GET['id'] ?? null; // Get user ID from URL
     $jr_id = $_GET['jrid'] ?? null; // Get job request ID if available
@@ -220,9 +221,6 @@ hr {
           <div><span class="label">Email:</span> <span class="value"><?php echo htmlspecialchars($user['email']); ?></span></div>
           <div><span class="label">Gender:</span> <span class="value"><?php echo htmlspecialchars($user['gender']); ?></span></div>
           <div><span class="label">City:</span> <span class="value"><?php echo htmlspecialchars($user['city']); ?></span></div>
-          <div>
-            <!-- Corrected View Button Link -->
-          </div>
         </div>
         
         <div class="hr-container">
@@ -233,7 +231,7 @@ hr {
           <iframe src="<?php echo htmlspecialchars($user['valid_id_path']); ?>" width="100%" height="600px" style="border: none;"></iframe>
         </div>
         <div class="action-buttons">
-          <a href="jobseekerofferdetails.php?id=<?php echo htmlspecialchars($jr_id); ?>" class="btn-hire" onclick="return confirm('Are you sure you want to view the job details?');">Proceed</a>
+          <a href="jobseekerofferdetails.php?id=<?php echo $id;?>&jrid=<?php echo $jrid;?>" class="btn-hire" onclick="return confirm('Are you sure you want to view the job details?');">Proceed</a>
           <button class="close-button" onclick="window.location.href='jobseekerinbox.php'">Back</button>
         </div>
       </div>

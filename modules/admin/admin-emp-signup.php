@@ -314,7 +314,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <section class="container">
         <header>CREATE A NEW ACCOUNT</header>
-        <form action="employersignup.php" method="POST" enctype="multipart/form-data" class="form" onsubmit="return validatePasswords()">
+        <form action="admin-emp-signup.php" method="POST" enctype="multipart/form-data" class="form" onsubmit="return validatePasswords()">
         <div class="input-box">
                 <label><b>First Name:</b></label>
                 <input type="text" name="first_name" placeholder="Enter first name" required />
@@ -529,7 +529,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
              // When the user clicks the button, redirect them to the login page
         continueBtn.onclick = function() {
-            window.location.href = "../login/login_emp.php";
+            window.location.href = "../admin/admdashboardemployer.php";
         }
 
     // Add event listener for phone number input

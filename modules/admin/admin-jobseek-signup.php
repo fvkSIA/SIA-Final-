@@ -388,7 +388,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <section class="container">
         <header>CREATE A NEW ACCOUNT</header>
-        <form action="jobseekersignup.php" method="POST" enctype="multipart/form-data" class="form" onsubmit="return validatePasswords()">
+        <form action="admin-jobseek-signup.php" method="POST" enctype="multipart/form-data" class="form" onsubmit="return validatePasswords()">
             <div class="input-box">
                 <label><b>First Name:</b></label>
                 <input type="text" name="first_name" placeholder="Enter first name" required />
@@ -514,7 +514,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="modal-body">
                 <h2>New record created successfully!</h2>
                 <p>Your data has been successfully saved.</p>
-                <a href="../login/login_seeker.php">
+                <a href="../admin/admdashboardjobseeker.php">
                     <button id="continueBtn" class="login-now">LOGIN NOW</button>
                 </a>
             </div>
