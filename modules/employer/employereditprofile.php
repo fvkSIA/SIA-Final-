@@ -205,7 +205,30 @@ $conn->close();
                     <div class="row mt-3">
                         <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" class="form-control" placeholder="enter phone number" value="<?php echo $data['phone_number'];?>" name="phone_number" ></div>
                         <div class="col-md-12"><label class="labels">Home Address</label><input type="text" class="form-control" placeholder="enter home address" value="<?php echo $data['home_address'];?>" name="home_address"></div>
-                        <div class="col-md-12"><label class="labels">City</label><input type="text" class="form-control" placeholder="enter city" value="<?php echo $data['city'];?>" name="city"></div>
+                        <div class="col-md-12">
+                        <label class="labels">City</label>
+                        <select class="form-control" name="city" required>
+                            <option value="">Select Location</option>
+                            <option value="Manila" <?php if($data['city'] == 'Manila') echo 'selected'; ?>>Manila</option>
+                            <option value="Caloocan" <?php if($data['city'] == 'Caloocan') echo 'selected'; ?>>Caloocan</option>
+                            <option value="Pasay" <?php if($data['city'] == 'Pasay') echo 'selected'; ?>>Pasay</option>
+                            <option value="Makati" <?php if($data['city'] == 'Makati') echo 'selected'; ?>>Makati</option>
+                            <option value="Quezon City" <?php if($data['city'] == 'QuezonㅤCity') echo 'selected'; ?>>QuezonㅤCity</option>
+                            <option value="Navotas" <?php if($data['city'] == 'Navotas') echo 'selected'; ?>>Navotas</option>
+                            <option value="Las Piñas" <?php if($data['city'] == 'LasㅤPiñas') echo 'selected'; ?>>LasㅤPiñas</option>
+                            <option value="Malabon" <?php if($data['city'] == 'Malabon') echo 'selected'; ?>>Malabon</option>
+                            <option value="Mandaluyong" <?php if($data['city'] == 'Mandaluyong') echo 'selected'; ?>>Mandaluyong</option>
+                            <option value="Marikina" <?php if($data['city'] == 'Marikina') echo 'selected'; ?>>Marikina</option>
+                            <option value="Muntinlupa" <?php if($data['city'] == 'Muntinlupa') echo 'selected'; ?>>Muntinlupa</option>
+                            <option value="Parañaque" <?php if($data['city'] == 'Parañaque') echo 'selected'; ?>>Parañaque</option>
+                            <option value="Pasig" <?php if($data['city'] == 'Pasig') echo 'selected'; ?>>Pasig</option>
+                            <option value="San Juan" <?php if($data['city'] == 'SanㅤJuan') echo 'selected'; ?>>SanㅤJuan</option>
+                            <option value="Taguig" <?php if($data['city'] == 'Taguig') echo 'selected'; ?>>Taguig</option>
+                            <option value="Valenzuela" <?php if($data['city'] == 'Valenzuela') echo 'selected'; ?>>Valenzuela</option>
+                            <option value="Pateros" <?php if($data['city'] == 'Pateros') echo 'selected'; ?>>Pateros</option>
+                        </select>
+                        </div>
+
                         <div class="col-md-12"><label class="labels">Birthdate</label><input type="text" class="form-control" placeholder="enter birthdate" value="<?php $date=date_create($data['birthdate']); echo date_format($date,"M d, Y");?>" disabled></div>
                         <div class="col-md-12"><label class="labels">Gender</label><input type="text" class="form-control" placeholder="enter gender" value="<?php echo $data['gender'];?>" disabled></div>
                         <div class="col-md-12"><label class="labels">Type</label><input type="text" class="form-control" placeholder="enter email id" value="<?php echo $data['user_type_desc'];?>" disabled></div>

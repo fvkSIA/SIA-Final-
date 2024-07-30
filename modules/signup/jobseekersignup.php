@@ -462,7 +462,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label><b>Educational Background:</b></label>
                 <select name="educational_background" required>
                     <option value="">Select type of educational background</option>
-                    <option value="1.00">Uneducated</option>
+                    <option value="1.00">No Educational Attainment</option>
                     <option value="2.00">Elementary</option>
                     <option value="3.00">High School</option>
                     <option value="4.00">Senior Highschool</option>
