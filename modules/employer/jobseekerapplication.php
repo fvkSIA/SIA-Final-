@@ -328,7 +328,7 @@ $conn->close();
       
       <div class="employee-info">
         <i class='bx bx-user-circle'></i>
-        <p>Employed Worker: <span><?php echo htmlspecialchars($user['job_seek_fname']) ?> <?php echo htmlspecialchars($user['job_seek_lname']) ?></span></p>
+        <p>Worker: <span><?php echo htmlspecialchars($user['job_seek_fname']) ?> <?php echo htmlspecialchars($user['job_seek_lname']) ?></span></p>
       </div>
 
       <div class="job-details">
