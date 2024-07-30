@@ -222,11 +222,6 @@ hr {
           <div><span class="label">City:</span> <span class="value"><?php echo htmlspecialchars($user['city']); ?></span></div>
           <div>
             <!-- Corrected View Button Link -->
-            <a href='jobseeker_history.php?id=<?php echo htmlspecialchars($user['id']); ?>'>
-              <button style='display: inline-block; padding: 6px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;'>
-              <i class='bx bx-show-alt' style='vertical-align: middle; margin-right: 5px;'></i> View History
-              </button> 
-            </a>
           </div>
         </div>
         
@@ -235,7 +230,7 @@ hr {
         </div>
         <div class="valid-id-section">
           <label>Valid ID</label>
-          <iframe src="<?php echo htmlspecialchars($user['valid_ids']); ?>" width="100%" height="600px" style="border: none;"></iframe>
+          <iframe src="<?php echo htmlspecialchars($user['valid_id_path']); ?>" width="100%" height="600px" style="border: none;"></iframe>
         </div>
         <div class="action-buttons">
           <a href="jobseekerofferdetails.php?id=<?php echo htmlspecialchars($jr_id); ?>" class="btn-hire" onclick="return confirm('Are you sure you want to view the job details?');">Proceed</a>

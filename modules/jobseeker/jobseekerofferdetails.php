@@ -311,7 +311,7 @@ if ($result != null) {
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <p>Congratulations on your new job!</p>
-            <a class="modal-button" href="jobseekerinbox.php">Continue</a>
+            <a class="modal-button" href="jobseeker_calendar.php">Continue</a>
         </div>
     </div>
 
