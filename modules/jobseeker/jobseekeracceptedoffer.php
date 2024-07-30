@@ -122,7 +122,7 @@ $jrid = $_GET['jrid'];
       Exciting Opportunity: binigyan ka ng offer kasi magaling ka
     </div>
     <div class="button-group">
-      <a class="proceed-button" href="employerviewprofile.php?id=<?php echo $id;?>&jrid=<?php echo $jrid;?>">Proceed</button>
+      <a class="proceed-button" href="jobseekerofferdetails.php?id=<?php echo $id;?>&jrid=<?php echo $jrid;?>">Proceed</button>
       <a class="close-button" href="jobseekerinbox.php">x</a>
     </div>
   </div>
@@ -132,7 +132,7 @@ $jrid = $_GET['jrid'];
       window.location.href = "jobseekerinbox.php";
     }
     function proceed() {
-      window.location.href = "employerviewprofile.php";
+      window.location.href = "jobseekerofferdetails.php";
     }
   </script>
   <!-- Scripts -->

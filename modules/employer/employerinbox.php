@@ -48,7 +48,7 @@ $conn->close();
     <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
     <link rel="icon" type="image/png" href="../HanapKITA.png">
     <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
         :root {
             --color-default: #004f83;
             --color-second: #0067ac;
@@ -66,7 +66,7 @@ $conn->close();
             min-height: 100vh;
             display: flex;
             font-family: 'Poppins', sans-serif;
-            flex-direction: column; /* Changed to column to stack elements vertically */
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             margin: 0;
@@ -83,7 +83,7 @@ $conn->close();
             border: 1px solid #ddd;
             font-family: 'Poppins', sans-serif;
             font-size: 18px;
-            padding: 8px 8px 8px 50px; /* Adjusted padding to move text to the right */
+            padding: 8px 8px 8px 50px;
             height: 40px;
         }
         .details {
@@ -92,15 +92,10 @@ $conn->close();
             width: 100%;
             display: flex;
             justify-content: space-between;
-            align-items: center; /* Align items in the center */
+            align-items: center;
         }
         .details b {
             flex: 1;
-        }
-        .details span {
-            margin-left: auto;
-            text-decoration: underline;
-            cursor: pointer;
         }
         .delete-button {
             margin-left: 10px;
@@ -109,7 +104,28 @@ $conn->close();
             background: none;
             cursor: pointer;
             font-size: 24px;
-        } 
+        }
+        /* New styles for the View button */
+        .view-button {
+            background-color: #6b0d0d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+        }
+        .view-button:hover {
+            background-color: #A52A2A;
+        }
+        .eye-icon::before {
+            content: "\1F441";
+            font-size: 16px;
+        }
     </style>
     <script>
         function confirmDelete() {
@@ -136,7 +152,7 @@ else
                         <td colspan="3">
                             <div class="details">
                                 <b><?php echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'];?> | Accepted the job offer you have been requested! </b>
-                                <a href="employeracceptedoffermessage.php?fname=<?php echo $row['job_seek_fname'];?>&lname=<?php echo $row['job_seek_lname'];?>">View Details</a>
+                                <a href="employeracceptedoffermessage.php?fname=<?php echo $row['job_seek_fname'];?>&lname=<?php echo $row['job_seek_lname'];?>" class="view-button"><span class="eye-icon"></span>View</a>
                                 <form action="delete_request.php" method="post" onsubmit="return confirmDelete();" style="display:inline;">
                                     <input type="hidden" name="jr_id" value="<?php echo $row['jr_id']; ?>">
                                     <button type="submit" class="delete-button">
@@ -154,7 +170,7 @@ else
                         <td colspan="3">
                             <div class="details">
                                 <b><?php echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'];?> | Applied for the job: <?php echo $row['job_list_job']; ?></b>
-                                <a href="jobseekerapply.php?id=<?php echo $row['jr_uid'];?>&jrid=<?php echo $row['jr_id'];?>">View Details</a>
+                                <a href="jobseekerapply.php?id=<?php echo $row['jr_uid'];?>&jrid=<?php echo $row['jr_id'];?>" class="view-button"><span class="eye-icon"></span>View</a>
                                 <form action="delete_request.php" method="post" onsubmit="return confirmDelete();" style="display:inline;">
                                     <input type="hidden" name="jr_id" value="<?php echo $row['jr_id']; ?>">
                                     <button type="submit" class="delete-button">

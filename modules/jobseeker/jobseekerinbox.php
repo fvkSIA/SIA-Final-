@@ -39,56 +39,71 @@ $conn->close();
   <!-- Link Styles -->
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    /* Your existing styles... */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+        background-color: #ffffff80;
+    }
 
-        /* Your existing styles... */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
-            background-color: #ffffff80;
-        }
+    td {
+        border: 1px solid #ddd;
+        font-family: 'Poppins', sans-serif;
+        font-size: 18px;
+        padding: 8px 8px 8px 50px;
+        height: 40px;
+    }
 
-        td {
-            border: 1px solid #ddd;
-            font-family: 'Poppins', sans-serif;
-            font-size: 18px;
-            padding: 8px 8px 8px 50px; /* Adjusted padding to move text to the right */
-            height: 40px;
-        }
-
-        .details {
-            font-family: 'Poppins', sans-serif;
-            font-size: 15px;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center; /* Align items in the center */
-        }
-        .details b {
-            flex: 1;
-        }
-        .details span {
-            margin-left: auto;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-        .delete-button {
-            margin-left: 10px;
-            color: red;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 24px;
-        } 
-    </style>
+    .details {
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .details b {
+        flex: 1;
+    }
+    .delete-button {
+        margin-left: 10px;
+        color: red;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 24px;
+    }
+    /* New styles for the View button */
+    .view-button {
+        background-color: #0067ac; /* Blue color */
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        text-decoration: none;
+    }
+    .view-button:hover {
+        background-color: #004f83; /* Darker blue on hover */
+    }
+    .eye-icon::before {
+        content: "\1F441"; /* Unicode for eye emoji */
+        font-size: 16px;
+    }
+  </style>
   <script>
-        function confirmDelete() {
-            return confirm("Are you sure you want to delete this item?");
-        }
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this item?");
+    }
 
-        function markAsRead(jr_id) {
+    function markAsRead(jr_id) {
         fetch('mark_as_read.php', {
             method: 'POST',
             headers: {
@@ -106,7 +121,7 @@ $conn->close();
             console.error('Error:', error);
         });
     }
-    </script>
+  </script>
 </head>
 <body>
 <?php 
@@ -125,7 +140,7 @@ if ($result != null) {
                         <td colspan="3">
                             <div class="details">
                                 <b><?php echo $row['firstname'] . ' ' . $row['lastname'];?> | Sent you a job offer! </b>
-                                <a href="jobseekeracceptedoffer.php?id=<?php echo $row['jr_jobid'];?>&jrid=<?php echo $row['jr_id'];?>" onclick="markAsRead(<?php echo $row['jr_id']; ?>)">View Details</a>
+                                <a href="jobseekeracceptedoffer.php?id=<?php echo $row['jr_jobid'];?>&jrid=<?php echo $row['jr_id'];?>" onclick="markAsRead(<?php echo $row['jr_id']; ?>)" class="view-button"><span class="eye-icon"></span>View</a>
                                 <form action="delete_request.php" method="post" onsubmit="return confirmDelete();" style="display:inline;">
                                     <input type="hidden" name="jr_id" value="<?php echo $row['jr_id']; ?>">
                                     <button type="submit" class="delete-button">
@@ -143,7 +158,7 @@ if ($result != null) {
                         <td colspan="3">
                             <div class="details">
                                 <b>Your application as a <?php echo $row['job_list_job'];?> has been accepted.</b>
-                                <a href="jobseekerhired.php" onclick="markAsRead(<?php echo $row['jr_id']; ?>)">View Details</a>
+                                <a href="jobseekerhired.php" onclick="markAsRead(<?php echo $row['jr_id']; ?>)" class="view-button"><span class="eye-icon"></span>View</a>
                                 <form action="delete_request.php" method="post" onsubmit="return confirmDelete();" style="display:inline;">
                                     <input type="hidden" name="jr_id" value="<?php echo $row['jr_id']; ?>">
                                     <button type="submit" class="delete-button">
@@ -172,7 +187,6 @@ if ($result != null) {
 
 <?php include '../jobseeker/jfooter.html'; ?>
 
-<script src="script.js">
-</script>
+<script src="script.js"></script>
 </body>
 </html>

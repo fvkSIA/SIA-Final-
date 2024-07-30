@@ -41,6 +41,28 @@ function sanitize_input($conn, $input) {
     return htmlspecialchars(strip_tags(mysqli_real_escape_string($conn, $input)));
 }
 
+function deleteJob($conn, $job_id, $user_id) {
+    $sql = "DELETE FROM job_listings WHERE id = ? AND employer_id = ?";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("ii", $job_id, $user_id);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }
+    return false;
+}
+
+// Add this code to handle AJAX delete requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    $job_id = isset($_POST['job_id']) ? intval($_POST['job_id']) : 0;
+    if ($job_id && deleteJob($conn, $job_id, $user_id)) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Failed to delete job']);
+    }
+    exit;
+}
+
 // Query to get distinct job types associated with the user
 $sql_jobs = "SELECT DISTINCT job FROM job_listings WHERE employer_id = ?";
 $stmt_jobs = $conn->prepare($sql_jobs);
@@ -229,34 +251,66 @@ $result_posts = $stmt_posts->get_result();
         }
     </style>
 </head>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.delete-job').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const jobId = this.getAttribute('data-job-id');
+            if (confirm('Are you sure you want to delete this job?')) {
+                deleteJob(jobId);
+            }
+        });
+    });
+
+    function deleteJob(jobId) {
+        fetch('<?php echo $_SERVER['PHP_SELF']; ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'action=delete&job_id=' + jobId
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const row = document.getElementById('job-row-' + jobId);
+                if (row) {
+                    row.remove();
+                }
+                alert('Job deleted successfully');
+            } else {
+                alert('Failed to delete job: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the job');
+        });
+    }
+});
+</script>
 <body>
 
     <div class="container animate-fade-in">
-        <div class="row mb-4">
-            <div class="col">
-                <h1 class="display-4 fw-bold text-primary">Your Job Posts</h1>
-                <p class="lead">Manage and track your job listings with ease.</p>
-            </div>
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-4 fw-bold text-primary">Your Job Posts</h1>
+            <p class="lead">Manage and track your job listings with ease.</p>
         </div>
-
-        <div class="card mb-4">
-            <div class="card-body d-flex justify-content-end">
-                <form method="post" class="row g-3 align-items-end justify-content-end">
-                    <div class="col-auto">
-                        <button type="submit" name="accepted_jobs" class="btn btn-success"><i class="fas fa-check-circle me-2"></i>Accepted Jobs</button>
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" name="pending_jobs" class="btn btn-warning"><i class="fas fa-clock me-2"></i>Pending Jobs</button>
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" name="all_jobs" class="btn btn-info"><i class="fas fa-list me-2"></i>All Jobs</button>
-                    </div>
-                    <input type="hidden" name="filter_type" value="<?php echo $filter_type; ?>">
-                </form>
-            </div>
+        <div class="col-md-6">
+            <form method="post" class="d-flex justify-content-end gap-2">
+                <button type="submit" name="accepted_jobs" class="btn btn-success"><i class="fas fa-check-circle me-2"></i>Accepted Jobs</button>
+                <button type="submit" name="pending_jobs" class="btn btn-warning"><i class="fas fa-clock me-2"></i>Pending Jobs</button>
+                <button type="submit" name="all_jobs" class="btn btn-info"><i class="fas fa-list me-2"></i>All Jobs</button>
+                <input type="hidden" name="filter_type" value="<?php echo $filter_type; ?>">
+            </form>
         </div>
+    </div>
+    <br>
+    <br>
 
-        <div class="card">
+    <div class="card">
             <div class="card-header text-center">
                 <h5 class="card-title mb-0">JOB LISTING</h5>
             </div>
@@ -277,7 +331,7 @@ $result_posts = $stmt_posts->get_result();
                             <?php
                             if ($result_posts->num_rows > 0) {
                                 while ($row = $result_posts->fetch_assoc()) {
-                                    echo "<tr>";
+                                    echo "<tr id='job-row-" . $row['id'] . "'>";
                                     echo "<td><strong>" . htmlspecialchars($row['job']) . "</strong></td>";
                                     $badgeClass = ($row['type'] == 'Full Time') ? 'badge-fulltime' : 'badge-parttime';
                                     echo "<td><span class='badge {$badgeClass}'>" . htmlspecialchars($row['type']) . "</span></td>";
@@ -287,7 +341,7 @@ $result_posts = $stmt_posts->get_result();
                                     echo "<td>{$statusBadge}</td>";
                                     echo "<td>";
                                     echo "<a href='jobpost_view_job.php?id=" . $row['id'] . "' class='btn btn-action btn-outline-primary me-2' title='View'><i class='fas fa-eye'></i></a>";
-                                    echo "<a href='jobpost_delete_job.php?id=" . $row['id'] . "' class='btn btn-action btn-outline-danger' onclick='return confirm(\"Are you sure you want to delete this job?\")' title='Delete'><i class='fas fa-trash-alt'></i></a>";
+                                    echo "<button class='btn btn-action btn-outline-danger delete-job' data-job-id='" . $row['id'] . "' title='Delete'><i class='fas fa-trash-alt'></i></button>";
                                     echo "</td>";
                                     echo "</tr>";
                                 }
@@ -300,6 +354,7 @@ $result_posts = $stmt_posts->get_result();
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
