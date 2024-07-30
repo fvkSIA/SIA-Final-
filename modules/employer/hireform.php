@@ -1,6 +1,14 @@
 <?php
 require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../login/PHPMailer/src/Exception.php';
+require '../login/PHPMailer/src/PHPMailer.php';
+require '../login/PHPMailer/src/SMTP.php';
+
 $error = '';
 $result = null;
 $showModal = false;
@@ -59,16 +67,61 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     $job_req->bind_param('siii', $jobseeker_id, $last_id, $emp_id, $type);
                     if ($job_req->execute()) {
                         $showModal = true;
-                    } else {
-                        $errorMessage = "Error: " . $job_req->error;
-                    }
+                    // Fetch jobseeker's email
+    $stmt = $conn->prepare("SELECT email FROM users WHERE id = ?");
+    $stmt->bind_param("i", $jobseeker_id);
+    $stmt->execute();
+    $stmt->bind_result($jobseeker_email);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Send email
+    $mail = new PHPMailer(true);
+
+    try {
+        //Server settings
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'kjcruz0604@gmail.com'; // Your Gmail
+        $mail->Password   = 'qvxhyivnmoiiexum'; // Your Gmail App Password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
+
+        //Recipients
+        $mail->setFrom('kjcruz0604@gmail.com', 'HanapKITA Team');
+        $mail->addAddress($jobseeker_email);
+
+        //Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Job Offer';
+        $mail->Body    = "
+            <h1>Congratulations! You've received a job offer.</h1>
+            <p>Job: $job</p>
+            <p>Date: $date</p>
+            <p>Time: $time</p>
+            <p>Job Type: $job_type</p>
+            <p>Salary: $salary</p>
+            <p>Location: $location</p>
+            <h2>Responsibilities:</h2>
+            <p>$job_desc</p>
+            <h2>Qualifications:</h2>
+            <p>$job_quali</p>
+        ";
+
+        $mail->send();
+    } catch (Exception $e) {
+        $errorMessage = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+} else {
+    $errorMessage = "Error: " . $job_req->error;   
+}
                 } else {
                     $errorMessage = "Error preparing job_requests statement: " . $conn->error;
                 }
             } else {
                 $errorMessage = "Error: " . $stmt->error;
             }
-            $stmt->close();
         } else {
             $errorMessage = "Error preparing job_offers statement: " . $conn->error;
         }
