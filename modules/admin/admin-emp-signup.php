@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Move uploaded files to their respective destinations
     move_uploaded_file($_FILES['profile_image_path']['tmp_name'], $profile_destination);
     move_uploaded_file($_FILES['valid_id_path']['tmp_name'], $valid_destination);
+    $valid_id_path = $valid_destination;
 
     // Check if email already exists
     $checkEmailQuery = "SELECT email FROM users WHERE email = '$email'";
@@ -43,10 +44,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Prepare SQL insert statement
         // $sql = "INSERT INTO users (first_name, middle_name, last_name, email, phone_number, birth_date, sex, address, password, profile_image_path, valid_id_path) 
         //         VALUES ('$first_name', '$middle_name', '$last_name', '$email', '$phone_number', '$birth_date', '$sex', '$address', '$hashed_password', '$profile_destination', '$valid_destination')";
-        $sql = "INSERT INTO users (profile, email, firstname, middlename, lastname, phone_number, birthdate, gender, home_address, city, password, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users (profile, email, firstname, middlename, lastname, phone_number, birthdate, gender, home_address, city, password, type, valid_id_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = $conn->prepare($sql)){
-            $stmt->bind_param("ssssssssssss",$profile_image_path, $email, $first_name, $middle_name, $last_name, $phone_number, $birth_date, $sex, $address, $city, $password, $employer_id);
+            $stmt->bind_param("sssssssssssss",$profile_image_path, $email, $first_name, $middle_name, $last_name, $phone_number, $birth_date, $sex, $address, $city, $password, $employer_id, $valid_id_path);
            
             
             if ($stmt->execute()){
@@ -72,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>EMPLOYER SIGNUP</title>
+    <link rel="icon" type="image/png" href="../HanapKITA.png">
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
@@ -87,27 +89,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items: center;
             justify-content: center;
             padding: 20px;
-            /* background: #4481eb; */
+            background: #8391c6;;
         }
         .btn.prev {
             position: fixed;
             top: 20px;
             left: 20px;
             background: none;
-            border: 2px solid #000;
+            border: 2px solid #fff;
             width: 40px;
             height: 40px;
             font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #000;
+            color: #fff;
             border-radius: 50%;
             cursor: pointer;
             transition: 0.3s;
         }
         .btn.prev:hover {
-            /* background-color: #4481eb; */
+            background-color: #4481eb;
         }
         .container {
             position: relative;
@@ -184,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .form button:hover {
             background: rgb(33, 108, 230);
         }
-        .skilled, .unskilled {
+        .skilled {
             margin-top: 20px;
         }
         .skilled label, .unskilled label {
@@ -195,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .skilled select {
             position: relative;
             height: 50px;
-            width: 30%;
+            width: 100%;
             outline: none;
             font-size: 1rem;
             color: black;
@@ -205,25 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 0 15px;
         }
 
-        .unskilled select {
-            position: relative;
-            height: 50px;
-            width: 50%;
-            outline: none;
-            font-size: 1rem;
-            color: black;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            padding: 0 15px;
-        }
-
-        .unskilled{
-          margin-top: -50px;
-          margin-left: 335px;
-        }
-
-
-        .skilled select:focus, .unskilled select:focus {
+        .skilled select:focus{
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
         }
 
@@ -330,14 +314,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <section class="container">
         <header>CREATE A NEW ACCOUNT</header>
-        <form action="admin-emp-signup.php" method="POST" enctype="multipart/form-data" class="form" onsubmit="return validatePasswords()">
+        <form action="employersignup.php" method="POST" enctype="multipart/form-data" class="form" onsubmit="return validatePasswords()">
         <div class="input-box">
                 <label><b>First Name:</b></label>
                 <input type="text" name="first_name" placeholder="Enter first name" required />
             </div>
             <div class="input-box">
-                <label><b>Middle Name:</b></label>
-                <input type="text" name="middle_name" placeholder="Enter middle name" required />
+                <label><b>Middle Initial:</b></label>
+                <input type="text" name="middle_name" placeholder="Enter middle initial"  maxlength="1"  required />
             </div>
             <div class="input-box">
                 <label><b>Last Name:</b></label>
@@ -350,7 +334,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="column">
                 <div class="input-box">
                     <label><b>Phone Number:</b></label>
-                    <input type="text" name="phone_number" placeholder="Enter your phone number" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                    <input type="text" name="phone_number" id="phone_number" placeholder="(09**-***-****)" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                 </div>
                 <div class="input-box">
                     <label><b>Birth Date:</b></label>
@@ -367,10 +351,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label><b>Address:</b></label>
                 <input type="text" name="address" placeholder="Enter your Address" required />
             </div>
-            <div class="input-box info">
-                <label><b>City:</b></label>
-                <input type="text" name="city" placeholder="City" required />
-            </div>
+            <div class="skilled">
+             <label><b>City:</b></label>
+                    <select name="city" required>
+                    <option value="">Select Location</option>
+                    <option value="Manila">Manila</option>
+                    <option value="Caloocan">Caloocan</option>
+                    <option value="Pasay">Pasay</option>
+                    <option value="Makati">Makati</option>
+                    <option value="QuezonㅤCity">Quezon City</option>
+                    <option value="Navotas">Navotas</option>
+                    <option value="LasㅤPiñas">Las Piñas</option>
+                    <option value="Malabon">Malabon</option>
+                    <option value="Mandaluyong">Mandaluyong</option>
+                    <option value="Marikina">Marikina</option>
+                    <option value="Muntinlupa">Muntinlupa</option>
+                    <option value="Parañaque">Parañaque</option>
+                    <option value="Pasig">Pasig</option>
+                    <option value="SanㅤJuan">San Juan</option>
+                    <option value="Taguig">Taguig</option>
+                    <option value="Valenzuela">Valenzuela</option>
+                    <option value="Pateros">Pateros</option>
+                  </select>
+                </div>
             <div class="input-box info">
                 <label><b>Password:</b></label>
                 <input type="password" name="password" id="password" placeholder="Enter password" required />
@@ -383,13 +386,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <i class="fas fa-eye eye-icon" id="confirmPasswordIcon" onclick="togglePasswordVisibility('confirm_password', 'confirmPasswordIcon')"></i>
             </div>
             <div class="input-box info picture">
-                <label><b>Profile:</b></label>
+                <label><b>Profile Picture:</b></label>
                 <input type="file" id="profile" name="profile_image_path" accept=".jpg, .png"  required >
             </div>
           
             <div class="input-box info">
-                <label><b>2 Valid IDs / Birth Certificate:</b></label>
-                <input type="file" id="valid" name="valid_id_path" accept=".pdf" required  >
+                <label><b>2 Valid IDs (ex; Drivers License, National ID):</b></label>
+                <input type="file" id="valid" name="valid_id_path" accept=".jpg, .png" required  >
             </div>
             
 
@@ -399,7 +402,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endif; ?>
         </form>
     </section>
-    <a href="admdashboardemployer.php" class="btn prev" style="text-decoration:none;"> <i class="fas fa-arrow-left"></i></button>
+    <button onclick="history.back()" class="btn prev"> <i class="fas fa-arrow-left"></i></button>
     <!-- The Modal -->
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -411,8 +414,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-
+    <?php if ($errorMessage) : ?>
     <script>
+        alert("Error: The email address is already registered. Please use a different email.");
+    </script>
+<?php endif; ?>
+    <script>
+
+        function handlePhoneNumber(input) {
+            if (!input.value.startsWith('09')) {
+                input.value = '09' + input.value.substring(2);
+            }
+            if (input.value.length > 11) {
+                input.value = input.value.slice(0, 11);
+            }
+        }
+
+        // Add event listeners when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            var phoneInput = document.getElementById('phone_number');
+            
+            // Set default value
+            if (!phoneInput.value) {
+                phoneInput.value = '09';
+            }
+
+            // Add event listeners
+            phoneInput.addEventListener('input', function() {
+                handlePhoneNumber(this);
+            });
+
+            phoneInput.addEventListener('focus', function() {
+                if (this.value === '') {
+                    this.value = '09';
+                }
+            });
+
+            phoneInput.addEventListener('blur', function() {
+                if (this.value === '09') {
+                    this.value = '';
+                }
+            });
+        });
+        
         // Get the modal
         var modal = document.getElementById("myModal");
 
@@ -484,9 +528,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
              // When the user clicks the button, redirect them to the login page
-        // continueBtn.onclick = function() {
-        //     window.location.href = "../login/login.html";
-        // }
+        continueBtn.onclick = function() {
+            window.location.href = "../login/login_emp.php";
+        }
 
     // Add event listener for phone number input
     document.querySelector('input[name="phone_number"]').addEventListener('input', function() {
