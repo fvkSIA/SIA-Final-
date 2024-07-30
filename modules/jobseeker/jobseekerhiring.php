@@ -439,8 +439,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="bg-blue-100 p-6 rounded-lg mb-2 flex justify-center">
     <form action="jobseekerhiring.php" method="post">
     <div class="flex space-x-4 items-center">
-        <label class="custom-label">Here are the job post for <?php echo htmlspecialchars($user_job_type); ?></label>
-        <select class="py-2 px-4 rounded bg-white border border-gray-300" name="location">
+    <label class="custom-label">Here ar the job post for <?php echo htmlspecialchars($user_job_type); ?></label>
+    <select class="py-2 px-4 rounded bg-white border border-gray-300" name="location">
             <option value="">All Cities</option>
             <option value="Manila">Manila</option>
             <option value="Caloocan">Caloocan</option>
