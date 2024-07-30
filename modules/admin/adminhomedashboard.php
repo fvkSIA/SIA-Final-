@@ -55,24 +55,6 @@ $conn->close();
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <style>
-        .dashboard {
-            padding: 20px;
-            background: #f8f9fa;
-            overflow-y: auto;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #ffffff;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .header h1 {
-            font-size: 24px;
-        }
 
         .card {
             border: 1px solid #e0e0e0;
@@ -80,7 +62,7 @@ $conn->close();
         }
 
         .card-body {
-            padding: 20px;
+            padding: 10px;
         }
 
         .card-title {
@@ -120,9 +102,81 @@ $conn->close();
             margin-left: 10px;
             font-size: 16px;
         }
+        .container{
+        width: 100%;
+        padding-bottom: 50px;
+        padding-top: 30px;
+        }
+
+        .framed-header {
+        width: 100%;
+        border: 2px solid #3498db;
+        padding: 20px;
+        border-radius: 10px;
+        background: linear-gradient(to right, #00aaff, #dbe9f4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .welcome-text {
+        font-family: 'Arial', sans-serif;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .welcome-text h1 {
+        font-size: 24px;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .welcome-text p {
+        font-size: 14px;
+        margin: 5px 0 0;
+        color: #00235e;
+    }
+
+    .dashboard-text {
+        font-family: 'Arial', sans-serif;
+        color: #3498db;
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    @media screen and (min-width: 768px) {
+        .framed-header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-text {
+            margin-bottom: 0;
+        }
+
+        .welcome-text h1 {
+            font-size: 28px;
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+        }
+
+        .dashboard-text {
+            font-size: 24px;
+        }
+    }
+
+
 
         .occupation-bar-container {
-            width: 100%;
+            width: 1500px;
             background-color: #e0e0e0;
             height: 20px;
             border-radius: 4px;
@@ -131,7 +185,7 @@ $conn->close();
 
         .occupation-bar {
             height: 100%;
-            background-color: #119aaf;
+            background-color: #3498db;
         }
 
         .chart {
@@ -172,9 +226,16 @@ $conn->close();
       $ongoing = $result4 ? $result4->fetch_assoc() : [];
     ?>
 
-
-<div class="container dashboard">
-    <h1 class="mt-4 mb-4">Dashboard</h1>
+<div class="container">
+<div class="container">
+    <div class="framed-header">
+        <div class="welcome-text">
+        <h1 style="color: #00358d; font-family: Arial, sans-serif; text-align: center;">Admin</h1>
+        <p>Welcome back</p>
+        </div>
+        <div class="dashboard-text">Dashboard</div>
+    </div>
+</div>
 
     <div class="row g-4">
         <div class="col-md-3 col-sm-6">
