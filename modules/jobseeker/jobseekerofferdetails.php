@@ -254,13 +254,13 @@ if ($result != null) {
                 <h1>Job Offer</h1>
                 <div class="header">
                     <h2><?php echo $job['job'] ?? 'Job Title';?></h2>
-                    <p><?php echo $job['date'] ?? 'Date';?> at <?php echo $job['time'] ?? 'Time';?></p>
+                    <p><i class='bx bx-briefcase'></i> <?php echo $job['date'] ?? 'Date';?> at <?php echo $job['time'] ?? 'Time';?></p>
                 </div>
 
                 <h3>Job Details</h3>
                 <div class="job-details">
                     <div class="job-type">
-                        <img src="../jobseeker/assets/images/job-icon.png" alt="Job Type">
+                    <i class='bx bx-briefcase'></i>
                         <h4>Job Type</h4>
                         <?php if (isset($job['type'])): ?>
                             <?php if ($job['type'] == 'parttime'): ?>
@@ -277,24 +277,24 @@ if ($result != null) {
                         <?php endif; ?>
                     </div>
                     <div class="salary">
-                        <img src="../jobseeker/assets/images/salary-icon.png" alt="Salary">
+                        <i class="bx bx-money"></i>
                         <h4>Salary</h4>
                         <span><?php echo isset($job['salary_offer']) ? number_format($job['salary_offer'], 2) : 'Not specified'; ?></span>
                         </div>  
                     <div class="location">
-                        <img src="../jobseeker/assets/images/location-icon.png" alt="Location">
+                        <i class='bx bx-map'></i>
                         <h4>Location</h4>
                         <span><?php echo $job['location'] ?? 'Not specified';?></span>
                     </div>
                 </div>
-
+ 
                 <div class="full-description">
                     <h3>Full Job Description</h3>
-                    <h4>Responsibilities:</h4>
+                    <h4><i class='bx bx-list-ul pt-5'></i> Responsibilities:</h4>
                     <ul>
                         <?php echo isset($job['responsibilities']) ? nl2br(htmlspecialchars($job['responsibilities'])) : '<li>No responsibilities listed.</li>';?>
                     </ul>
-                    <h4>Qualifications:</h4>
+                    <h4><i class='bx bx-badge-check pt-5'></i> Qualifications:</h4>
                     <ul>
                         <?php echo isset($job['qualifications']) ? nl2br(htmlspecialchars($job['qualifications'])) : '<li>No qualifications listed.</li>';?>
                     </ul>
