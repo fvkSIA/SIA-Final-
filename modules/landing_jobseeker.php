@@ -446,7 +446,7 @@ body {
     <br>
     
     <div class="container">
-        <?php include 'metromanila.php' ?>
+        <?php include 'metromanila_landing.php' ?>
     </div>
 <?php include '../chatbot/index.html';?>
 <?php include '../modules/landing_footer.html'; ?>

@@ -76,11 +76,10 @@ button:focus, input:focus, textarea:focus {
 }
 
 .card_box {
-	background: #484848;
-	border-radius: 40px;
-	margin-top: 10px;
-	transition: .3s;
-	margin-bottom: 40px;
+    background: linear-gradient(to right, hsl(203, 100%, 18%), #4c0000);
+    margin-top: 10px;
+    transition: .3s;
+    margin-bottom: 40px;
 }
 
 .card_box:hover {
@@ -95,7 +94,7 @@ button:focus, input:focus, textarea:focus {
 .card_text h4 {
 	font-size: 18px;
 	font-family: bromega-Bold;
-	color: #FA4A6F;
+	color: #ffffff;
 }
 
 .card_text p {
@@ -118,7 +117,7 @@ button:focus, input:focus, textarea:focus {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 50%;
+	border-radius: 0%;
 	position: absolute;
 	top: 50%;
 }
