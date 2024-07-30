@@ -140,7 +140,7 @@ if ($result != null) {
                         <td colspan="3">
                             <div class="details">
                                 <b><?php echo $row['firstname'] . ' ' . $row['lastname'];?> | Sent you a job offer! </b>
-                                <a href="jobseekeracceptedoffer.php?id=<?php echo $row['jr_jobid'];?>&jrid=<?php echo $row['jr_id'];?>" onclick="markAsRead(<?php echo $row['jr_id']; ?>)" class="view-button"><span class="eye-icon"></span>View</a>
+                                <a href="employerapply.php?id=<?php echo $row['jr_jobid'];?>&jrid=<?php echo $row['jr_id'];?>&jr_empid=<?php echo $row['jr_empid'];?>" onclick="markAsRead(<?php echo $row['jr_id']; ?>)" class="view-button"><span class="eye-icon"></span>View</a>
                                 <form action="delete_request.php" method="post" onsubmit="return confirmDelete();" style="display:inline;">
                                     <input type="hidden" name="jr_id" value="<?php echo $row['jr_id']; ?>">
                                     <button type="submit" class="delete-button">
