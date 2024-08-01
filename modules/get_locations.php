@@ -35,7 +35,5 @@ while ($row = $result->fetch_assoc()) {
 $stmt->close();
 $conn->close();
 
-// Return locations data in JSON format
-header('Content-Type: application/json');
 echo json_encode($locations);
 ?>
