@@ -1,22 +1,6 @@
 // Predefined dataset of questions and corresponding answers
 const dataset = [
     {
-        questionPattern: /what is your name/,
-        answer: "I am your NLP chatbot."
-    },
-
-    {
-        questionPattern: /how are you|chatbot/,
-        answer: "I'm just a program, but I'm functioning well! Thanks for asking. Use for barangay questions only"
-    },
-    {
-        questionPattern: /what time is it/,
-        answer: () => {
-            const now = new Date();
-            return `It's ${now.toLocaleTimeString()}.`;
-        }
-    },
-    {
         questionPattern: /jobseeker/,
         answer: "• Find Jobs <br>\
                     • Applying to Jobs<br>\
