@@ -1,80 +1,85 @@
-<style type="text/css">
-    .icon {
-        /*            border: 1px solid red;*/
-        width: 60px;
-        height: 60px;
-        position: fixed;
-        right: 30px;
-        bottom: 30px;
-        background: #1686ff;
-        border-radius: 100px;
-        box-shadow: 0px 0px 15px gray;
-    }
-
-    .icon_img {
-        width: 100%;
-    }
-
-    .msg_box {
-        /*            border:1px red solid;*/
-        position: absolute;
-        right: 0px;
-        max-width: 620%;
-        width: 320px;
-        max-height: 830%;
-        height: 750px;
-        margin-top: -505px;
-        border-radius: 5px;
-        box-shadow: 0px 0px 15px gray;
-        padding-inline: 10px;
-        background: white;
-        padding-top: 10px;
-        background-color: white;
-        /* For browsers that do not support gradients */
-        /*            background-image: linear-gradient(to bottom , #0084ff, white);*/
-    }
-
-    .chat_form {
-        position: absolute;
-        bottom: 10px;
-        width: 300px;
-    }
-
-    .chat_form input {
-        height: 40px;
-        padding-inline: 10px;
-    }
-
-    .chatbox {
-        /*            border:1px red solid;*/
-        width: 100%;
-        height: 380px;
-        overflow-y: scroll;
-    }
-
-    .user {
-        width: auto;
-        text-shadow: 2px 2px 5px white;
-        /*            background: #0084ff;*/
-        padding: 5px;
-        border-radius: 10px 10px 0px 10px;
-        /*            color: white;*/
-        position: relative;
-        text-align: right;
-        margin-top: 5px;
-    }
-
-    .chatbot {
-        width: auto;
-        padding: 5px;
-        border-radius: 0px 10px 10px 10px;
-        color: black;
-        text-align: left;
-        margin-top: 5px;
-        right: 30px;
-    }
-</style>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HanapKITA Chatbot</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .icon {
+            width: 60px;
+            height: 60px;
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            background: #1686ff;
+            border-radius: 100px;
+            box-shadow: 0px 0px 15px gray;
+        }
+        
+        .icon_img {
+            width: 100%;
+        }
+        
+        h2 {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .msg_box {
+            position: absolute;
+            right: 30px;
+            width: 420px;
+            height: 500px;
+            margin-top: -505px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 15px gray;
+            padding: 10px;
+            background: white;
+        }
+        
+        .chat_form {
+            position: absolute;
+            bottom: 10px;
+            width: 380px;
+        }
+        
+        .chat_form input {
+            height: 40px;
+            padding: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .chatbox {
+            width: 100%;
+            height: 380px;
+            overflow-y: scroll;
+        }
+        
+        .user, .chatbot {
+            width: auto;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .user {
+            text-align: right;
+            background-color: #d0e1ff; /* Lighter blue for user messages */
+        }
+        
+        .chatbot {
+            text-align: left;
+            background-color: #f0f4ff; /* Light blue for chatbot messages */
+        }
+    </style>
+</head>
 <body>
     <div class="icon">
         <div class="msg_box" id="msg_box">
@@ -82,22 +87,206 @@
                 style="position:absolute;right: 10px; color: #0084ff; font-size: 32px;"></span>
             <h2>HanapKITA Chatbot</h2>
             <div id="chatbox" class="chatbox">
-                <div class="chatbot">Select your user type: </div>
+                <div class="chatbot">Enter your user type: </div>
                 <div class="chatbot" onclick="selectJob('employer')">Employer</div>
                 <div class="chatbot" onclick="selectJob('jobseeker')">Jobseeker</div>
-
             </div>
             <form onsubmit="return false" class="chat_form input-group">
                 <input type="text" id="userInput" placeholder="Type your message here..." class="form-control">
-                <button onclick="sendMessage()" class="input-group-text btn-primary"><span
-                        class="mbri-paper-plane mbr-iconfont mbr-iconfont-btn"></span> Send</button>
-
+                <button onclick="sendMessage()" class="input-group-text btn-primary">
+                    <span class="mbri-paper-plane mbr-iconfont mbr-iconfont-btn"></span> Send
+                </button>
             </form>
         </div>
         <a href="#chat" onclick="chat_bot()"> <img src="../chatbot/chatbot_icon.png" class="icon_img"></a>
     </div>
 
+    <script>
+        // Predefined dataset of questions and corresponding answers
+        const dataset = [
+            {
+                questionPattern: /jobseeker/,
+                answer: "• Find Jobs <br>\
+                        • Applying to Jobs<br>\
+                        • Job Offers and Orders<br>\
+                        • Ranking <br>\
+                        • Feedback",
+            },
+            {
+                questionPattern: /find jobs/,
+                answer: "Looking for jobs? You can search available job postings from different employers in our job list. Select which type of work you are looking for, and its location, and the job posts will be displayed. <br>\
+                    •What jobs are available?"
+            },
+            {
+                questionPattern: /what jobs are available?/,
+                answer: "Here are the jobs available for you:<br>\
+                    SKILLED: Welder, Electrician, Plumber, Carpenter, Refrigerator and Aircon Service Provider, Driver, Lineman <br>\
+                    UNSKILLED: Laundry Staff, Janitor, Food Services (Dishwasher and Waiter), Factory Worker, House Keeper, Construction Worker, Security Guard"
+            },
+            {
+                questionPattern: /applying to jobs/,
+                answer: "To apply to a job, just press an available job post. Click on the Apply Now button, and the employer will be notified about your intent. The employer will be able to see your contact details, resume and other files."
+            },
+            {
+                questionPattern: /job offers and orders/,
+                answer: "If the employer accepts your application, a job offer will be sent to you specifying the agreement details. You may accept or decline the offer. Accepting the offer will activate the job order that reflects the status of the ongoing job post."
+            },
+            {
+                questionPattern: /ranking/,
+                answer: "View your latest rank in the Top Jobseekers page. Your rank here depends on the quality of work you provide according to the reviews of your employers.<br>\
+                    How can I increase my rank?"
+            },
+            {
+                questionPattern: /how can i increase my rank/,
+                answer: "You can increase your rank by doing great work in each job you accept. Happy employers will definitely give you favorable reviews."
+            },
+            {
+                questionPattern: /feedback/,
+                answer: "You can view all the feedback from the previous job orders in the Feedback page. The details of the job order finished will also display here. "
+            },
+            // Ad
+            // Add more question-answer pairs as needed
+        ];
 
+        // Predefined dataset of Filipino translations
+        const employerDataset = [
+            {
+                questionPattern: /ano ang pangalan mo/,
+                answer: "Ako ang inyong NLP chatbot.",
+            },
+            {
+                questionPattern: /kamusta ka|chatbot/,
+                answer: "Ako ay isang programa lamang, ngunit maayos naman! Gamitin lamang sa mga pambarangay na katanungan. Salamat!",
+            },
+            {
+                questionPattern: /anong oras na/,
+                answer: () => {
+                    const now = new Date();
+                    return `Ang oras ngayon ay ${now.toLocaleTimeString()}.`;
+                }
+            },
+            {
+                questionPattern: /find jobseeker/,
+                answer: "Find your ideal job prospect by searching the particular work you wish to employ. You can view the list of jobseekers that is arranged according to occupation.",
+            },
+            {
+                questionPattern: /hiring jobseeker/,
+                answer: "You can hire a jobseeker directly by pressing the Hire button in their profile details. This allows you to directly give the job post to your target jobseeker.<br>\
+                    You can also hire the jobseeker who has filed an application on your jobpost",
+            },
+            {
+                questionPattern: /job posting/,
+                answer: "Create a job post where jobseekers can apply to. You can specify here the type of work to be done, its location, salary and other relevant requirements. Once posted, the job post will appear in the job post list that can be viewed by jobseekers",
+            },
+            {
+                questionPattern: /managing job applications/,
+                answer: "To manage the job application, you can view the applications to your job post. Accepting a worker will automatically give the job offer to the accepted applicant.",
+            },
+            {
+                questionPattern: /job order/,
+                answer: "A job order is activated whenever the jobseeker accepts your job offer. This reflects the status of the job post as ongoing. To end the job order, give your worker a review of the work accomplished, along with the proof of the work done.",
+            },
+            
+        ];
 
+        let selectedLanguage = null;
+        let selectedJob = null;
 
-    <script src="chatbot/script.js"></script>
+        // Function to get a response based on user input
+        function getResponse(input) {
+            const isEmployerQuestion = input.toLowerCase().includes('employer');
+            const isJobseekerQuestion = input.toLowerCase().includes('jobseeker');
+
+            if (isEmployerQuestion) {
+                selectedJob = 'employer';
+                return "Hi! I’m the HanapKITA Chatbot. I’m here to guide you on how to use our page.  The employer account can create job posts and exclusively give offers to jobseekers from the pool of workers. Employers can hire their ideal candidate by giving them job orders. They can rate the performance of jobseekers in a particular job order. The options here below explain each employer feature.<br><br>\
+                        EMPLOYER OPTIONS <br>\
+                        • Find Jobseekers <br>\
+                        • Hiring Jobseekers<br>\
+                        • Job Posting<br>\
+                        • Managing Job Applications <br>\
+                        • Job Order";
+            } else if (isJobseekerQuestion) {
+                selectedJob = 'jobseeker';
+                return "Hi! I’m the HanapKITA Chatbot. I’m here to guide you on how to use our page. The jobseeker account allows skilled and unskilled workers to view various job posts created by employers. They may apply to job posts, and they can also accept offers from the employers. The options here below explain each feature. <br><br>\
+                        JOBSEEKER OPTIONS <br>\
+                        • Find Jobs <br>\
+                        • Applying to Jobs<br>\
+                        • Job Offers and Orders<br>\
+                        • Ranking <br>\
+                        • Feedback";
+            }
+
+            if (!selectedJob) {
+                return "Please select a user type: 'Employer' or 'Jobseeker'.";
+            }
+
+            const jobDataset = selectedJob === 'employer' ? employerDataset : dataset;
+            
+            for (const item of jobDataset) {
+                // Constructing the regular expression for alternative patterns
+                const regexPattern = new RegExp(`(?<!\\|)\\b(?:${item.questionPattern.source.replace(/\|/g, '|')}|${item.questionPattern.source})\\b(?!\\|)`, 'i');
+                if (input.match(regexPattern)) {
+                    return typeof item.answer === 'function' ? item.answer() : item.answer;
+                }
+            }
+
+            // Check if the question is not part of the selected language dataset
+            if (selectedLanguage === 'filipino') {
+                return "Paumanhin, sapagkat hindi ko naintindihan ang iyong katanungan.";
+            } else {
+                return "I'm sorry, I don't understand that question.";
+            }
+        }
+
+        function speakMessage(message) {
+            const utterance = new SpeechSynthesisUtterance(message);
+            utterance.lang = 'en-US'; // Set language to English
+            speechSynthesis.speak(utterance);
+        }
+
+        function displayMessage(sender, message) {
+            const chatbox = document.getElementById("chatbox");
+            const newMessage = document.createElement("div");
+
+            if (sender === "user") {
+                newMessage.classList.add("user");
+            } else {
+                newMessage.classList.add("chatbot");
+                speakMessage(message); // Speak the chatbot's message
+            }
+            newMessage.innerHTML = message;
+            chatbox.appendChild(newMessage);
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById("userInput").value;
+            if (!userInput.trim()) return;
+
+            displayMessage("user", userInput);
+
+            const botResponse = getResponse(userInput);
+            displayMessage("chatbot", botResponse);
+
+            // Clear the input field
+            document.getElementById("userInput").value = "";
+
+            var scroll = document.getElementById("chatbox");
+            scroll.scrollTop = scroll.scrollHeight;
+        }
+
+        function selectJob(jobType) {
+            selectedJob = jobType;
+            const message = jobType === 'employer' 
+                ? "You have selected Employer. You can now ask questions related to being an employer."
+                : "You have selected Jobseeker. You can now ask questions related to being a jobseeker.";
+            displayMessage("chatbot", message);
+        }
+
+        function chat_bot() {
+            const msgBox = document.getElementById("msg_box");
+            msgBox.style.display = (msgBox.style.display === "none") ? "block" : "none";
+        }
+    </script>
+</body>
+</html>
