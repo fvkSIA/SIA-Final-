@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 // Map educational background to compound rating
                 $education_to_compound = [
-                    "1.00" => 0.10, // Uneducated
+                    "1.00" => 0.10, // 
                     "2.00" => 0.20, // Elementary
                     "3.00" => 0.30, // High School
                     "4.00" => 0.40, // Senior Highschool
