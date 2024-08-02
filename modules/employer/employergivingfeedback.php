@@ -193,7 +193,7 @@ $conn->close();
       border: none;
       border-radius: 10px;
       font-size: 15px;
-      cursor: pointer;
+      cursor: progress;
       margin-top: 20px;
       margin: 0 auto; /* Ito ang pag-update para i-center horizontally */
       margin-bottom: 5%;
@@ -247,7 +247,7 @@ $conn->close();
     <input type="file" id="image_proof" accept="image/*" name="image_proof" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; color: #333; background-color: #fff;">
     <div id="imagePreview"></div>
     <label class="label" for="reviewText">Tell us more about the job completed.</label>
-    <textarea id="reviewText" name="review_text" class="review-text" minlength="1" maxlength="500" placeholder="Type review here." required style="width: 300px;"></textarea><br>
+    <textarea id="reviewText" name="review_text" class="review-text" minlength="4" maxlength="100" placeholder="Type review here." required style="width: 500px;"></textarea><br>
     <button class="send-button" type="submit">SEND REVIEW</button>
   </div>
 

@@ -299,7 +299,7 @@ body {
       <div class="form-group">
         <div>
           <label for="salary">Salary Offer:</label>
-          <input type="number" id="salary" name="salary" min="0" required>
+          <input type="number" id="salary" name="salary" min="1000" max="100000" required>
         </div>
         <div>
           <label for="date">Date:</label>

@@ -131,10 +131,13 @@ if (!$result) {
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="card animate-in mb-4">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <h2 class="mb-0 fw-bold text-center">
                             <i class="fas fa-user-tie me-2"></i>Top Performers
                         </h2>
+                        <button class="btn btn-outline-light btn-sm" onclick="printLeaderboard()">
+                            <i class="fas fa-print me-1"></i> Print
+                        </button>
                     </div>
                     <div class="card-body">
                         <form method="get" class="mb-4">
@@ -156,7 +159,7 @@ if (!$result) {
                         </form>
 
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table id="leaderboardTable" class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>Rank</th>
@@ -210,6 +213,64 @@ if (!$result) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+    <script>
+  function printLeaderboard() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Add table data
+    const table = document.getElementById('leaderboardTable');
+    const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
+        const cells = row.querySelectorAll('td');
+        return [
+            cells[0].innerText.trim(),
+            cells[1].innerText.trim(),
+            cells[2].innerText.trim(),
+            cells[3].innerText.trim()
+        ];
+    });
+
+    // Add title and table
+    doc.autoTable({
+        startY: 30,
+        head: [['Rank', 'Worker', 'Job Type', 'Rating']],
+        body: rows,
+        styles: {
+            fontSize: 10,
+            cellPadding: 4,
+            valign: 'middle',
+            halign: 'center',
+            fillColor: [255, 255, 255],
+            textColor: [0, 0, 0],
+        },
+        headStyles: {
+            fillColor: [0, 123, 255],
+            textColor: [255, 255, 255],
+            fontStyle: 'bold',
+        },
+        alternateRowStyles: {
+            fillColor: [240, 240, 240],
+        },
+        margin: { top: 30 },
+        didDrawPage: (data) => {
+            // Center the title
+            doc.setFontSize(18);
+            doc.setFont("Poppins", "bold");
+            const title = 'Top Performers Leaderboard';
+            const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const x = (pageWidth - titleWidth) / 2;
+            doc.text(title, x, 20);
+        }
+    });
+
+    // Save the PDF
+    doc.save('leaderboard.pdf');
+}
+
+    </script>
 </body>
 </html>
 
