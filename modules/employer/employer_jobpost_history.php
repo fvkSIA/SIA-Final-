@@ -300,8 +300,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="col-md-6">
             <form method="post" class="d-flex justify-content-end gap-2">
-                <button type="submit" name="accepted_jobs" class="btn btn-success"><i class="fas fa-check-circle me-2"></i>Accepted Jobs</button>
-                <button type="submit" name="pending_jobs" class="btn btn-warning"><i class="fas fa-clock me-2"></i>Pending Jobs</button>
+                <button type="submit" name="accepted_jobs" class="btn btn-success"><i class="fas fa-check-circle me-2"></i>On Going Jobs</button>
+                <button type="submit" name="pending_jobs" class="btn btn-warning"><i class="fas fa-clock me-2"></i>Posted Jobs</button>
                 <button type="submit" name="all_jobs" class="btn btn-info"><i class="fas fa-list me-2"></i>All Jobs</button>
                 <input type="hidden" name="filter_type" value="<?php echo $filter_type; ?>">
             </form>
