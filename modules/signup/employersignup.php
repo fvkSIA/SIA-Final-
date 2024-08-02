@@ -179,7 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-top: 30px;
             border-radius: 5px;
             border: none;
-            cursor: pointer;
+            cursor: progress;
             transition: all 0.2s ease;
             background: #4481eb;
         }
@@ -376,7 +376,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             <div class="input-box info">
                 <label><b>Password:</b></label>
-                <input type="password" name="password" id="password" placeholder="Enter password" required />
+                <input type="password" name="password" id="password" placeholder="Enter password: (Juandelacruz123!!)" required />
                 <i class="fas fa-eye eye-icon" id="passwordIcon" onclick="togglePasswordVisibility('password', 'passwordIcon')"></i>
             </div>
             </div>
@@ -391,7 +391,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
           
             <div class="input-box info">
-                <label><b>2 Valid IDs (ex; Drivers License, National ID):</b></label>
+                <label><b>2 Valid IDs (ex: Drivers License, National ID):</b></label>
                 <input type="file" id="valid" name="valid_id_path" accept=".jpg, .png" required  >
             </div>
             

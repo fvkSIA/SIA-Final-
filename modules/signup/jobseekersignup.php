@@ -450,7 +450,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             <div class="input-box info">
                 <label><b>Password:</b></label>
-                <input type="password" name="password" id="password" placeholder="Enter password" required />
+                <input type="password" name="password" id="password" placeholder="Enter password: (Juandelacruz123!!)" required />
                 <i class="fas fa-eye eye-icon" id="passwordIcon" onclick="togglePasswordVisibility('password', 'passwordIcon')"></i>
             </div>
             <div class="input-box info">
@@ -493,11 +493,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="file" id="resume" name="resume" accept=".pdf" required>
             </div>
             <div class="input-box info">
-                <label><b>2 Valid IDs (ex; Drivers License, National ID):</b></label>
+                <label><b>2 Valid IDs (ex: Drivers License, National ID):</b></label>
                 <input type="file" id="valid" name="valid" accept=".jpg, .png" required>
             </div>
             <div class="input-box info">
-                <label><b>Certificate (ex; NCII):</b></label>
+                <label><b>Certificate (ex: NCII):</b></label>
                 <input type="file" id="recent" name="recent" accept=".pdf" required>
             </div>
             <button type="submit">SUBMIT</button>
