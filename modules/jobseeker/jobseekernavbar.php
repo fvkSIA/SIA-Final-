@@ -433,6 +433,12 @@ $conn->close();
           <span class="link_name">Calendar</span>
         </a>
       </li>
+      <li>
+        <a href="javascript:void(0)" onclick="changeContent('jobseekerongoing.php')">
+          <i class="bx bx-search"></i>
+          <span class="link_name">Ongoing Job</span>
+        </a>
+      </li>
       <li class="profile">
         <div class="profile_details">
         <a href="javascript:void(0)" onclick="changeContent('profile_jobseeker.php')">
