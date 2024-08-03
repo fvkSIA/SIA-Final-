@@ -48,8 +48,6 @@ if ($stmt = $conn->prepare($sql)) {
 }
 
 $conn->close();
-
-
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +58,7 @@ $conn->close();
   <title>Ongoing Job</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-      @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
@@ -79,6 +77,8 @@ $conn->close();
       margin-bottom: 30px;
       border-bottom: 2px solid #3b82f6;
       padding-bottom: 10px;
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
     }
 
     .job-offer {
@@ -95,11 +95,6 @@ $conn->close();
       transform: translateY(-5px);
     }
 
-    .job-details {
-      display: flex;
-      flex-direction: column;
-    }
-
     .job-title-wrapper {
       display: flex;
       align-items: center;
@@ -108,23 +103,30 @@ $conn->close();
 
     .job-title-wrapper .fas {
       font-size: 24px;
-      color: #3D52A0;
+      color: #000;
       margin-right: 10px;
     }
 
-    .job-title {
-      font-size: 1.5rem;
+    .job-title,
+    .job-location-salary span,
+    .job-datetime span {
       font-weight: bold;
-      color: #3D52A0;
     }
 
-    .job-location, .job-type, .job-salary {
+    .job-location-salary {
       font-size: 1rem;
       margin-bottom: 10px;
       color: #333;
+      display: flex;
+      align-items: center;
     }
 
-    .job-type span, .job-salary span {
+    .job-location-salary .separator {
+      margin: 0 10px;
+      color: #3D52A0;
+    }
+
+    .job-type span {
       background-color: #e9ecef;
       padding: 5px 10px;
       border-radius: 4px;
@@ -132,12 +134,30 @@ $conn->close();
       margin-right: 5px;
     }
 
-    .employee-name {
+    .job-salary span {
+      font-size: 0.9rem;
+      margin-right: 5px;
+    }
+
+    .job-datetime {
       font-size: 1rem;
+      margin-bottom: 10px;
+      color: #333;
+      display: flex;
+      align-items: center;
+    }
+
+    .job-datetime .separator {
+      margin: 0 10px;
+      color: #3D52A0;
+    }
+
+    .employee-name {
+      font-size: 20px;
       font-weight: bold;
       color: #333;
       position: absolute;
-      top: 20px;
+      top: 60px;
       right: 20px;
     }
 
@@ -169,7 +189,7 @@ $conn->close();
         font-size: 1.2rem;
       }
 
-      .job-location, .job-type, .job-salary {
+      .job-location-salary {
         font-size: 0.9rem;
       }
 
@@ -198,39 +218,38 @@ $conn->close();
         echo 'no ongoing job';
     ?>
 
-<?php if($data):?>
-  <?php foreach($data as $row): ?>
-    <div class="job-offer">
-      <div class="job-details">
-        <div class="job-title-wrapper">
-          <i class="fas fa-briefcase"></i>
-          <div class="job-title"><?php echo htmlspecialchars($row['job']); ?></div>
+    <?php if($data):?>
+      <?php foreach($data as $row): ?>
+        <div class="job-offer">
+          <div class="job-details">
+            <div class="job-title-wrapper">
+              <i class="fas fa-briefcase"></i>
+              <div class="job-title"><?php echo htmlspecialchars($row['job']); ?></div>
+            </div>
+            <div class="job-location-salary">
+              <i class="fas fa-map-marker-alt">&nbsp;</i> 
+              <span><?php echo htmlspecialchars($row['location']); ?></span>
+              <span class="separator">|</span>
+              <span><i class="fas fa-dollar-sign">&nbsp;</i> <?php echo htmlspecialchars($row['salary_offer']); ?></span>
+            </div>
+            <div class="job-datetime">
+              <i class="fas fa-calendar-alt">&nbsp;&nbsp;</i> 
+              <span><?php echo htmlspecialchars($row['date']);?></span>
+              <span class="separator">|</span>
+              <i class="fas fa-clock">&nbsp;&nbsp;</i> 
+              <span><?php echo htmlspecialchars($row['time']); ?></span>
+            </div>
+          </div>
+          <div class="employee-name"><?php echo htmlspecialchars($row['firstname'] . ' ' . $row['lastname']); ?></div>
         </div>
-        <div class="job-location"><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row['location']); ?></div>
-        <div class="job-type">
-          <span>Job Type</span>
-          <span><?php echo htmlspecialchars($row['job_type']); ?></span>
-        </div>
-        <div class="job-salary">
-          <span>Salary</span>
-          <span><?php echo htmlspecialchars($row['salary_offer']); ?></span>
-        </div>
-        <div class="job-datetime">
-          <span>Date and Time</span>
-          <span><?php echo htmlspecialchars($row['date'] . ' ' . $row['time']); ?></span>
+      <?php endforeach;?>
+    <?php else:?>
+      <div class="job-offer">
+        <div class="job-details">
+          No Ongoing Jobs
         </div>
       </div>
-      <div class="employee-name"><?php echo htmlspecialchars($row['firstname'] . ' ' . $row['lastname']); ?></div>
-    </div>
-  <?php endforeach;?>
-<?php else:?>
-  <div class="job-offer">
-    <div class="job-details">
-      No Ongoing Jobs
-    </div>
-  </div>
-<?php endif;?>
-    
+    <?php endif;?>
   </div>
 </body>
 </html>
