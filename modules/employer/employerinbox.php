@@ -1,5 +1,4 @@
 <?php 
-
 require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
 $error = '';
@@ -43,34 +42,18 @@ $conn->close();
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employer Dashboard</title>
-    <!-- Link Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-    <link rel="icon" type="image/png" href="../HanapKITA.png">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-        :root {
-            --color-default: #004f83;
-            --color-second: #0067ac;
-            --color-white: #fff;
-            --color-body: #e4e9f7;
-            --color-light: #e0e0e0;
+        .notification-item {
+            transition: all 0.3s ease;
         }
-        * {
-            padding: 0%;
-            margin: 0%;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-        body {
-            min-height: 100vh;
-            display: flex;
-            font-family: 'Poppins', sans-serif;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #7cbeea00;
+        .notification-item.active {
+            background-color: #F6E5E4;
+            border-left: 4px solid #4C100C;
         }
         table {
             border-collapse: collapse;
@@ -105,100 +88,110 @@ $conn->close();
             cursor: pointer;
             font-size: 24px;
         }
-        /* New styles for the View button */
-        .view-button {
-            background-color: #6b0d0d;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            text-decoration: none;
-        }
-        .view-button:hover {
-            background-color: #A52A2A;
-        }
-        .eye-icon::before {
-            content: "\1F441";
-            font-size: 16px;
-        }
     </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-5">
+        <div class="flex flex-col md:flex-row gap-6">
+            <div class="w-full md:w-1/3 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700">Notifications</h2>
+                <div class="space-y-4">
+                    <?php 
+                    $data = [];
+                    if ($result != null) {
+                        $data = $result->fetch_all(MYSQLI_ASSOC);
+                    }
+                    if($data):
+                        foreach($data as $row): 
+                            if(($row['jr_type'] === 1 && $row['is_accepted'] == 1) || 
+                               ($row['jr_type'] === 2 && $row['is_accepted'] == 0)): 
+                    ?>
+                    <div id="notification-<?php echo $row['jr_id']; ?>" class="notification-item bg-gray-50 p-4 rounded-md">
+                        <p class="text-sm font-medium text-gray-600 mb-2">
+                            <?php 
+                            if($row['jr_type'] === 1) {
+                                echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'] . ' accepted the job offer you requested!';
+                            } elseif($row['jr_type'] === 2) {
+                                echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'] . ' applied for the job: ' . $row['job_list_job'];
+                            }
+                            ?>
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <button onclick="loadContent('<?php echo $row['jr_type'] === 1 ? 'employeracceptedoffermessage.php?fname=' . $row['job_seek_fname'] . '&lname=' . $row['job_seek_lname'] : 'jobseekerapply.php?id=' . $row['jr_uid'] . '&jrid=' . $row['jr_id'];?>', <?php echo $row['jr_id']; ?>)" class="text-blue-600 hover:text-maroon-800 text-sm font-medium">
+                                View Details
+                            </button>
+                            <form action="delete_request.php" method="post" onsubmit="return confirmDelete();" class="inline">
+                                <input type="hidden" name="jr_id" value="<?php echo $row['jr_id']; ?>">
+                                <button type="submit" class="delete-button">
+                                    <i class="bx bx-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <?php 
+                            endif;
+                        endforeach;
+                    else:
+                    ?>
+                    <p class="text-gray-500">No notifications yet</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div id="rightContent" class="w-full md:w-2/3 bg-white rounded-lg shadow-md p-6">
+                <p class="text-gray-500">Select a notification to view details</p>
+            </div>
+        </div>
+    </div>
+    <?php include '../employer/em_footer.html'; ?>
+
     <script>
+        let currentJrId = null;
+
         function confirmDelete() {
             return confirm("Are you sure you want to delete this item?");
         }
+
+        function markAsRead(jr_id) {
+            fetch('mark_as_read.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'jr_id=' + jr_id
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Message marked as read.');
+                } else {
+                    console.log('Failed to mark as read.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function loadContent(url, jr_id) {
+            if (currentJrId !== jr_id) {
+                if (currentJrId) {
+                    document.getElementById('notification-' + currentJrId).classList.remove('active');
+                }
+                
+                document.getElementById('notification-' + jr_id).classList.add('active');
+
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('rightContent').innerHTML = data;
+                        markAsRead(jr_id);
+                        currentJrId = jr_id;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                document.getElementById('rightContent').innerHTML = "<p class='text-gray-500'>Select a notification to view details</p>";
+                currentJrId = null;
+            }
+        }
     </script>
-</head>
-<body>
-
-<?php 
-$data = [];
-if ($result != null)
-    $data = $result->fetch_all(MYSQLI_ASSOC);
-else 
-    echo '';
-?>
-
-<table>
-    <?php if($data): ?>
-        <?php foreach($data as $row): ?>
-            <?php if($row['jr_type'] === 1): ?>
-                <?php if($row['is_accepted'] == 1): ?>
-                    <tr>
-                        <td colspan="3">
-                            <div class="details">
-                                <b><?php echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'];?> | Accepted the job offer you have been requested! </b>
-                                <a href="employeracceptedoffermessage.php?fname=<?php echo $row['job_seek_fname'];?>&lname=<?php echo $row['job_seek_lname'];?>" class="view-button"><span class="eye-icon"></span>View</a>
-                                <form action="delete_request.php" method="post" onsubmit="return confirmDelete();" style="display:inline;">
-                                    <input type="hidden" name="jr_id" value="<?php echo $row['jr_id']; ?>">
-                                    <button type="submit" class="delete-button">
-                                        <i class="bx bx-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endif; ?>
-
-            <?php elseif($row['jr_type'] === 2): ?>
-                <?php if ($row['is_accepted'] == 0): ?>
-                    <tr>
-                        <td colspan="3">
-                            <div class="details">
-                                <b><?php echo $row['job_seek_fname'] . ' ' . $row['job_seek_lname'];?> | Applied for the job: <?php echo $row['job_list_job']; ?></b>
-                                <a href="jobseekerapply.php?id=<?php echo $row['jr_uid'];?>&jrid=<?php echo $row['jr_id'];?>" class="view-button"><span class="eye-icon"></span>View</a>
-                                <form action="delete_request.php" method="post" onsubmit="return confirmDelete();" style="display:inline;">
-                                    <input type="hidden" name="jr_id" value="<?php echo $row['jr_id']; ?>">
-                                    <button type="submit" class="delete-button">
-                                        <i class="bx bx-trash"></i> 
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endif; ?>
-
-            <?php elseif($row['jr_type'] === 3): ?>
-            <?php else: ?>
-            <?php endif; ?>
-
-        <?php endforeach; ?>
-    <?php else: ?>
-        <tr>
-        <td colspan="3">
-            <div class="details">
-                <b>No items yet</b>
-            </div>
-        </td>
-    </tr>
-    <?php endif; ?>
-</table>
-
-<?php include '../employer/em_footer.html'; ?>
-
 </body>
 </html>

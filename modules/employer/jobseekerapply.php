@@ -39,21 +39,10 @@ $conn->close();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
-
-body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-    }
-
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
     .container {
       width: 100%;
-      max-width: 700px;
     }
-
     .profile-card {
       background-color: #ffffff;
       border-radius: 12px;
@@ -62,7 +51,6 @@ body {
       text-align: left;
       border: 1px solid #ddd;
     }
-
     .profile-card img {
       width: 150px;
       height: 150px;
@@ -71,33 +59,27 @@ body {
       margin-bottom: 20px;
       border: 4px solid #007bff;
     }
-
     .profile-card h1 {
       font-size: 28px;
       font-weight: bold;
       margin-bottom: 15px;
       color: #333;
     }
-
     .profile-card .info {
       margin-bottom: 5px;
     }
-
     .profile-card .info div {
       margin-bottom: 12px;
     }
-
     .profile-card .info span.label {
       font-weight: bold;
       color: #333;
       display: inline-block;
       width: 150px;
     }
-
     .profile-card .info span.value {
       color: #555;
     }
-
     .btn-hire {
       display: inline-block;
       padding: 12px 24px;
@@ -109,13 +91,10 @@ body {
       text-align: right;
       transition: background-color 0.3s, transform 0.3s;
     }
-
     .btn-hire:hover {
       background-color: #0056b3;
       transform: scale(1.05);
     }
-
-
     .close-button {
       background-color: #ff4d4d;
       color: #ffffff;
@@ -126,83 +105,81 @@ body {
       cursor: pointer;
       transition: background-color 0.3s, transform 0.3s;
     }
-
     .close-button:hover {
       background-color: #cc0000;
       transform: scale(1.05);
     }
     .profile-container {
     display: flex;
-    align-items: flex-start; /* Align items to the start vertically */
-    gap: 20px; /* Adjust space between image and text as needed */
-}
-
-.profile-image {
+    align-items: flex-start; 
+    gap: 20px; 
+    }
+    .profile-image {
     max-width: 150px;
     height: auto;
     border-radius: 50%; 
-}
-
-.profile-info {
+    }
+    .profile-info {
     flex: 1; 
     padding-top: 8%;
-}
-
-.info {
+    }
+    .info {
     display: flex;
-    justify-content: center; /* Center items horizontally */
-    flex-wrap: wrap; /* Allow wrapping to next line if needed */
-    gap: 2px; /* Optional: Adjust spacing between items */
-}
-
-.info > div {
+    justify-content: center; 
+    flex-wrap: wrap; 
+    gap: 2px; 
+    }
+    .info > div {
     flex: 1;
-    min-width: 100px; /* Optional: Adjust minimum width if needed */
-    text-align: center; /* Center text within each item */
-}
-
-.hr-container {
-    text-align: center; /* Center the horizontal rule */
-    margin-bottom: 10px; /* Optional: Adjust spacing below the horizontal rule */
-}
-
-hr {
+    min-width: 100px;
+    text-align: center; 
+    }
+    .hr-container {
+    text-align: center; 
+    margin-bottom: 10px;
+    }
+    hr {
     border: 0;
-    border-top: 2px solid #ccc; /* Adjust color and thickness as needed */
-    margin: 0 auto; /* Center the horizontal rule */
-    width: 100%; /* Adjust width as needed */
-}
-
-.label {
+    border-top: 2px solid #ccc;
+    margin: 0 auto; 
+    width: 100%; 
+    }
+    .label {
     font-weight: bold;
-}
-
-.value {
-    margin-left: 5px; /* Space between label and value */
-}
-.file{
-  align-items: center;
-}
-.action-buttons {
+    }
+    .value {
+    margin-left: 5px;
+    }
+    .file{
+    align-items: center;
+    }
+    .action-buttons {
     display: flex;
     justify-content: flex-end;
-    gap: 10px; /* Optional: to add space between buttons */
-}
-.resume-section, .valid-id-section, .work-experience-section {
-            margin-bottom: 30px;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .resume-section label, .valid-id-section label, .work-experience-section label {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            display: block;
-        }
-        iframe {
-            border-radius: 8px;
-        }  </style>
+    gap: 10px;
+    }
+    .resume-section, .valid-id-section, .work-experience-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .resume-section label, .valid-id-section label, .work-experience-section label {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+    }
+    iframe {
+    border-radius: 8px;
+    }  
+    .image-container {
+    width: 100%;
+    height: 600px;
+    background-size: cover;
+    background-position: center;
+    }
+    </style>
 </head>
 <body>
   <div class="container">
@@ -241,8 +218,8 @@ hr {
 
         <div class="valid-id-section">
           <label>Valid ID</label>
-          <iframe src="<?php echo htmlspecialchars($user['valid_ids']); ?>" width="100%" height="600px" style="border: none;"></iframe>
-        </div>
+          <div class="image-container" style="background-image: url('<?php echo htmlspecialchars($user['valid_ids']); ?>');"></div>
+          </div>
 
         <div class="work-experience-section">
           <label>Certificate</label>
