@@ -213,16 +213,16 @@ $conn->close();
                             <option value="Caloocan" <?php if($data['city'] == 'Caloocan') echo 'selected'; ?>>Caloocan</option>
                             <option value="Pasay" <?php if($data['city'] == 'Pasay') echo 'selected'; ?>>Pasay</option>
                             <option value="Makati" <?php if($data['city'] == 'Makati') echo 'selected'; ?>>Makati</option>
-                            <option value="Quezon City" <?php if($data['city'] == 'QuezonㅤCity') echo 'selected'; ?>>QuezonㅤCity</option>
+                            <option value="QuezonㅤCity" <?php if($data['city'] == 'QuezonㅤCity') echo 'selected'; ?>>QuezonㅤCity</option>
                             <option value="Navotas" <?php if($data['city'] == 'Navotas') echo 'selected'; ?>>Navotas</option>
-                            <option value="Las Piñas" <?php if($data['city'] == 'LasㅤPiñas') echo 'selected'; ?>>LasㅤPiñas</option>
+                            <option value="LasㅤPiñas" <?php if($data['city'] == 'LasㅤPiñas') echo 'selected'; ?>>LasㅤPiñas</option>
                             <option value="Malabon" <?php if($data['city'] == 'Malabon') echo 'selected'; ?>>Malabon</option>
                             <option value="Mandaluyong" <?php if($data['city'] == 'Mandaluyong') echo 'selected'; ?>>Mandaluyong</option>
                             <option value="Marikina" <?php if($data['city'] == 'Marikina') echo 'selected'; ?>>Marikina</option>
                             <option value="Muntinlupa" <?php if($data['city'] == 'Muntinlupa') echo 'selected'; ?>>Muntinlupa</option>
                             <option value="Parañaque" <?php if($data['city'] == 'Parañaque') echo 'selected'; ?>>Parañaque</option>
                             <option value="Pasig" <?php if($data['city'] == 'Pasig') echo 'selected'; ?>>Pasig</option>
-                            <option value="San Juan" <?php if($data['city'] == 'SanㅤJuan') echo 'selected'; ?>>SanㅤJuan</option>
+                            <option value="SanㅤJuan" <?php if($data['city'] == 'SanㅤJuan') echo 'selected'; ?>>SanㅤJuan</option>
                             <option value="Taguig" <?php if($data['city'] == 'Taguig') echo 'selected'; ?>>Taguig</option>
                             <option value="Valenzuela" <?php if($data['city'] == 'Valenzuela') echo 'selected'; ?>>Valenzuela</option>
                             <option value="Pateros" <?php if($data['city'] == 'Pateros') echo 'selected'; ?>>Pateros</option>

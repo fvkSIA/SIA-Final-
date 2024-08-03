@@ -354,24 +354,29 @@ $conn->close(); // Close the database connection
     </div>
     <div id="myModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close" onclick="closeModal()">&times;</span> 
             <p>The Offer was successfully sent to the jobseeker!</p>
             <button class="modal-button" onclick="closeModalAndRedirect()">Continue</button>
         </div>
     </div>
 
     <script>
+        function formatBulletPoints(textarea) {
+            let lines = textarea.value.split('\n');
+            let formattedLines = lines.map(line => {
+            let trimmedLine = line.replace(/^•\s*/, '').trim();
+            return trimmedLine.length > 0 ? '• ' + trimmedLine : '';
+            });
+            textarea.value = formattedLines.join('\n');
+        }
+
         document.getElementById('job_responsibilities').addEventListener('input', function() {
-            let lines = this.value.split('\n');
-            let formattedLines = lines.map(line => line.startsWith('• ') ? line : '• ' + line);
-            this.value = formattedLines.join('\n');
-        });
-        document.getElementById('job_qualifications').addEventListener('input', function() {
-            let lines = this.value.split('\n');
-            let formattedLines = lines.map(line => line.startsWith('• ') ? line : '• ' + line);
-            this.value = formattedLines.join('\n');
+            formatBulletPoints(this);
         });
 
+        document.getElementById('job_qualifications').addEventListener('input', function() {
+            formatBulletPoints(this);
+        });
         const modal = document.getElementById("myModal");
         <?php if ($showModal) : ?>
             document.addEventListener('DOMContentLoaded', function() {

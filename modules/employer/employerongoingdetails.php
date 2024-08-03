@@ -308,7 +308,7 @@ $conn->close();
           <p>Employed Worker: <span><?php echo $row['user_fname'] . ' ' . $row['user_lname'];?></span></p>
         </div>
 
-        <div class="job-details">
+        <div class="job-details"> 
           <h2>Job Details</h2>
           <p><i class='bx bx-briefcase'></i>  <?php echo $row['job_req_type'] == 1 ? $row['job_offer_type'] : $row['type']?></p>
           <p><i class='bx bx-map'></i> <?php echo $row['job_req_type'] == 1 ? $row['job_offer_loc'] : $row['location']?></p>

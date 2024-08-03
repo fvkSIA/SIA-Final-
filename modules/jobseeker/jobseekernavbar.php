@@ -60,7 +60,7 @@ $conn->close();
       --color-default: #004f83;
       --color-second: #004f83;
       --color-white: #fff;
-      --color-body: #e4e9f7;
+      --color-body: #fff;
       --color-light: #e0e0e0;
     }
 

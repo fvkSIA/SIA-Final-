@@ -50,11 +50,10 @@ $conn->close();
   <style>
     body {
       font-family: 'Roboto', sans-serif;
-      background-color: #f9f9f9;
       color: #333;
     }
     .container {
-      max-width: 1200px;
+      width: 100%;
       margin: 0 auto;
       padding: 20px;
     }
@@ -62,7 +61,8 @@ $conn->close();
       background: #fff;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      padding: 20px;
+      padding: 30px;
+      width: 100%;
     }
     .job-details h1 {
       font-size: 2rem;
@@ -223,7 +223,7 @@ $conn->close();
     }
 
     function redirect() {
-      location.href = "jobseekerhiring.php";
+      location.href = "jobseekerdashboardhome.php";
     }
 
     // Close the modal when clicking outside of the modal content

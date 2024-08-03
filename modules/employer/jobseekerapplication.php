@@ -3,57 +3,57 @@ require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
 $error = '';
 $result = null;
+$showModal = false;
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $jrid = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+if($_SERVER["REQUEST_METHOD"] == "GET") {
+  $jrid = $_GET['id'];
   
-    $sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_requests.job_id as jr_jobid, job_requests.employer_id as jr_empid, job_requests.type as jr_type, job_requests.status as jr_comp, job_requests.is_accepted, users.id as user_id, users.firstname, users.lastname, job_listings.*, job_offers.id as job_offer_id, job_offers.job as job_offer_job, job_offers.date as job_offer_date, job_offers.time as job_offer_time, job_offers.type as job_offer_type, job_offers.salary_offer as job_offer_sal, job_offers.location as job_offer_loc, job_offers.responsibilities as job_offer_respo, job_offers.qualifications as job_offer_quali, a.firstname as job_seek_fname, a.lastname as job_seek_lname, a.middlename as job_seek_mname, a.email as job_seek_email, a.phone_number as job_seek_phone FROM job_requests
-            LEFT JOIN users ON job_requests.employer_id = users.id
-            LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
-            LEFT JOIN users as a ON job_requests.user_id = a.id
-            LEFT JOIN job_offers ON job_requests.job_id = job_offers.id
-            WHERE job_requests.id = ?";
+  $sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_requests.job_id as jr_jobid, job_requests.employer_id as jr_empid, job_requests.type as jr_type, job_requests.status as jr_comp, job_requests.is_accepted, users.id as user_id, users.firstname, users.lastname, job_listings.*, job_offers.id as job_offer_id, job_offers.job as job_offer_job, job_offers.date as job_offer_date, job_offers.time as job_offer_time, job_offers.type as job_offer_type, job_offers.salary_offer as job_offer_sal, job_offers.location as job_offer_loc, job_offers.responsibilities as job_offer_respo, job_offers.qualifications as job_offer_quali, a.firstname as job_seek_fname, a.lastname as job_seek_lname, a.middlename as job_seek_mname, a.email as job_seek_email, a.phone_number as job_seek_phone FROM job_requests
+        LEFT JOIN users ON job_requests.employer_id = users.id
+        LEFT JOIN job_listings ON job_requests.job_id = job_listings.id
+        LEFT JOIN users as a ON job_requests.user_id = a.id
+        LEFT JOIN job_offers ON job_requests.job_id = job_offers.id
+        WHERE job_requests.id = ?";
 
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("i", $jrid);
-        $stmt->execute();
-        $result = $stmt->get_result() ?? null;
-        $stmt->close();
-    }
+  // echo $id . ' query: ' . $sql; die();
+  if ($stmt = $conn->prepare($sql)) {
+    $stmt->bind_param("s", $jrid);
+    $stmt->execute();
+    $result = $stmt->get_result() ?? null;
 
-} elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = filter_input(INPUT_POST, 'job_id', FILTER_SANITIZE_NUMBER_INT);
-    $job_req_id = filter_input(INPUT_POST, 'job_req_id', FILTER_SANITIZE_NUMBER_INT);
+    // print_r($result);
+    // die();
+    $stmt->close();
+  }
+
+} else if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST['job_id'];
+    $job_req_id = $_POST['job_req_id'];
 
     $sql = "UPDATE job_listings SET accepted = 1 WHERE id = ?";
     $sql2 = "UPDATE job_requests SET is_accepted = 1 WHERE id = ?";
-    if ($stmt = $conn->prepare($sql)) {
+    if ($stmt = $conn->prepare($sql)){
         $stmt->bind_param("i", $id);
-        if ($stmt->execute()) {
-            if ($stmt2 = $conn->prepare($sql2)) {
+        if ($stmt->execute()){
+            if($stmt2 = $conn->prepare($sql2)){
                 $stmt2->bind_param("i", $job_req_id);
-                if ($stmt2->execute()) {
-                    $stmt->close();
-                    $stmt2->close();
-                    header('Location: employerongoing.php');
-                    exit();
-                } else {
-                    $error = 'Error encountered while updating job request. Try again later.';
+                if ($stmt2->execute()){
+                  $stmt->close();
+                  $stmt2->close();
+                  header('Location: employerongoing.php');
+                  
                 }
-            } else {
-                $error = 'Error preparing statement for updating job request.';
             }
-        } else {
-            $error = 'Error encountered while updating job listing. Try again later.';
+            
+        } else {    
+            $error = 'Error encountered. Try again later';
         }
-    } else {
-        $error = 'Error preparing statement for updating job listing.';
+    } else{
+        $error = 'Error encountered. Try again later';
     }
 }
 $conn->close();
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -222,60 +222,6 @@ $conn->close();
       background-color: #1557b0;
     }
 
-    .confirmation-box {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .confirmation-box .box {
-      background-color: var(--card-background);
-      padding: 30px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .confirmation-box .box p {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
-    .confirmation-box .box button {
-      padding: 10px 20px;
-      border-radius: 20px;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 500;
-      transition: background-color 0.3s ease;
-    }
-
-    .confirmation-box .box button#confirmButton {
-      background-color: var(--primary-color);
-      color: white;
-      margin-right: 10px;
-    }
-
-    .confirmation-box .box button#confirmButton:hover {
-      background-color: #1557b0;
-    }
-
-    .confirmation-box .box button#cancelButton {
-      background-color: #f1f3f4;
-      color: var(--secondary-color);
-    }
-
-    .confirmation-box .box button#cancelButton:hover {
-      background-color: #e8eaed;
-    }
-
     @media (max-width: 768px) {
       main {
         padding: 20px;
@@ -304,6 +250,53 @@ $conn->close();
         margin-bottom: 10px;
       }
     }
+
+    /* Add these new styles for the modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .modal-buttons {
+      margin-top: 20px;
+    }
+
+    .modal-button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .modal-confirm {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .modal-cancel {
+      background-color: #ccc;
+      color: black;
+    }
   </style>
 </head>
 <body>
@@ -321,19 +314,24 @@ $conn->close();
   ?>
 
   <main>
+    <form action="jobseekerapplication.php" method="post" id="jobseeker_apply_form">
+      <input type="hidden" name="job_id" value="<?php echo $user['jr_jobid'] ?? '';?>">
+      <input type="hidden" name="job_req_id" value="<?php echo $jrid ?? '';?>">
+    </form>
     <h1 class="header">Job Post Details</h1>
     <div class="job-post">
-      <h1><?php echo htmlspecialchars($user['job']) ?></h1>
-      <p><i class='bx bx-calendar'></i> <?php echo htmlspecialchars($user['date']) ?> at <?php echo htmlspecialchars($user['time']) ?></p>
+      <h1><?php echo $user['job']?></h1>
+      <p><i class='bx bx-calendar'></i> <?php echo $user['date'] ?> at <?php echo $user['time'] ?></p>
       
       <div class="employee-info">
         <i class='bx bx-user-circle'></i>
-        <p>Employed Worker: <span><?php echo htmlspecialchars($user['job_seek_fname']) ?> <?php echo htmlspecialchars($user['job_seek_lname']) ?></span></p>      </div>
+        <p>Employed Worker: <span><?php echo $user['job_seek_fname'] ?> <?php echo $user['job_seek_lname'] ?></span></p>
+      </div>
 
       <div class="job-details">
         <h2>Job Details</h2>
-        <p><i class='bx bx-briefcase'></i> <?php echo htmlspecialchars($user['type']) ?></p>
-        <p><i class='bx bx-map'></i> <?php echo htmlspecialchars($user['location']) ?></p>
+        <p><i class='bx bx-briefcase'></i> <?php echo $user['type'] ?></p>
+        <p><i class='bx bx-map'></i> <?php echo $user['location'] ?></p>
         
         <div class="salary">
           <h3><i class='bx bx-money'></i> Salary</h3>
@@ -341,65 +339,75 @@ $conn->close();
         </div>
         
         <div class="responsibilities">
-  <h3><i class='bx bx-list-ul'></i> Responsibilities</h3>
-  <div>
-    <?php 
-      $responsibilities = explode("\n", $user['responsibilities']);
-      foreach ($responsibilities as $responsibility) {
-        $trimmedResponsibility = htmlspecialchars(trim($responsibility));
-        if ($trimmedResponsibility) {
-          echo "$trimmedResponsibility<br>";
-        }
-      }
-    ?>
-  </div>
-</div>
+          <h3><i class='bx bx-list-ul'></i> Responsibilities</h3>
+          <div>
+            <?php 
+              $responsibilities = explode("\n", $user['responsibilities']);
+              foreach ($responsibilities as $responsibility) {
+                $trimmedResponsibility = trim($responsibility);
+                if ($trimmedResponsibility) {
+                  echo "$trimmedResponsibility<br>";
+                }
+              }
+            ?>
+          </div>
+        </div>
 
-<div class="qualifications">
-  <h3><i class='bx bx-badge-check'></i> Qualifications</h3>
-  <div>
-    <?php 
-      $qualifications = explode("\n", $user['qualifications']);
-      foreach ($qualifications as $qualification) {
-        $trimmedQualification = htmlspecialchars(trim($qualification));
-        if ($trimmedQualification) {
-          echo "$trimmedQualification<br>";
-        }
-      }
-    ?>
-  </div>
-</div>
-
+        <div class="qualifications">
+          <h3><i class='bx bx-badge-check'></i> Qualifications</h3>
+          <div>
+            <?php 
+              $qualifications = explode("\n", $user['qualifications']);
+              foreach ($qualifications as $qualification) {
+                $trimmedQualification = trim($qualification);
+                if ($trimmedQualification) {
+                  echo "$trimmedQualification<br>";
+                }
+              }
+            ?>
+          </div>
+        </div>
         
         <button id="acceptButton" class="accept-button">ACCEPT WORKER</button>
       </div>
     </div>
-    
-    <div id="confirmationBox" class="confirmation-box">
-      <div class="box">
-        <p>Are you sure you want to accept this worker?</p>
-        <form id="jobseeker_apply_form" method="POST">
-          <input type="hidden" name="job_id" value="<?php echo htmlspecialchars($user['job_offer_id']); ?>">
-          <input type="hidden" name="job_req_id" value="<?php echo htmlspecialchars($user['jr_id']); ?>">
-          <button type="submit" id="confirmButton">Yes, Accept</button>
-        </form>
-        <button id="cancelButton">Cancel</button>
-      </div>
-    </div>
   </main>
 
+  <!-- Add the modal structure -->
+  <div id="confirmationModal" class="modal">
+    <div class="modal-content">
+      <p>Are you sure you want to accept this worker?</p>
+      <div class="modal-buttons">
+        <button id="confirmButton" class="modal-button modal-confirm">Yes</button>
+        <button id="cancelButton" class="modal-button modal-cancel">No</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    document.getElementById('acceptButton').addEventListener('click', function() {
-      document.getElementById('confirmationBox').style.display = 'flex';
-    });
+    var modal = document.getElementById('confirmationModal');
+    var acceptButton = document.getElementById('acceptButton');
+    var confirmButton = document.getElementById('confirmButton');
+    var cancelButton = document.getElementById('cancelButton');
 
-    document.getElementById('confirmButton').addEventListener('click', function() {
-      document.getElementById('jobseeker_apply_form').submit();
-    });
+    acceptButton.onclick = function() {
+      modal.style.display = "block";
+    }
 
-    document.getElementById('cancelButton').addEventListener('click', function() {
-      document.getElementById('confirmationBox').style.display = 'none';
-    });
+    confirmButton.onclick = function() {
+      var form = document.getElementById('jobseeker_apply_form');
+      form.submit();
+    }
+
+    cancelButton.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
   </script>
 </body>
 </html>

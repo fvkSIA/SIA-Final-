@@ -249,6 +249,10 @@ body {
 .back-button:hover {
   background-color: #8b1b0d;
 }
+textarea {
+            width: 100%;
+            height: 150px;
+        }
   </style>
 </head>
 <body>
@@ -292,8 +296,8 @@ body {
         </div>
         <div>
           <label for="location">Location:</label>
-          <input type="hidden" id="location" name="location" value="<?php echo htmlspecialchars($user_city);?>">
-          <input style="color: #8D8D8E;" type="text" id="locationDisplay" value="<?php echo htmlspecialchars($user_city);?>" readonly>
+          <input type="hidden" id="location" name="location" value="<?php echo $user_city;?>">
+          <input style="color: #8D8D8E;" type="text" id="locationDisplay" value="<?php echo $user_city;?>" readonly>
         </div>
       </div>
       <div class="form-group">
@@ -327,7 +331,6 @@ body {
   </form>
 </div>
 
-<!-- Modal -->
 <div id="successModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -337,23 +340,28 @@ body {
 </div>
 
 <script>
-document.getElementById('job_responsibilities').addEventListener('input', function() {
-  let lines = this.value.split('\n');
-  let formattedLines = lines.map(line => line.startsWith('• ') ? line : '• ' + line);
-  this.value = formattedLines.join('\n');
-});
-document.getElementById('job_qualifications').addEventListener('input', function() {
-  let lines = this.value.split('\n');
-  let formattedLines = lines.map(line => line.startsWith('• ') ? line : '• ' + line);
-  this.value = formattedLines.join('\n');
-});
+function formatBulletPoints(textarea) {
+    let lines = textarea.value.split('\n');
+    let formattedLines = lines.map(line => {
+      let trimmedLine = line.replace(/^•\s*/, '').trim();
+      return trimmedLine.length > 0 ? '• ' + trimmedLine : '';
+    });
+    textarea.value = formattedLines.join('\n');
+  }
+
+  document.getElementById('job_responsibilities').addEventListener('input', function() {
+    formatBulletPoints(this);
+  });
+
+  document.getElementById('job_qualifications').addEventListener('input', function() {
+    formatBulletPoints(this);
+  });
 
 document.getElementById('jobForm').addEventListener('submit', function(event) {
   const form = event.target;
   if (!form.checkValidity()) {
     event.preventDefault();
     event.stopPropagation();
-    // Optionally show some error messages
   }
 });
 

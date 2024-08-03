@@ -1,7 +1,68 @@
-<?php 
-
+<?php
+require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
+$error = '';
+$result = null;
+$showModal = false;
+$result2 = null;
 
+$servername = "localhost"; 
+$username = "root";
+$password = ""; 
+$dbname = "hanapkita_db";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Pagination settings
+$limit = 5; // Number of rows per page
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// Fetch job types for filter
+$sql_job_types = "SELECT DISTINCT job_type FROM users WHERE type = 2";
+$result_job_types = $conn->query($sql_job_types);
+
+// Main query
+$sql = "SELECT u.id, u.firstname, u.middlename, u.lastname, u.gender, u.home_address, u.job_type, u.city, u.profile, SUM(r.compound) AS total_compound
+        FROM (SELECT DISTINCT id, firstname, middlename, lastname, gender, home_address, job_type, city, profile FROM users WHERE type = 2) u
+        INNER JOIN ratings r ON u.id = r.user_id 
+        WHERE r.compound IS NOT NULL";
+
+if (!empty($_GET['job_type'])) {
+    $job_type = $conn->real_escape_string($_GET['job_type']);
+    $sql .= " AND u.job_type = '".$job_type."'";
+}
+
+$sql .= " GROUP BY u.id, u.firstname, u.middlename, u.lastname, u.gender, u.home_address, u.job_type, u.city, u.profile
+          ORDER BY total_compound DESC
+          LIMIT $limit OFFSET $offset";
+
+// Get the results
+$result = $conn->query($sql);
+
+if ($result === false) {
+    echo "Error executing query: " . $conn->error;
+    exit;
+}
+
+// Get total number of rows for pagination
+$sql_count = "SELECT COUNT(DISTINCT u.id) AS total_rows
+              FROM (SELECT DISTINCT id, firstname, middlename, lastname, gender, home_address, job_type, city, profile FROM users WHERE type = 2) u
+              INNER JOIN ratings r ON u.id = r.user_id
+              WHERE r.compound IS NOT NULL";
+
+if (!empty($_GET['job_type'])) {
+    $job_type = $conn->real_escape_string($_GET['job_type']);
+    $sql_count .= " AND u.job_type = '".$job_type."'";
+}
+
+$result_count = $conn->query($sql_count);
+$total_rows = $result_count->fetch_assoc()['total_rows'];
+$total_pages = ceil($total_rows / $limit);
 ?>
 
 <!DOCTYPE html>
@@ -12,325 +73,182 @@ session_start();
   <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="icon" type="image/png" href="../HanapKITA.png">
   <style>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
-    .home-section {
-      position: relative;
-      background-color: var(--color-body);
-      min-height: 100vh;
-      top: 0;
-      width: calc(100% - 78px);
-      transition: all .5s ease;
-      z-index: 2;
-      margin: 0 auto;
-    }
-.home-section .text{
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+    body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination a {
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  color: #333;
+  margin: 0 4px;
+  border-radius: 4px;
+}
+
+.pagination a.active {
+  background-color: #6b0d0d;
+  color: white;
+}
+
+.home-section {
+  position: relative;
+  background-color: var(--color-body);
+  min-height: 100vh;
+  top: 0;
+  width: calc(100% - 78px);
+  transition: all .5s ease;
+  z-index: 2;
+  margin: 0 auto;
+  padding: 20px; /* Add padding for better spacing */
+}
+
+.home-section .text {
   display: inline-block;
-  color:var(--color-default);
+  color: var(--color-default);
   font-size: 25px;
   font-weight: 500;
   margin: 18px;
 }
 
-
-
-
-.text1 {
-  display: inline-block;
-  margin: 0;
-  color: #3D52A0;
-  font-size: 120px;
-  font-family: 'Poppins', sans-serif;
-  position: absolute;
-  top: -600px;
-  left: 70px; /* Adjusted value to position the title relative to the logo */
-  }
-  .text2 {
-  display: inline-block;
-  margin: 0;
-  color: #3D52A0;
-  font-size: 15px;
-  font-family: 'Poppins', sans-serif;
-  font-style: italic;
-  position: absolute;
-  top: -295px;
-  left: 90px; /* Adjusted value to position the title relative to the logo */
-  }
-  .landpic {
-  position: absolute;
-  top: -680px; /* Adjust as needed */
-  left: 670px; /* Adjust to move it to the right */
-  }
-  .pic1 {
-  height: 650px; /* Adjust height as needed */
-  width: 580px; /* Adjust width as needed */
-  }
-
-  @media (max-width: 768px) {
-    /* Adjustments for smaller screens (tablets and phones) */
-    .text1 {
-        font-size: 2em; /* Decrease font size */
-    }
-
-    .text2 {
-        font-size: 0.8em; /* Decrease font size */
-    }
-}
-  .right-half {
-  position: absolute;
-  top: 0px;
-  right: 0;
-  width: 40%; /* Adjust as needed */
-  height: 100%;
-  background-color: #EDE8F5; /* Set background color */
-  }
-  .search-bar {
-  background-color: #7091E6; /* Medium blue background */
-  padding: 20px;
-  border-radius: 20px;
+.container {
   display: flex;
-  align-items: center;
-  position: absolute;
-  top: -180px; /* Adjust this value to position the search bar */
-  left: 120px; /* Adjust this value to position the search bar */
-  gap: 15px;
+  background-color: rgba(255, 255, 255);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 0px; /* Adjusted margin to move the content further down */
+  width: 100%; /* Make the container span the entire width */
+  margin: 0 auto; /* Center align horizontally */
+  flex-wrap: nowrap; /* Prevent wrapping to keep items in a row */
+  padding: 20px; /* Add padding inside the container */
+}
+
+@media (max-width: 768px) {
+  .home-section {
+    width: calc(100% - 20px); 
   }
-  .search-bar input, .search-bar select, .search-bar button {
-  border: none;
-  border-radius: 10px;
-  padding: 13px;
-  margin-right: 25px;
-  font-size: 20px;
-  }
-  .search-bar input:focus, .search-bar select:focus, .search-bar button:focus {
-  outline: none;
-  }
-  .search-bar input {
-  flex: 1;
-  }
-  .search-bar select {
-  flex: 1.5; /* Adjust flex value to expand the select box */
-  }
-  .search-bar button {
-  background-color: #3D52A0; /* Dark blue button */
-  color: white;
-  cursor: pointer;
-  }
-  .search-bar button:hover {
-  background-color: #2d3d82; /* Slightly darker blue on hover */
+
+  .home-section .text {
+    font-size: 20px; 
+    margin: 10px;
   }
 
   .container {
-    display: flex;
-    background-color: rgba(255, 255, 255);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: 0px; /* Adjusted margin to move the content further down */
-    width: 100%; /* Make the container span the entire width */
-    margin: 0 auto; /* Center align horizontally */
-    flex-wrap: nowrap; /* Prevent wrapping to keep items in a row */
-}
-
-
-.image-section {
-    flex: 1; /* Adjusted width to make it flexible */
-    position: relative; /* Needed for absolute positioning within */
-}
-
-.image-section img {
-    width: 95%; /* Ensure the image takes up the entire container */
-    height: 500px ; /* Maintain aspect ratio */
-    border-radius: 5px;
-    position: absolute; /* Position the image absolutely within its container */
-    top: 0; /* Adjust as needed */
-    left: 0; /* Adjust as needed */
-    right: 0; /* Adjust as needed */
-    bottom: 0; /* Adjust as needed */
-    margin: auto; /* Center the image within its container */
-}
-
-.text-section {
-    flex: 1; /* Adjusted width to make it flexible */
-    padding: 40px; /* Adjusted padding for better spacing */
-    font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa00;
-}
-
-  
-  .text-section h1 {
-    margin-top: 0;
-    font-size: 2em;
-    color: #333;
-    font-weight: 600;
-  }
-  .text-section p {
-    font-size: 1em;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 20px;
-  }
-  .text-section p:last-child {
-    margin-bottom: 0;
+    flex-direction: column; 
+    padding: 10px; 
   }
 
-  .top-job-seekers {
-    background-color: rgba(255, 255, 255, 0);
-    padding: 10px;
-    border-radius: 20px;
-    width: 600px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 25px auto; /* Center horizontally with auto margins */
-    text-align: center; /* Center text content inside the div */
-    height: 320px; /* Adjusted height */
+  .pagination a {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
 }
 
+@media (max-width: 480px) {
+  .home-section .text {
+    font-size: 18px;
+    margin: 8px;
+  }
 
-        .top-job-seekers h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #3D52A0;
-        }
-        .job-seeker {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #ADBBDA;
-            border-radius: 20px;
-            padding: 15px 20px;
-            margin-bottom: 10px;
-        }
-        .job-seeker img {
-            border-radius: 50%;
-            width: 60px;
-            height: 70px;
-        }
-        .job-seeker-info {
-            flex: 1;
-            margin-left: 15px;
-            text-align: left;
-        }
-        .job-seeker-info h3 {
-            margin: 0;
-            font-size: 16px;
-        }
-        .job-seeker-info p {
-            margin: 5px 0;
-            font-size: 14px;
-            color: #555;
-        }
-        .job-seeker-info .ratings {
-            color: #FFD700;
-        }
-        .rank {
-            font-size: 18px;
-            color: #3D52A0;
-            text-align: right;
-        }
-        .rank span {
-            display: block;
-            font-size: 14px;
-            color: #555;
-        }
-        .navigation {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        .navigation span {
-            width: 10px;
-            height: 10px;
-            margin: 0 5px;
-            background-color: #ccc;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .navigation .active {
-            background-color: #3D52A0;
-        }
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-}
-.topnav {
-  overflow: hidden;
-  background-color: #DADADA;
-  justify-items: end;
-}
-
-.topnav a {
-  float: right;
-  color: #333;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.topnav a:hover {
-  /* background-color: #ddd; */
-  color: #007bff;
-}
-
-.topnav a.active {
-  background-color: #04AA6D;
-  color: white;
+  .pagination a {
+    padding: 4px 8px; 
+    font-size: 12px;
+  }
 }
 </style>
-
-  </style>
 </head>
 <body>
   <section class="home-section">
-    <div class="container" style="display: flex; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.529); margin: 0 auto;  padding-bottom: 20px; border: 1px solid;">
-        <div style="flex: 1 1 60%; padding: 20px; box-sizing: border-box; text-align: center;">
-            <h1 style="font-family: 'Poppins', sans-serif; font-size: 3.5em; font-weight: bold; color: #6b0d0d; padding-top: 30px;">
-                Search, Find, and Apply!
-            </h1>
-            <form action="findworkers.php" method="post" >
-                <div style="display: flex; justify-content: center; align-items: center; gap: 10px; background-color: #f0f0f0; padding: 10px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                    <input type="text" name="job_type" style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;" placeholder="Enter Types of Job: Driver" required>
-                    <select name="location" style="flex: 1 1 auto; padding: 8px; width: 40px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: white;" required>
-                        <option value="">Location</option>
-                        <option value="manila">Manila</option>
-                        <option value="caloocan">Caloocan</option>
-                        <option value="valenzuela">Valenzuela</option>
-                        <option value="pasay">Pasay</option>
-                        <option value="makati">Makati</option>
-                        <option value="quezon_city">Quezon City</option>
-                        <option value="navotas">Navotas</option>
-                        <option value="las_piñas">Las Piñas</option>
-                        <option value="malabon">Malabon</option>
-                        <option value="mandaluyong">Mandaluyong</option>
-                        <option value="marikina">Marikina</option>
-                        <option value="muntinlupa">Muntinlupa</option>
-                        <option value="parañaque">Parañaque</option>
-                        <option value="pasig">Pasig</option>
-                        <option value="san_juan">San Juan</option>
-                        <option value="taguig">Taguig</option>
-                        <option value="valenzuela">Valenzuela</option>
-                        <option value="pateros">Pateros</option>
-                    </select>
-                    <button type="submit" style="flex: 1 1 auto; padding: 8px 20px; width: 20px; background-color: #6b0d0d; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;" >
-                        Find Now!
-                    </button>
-                </div>
-            </form>
-        </div>
+  <div style="text-align: right;">
+  <form method="GET" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" style="margin-bottom: 20px; display: inline-flex; align-items: center; gap: 15px;">
+    <div style="display: flex; align-items: center; gap: 15px; background-color: #f9f9f9; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+      <label for="job_type" style="font-weight: bold; font-size: 16px; color: #333; margin-right: 10px;">Select Job Type:</label>
+      <select name="job_type" id="job_type" style="padding: 2px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; width: 220px; transition: border-color 0.3s;">
+        <option value="">All Job Types</option>
+        <?php while ($row_job_type = $result_job_types->fetch_assoc()): ?>
+          <?php $selected = ($_GET['job_type'] == $row_job_type['job_type']) ? 'selected' : ''; ?>
+          <option value="<?php echo htmlspecialchars($row_job_type['job_type']); ?>" <?php echo $selected; ?>><?php echo htmlspecialchars($row_job_type['job_type']); ?></option>
+        <?php endwhile; ?>
+      </select>
+      <button type="submit" style="padding: 10px 20px; background-color: #6b0d0d; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; transition: background-color 0.3s, transform 0.2s;">
+        Filter
+      </button>
     </div>
-    <br> 
-    <div class="container" style="border: 1px solid;">
-        <div class="image-section">
-            <img src="pic1.jpg">
-        </div>
-        <div class="text-section">
-            <p>HanapKITA aims to revolutionize the job search experience by providing an intuitive, efficient, and comprehensive platform for job seekers and employers alike. </p> 
-            <p>Our primary goal is to bridge the gap between talent and opportunity, ensuring that individuals can find job positions that truly match their skills, interests, and career aspirations. We understand the complexities of the job market and strive to simplify this process by offering a user-friendly interface, advanced search functionalities, and a wide array of job listings across various industries.</p>
-            <p>Moreover, HanapKITA seeks to foster a community where employers and job seekers can connect seamlessly and effectively. We prioritize creating a transparent and supportive environment that allows employers to find the right candidates quickly and efficiently. By leveraging technology and a deep understanding of the job market, HanapKITA aspires to become the go-to platform for anyone looking to advance their career or find the perfect candidate for their organization, thereby contributing to a more dynamic and thriving workforce.</p>
+  </form>
+</div>
 
-          </div>
-    </div>
 
-          <!-- <iframe src="/slide/index.html" frameborder="0" style="width: 100%; height: 540px;"></iframe> -->
+
+<?php if ($result->num_rows > 0): ?>
+  <table border='0' style='border-collapse: collapse; width: 100%;'>
+    <thead>
+      <tr style='background-color: #f6b4ab; align-items: center;'>
+        <th style='padding: 10px; width: 2%;'>Rank</th>
+        <th style='padding: 10px; width: 1%;'></th>
+        <th style='padding: 10px; width: 10%; text-align: left;'>Name</th>
+        <th style='padding: 10px; width: 10%;'>Gender</th>
+        <th style='padding: 10px; width: 10%;'>Job Type</th>
+        <th style='padding: 10px; width: 10%;'>City</th>
+        <th style='padding: 10px; width: 10%;'>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php $rank = $offset + 1; ?>
+      <?php while ($row = $result->fetch_assoc()): ?>
+        <?php $row_color = ($rank % 2 == 0) ? '#f6fbfe' : '#ffffff'; // Alternate row colors ?>
+        <tr style='background-color: <?php echo $row_color; ?>;'>
+          <td style='padding: 10px; text-align: center;'><?php echo $rank; ?></td>
+          <td style='padding: 5px; text-align: right;'><img src='../jobseeker/assets/images/<?php echo htmlspecialchars($row['profile'] ?? 'no-image.png'); ?>' style='width: 35px; height: 35px; object-fit: cover; border-radius: 50%;'></td>
+          <td style='padding: 10px; align-items: left;'><?php echo $row["firstname"]." ".$row["middlename"]." ".$row["lastname"]; ?></td>
+          <td style='padding: 10px; text-align: center;'><?php echo $row["gender"]; ?></td>
+          <td style='padding: 10px; text-align: center;'><?php echo $row["job_type"]; ?></td>
+          <td style='padding: 10px; text-align: center;'><?php echo $row["city"]; ?></td>
+          <td style='padding: 10px; text-align: center;'>
+          <a href='jobseekerviewprofile.php?id=<?php echo $row['id']; ?>' 
+          style='display: inline-block; padding: 6px 12px; background-color: #6b0d0d; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;'>
+          <i class='bx bx-show-alt' style='vertical-align: middle; margin-right: 5px;'></i> View
+          </a>
+          </td>
+        </tr>
+        <?php $rank++; ?>
+      <?php endwhile; ?>
+    </tbody>
+  </table>
+<?php else: ?>
+  <p>No results found.</p>
+<?php endif; ?>
+
+<!-- Pagination controls -->
+<div class="pagination">
+  <?php if ($page > 1): ?>
+    <a href="?page=<?php echo $page - 1; ?>&job_type=<?php echo urlencode($_GET['job_type'] ?? ''); ?>">Previous</a>
+  <?php endif; ?>
+
+  <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+    <a href="?page=<?php echo $i; ?>&job_type=<?php echo urlencode($_GET['job_type'] ?? ''); ?>" class="<?php echo ($i == $page) ? 'active' : ''; ?>"><?php echo $i; ?></a>
+  <?php endfor; ?>
+
+  <?php if ($page < $total_pages): ?>
+    <a href="?page=<?php echo $page + 1; ?>&job_type=<?php echo urlencode($_GET['job_type'] ?? ''); ?>">Next</a>
+  <?php endif; ?>
+</div>
+
+
+
+<?php $conn->close(); ?>
+
+
+
 </section>
 <?php include '../employer/em_footer.html'; ?>
 

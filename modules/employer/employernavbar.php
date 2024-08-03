@@ -449,6 +449,13 @@ $conn->close();
         </a>
         <span class="tooltip">Job Posted</span>
       </li>
+      <li>
+        <a href="javascript:void(0)" onclick="changeContent('employer_analytics.php')">
+          <i class="bx bx-briefcase"></i>
+          <span class="link_name">Analytics</span>
+        </a>
+        <span class="tooltip">Analytics</span>
+      </li>
       <li class="profile">
         <div class="profile_details">
         <a href="javascript:void(0)" onclick="changeContent('profile_employer.php')">

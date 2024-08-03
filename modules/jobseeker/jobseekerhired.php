@@ -1,137 +1,32 @@
 <?php 
 session_start();
-
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Jobseeker Dashboard</title>
-  <!-- Link Styles -->
-  <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-    .container {
-      width: 100%;
-      height: 100vh; /* Full viewport height */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      background-color: #f0f0f0; /* Optional: a background for the container */
-    }
-    .title {
-      font-size: 32px;
-      font-family: 'Poppins', sans-serif;
-      color: #1E3B85;
-      margin-bottom: 20px;
-      text-align: left;
-      width: 80%;
-      margin-top: 1%;
-    }
-    .message-box {
-      background-color: #d7dfee;
-      width: 80%;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 5px; /* Optional: padding for inner spacing */
-    }
-    .message-box h2 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 30px;
-      color: #333333;
-      font-weight: bold;
-    }
-    .message-box p {
-      font-family: 'Poppins', sans-serif;
-      font-size: 40px;
-      color: #333333;
-      font-weight: bold;
-    }
-    .greeting {
-      font-family: 'Poppins', sans-serif;
-      font-size: 16px;
-      margin: 25px 0 15px;
-      text-align: left;
-      width: 80%;
-    }
-    .congratulations {
-      font-family: 'Poppins', sans-serif;
-      font-size: 16px;
-      width: 80%;
-      text-align: left;
-    }
-    .see-more {
-      color: #1E3B85;
-      text-decoration: none;
-      font-size: 14px;
-      font-family: 'Poppins', sans-serif;
-      margin-bottom: 20px;
-    }
-    .see-more:hover {
-      text-decoration: underline;
-    }
-    .button-group {
-      display: flex;
-      justify-content: flex-end;
-      width: 80%;
-      margin-top: auto;
-      margin-bottom: 20px;
-    }
-    .proceed-button {
-      background-color: #1E3B85;
-      color: #ffffff;
-      border: none;
-      border-radius: 20px;
-      font-family: 'Poppins', sans-serif;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-right: 10px;
-    }
-    .close-button {
-      background-color: transparent;
-      color: #333333;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-    }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Accepted</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-
-  <div class="container">
-    <div class="title">Job Details</div>
-    <div class="message-box">
-        <h2><?php echo $_SESSION['name'];?></h2>
-        <p>Your Application has been accepted!</p>
+<body class="bg-gray-100 font-sans">
+  <div class="container mx-auto px-4 py-8 max-w-5xl">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h1 class="text-2xl font-bold mb-4 text-gray-800">Application Status</h1>
+      <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
+        <h2 class="text-lg font-semibold text-green-700">Congratulations, <?php echo htmlspecialchars($_SESSION['name']); ?>!</h2>
+        <p class="text-green-600">Your application has been accepted.</p>
+      </div>
+      <p class="text-gray-700 mb-4">Dear <?php echo htmlspecialchars($_SESSION['name']); ?>,</p>
+      <p class="text-gray-600 mb-6">
+        We are thrilled to inform you that your application has been successful. Your professionalism, skills, and enthusiasm have truly impressed our team. We believe you will be a valuable addition to our organization and look forward to a rewarding and productive work experience ahead.
+      </p>
+      <p class="text-gray-600 mb-6">
+        Welcome to our team! We're excited to have you on board and can't wait to see the great contributions you'll make.
+      </p>
     </div>
-    <div class="greeting">Hi! <?php echo $_SESSION['name'];?></div>
-    <div class="congratulations">
-        Congratulations! Your professionalism and commitment impressed us. Looking forward to smooth work ahead. Welcome!
-    </div>
-    <div class="button-group">
-      <!-- <button class="proceed-button" onclick="proceed()">Proceed</button> -->
-        <button class="close-button" onclick="closeContainer()">x</button>
-    </div>
-</div>
+  </div>
 
-
-
-<script>
-     function closeContainer() {
-      window.location.href = "jobseekerinbox.php";
-    }
-    function proceed() {
-    window.location.href = "employerviewprofile.html";
-  }
-</script>
-  <!-- Scripts -->
-  <script src="script.js"></script>
 </body>
-</html>
+</html> 

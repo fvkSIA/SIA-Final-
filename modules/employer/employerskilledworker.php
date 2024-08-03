@@ -14,12 +14,19 @@ $dbname = "hanapkita_db";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
+// Pagination settings
+$limit = 5; // Number of rows per page
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// Fetch job types for filter
 $sql_job_types = "SELECT DISTINCT job_type FROM users WHERE type = 2";
 $result_job_types = $conn->query($sql_job_types);
 
+// Main query
 $sql = "SELECT u.id, u.firstname, u.middlename, u.lastname, u.gender, u.home_address, u.job_type, u.city, u.profile, SUM(r.compound) AS total_compound
         FROM (SELECT DISTINCT id, firstname, middlename, lastname, gender, home_address, job_type, city, profile FROM users WHERE type = 2) u
         INNER JOIN ratings r ON u.id = r.user_id 
@@ -31,15 +38,31 @@ if (!empty($_GET['job_type'])) {
 }
 
 $sql .= " GROUP BY u.id, u.firstname, u.middlename, u.lastname, u.gender, u.home_address, u.job_type, u.city, u.profile
-          ORDER BY total_compound DESC";
+          ORDER BY total_compound DESC
+          LIMIT $limit OFFSET $offset";
 
+// Get the results
 $result = $conn->query($sql);
 
 if ($result === false) {
-  echo "Error executing query: " . $conn->error;
-  exit;
+    echo "Error executing query: " . $conn->error;
+    exit;
 }
 
+// Get total number of rows for pagination
+$sql_count = "SELECT COUNT(DISTINCT u.id) AS total_rows
+              FROM (SELECT DISTINCT id, firstname, middlename, lastname, gender, home_address, job_type, city, profile FROM users WHERE type = 2) u
+              INNER JOIN ratings r ON u.id = r.user_id
+              WHERE r.compound IS NOT NULL";
+
+if (!empty($_GET['job_type'])) {
+    $job_type = $conn->real_escape_string($_GET['job_type']);
+    $sql_count .= " AND u.job_type = '".$job_type."'";
+}
+
+$result_count = $conn->query($sql_count);
+$total_rows = $result_count->fetch_assoc()['total_rows'];
+$total_pages = ceil($total_rows / $limit);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,21 +80,49 @@ if ($result === false) {
       margin: 0;
       font-family: 'Poppins', sans-serif;
     }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .pagination a {
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      color: #333;
+      margin: 0 4px;
+      border-radius: 4px;
+    }
+
+    .pagination a.active {
+      background-color: #6b0d0d;
+      color: white;
+    }
   </style>
 </head>
 <body>
 
-<form method="GET" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" style="margin-bottom: 20px; display: flex; align-items: center;">
-  <label for="job_type" style="margin-right: 10px;">Select Job Type:</label>
-  <select name="job_type" id="job_type" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-    <option value="">All Job Types</option>
-    <?php while ($row_job_type = $result_job_types->fetch_assoc()): ?>
-      <?php $selected = ($_GET['job_type'] == $row_job_type['job_type']) ? 'selected' : ''; ?>
-      <option value="<?php echo htmlspecialchars($row_job_type['job_type']); ?>" <?php echo $selected; ?>><?php echo htmlspecialchars($row_job_type['job_type']); ?></option>
-    <?php endwhile; ?>
-  </select>
-  <button type="submit" style="padding: 8px 20px; background-color: #6b0d0d; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;">Filter</button>
-</form>
+<div style="text-align: right;">
+  <form method="GET" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" style="margin-bottom: 20px; display: inline-flex; align-items: center; gap: 15px;">
+    <div style="display: flex; align-items: center; gap: 15px; background-color: #f9f9f9; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+      <label for="job_type" style="font-weight: bold; font-size: 16px; color: #333; margin-right: 10px;">Select Job Type:</label>
+      <select name="job_type" id="job_type" style="padding: 2px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; width: 220px; transition: border-color 0.3s;">
+        <option value="">All Job Types</option>
+        <?php while ($row_job_type = $result_job_types->fetch_assoc()): ?>
+          <?php $selected = ($_GET['job_type'] == $row_job_type['job_type']) ? 'selected' : ''; ?>
+          <option value="<?php echo htmlspecialchars($row_job_type['job_type']); ?>" <?php echo $selected; ?>><?php echo htmlspecialchars($row_job_type['job_type']); ?></option>
+        <?php endwhile; ?>
+      </select>
+      <button type="submit" style="padding: 10px 20px; background-color: #6b0d0d; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; transition: background-color 0.3s, transform 0.2s;">
+        Filter
+      </button>
+    </div>
+  </form>
+</div>
+
+
 
 <?php if ($result->num_rows > 0): ?>
   <table border='0' style='border-collapse: collapse; width: 100%;'>
@@ -87,7 +138,7 @@ if ($result === false) {
       </tr>
     </thead>
     <tbody>
-      <?php $rank = 1; ?>
+      <?php $rank = $offset + 1; ?>
       <?php while ($row = $result->fetch_assoc()): ?>
         <?php $row_color = ($rank % 2 == 0) ? '#f6fbfe' : '#ffffff'; // Alternate row colors ?>
         <tr style='background-color: <?php echo $row_color; ?>;'>
@@ -112,10 +163,24 @@ if ($result === false) {
   <p>No results found.</p>
 <?php endif; ?>
 
+<!-- Pagination controls -->
+<div class="pagination">
+  <?php if ($page > 1): ?>
+    <a href="?page=<?php echo $page - 1; ?>&job_type=<?php echo urlencode($_GET['job_type'] ?? ''); ?>">Previous</a>
+  <?php endif; ?>
+
+  <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+    <a href="?page=<?php echo $i; ?>&job_type=<?php echo urlencode($_GET['job_type'] ?? ''); ?>" class="<?php echo ($i == $page) ? 'active' : ''; ?>"><?php echo $i; ?></a>
+  <?php endfor; ?>
+
+  <?php if ($page < $total_pages): ?>
+    <a href="?page=<?php echo $page + 1; ?>&job_type=<?php echo urlencode($_GET['job_type'] ?? ''); ?>">Next</a>
+  <?php endif; ?>
+</div>
+
 <?php include '../employer/em_footer.html'; ?>
 
 </body>
 </html>
 
 <?php $conn->close(); ?>
-
