@@ -435,7 +435,7 @@ $conn->close();
       </li>
       <li>
         <a href="javascript:void(0)" onclick="changeContent('jobseekerongoing.php')">
-          <i class="bx bx-search"></i>
+          <i class="bx bx-briefcase"></i>
           <span class="link_name">Ongoing Job</span>
         </a>
       </li>

@@ -451,7 +451,7 @@ $conn->close();
       </li>
       <li>
         <a href="javascript:void(0)" onclick="changeContent('employer_analytics.php')">
-          <i class="bx bx-briefcase"></i>
+          <i class="bx bx-chart"></i>
           <span class="link_name">Analytics</span>
         </a>
         <span class="tooltip">Analytics</span>
