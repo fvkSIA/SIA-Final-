@@ -5,7 +5,7 @@ $error = '';
 $result = null;
 
 $id = $_SESSION['user_id'];
-
+ 
 // Ensure each job seeker can only apply once per job
 $sql = "SELECT job_requests.id as jr_id, job_requests.user_id as jr_uid, job_requests.job_id as jr_jobid, job_requests.employer_id as jr_empid, job_requests.type as jr_type,
            job_requests.status as jr_comp, job_requests.is_accepted, users.id as user_id, users.firstname, users.lastname, job_listings.id as job_list_id, job_listings.job as job_list_job,

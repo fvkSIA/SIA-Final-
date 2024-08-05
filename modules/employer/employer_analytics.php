@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once '/xampp/htdocs/SIA-Final-/db/db_connection.php';
 session_start();
 
@@ -75,12 +75,36 @@ $completedJobsCount = count($completedJobs);
 
 $employer_id = $_SESSION['user_id'];
 
+
 $sql_job_posts = "SELECT COUNT(*) as job_post_count FROM job_listings WHERE employer_id = ?";
 $stmt_job_posts = mysqli_prepare($conn, $sql_job_posts);
 mysqli_stmt_bind_param($stmt_job_posts, "i", $employer_id);
 mysqli_stmt_execute($stmt_job_posts);
 $result_job_posts = mysqli_stmt_get_result($stmt_job_posts);
 $job_posts_count = mysqli_fetch_assoc($result_job_posts)['job_post_count'];
+
+$topJobsQuery = "SELECT 
+    COALESCE(jl.job, jo.job) as type_of_jobs,
+    COUNT(DISTINCT jl.id) as no_of_jobs,
+    SUM(CASE WHEN jr.is_accepted = 1 AND jr.status = 0 THEN 1 ELSE 0 END) as no_of_on_going,
+    SUM(CASE WHEN jr.status = 1 THEN 1 ELSE 0 END) as no_of_hired_workers
+FROM (
+    SELECT DISTINCT job FROM job_listings WHERE employer_id = ?
+    UNION
+    SELECT DISTINCT job FROM job_offers WHERE employer_id = ?
+) AS unique_jobs
+LEFT JOIN job_listings jl ON unique_jobs.job = jl.job AND jl.employer_id = ?
+LEFT JOIN job_offers jo ON unique_jobs.job = jo.job AND jo.employer_id = ?
+LEFT JOIN job_requests jr ON (jr.job_id = jl.id OR jr.job_id = jo.id) AND jr.employer_id = ?
+GROUP BY type_of_jobs
+ORDER BY no_of_jobs DESC
+LIMIT 10";
+
+$stmt = mysqli_prepare($conn, $topJobsQuery);
+mysqli_stmt_bind_param($stmt, "iiiii", $id, $id, $id, $id, $id);  // Assuming $id is the employer_id
+mysqli_stmt_execute($stmt);
+$topJobsResult = mysqli_stmt_get_result($stmt);
+
 
 ?>
 
@@ -180,6 +204,22 @@ $job_posts_count = mysqli_fetch_assoc($result_job_posts)['job_post_count'];
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       margin-top: 30px;
     }
+    table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .print-button {
+            float: right;
+            margin-bottom: 10px;
+        }
   </style>
 </head>
 <body class="bg-gray-100">
@@ -191,7 +231,7 @@ $job_posts_count = mysqli_fetch_assoc($result_job_posts)['job_post_count'];
       <option value="weekly">Weekly</option>
       <option value="yearly">Yearly</option>
     </select>
-      <button class="print-btn">
+      <button onclick="window.print()" class="print-button print-btn">
         <i class="fas fa-print"></i> Print Report
       </button>
     </div>
@@ -227,6 +267,33 @@ $job_posts_count = mysqli_fetch_assoc($result_job_posts)['job_post_count'];
       </div>
     </div>
     
+    <h2 class="ongoing-title" style="margin-top: 40px;">Top Jobs</h2>
+<div class="chart-container">
+  <table>
+    <tr>
+      <th>Type of Jobs</th>
+      <th>No. of Jobs</th>
+      <th>No. of On Going</th>
+      <th>No. of Hired Workers</th>
+    </tr>
+    <?php
+    if (mysqli_num_rows($topJobsResult) > 0) {
+      while ($row = mysqli_fetch_assoc($topJobsResult)) {
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($row["type_of_jobs"]) . "</td>";
+        echo "<td>" . $row["no_of_jobs"] . "</td>";
+        echo "<td>" . $row["no_of_on_going"] . "</td>";
+        echo "<td>" . $row["no_of_hired_workers"] . "</td>";
+        echo "</tr>";
+      }
+    } else {
+      echo "<tr><td colspan='4'>No jobs found</td></tr>";
+    }
+    ?>
+  </table>
+</div>
+
+
     <!-- New section for the Most Employed Workers graph -->
     <h2 class="ongoing-title" style="margin-top: 40px;">Completed Jobs Distribution</h2>
   <div class="chart-container">

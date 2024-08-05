@@ -4,10 +4,7 @@ if (isset($_POST['selectedOption'])){
 
     if ($selectedOption == 'EMPLOYER') {
         header("Location: ../signup/termsemployer.html");
-    } else if ($selectedOption == 'JOBSEEKER') {
-        header("Location: ../signup/termsjobseeker.html");
     }
-
 }
 ?>
 
